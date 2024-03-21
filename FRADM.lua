@@ -9,7 +9,7 @@ Redis = require('libs/redis').connect('127.0.0.1', 6379)
 http  = require("socket.http")
 https   = require("ssl.https")
 SshId = io.popen("echo $SSH_CLIENT ︙ awk '{ print $1}'"):read('*a')
-luatele = require 'luatele'
+Merotele = require 'MeroTele'
 local FileInformation = io.open("./Information.lua","r")
 if not FileInformation then
 if not Redis:get(SshId.."Info:Redis:Token") then
@@ -30,7 +30,7 @@ end
 else
 print('\27[1;34mلم يتم حفظ التوكن جرب مره اخرى \nToken not saved, try again')
 end 
-os.execute('lua5.3 Fast.lua')
+os.execute('lua5.2 Fast.lua')
 end
 if not Redis:get(SshId.."Info:Redis:User") then
 io.write('\27[1;31mارسل معرف المطور الاساسي الان \nDeveloper UserName saved ↡\n\27[0;39;49m')
@@ -41,7 +41,7 @@ Redis:set(SshId.."Info:Redis:User",UserSudo)
 else
 print('\n\27[1;34mلم يتم حفظ معرف المطور الاساسي \nDeveloper UserName not saved\n')
 end 
-os.execute('lua5.3 Fast.lua')
+os.execute('lua5.2 Fast.lua')
 end
 if not Redis:get(SshId.."Info:Redis:User:ID") then
 io.write('\27[1;31mارسل ايدي المطور الاساسي الان \nDeveloper ID saved ↡\n\27[0;39;49m')
@@ -52,7 +52,7 @@ Redis:set(SshId.."Info:Redis:User:ID",UserId)
 else
 print('\n\27[1;34mلم يتم حفظ ايدي المطور الاساسي \nDeveloper ID not saved\n')
 end 
-os.execute('lua5.3 Fast.lua')
+os.execute('lua5.2 Fast.lua')
 end
 local Informationlua = io.open("Information.lua", 'w')
 Informationlua:write([[
@@ -4927,7 +4927,7 @@ Zh_En8 = Zh_En8:gsub('v','𝘃')
 Zh_En8 = Zh_En8:gsub('c','𝗰')
 Zh_En8 = Zh_En8:gsub('x','𝘅')
 Zh_En8 = Zh_En8:gsub('z','𝘇 ')
-local Zh_En9  = text:gsub('q','𝖖 ')
+local Zh_En9  = text:gsub('q','?? ')
 Zh_En9 = Zh_En9:gsub('w','𝖜')
 Zh_En9 = Zh_En9:gsub('e','𝖊')
 Zh_En9 = Zh_En9:gsub('r','𝖗')
