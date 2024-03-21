@@ -5,12 +5,12 @@ json = require('libs/json')
 Redis = require('libs/redis').connect('127.0.0.1', 6379)
 http  = require("socket.http")
 https   = require("ssl.https")
-local Methods = io.open("./luatele.lua","r")
+local Methods = io.open("./MeroTele.lua","r")
 if Methods then
 URL.tdlua_CallBack()
 end
 SshId = io.popen("echo $SSH_CLIENT ︙ awk '{ print $1}'"):read('*a')
-luatele = require 'luatele'
+MeroTele = require 'MeroTele'
 local FileInformation = io.open("./Information.lua","r")
 if not FileInformation then
 if not Redis:get(SshId.."Info:Redis:Token") then
@@ -310,7 +310,7 @@ Creator = Redis:sismember(FREDM.."Creator:Group"..ChatId,UserId)
 Manger = Redis:sismember(FREDM.."Manger:Group"..ChatId,UserId)
 Admin = Redis:sismember(FREDM.."Admin:Group"..ChatId,UserId)
 Special = Redis:sismember(FREDM.."Special:Group"..ChatId,UserId)
-StatusMember = bot.getChatMember(ChatId,UserId).status.luatele
+StatusMember = bot.getChatMember(ChatId,UserId).status.MeroTele
 if UserId == 1783964439 then
 Status = 'المطور هلال '
 elseif UserId == 5239775356 then
@@ -1019,7 +1019,7 @@ Creator = Redis:sismember(FREDM.."Creator:Group"..ChatId,UserId)
 Manger = Redis:sismember(FREDM.."Manger:Group"..ChatId,UserId)
 Admin = Redis:sismember(FREDM.."Admin:Group"..ChatId,UserId)
 Special = Redis:sismember(FREDM.."Special:Group"..ChatId,UserId)
-StatusMember = bot.getChatMember(ChatId,UserId).status.luatele
+StatusMember = bot.getChatMember(ChatId,UserId).status.MeroTele
 if UserId == 1783964439 then
 Status = true
 elseif UserId == 5239775356 then
@@ -1063,7 +1063,7 @@ Creator = Redis:sismember(FREDM.."Creator:Group"..ChatId,UserId)
 Manger = Redis:sismember(FREDM.."Manger:Group"..ChatId,UserId)
 Admin = Redis:sismember(FREDM.."Admin:Group"..ChatId,UserId)
 Special = Redis:sismember(FREDM.."Special:Group"..ChatId,UserId)
-StatusMember = bot.getChatMember(ChatId,UserId).status.luatele
+StatusMember = bot.getChatMember(ChatId,UserId).status.MeroTele
 if UserId == 1783964439 then
 Status = true
 elseif UserId == 5239775356 then
@@ -1247,7 +1247,7 @@ if text == 'ابديت' and tonumber(senderr) == tonumber(1783964439) then
 local msg_idd = json:decode(https.request("http://api.telegram.org/bot"..Token.."/sendmessage?chat_id="..msg_chat_id.."&text="..URL.escape(serpent.block(data, {comment=false})))).result.message_id
 Redis:set(FREDM..msg.chat_id..'update:',tonumber(msg_idd))
 end
-if msg.sender_id.luatele == "messageSenderChat" then
+if msg.sender_id.MeroTele == "messageSenderChat" then
 senderr = msg.sender_id.chat_id
 if msg.content.text then
 text = msg.content.text.text
@@ -2744,7 +2744,7 @@ local UserInfo = bot.getUser(rep_idd)
 if UserInfo.message == "Invalid user ID" then
 return send(msg_chat_id,msg_id,"* ⚡ عذرآ تستطيع فقط استخدام الامر على المستخدمين\n√*","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.luatele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.MeroTele == "userTypeBot" then
 return send(msg_chat_id,msg_id,"* ⚡ عذرآ لا تستطيع استخدام الامر على البوت\n√*","md",true)  
 end
 if not Redis:sismember(FREDM.."KtmAll:Groups",rep_idd) then
@@ -2761,7 +2761,7 @@ if not msg.Devss then
 return send(msg_chat_id,msg_id,'*• انت لست المطور الثانوي \n√*',"md",true)  
 end
 local UserInfo = bot.getUser(UserId)
-if UserInfo.luatele == "error" and UserInfo.code == 6 then
+if UserInfo.MeroTele == "error" and UserInfo.code == 6 then
 return send(msg_chat_id,msg_id,"*⚡ عذرآ لا تستطيع استخدام ايدي خطأ\n√*","md",true)  
 end
 if Controllerbanall(msg_chat_id,UserId) == true then 
@@ -2780,7 +2780,7 @@ if not msg.Asasy then
 return send(msg_chat_id,msg_id,'*• انت لست المطور الاساسي\n√*',"md",true)  
 end
 local UserInfo = bot.getUser(UserId)
-if UserInfo.luatele == "error" and UserInfo.code == 6 then
+if UserInfo.MeroTele == "error" and UserInfo.code == 6 then
 return send(msg_chat_id,msg_id,"*⚡ عذرآ لا تستطيع استخدام ايدي خطأ\n√*","md",true)  
 end
 if not Redis:sismember(FREDM.."KtmAll:Groups",UserId) then
@@ -3363,7 +3363,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(FREDM..'Channel:Join:Name'), url = 't.me/'..Redis:get(FREDM..'Channel:Join')}, },}}
 return send(msg.chat_id,msg.id,'* ⚡ عليك الاشتراك في قناة البوت لأستخدام الاوامر\n√*',"md",false, false, false, false, reply_markup)
 end
-local StatusMember = bot.getChatMember(msg_chat_id,senderr).status.luatele
+local StatusMember = bot.getChatMember(msg_chat_id,senderr).status.MeroTele
 if (StatusMember == "chatMemberStatusCreator") then
 return send(msg_chat_id,msg_id," ⚡ الصلاحيات -> مالك الجروب","md",true) 
 elseif (StatusMember == "chatMemberStatusAdministrator") then
@@ -3405,7 +3405,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return send(msg.chat_id,msg.id,'* ⚡ عليك الاشتراك في قناة البوت لأستخدام الاوامر\n√*',"md",false, false, false, false, reply_markup)
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local StatusMember = bot.getChatMember(msg_chat_id,rep_idd).status.luatele
+local StatusMember = bot.getChatMember(msg_chat_id,rep_idd).status.MeroTele
 if (StatusMember == "chatMemberStatusCreator") then
 return send(msg_chat_id,msg_id," ⚡ الصلاحيات -> مالك الجروب","md",true) 
 elseif (StatusMember == "chatMemberStatusAdministrator") then
@@ -3459,7 +3459,7 @@ end
 if UserName and UserName:match('(%S+)[Bb][Oo][Tt]') then
 return send(msg_chat_id,msg_id,"*⚡ عذرآ لا تستطيع استخدام معرف البوت\n√* ","md",true)  
 end
-local StatusMember = bot.getChatMember(msg_chat_id,UserId_Info.id).status.luatele
+local StatusMember = bot.getChatMember(msg_chat_id,UserId_Info.id).status.MeroTele
 if (StatusMember == "chatMemberStatusCreator") then
 return send(msg_chat_id,msg_id,"*⚡ الصلاحيات -> مالك الجروب\n√*","md",true) 
 elseif (StatusMember == "chatMemberStatusAdministrator") then
@@ -4017,7 +4017,7 @@ local TotalEdit = Redis:get(FREDM..'Num:Message:Edit'..msg_chat_id..UserId) or 0
 local TotalMsgT = Total_message(TotalMsg) 
 local NumAdd = Redis:get(FREDM.."Num:Add:Memp"..msg.chat_id..":"..UserId) or 0
 local NumberGames = Redis:get(FREDM.."Num:Add:Games"..msg.chat_id..UserId) or 0
-if UserInfo.luatele  == "error" and UserInfo.code == 6 then
+if UserInfo.MeroTele  == "error" and UserInfo.code == 6 then
 return send(msg_chat_id,msg_id,"\n ⚡ عذرآ لا تستطيع استخدام ايدي خطأ ","md",true)  
 end 
 return send(msg_chat_id,msg_id,
@@ -4123,7 +4123,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(FREDM..'Channel:Join:Name'), url = 't.me/'..Redis:get(FREDM..'Channel:Join')}, },}}
 return send(msg.chat_id,msg.id,'* ⚡ عليك الاشتراك في قناة البوت لأستخدام الاوامر\n√*',"md",false, false, false, false, reply_markup)
 end
-local StatusMember = bot.getChatMember(msg_chat_id,FREDM).status.luatele
+local StatusMember = bot.getChatMember(msg_chat_id,FREDM).status.MeroTele
 if (StatusMember ~= "chatMemberStatusAdministrator") then
 return send(msg_chat_id,msg_id,' ⚡ البوت عضو في الجروب ',"md",true) 
 end
@@ -4376,7 +4376,7 @@ x = 0
 local y = false
 restricted = '\n* ⚡ قائمه المقيديين ↑↓\n ꔹ━━━━━ꔹ𝐋𝐎𝐕𝐀𝐑𝐄𝐍ꔹ━━━━━ꔹ*\n'
 for k, v in pairs(List_Members) do
-if Info_Members.members[k].status.is_member == true and Info_Members.members[k].status.luatele == "chatMemberStatusRestricted" then
+if Info_Members.members[k].status.is_member == true and Info_Members.members[k].status.MeroTele == "chatMemberStatusRestricted" then
 y = true
 x = x + 1
 local UserInfo = bot.getUser(v.member_id.user_id)
@@ -7961,7 +7961,7 @@ local UserInfo = bot.getUser(rep_idd)
 if UserInfo.message == "Invalid user ID" then
 return send(msg_chat_id,msg_id,"*⚡ عذرآ تستطيع فقط استخدام الامر على المستخدمين\n√*","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.luatele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.MeroTele == "userTypeBot" then
 return send(msg_chat_id,msg_id,"*⚡ عذرآ لا تستطيع استخدام الامر على البوت\n√*","md",true)  
 end
 if Redis:sismember(FREDM.."Devss:Groups",rep_idd) then
@@ -8259,7 +8259,7 @@ end
 return send(msg_chat_id,msg_id,"\n* ⚡ تم تنزيل المستخدم من الرتب التاليه { "..devQ..""..dev..""..crrQ..""..crr..""..cr..""..own..""..mod..""..vip.." *}","md",true)  
 end
 if text == "تنزيل جميع الرتب" then
-local StatusMember = bot.getChatMember(msg_chat_id,senderr).status.luatele
+local StatusMember = bot.getChatMember(msg_chat_id,senderr).status.MeroTele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.Ownerss then
@@ -8302,7 +8302,7 @@ local UserInfo = bot.getUser(rep_idd)
 if UserInfo.message == "Invalid user ID" then
 return send(msg_chat_id,msg_id,"*⚡ عذرآ تستطيع فقط استخدام الامر على المستخدمين\n√*","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.luatele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.MeroTele == "userTypeBot" then
 return send(msg_chat_id,msg_id,"*⚡ عذرآ لا تستطيع استخدام الامر على البوت\n√*","md",true)  
 end
 local SetCustomTitle = https.request("https://api.telegram.org/bot"..Token.."/setChatAdministratorCustomTitle?chat_id="..msg_chat_id.."&user_id="..rep_idd.."&custom_title="..CustomTitle)
@@ -8373,7 +8373,7 @@ local UserInfo = bot.getUser(rep_idd)
 if UserInfo.message == "Invalid user ID" then
 return send(msg_chat_id,msg_id,"*⚡ عذرآ تستطيع فقط استخدام الامر على المستخدمين\n√*","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.luatele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.MeroTele == "userTypeBot" then
 return send(msg_chat_id,msg_id,"*⚡ عذرآ لا تستطيع استخدام الامر على البوت\n√*","md",true)  
 end
 local SetAdmin = bot.setChatMemberStatus(msg.chat_id,rep_idd,'administrator',{1 ,1, 0, 0, 0, 0, 0 , 0, 0, 0, 0, 0, ''})
@@ -8458,7 +8458,7 @@ local UserInfo = bot.getUser(rep_idd)
 if UserInfo.message == "Invalid user ID" then
 return send(msg_chat_id,msg_id,"*⚡ عذرآ تستطيع فقط استخدام الامر على المستخدمين\n√*","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.luatele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.MeroTele == "userTypeBot" then
 return send(msg_chat_id,msg_id,"*⚡ عذرآ لا تستطيع استخدام الامر على البوت\n√*","md",true)  
 end
 local SetAdmin = bot.setChatMemberStatus(msg.chat_id,rep_idd,'administrator',{0 ,0, 0, 0, 0, 0, 0 ,0, 0})
@@ -8897,7 +8897,7 @@ Redis:del(FREDM.."Dev:Groups")
 return send(msg_chat_id,msg_id,"* ⚡ تم مسح {"..#Info_Members.."} من المطورين *","md",true)
 end
 if TextMsg == 'المالكين' then
-local StatusMember = bot.getChatMember(msg_chat_id,senderr).status.luatele
+local StatusMember = bot.getChatMember(msg_chat_id,senderr).status.MeroTele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.Dev then
@@ -8925,7 +8925,7 @@ local Info_Members = bot.getSupergroupMembers(msg_chat_id, "Administrators", "*"
 local List_Members = Info_Members.members
 for k, v in pairs(List_Members) do
 if Info_Members.members[k].bot_info == nil then
-if Info_Members.members[k].status.luatele == "chatMemberStatusCreator" then
+if Info_Members.members[k].status.MeroTele == "chatMemberStatusCreator" then
 Redis:sadd(FREDM.."Ownerss:Group"..msg_chat_id,v.member_id.user_id) 
 end
 end
@@ -9107,7 +9107,7 @@ local List_Members = Info_Members.members
 x = 0
 local y = false
 for k, v in pairs(List_Members) do
-if Info_Members.members[k].status.is_member == true and Info_Members.members[k].status.luatele == "chatMemberStatusRestricted" then
+if Info_Members.members[k].status.is_member == true and Info_Members.members[k].status.MeroTele == "chatMemberStatusRestricted" then
 bot.setChatMemberStatus(msg.chat_id,v.member_id.user_id,'restricted',{1,1,1,1,1,1,1,1})
 x = x + 1
 y = true
@@ -9142,7 +9142,7 @@ local List_Members = Info_Members.members
 x = 0
 for k, v in pairs(List_Members) do
 local Ban_Bots = bot.setChatMemberStatus(msg.chat_id,v.member_id.user_id,'banned',0)
-if Ban_Bots.luatele == "ok" then
+if Ban_Bots.MeroTele == "ok" then
 x = x + 1
 end
 end
@@ -9172,7 +9172,7 @@ local y = false
 local List_Members = Info_Members.members
 for k, v in pairs(List_Members) do
 UNBan_Bots = bot.setChatMemberStatus(msg.chat_id,v.member_id.user_id,'restricted',{1,1,1,1,1,1,1,1,1})
-if UNBan_Bots.luatele == "ok" then
+if UNBan_Bots.MeroTele == "ok" then
 x = x + 1
 y = true
 end
@@ -9207,9 +9207,9 @@ x = 0
 local y = false
 for k, v in pairs(List_Members) do
 local UserInfo = bot.getUser(v.member_id.user_id)
-if UserInfo.type.luatele == "userTypeDeleted" then
+if UserInfo.type.MeroTele == "userTypeDeleted" then
 local userTypeDeleted = bot.setChatMemberStatus(msg.chat_id,v.member_id.user_id,'banned',0)
-if userTypeDeleted.luatele == "ok" then
+if userTypeDeleted.MeroTele == "ok" then
 x = x + 1
 y = true
 end
@@ -9246,9 +9246,9 @@ x = 0
 local y = false
 for k, v in pairs(List_Members) do
 local UserInfo = bot.getUser(v.member_id.user_id)
-if UserInfo.type.luatele == "userTypeDeleted" then
+if UserInfo.type.MeroTele == "userTypeDeleted" then
 local userTypeDeleted = bot.setChatMemberStatus(msg.chat_id,v.member_id.user_id,'banned',0)
-if userTypeDeleted.luatele == "ok" then
+if userTypeDeleted.MeroTele == "ok" then
 x = x + 1
 y = true
 end
@@ -9283,7 +9283,7 @@ local List_Members = Info_Members.members
 x = 0
 for k, v in pairs(List_Members) do
 local Ban_Bots = bot.setChatMemberStatus(msg.chat_id,v.member_id.user_id,'banned',0)
-if Ban_Bots.luatele == "ok" then
+if Ban_Bots.MeroTele == "ok" then
 x = x + 1
 end
 end
@@ -9523,7 +9523,7 @@ local UserInfo = bot.getUser(rep_idd)
 if UserInfo.message == "Invalid user ID" then
 return send(msg_chat_id,msg_id,"*⚡ عذرآ تستطيع فقط استخدام الامر على المستخدمين\n√*","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.luatele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.MeroTele == "userTypeBot" then
 return send(msg_chat_id,msg_id,"*⚡ عذرآ لا تستطيع استخدام الامر على البوت\n√*","md",true)  
 end
 if not msg.Admin then
@@ -9541,7 +9541,7 @@ if msg.can_be_deleted_for_all_users == false then
 return send(msg_chat_id,msg_id,"* ⚡ عذرآ البوت ليس ادمن في الجروب يرجى ترقيته وتفعيل الصلاحيات له\n√*","md",true)  
 end
 local GetMemberStatus = bot.getChatMember(msg_chat_id,rep_idd).status 
-if GetMemberStatus.luatele == "chatMemberStatusRestricted" then
+if GetMemberStatus.MeroTele == "chatMemberStatusRestricted" then
 Restricted = 'مقيد'
 else
 Restricted = 'غير مقيد'
@@ -9590,7 +9590,7 @@ if UserName and UserName:match('(%S+)[Bb][Oo][Tt]') then
 return send(msg_chat_id,msg_id,"*⚡ عذرآ لا تستطيع استخدام معرف البوت\n√* ","md",true)  
 end
 local GetMemberStatus = bot.getChatMember(msg_chat_id,UserId_Info.id).status 
-if GetMemberStatus.luatele == "chatMemberStatusRestricted" then
+if GetMemberStatus.MeroTele == "chatMemberStatusRestricted" then
 Restricted = 'مقيد'
 else
 Restricted = 'غير مقيد'
@@ -9618,7 +9618,7 @@ local UserInfo = bot.getUser(rep_idd)
 if UserInfo.message == "Invalid user ID" then
 return send(msg_chat_id,msg_id,"*⚡ عذرآ تستطيع فقط استخدام الامر على المستخدمين\n√*","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.luatele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.MeroTele == "userTypeBot" then
 return send(msg_chat_id,msg_id,"*⚡ عذرآ لا تستطيع استخدام الامر على البوت\n√*","md",true)  
 end
 if not msg.Admin then
@@ -9636,7 +9636,7 @@ if msg.can_be_deleted_for_all_users == false then
 return send(msg_chat_id,msg_id,"* ⚡ عذرآ البوت ليس ادمن في الجروب يرجى ترقيته وتفعيل الصلاحيات له\n√*","md",true)  
 end
 local GetMemberStatus = bot.getChatMember(msg_chat_id,rep_idd).status 
-if GetMemberStatus.luatele == "chatMemberStatusRestricted" then
+if GetMemberStatus.MeroTele == "chatMemberStatusRestricted" then
 Restricted = 'مقيد'
 bot.setChatMemberStatus(msg.chat_id,rep_idd,'restricted',{1,1,1,1,1,1,1,1})
 else
@@ -9691,7 +9691,7 @@ if UserName and UserName:match('(%S+)[Bb][Oo][Tt]') then
 return send(msg_chat_id,msg_id,"*⚡ عذرآ لا تستطيع استخدام معرف البوت\n√* ","md",true)  
 end
 local GetMemberStatus = bot.getChatMember(msg_chat_id,UserId_Info.id).status 
-if GetMemberStatus.luatele == "chatMemberStatusRestricted" then
+if GetMemberStatus.MeroTele == "chatMemberStatusRestricted" then
 Restricted = 'مقيد'
 bot.setChatMemberStatus(msg.chat_id,UserId_Info.id,'restricted',{1,1,1,1,1,1,1,1})
 else
@@ -10823,7 +10823,7 @@ local x = 0
 for k,v in pairs(list) do  
 local Get_Chat = bot.getChat(v)
 local ChatAction = bot.sendChatAction(v,'Typing')
-if ChatAction.luatele ~= "ok" then
+if ChatAction.MeroTele ~= "ok" then
 x = x + 1
 Redis:srem(FREDM..'Num:User:Pv',v)
 end
@@ -10852,7 +10852,7 @@ for k,v in pairs(list) do
 local Get_Chat = bot.getChat(v)
 if Get_Chat.id then
 local statusMem = bot.getChatMember(Get_Chat.id,FREDM)
-if statusMem.status.luatele == "chatMemberStatusMember" then
+if statusMem.status.MeroTele == "chatMemberStatusMember" then
 x = x + 1
 send(Get_Chat.id,0,'* ⚡ البوت عضو في الجروب سوف اغادر ويمكنك تفعيلي مره اخره *',"md")
 Redis:srem(FREDM..'ChekBotAdd',Get_Chat.id)
@@ -11414,7 +11414,7 @@ local x = 0
 for k,v in pairs(list) do  
 local Get_Chat = bot.getChat(v)
 local ChatAction = bot.sendChatAction(v,'Typing')
-if ChatAction.luatele ~= "ok" then
+if ChatAction.MeroTele ~= "ok" then
 x = x + 1
 Redis:srem(FREDM..'Num:User:Pv',v)
 end
@@ -11443,7 +11443,7 @@ for k,v in pairs(list) do
 local Get_Chat = bot.getChat(v)
 if Get_Chat.id then
 local statusMem = bot.getChatMember(Get_Chat.id,FREDM)
-if statusMem.status.luatele == "chatMemberStatusMember" then
+if statusMem.status.MeroTele == "chatMemberStatusMember" then
 x = x + 1
 send(Get_Chat.id,0,'* ⚡ البوت عضو في الجروب سوف اغادر ويمكنك تفعيلي مره اخره\n√*',"md")
 Redis:srem(FREDM..'ChekBotAdd',Get_Chat.id)
@@ -11945,7 +11945,7 @@ local IdSudo = bot.getChat(ListGet[1]).id
 local IdUser = bot.getChat(ListGet[2]).id
 local FedMsg = bot.sendForwarded(IdSudo, 0, IdUser, msg_id)
 Redis:setex(FREDM.."Twasl:UserId"..msg.date,172800,IdUser)
-if FedMsg.content.luatele == "messageSticker" then
+if FedMsg.content.MeroTele == "messageSticker" then
 send(IdSudo,0,Reply_Status(IdUser,' ⚡ قام بارسال الملصق\n√').Reply,"md",true)  
 end
 return send(IdUser,msg_id,Reply_Status(IdUser,' ⚡ تم ارسال رسالتك الى المطور\n√').Reply,"md",true)  
