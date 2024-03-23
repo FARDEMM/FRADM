@@ -4,7 +4,7 @@ if plugin and plugin.TheFREDM and msg then
 results = plugin.TheFREDM(msg)
 end
 end
-function RunCallBack(data)
+function FeilFeilRunCallBack(data)
 if data and data.luatele and data.luatele == "updateChatMember" then
 UserCheck = data.new_chat_member.member_id.user_id
 local Result = bot.getUser(data.actor_user_id)
