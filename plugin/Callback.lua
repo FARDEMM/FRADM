@@ -6598,4 +6598,3548 @@ type = 'inline',
 data = {
 {{text = name1, url = id},},
 {{text = name2, url = id1},},
-{{text = '✦ اضغط للانضمام الى اللعبه ✦', data = '/Sar
+{{text = '✦ اضغط للانضمام الى اللعبه ✦', data = '/Sarraha'},},}}
+edit(ChatId,Msg_id,zzllzz, 'md', true, false, reply_markup)
+end
+end
+elseif #list == 3 then
+local UserInfo = bot.getUser(IdUser)
+local Teext = '- ['..FlterBio(UserInfo.first_name)..'](tg://user?id='..IdUser..')'
+local message = '*✦┊عـدد اللاعبيـن ⇜*'..#list..' \n*✦┊لقـد انضـم للعبـة كرسـي ⇩*\n'..Teext
+for k,v in pairs(list) do
+if k == 1 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id = "t.me/"..Uname
+name1 = FlterBio(Nname)
+end
+if k == 2 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id1 = "t.me/"..Uname
+name2 = FlterBio(Nname)
+end
+if k == 3 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id2 = "t.me/"..Uname
+name3 = FlterBio(Nname)
+end
+if k == #list then
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{{text = name1, url = id},},
+{{text = name2, url = id1},},
+{{text = name3, url = id2},},
+{{text = '✦ اضغط للانضمام الى اللعبه ✦', data = '/Sarraha'},},
+{{text = '✦ او اضغط لبدء اللعبه ✦', data = '/startsaraha'},},}}
+edit(ChatId,Msg_id,message, 'md', true, false, reply_markup)
+end
+end
+elseif #list == 4 then
+local UserInfo = bot.getUser(IdUser)
+local Teext = '- ['..FlterBio(UserInfo.first_name)..'](tg://user?id='..IdUser..')'
+local message = '*✦┊عـدد اللاعبيـن ⇜*'..#list..' \n*✦┊لقـد انضـم للعبـة كرسـي ⇩*\n'..Teext
+for k,v in pairs(list) do
+if k == 1 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id = "t.me/"..Uname
+name1 = FlterBio(Nname)
+end
+if k == 2 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id1 = "t.me/"..Uname
+name2 = FlterBio(Nname)
+end
+if k == 3 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id2 = "t.me/"..Uname
+name3 = FlterBio(Nname)
+end
+if k == 4 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id3 = "t.me/"..Uname
+name4 = FlterBio(Nname)
+end
+if k == #list then
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{{text = name1, url = id},},
+{{text = name2, url = id1},},
+{{text = name3, url = id2},},
+{{text = name4, url = id3},},
+{{text = '✦ اضغط للانضمام الى اللعبه ✦', data = '/Sarraha'},},
+{{text = '✦ او اضغط لبدء اللعبه ✦', data = '/startsaraha'},},}}
+edit(ChatId,Msg_id,message, 'md', true, false, reply_markup)
+end
+end
+elseif #list == 5 then
+local UserInfo = bot.getUser(IdUser)
+local Teext = '- ['..FlterBio(UserInfo.first_name)..'](tg://user?id='..IdUser..')'
+local message = '*✦┊عـدد اللاعبيـن ⇜*'..#list..' \n*✦┊لقـد انضـم للعبـة كرسـي ⇩*\n'..Teext
+for k,v in pairs(list) do
+if k == 1 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id = "t.me/"..Uname
+name1 = FlterBio(Nname)
+end
+if k == 2 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id1 = "t.me/"..Uname
+name2 = FlterBio(Nname)
+end
+if k == 3 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id2 = "t.me/"..Uname
+name3 = FlterBio(Nname)
+end
+if k == 4 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id3 = "t.me/"..Uname
+name4 = FlterBio(Nname)
+end
+if k == 5 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id4 = "t.me/"..Uname
+name5 = FlterBio(Nname)
+end
+if k == #list then
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{{text = name1, url = id},},
+{{text = name2, url = id1},},
+{{text = name3, url = id2},},
+{{text = name4, url = id3},},
+{{text = name5, url = id4},},
+{{text = '✦ اضغط للانضمام الى اللعبه ✦', data = '/Sarraha'},},
+{{text = '✦ او اضغط لبدء اللعبه ✦', data = '/startsaraha'},},}}
+edit(ChatId,Msg_id,message, 'md', true, false, reply_markup)
+end
+end
+elseif #list == 6 then
+local UserInfo = bot.getUser(IdUser)
+local Teext = '- ['..FlterBio(UserInfo.first_name)..'](tg://user?id='..IdUser..')'
+local message = '*✦┊عـدد اللاعبيـن ⇜*'..#list..' \n*✦┊لقـد انضـم للعبـة كرسـي ⇩*\n'..Teext
+for k,v in pairs(list) do
+if k == 1 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id = "t.me/"..Uname
+name1 = FlterBio(Nname)
+end
+if k == 2 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id1 = "t.me/"..Uname
+name2 = FlterBio(Nname)
+end
+if k == 3 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id2 = "t.me/"..Uname
+name3 = FlterBio(Nname)
+end
+if k == 4 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id3 = "t.me/"..Uname
+name4 = FlterBio(Nname)
+end
+if k == 5 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id4 = "t.me/"..Uname
+name5 = FlterBio(Nname)
+end
+if k == 6 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id5 = "t.me/"..Uname
+name6 = FlterBio(Nname)
+end
+if k == #list then
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{{text = name1, url = id},},
+{{text = name2, url = id1},},
+{{text = name3, url = id2},},
+{{text = name4, url = id3},},
+{{text = name5, url = id4},},
+{{text = name6, url = id5},},
+{{text = '✦ اضغط للانضمام الى اللعبه ✦', data = '/Sarraha'},},
+{{text = '✦ او اضغط لبدء اللعبه ✦', data = '/startsaraha'},},}}
+edit(ChatId,Msg_id,message, 'md', true, false, reply_markup)
+end
+end
+elseif #list == 7 then
+local UserInfo = bot.getUser(IdUser)
+local Teext = '- ['..FlterBio(UserInfo.first_name)..'](tg://user?id='..IdUser..')'
+local message = '*✦┊عـدد اللاعبيـن ⇜*'..#list..' \n*✦┊لقـد انضـم للعبـة كرسـي ⇩*\n'..Teext
+for k,v in pairs(list) do
+if k == 1 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id = "t.me/"..Uname
+name1 = FlterBio(Nname)
+end
+if k == 2 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id1 = "t.me/"..Uname
+name2 = FlterBio(Nname)
+end
+if k == 3 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id2 = "t.me/"..Uname
+name3 = FlterBio(Nname)
+end
+if k == 4 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id3 = "t.me/"..Uname
+name4 = FlterBio(Nname)
+end
+if k == 5 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id4 = "t.me/"..Uname
+name5 = FlterBio(Nname)
+end
+if k == 6 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id5 = "t.me/"..Uname
+name6 = FlterBio(Nname)
+end
+if k == 7 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id6 = "t.me/"..Uname
+name7 = FlterBio(Nname)
+end
+if k == #list then
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{{text = name1, url = id},},
+{{text = name2, url = id1},},
+{{text = name3, url = id2},},
+{{text = name4, url = id3},},
+{{text = name5, url = id4},},
+{{text = name6, url = id5},},
+{{text = name7, url = id6},},
+{{text = '✦ اضغط للانضمام الى اللعبه ✦', data = '/Sarraha'},},
+{{text = '✦ الان اضغط لبدء اللعبه ✦', data = '/startsaraha'},},}}
+edit(ChatId,Msg_id,message, 'md', true, false, reply_markup)
+end
+end
+elseif #list == 8 then
+local UserInfo = bot.getUser(IdUser)
+local Teext = '- ['..FlterBio(UserInfo.first_name)..'](tg://user?id='..IdUser..')'
+local message = '*✦┊عـدد اللاعبيـن ⇜*'..#list..' \n*✦┊لقـد انضـم للعبـة كرسـي ⇩*\n'..Teext
+for k,v in pairs(list) do
+if k == 1 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id = "t.me/"..Uname
+name1 = FlterBio(Nname)
+end
+if k == 2 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id1 = "t.me/"..Uname
+name2 = FlterBio(Nname)
+end
+if k == 3 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id2 = "t.me/"..Uname
+name3 = FlterBio(Nname)
+end
+if k == 4 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id3 = "t.me/"..Uname
+name4 = FlterBio(Nname)
+end
+if k == 5 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id4 = "t.me/"..Uname
+name5 = FlterBio(Nname)
+end
+if k == 6 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id5 = "t.me/"..Uname
+name6 = FlterBio(Nname)
+end
+if k == 7 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id6 = "t.me/"..Uname
+name7 = FlterBio(Nname)
+end
+if k == 8 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id7 = "t.me/"..Uname
+name8 = FlterBio(Nname)
+end
+if k == #list then
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{{text = name1, url = id},},
+{{text = name2, url = id1},},
+{{text = name3, url = id2},},
+{{text = name4, url = id3},},
+{{text = name5, url = id4},},
+{{text = name6, url = id5},},
+{{text = name7, url = id6},},
+{{text = name8, url = id7},},
+{{text = '✦ اضغط للانضمام الى اللعبه ✦', data = '/Sarraha'},},
+{{text = '✦ الان اضغط لبدء اللعبه ✦', data = '/startsaraha'},},}}
+edit(ChatId,Msg_id,message, 'md', true, false, reply_markup)
+end
+end
+elseif #list == 9 then
+local UserInfo = bot.getUser(IdUser)
+local Teext = '- ['..FlterBio(UserInfo.first_name)..'](tg://user?id='..IdUser..')'
+local message = '*✦┊عـدد اللاعبيـن ⇜*'..#list..' \n*✦┊لقـد انضـم للعبـة كرسـي ⇩*\n'..Teext
+for k,v in pairs(list) do
+if k == 1 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id = "t.me/"..Uname
+name1 = FlterBio(Nname)
+end
+if k == 2 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id1 = "t.me/"..Uname
+name2 = FlterBio(Nname)
+end
+if k == 3 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id2 = "t.me/"..Uname
+name3 = FlterBio(Nname)
+end
+if k == 4 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id3 = "t.me/"..Uname
+name4 = FlterBio(Nname)
+end
+if k == 5 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id4 = "t.me/"..Uname
+name5 = FlterBio(Nname)
+end
+if k == 6 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id5 = "t.me/"..Uname
+name6 = FlterBio(Nname)
+end
+if k == 7 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id6 = "t.me/"..Uname
+name7 = FlterBio(Nname)
+end
+if k == 8 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id7 = "t.me/"..Uname
+name8 = FlterBio(Nname)
+end
+if k == 9 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id8 = "t.me/"..Uname
+name9 = FlterBio(Nname)
+end
+if k == #list then
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{{text = name1, url = id},},
+{{text = name2, url = id1},},
+{{text = name3, url = id2},},
+{{text = name4, url = id3},},
+{{text = name5, url = id4},},
+{{text = name6, url = id5},},
+{{text = name7, url = id6},},
+{{text = name8, url = id7},},
+{{text = name9, url = id8},},
+{{text = '✦ اضغط للانضمام الى اللعبه ✦', data = '/Sarraha'},},
+{{text = '✦ الان اضغط لبدء اللعبه ✦', data = '/startsaraha'},},}}
+edit(ChatId,Msg_id,message, 'md', true, false, reply_markup)
+end
+end
+elseif #list == 10 then
+local message = '*✦┊لقـد وصـل اللاعبيـن للحـد الاقصـى\n✦┊المشتـركيـن الـ10 فـي لعبـة كرسـي هـم :*' 
+for k,v in pairs(list) do
+if k == 1 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id = "t.me/"..Uname
+name1 = FlterBio(Nname)
+end
+if k == 2 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id1 = "t.me/"..Uname
+name2 = FlterBio(Nname)
+end
+if k == 3 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id2 = "t.me/"..Uname
+name3 = FlterBio(Nname)
+end
+if k == 4 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id3 = "t.me/"..Uname
+name4 = FlterBio(Nname)
+end
+if k == 5 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id4 = "t.me/"..Uname
+name5 = FlterBio(Nname)
+end
+if k == 6 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id5 = "t.me/"..Uname
+name6 = FlterBio(Nname)
+end
+if k == 7 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id6 = "t.me/"..Uname
+name7 = FlterBio(Nname)
+end
+if k == 8 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id7 = "t.me/"..Uname
+name8 = FlterBio(Nname)
+end
+if k == 9 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id8 = "t.me/"..Uname
+name9 = FlterBio(Nname)
+end
+if k == 10 then
+local Nname = bot.getUser(v).first_name
+local Uname = bot.getUser(v).username
+id9 = "t.me/"..Uname
+name10 = FlterBio(Nname)
+end
+if k == #list then
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{{text = name1, url = id},},
+{{text = name2, url = id1},},
+{{text = name3, url = id2},},
+{{text = name4, url = id3},},
+{{text = name5, url = id4},},
+{{text = name6, url = id5},},
+{{text = name7, url = id6},},
+{{text = name8, url = id7},},
+{{text = name9, url = id8},},
+{{text = name10, url = id9},},
+{{text = '✦ الان اضغط لبدء اللعبه ✦', data = '/startsaraha'},},}}
+return edit(ChatId,Msg_id,message, 'md', true, false, reply_markup)
+end
+end
+end
+else
+return bot.answerCallbackQuery(data.id, "✦┊انت منضـم مسبقـاً .. الـى اللعبـه", true)
+end
+end
+---------------------- صراحه ----------------------
+if Text == '/startsaraha' and Redis:get(TheFRADM.."Witting_StartGameS"..ChatId) then
+local rarahkam = Redis:get(TheFRADM.."raesaraha"..ChatId)
+if tonumber(IdUser) == tonumber(rarahkam) then
+local list = Redis:smembers(TheFRADM..'List_Saraha'..ChatId) 
+local UserName = list[math.random(#list)]
+local UserId_Info = bot.getUser(UserName)
+local testsaraha = math.random(1,9999999999999)
+Redis:set(TheFRADM.."saraha:"..testsaraha.."chat_id", ChatId)
+Redis:set(TheFRADM.."saraha:"..testsaraha.."to", UserId_Info.id)
+Redis:set(TheFRADM.."saraha:"..testsaraha.."msg_id",Msg_id)
+if UserId_Info.username and UserId_Info.username ~= "" then
+ls = '['..UserId_Info.first_name..'](tg://user?id='..UserName..')'
+else
+ls = '['..UserId_Info.first_name..'](tg://user?id='..UserName..')'
+end
+Redis:set(TheFRADM.."kk_saraha"..ChatId,UserId_Info.id)
+Redis:srem(TheFRADM..'List_Saraha'..ChatId,UserName) 
+local liiiist = Redis:smembers(TheFRADM..'List_Saraha'..ChatId) 
+local User2Name = liiiist[math.random(#liiiist)]
+local UserId2_Info = bot.getUser(User2Name)
+Redis:incrby(TheFRADM..'Num:Add:Games'..ChatId..UserId2_Info.id,5)
+Redis:set(TheFRADM.."ff_saraha"..ChatId,UserId2_Info.id)
+Redis:del(TheFRADM..'raesaraha'..ChatId) 
+Redis:del(TheFRADM..'List_Saraha'..ChatId) 
+Redis:del(TheFRADM.."Witting_StartGameS"..ChatId)
+Redis:del(TheFRADM.."Start_Saraha"..ChatId)
+local liiist = Redis:sismember(TheFRADM..'List_Saraha'..ChatId,IdUser)
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{
+{text = '✦ إضغـط لارسـال السـؤال 📬✦', url = 't.me/'..UserBot..'?start=saraha'..testsaraha..'from_id'..UserId2_Info.id}, 
+},
+}
+}
+return edit(ChatId,Msg_id,"*✦┊صارحني بسـرية تامـه 🤔⁉️*\n\n*✦┊تـم اختيـار ⇜(*  "..ls.."  *) \n✦┊وتـم اختيـار الفـائـز واخفـائـه 🥷\n✦┊لدى الفائـز فقـط ⇜ 5 اسئلـه*", 'md', true, false, reply_markup)
+else
+return bot.answerCallbackQuery(data.id, "✦┊الامـر للي بـدأ اللعبـه ...", true)
+end
+end
+
+if Text and Text:match('/Akab(.*)') then
+local UserId = Text:match('/Akab(.*)')
+if Redis:sismember(TheFRADM..'List_Ahkamm'..ChatId,IdUser) then
+return bot.answerCallbackQuery(data.id, "✦┊انت منضـم مسبقـاً .. الـى اللعبـه", true)
+end
+bot.answerCallbackQuery(data.id, "✦ تم ضفتك للعبـة ⛓ ✓", true)
+Redis:sadd(TheFRADM..'List_Ahkamm'..ChatId,IdUser)
+Redis:sadd(TheFRADM..'members_Ahkamm'..ChatId,IdUser)
+Redis:setex(TheFRADM.."Witting_StartGamehh"..ChatId,1400,true)
+end
+if Text and Text:match('/Ahkam(.*)') then
+local UserId = Text:match('/Ahkam(.*)')
+if Redis:sismember(TheFRADM..'List_Ahkam'..ChatId,IdUser) then
+return bot.answerCallbackQuery(data.id, "✦┊انت منضـم مسبقـاً .. الـى اللعبـه", true)
+end
+bot.answerCallbackQuery(data.id, "✦ تم ضفتك للعبـة 👩🏻‍⚖⚖ ✓", true)
+Redis:sadd(TheFRADM..'List_Ahkam'..ChatId,IdUser)
+Redis:setex(TheFRADM.."Witting_StartGameh"..ChatId,1400,true)
+end
+if Text and Text:match('/Korsy(.*)') then
+local UserId = Text:match('/Korsy(.*)')
+if Redis:sismember(TheFRADM..'List_Korsi'..ChatId,IdUser) then
+return bot.answerCallbackQuery(data.id, "✦┊انت منضـم مسبقـاً .. الـى اللعبـه", true)
+end
+bot.answerCallbackQuery(data.id, "✦ تم ضفتك للعبـة ⛓ ✓", true)
+Redis:sadd(TheFRADM..'List_Korsi'..ChatId,IdUser)
+Redis:setex(TheFRADM.."Witting_StartGamek"..ChatId,1400,true)
+end
+if Text and Text:match('/Sarahy(.*)') then
+local UserId = Text:match('/Sarahy(.*)')
+if Redis:sismember(TheFRADM..'List_Saraha'..ChatId,IdUser) then
+return bot.answerCallbackQuery(data.id, "✦┊انت منضـم مسبقـاً .. الـى اللعبـه", true)
+end
+bot.answerCallbackQuery(data.id, "✦ تم ضفتك للعبـة ⛓ ✓", true)
+Redis:sadd(TheFRADM..'List_Saraha'..ChatId,IdUser)
+Redis:setex(TheFRADM.."Witting_StartGameS"..ChatId,1400,true)
+end
+
+if Text and Text:match('(%d+)/startttahkam') and Redis:get(TheFRADM.."Witting_StartGameh"..ChatId) then
+local UserId = Text:match('(%d+)/startttahkam')
+local rarahkam = Redis:get(TheFRADM.."raeahkam"..ChatId)
+if tonumber(IdUser) ~= tonumber(rarahkam) then
+return bot.answerCallbackQuery(data.id, "✦┊الامـر للي بـدأ اللعبـه ...", true)
+else
+local list = Redis:smembers(TheFRADM..'List_Ahkam'..ChatId) 
+local UserName = list[math.random(#list)]
+local UserId_Info = bot.getUser(UserName)
+if UserId_Info.username and UserId_Info.username ~= "" then
+ls = '['..UserId_Info.first_name..'](tg://user?id='..UserName..')'
+else
+ls = '['..UserId_Info.first_name..'](tg://user?id='..UserName..')'
+end
+Redis:set(TheFRADM.."kk_Ahkam"..ChatId,UserId_Info.id)
+Redis:srem(TheFRADM..'List_Ahkam'..ChatId,UserId_Info.id) 
+local User2Name = list[math.random(#list)]
+local UserId2_Info = bot.getUser(User2Name)
+if UserId2_Info.username and UserId2_Info.username ~= "" then
+Hs = '['..UserId2_Info.first_name..'](tg://user?id='..User2Name..')'
+else
+Hs = '['..UserId2_Info.first_name..'](tg://user?id='..User2Name..')'
+end
+Redis:set(TheFRADM.."ff_Ahkam"..ChatId,UserId2_Info.id)
+Redis:incrby(TheFRADM..'Num:Add:Ahkam'..ChatId..UserId2_Info.id,5)
+Redis:del(TheFRADM..'raeahkam'..ChatId) 
+Redis:del(TheFRADM..'List_Ahkam'..ChatId) 
+Redis:del(TheFRADM.."Witting_StartGameh"..ChatId)
+Redis:del(TheFRADM.."Start_Ahkam"..ChatId)
+local TheFRADM = '*⚖┊تم إختيار الشخـص ⇜* '..ls..'\n*👩🏻‍⚖┊ليتـم الحكـم عليـه من قبـل ⇜* '..Hs..'\n\n*🎁┊وتم اضـافـة 5 نقـاط للحـاكـم*'
+keyboard = {} 
+keyboard.inline_keyboard = {
+{{text = '˹𓌗 قنـاة البـوت 𓌗.',url='http://t.me/'..chsource..''}},
+}
+local msg_idd = Msg_id/2097152/0.5
+return https.request("https://api.telegram.org/bot"..Token..'/editMessageText?chat_id='..data.id..'&text='..URL.escape(TheFRADM)..'&message_id='..msg_idd..'&parse_mode=markdown&disable_web_page_preview=true&reply_markup='..JSON.encode(keyboard)) 
+end
+end
+
+if Text and Text:match('(%d+)/help1') then
+local UserId = Text:match('(%d+)/help1')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{
+{text = '› ❶ ‹', data = IdUser..'/help1'}, {text = '❷', data = IdUser..'/help2'}, {text = '❸', data = IdUser..'/help3'},
+},
+{
+{text = '❹', data = IdUser..'/help4'}, {text = '❺', data = IdUser..'/help5'}, {text = '❻', data = IdUser..'/help6'},
+},
+{
+{text = 'التالي', data = IdUser..'/help2'}, {text = 'القائمه الرئيسية', data = IdUser..'/helpall'},
+},
+}
+}
+local TextHelp = [[
+⤶ *اوامر الادارة*
+
+- اوامر الرفع والتنزيل
+
+• رفع - تنزيل ↢ مشرف
+• رفع - تنزيل ↢ منشئ اساسي
+• رفع - تنزيل ↢ منشئ
+• رفع - تنزيل ↢ مدير
+• رفع - تنزيل ↢ ادمن
+• رفع - تنزيل ↢ مميز
+
+- اوامر المسح
+
+• مسح الكل 
+• مسح المنشئين الاساسيين 
+• مسح المنشئين
+• مسح المدراء
+• مسح الادمنيه
+• مسح المميزين
+• مسح المحظورين
+• مسح المكتومين
+• مسح قائمه المنع
+• مسح الردود
+• مسح الاوامر المضافه
+• مسح + عدد
+• مسح بالرد
+• مسح الترحيب
+• مسح القوانين
+• مسح الرابط
+
+- اوامر الطرد والحظر
+
+• تقييد + الوقت
+• حظر
+• طرد
+• كتم 
+• تقييد
+• الغاء حظر
+• الغاء كتم
+• الغاء تقييد
+• رفع القيود
+• منع بالرد
+• طرد المحذوفين
+• طرد البوتات
+• كشف البوتات
+]]
+edit(ChatId,Msg_id,TextHelp, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/help2') then
+local UserId = Text:match('(%d+)/help2')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{
+{text = '❶', data = IdUser..'/help1'}, {text = '› ❷ ‹', data = IdUser..'/help2'}, {text = '❸', data = IdUser..'/help3'},
+},
+{
+{text = '❹', data = IdUser..'/help4'}, {text = '❺', data = IdUser..'/help5'}, {text = '❻', data = IdUser..'/help6'},
+},
+{
+{text = 'التالي', data = IdUser..'/help3'}, {text = 'السابق', data = IdUser..'/help1'},
+},
+{
+{text = 'القائمه الرئيسية', data = IdUser..'/helpall'},
+},
+}
+}
+local TextHelp = [[
+⤶ *اوامر الاعدادات*
+
+- اوامر رؤية الاعدادات
+
+• المطورين
+• المنشئين الاساسيين
+• المنشئين
+• المدراء
+• الادمنيه
+• المميزين
+• الساعه
+• التاريخ
+• القوانين
+• الترحيب
+• المكتومين
+• المحظورين
+• معلوماتي
+• اوامر الفتح
+• اوامر التعطيل
+• المجموعه
+
+- اوامر التحميل
+• تفعيل - تعطيل ↢ التحميل
+• تفعيل - تعطيل ↢ اليوتيوب
+• ضع التحميل للمميزين
+• ضع التحميل للاعضاء
+• بحث + اسم او رابط المقطع
+• تيك + رابط المقطع
+• ساوند + اسم المقطع
+• رابط ساوند + رابط المقطع
+• فيس + رابط المقطع
+
+- اوامر وضع الاعدادات
+
+• انشاء رابط
+• انشاء رابط خاص
+• ضع رابط
+• ضع صوره
+• ضع وصف
+• ضع قوانين
+• ضع ترحيب
+• وضع الرتب
+• وضع قناتي
+• تعين عدد الاحروف + العدد
+]]
+edit(ChatId,Msg_id,TextHelp, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/help3') then
+local UserId = Text:match('(%d+)/help3')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{
+{text = '❶', data = IdUser..'/help1'}, {text = '❷', data = IdUser..'/help2'}, {text = '› ❸ ‹', data = IdUser..'/help3'},
+},
+{
+{text = '❹', data = IdUser..'/help4'}, {text = '❺', data = IdUser..'/help5'}, {text = '❻', data = IdUser..'/help6'},
+},
+{
+{text = 'التالي', data = IdUser..'/help4'}, {text = 'السابق', data = IdUser..'/help2'},
+},
+{
+{text = 'القائمه الرئيسية', data = IdUser..'/helpall'},
+},
+}
+}
+local TextHelp = [[
+⤶ *اوامر القفل والتعطيل*
+
+- اوامر القفل
+
+• قفل - فتح ↢ الروابط
+• قفل - فتح ↢ المعرف
+• قفل - فتح ↢ التاك
+• قفل - فتح ↢ الشارحة
+• قفل - فتح ↢ التعديل
+• قفل - فتح ↢ التثبيت
+• قفل - فتح ↢ المتحركه
+• قفل - فتح ↢ الشات
+• قفل - فتح ↢ الصور
+• قفل - فتح ↢ الملفات
+• قفل - فتح ↢ البوتات
+• قفل - فتح ↢ التكرار
+• قفل - فتح ↢ الكلايش
+• قفل - فتح ↢ الانلاين
+• قفل - فتح ↢ الفيديو
+• قفل - فتح ↢ السيلفي
+• قفل - فتح ↢ الماركدوان
+• قفل - فتح ↢ التوجيه
+• قفل - فتح ↢ الاغاني
+• قفل - فتح ↢ الصوت
+• قفل - فتح ↢ الجهات
+• قفل - فتح ↢ الاشعارات
+• قفل - فتح ↢ السب
+• قفل - فتح ↢ الاباحي
+• قفل - فتح ↢ الوسائط
+• قفل - فتح ↢ الانقليزيه
+• قفل - فتح ↢ الفارسيه
+• قفل - فتح ↢ تعديل الميديا
+• قفل - فتح ↢ الكل
+
+اوامر التعطيل - 
+
+• تفعيل - تعطيل ↢ الترحيب
+• تفعيل - تعطيل ↢ الردود
+• تفعيل - تعطيل ↢ الرفع
+• تفعيل - تعطيل ↢ الايدي
+• تفعيل - تعطيل ↢ الطرد
+• تفعيل - تعطيل ↢ الحظر
+• تفعيل - تعطيل ↢ البنك
+• تفعيل - تعطيل ↢ التحميل
+• تفعيل - تعطيل ↢ الرابط
+• تفعيل - تعطيل ↢ اطردني
+• تفعيل - تعطيل ↢ الحظر
+• تفعيل - تعطيل ↢ الحمايه
+• تفعيل - تعطيل ↢ المنشن
+• تفعيل - تعطيل ↢ الايدي بالصوره
+• تفعيل - تعطيل ↢ التحقق
+• تفعيل - تعطيل ↢ ردود المطور
+• تفعيل - تعطيل ↢ الالعاب
+• تفعيل - تعطيل ↢ انطق
+• تفعيل - تعطيل ↢ صورتي
+• تفعيل - تعطيل ↢  اسمي
+• تفعيل - تعطيل ↢  منشن
+• تفعيل - تعطيل ↢  الابراج
+• تفعيل - تعطيل ↢  البايو
+• تفعيل - تعطيل ↢  الاقتباسات
+• تفعيل - تعطيل ↢  الصوتيات
+• تفعيل - تعطيل ↢  ايدي العضو
+• تفعيل - تعطيل ↣ ↢ نداء المالك
+• تفعيل - تعطيل ↢ المسح التلقائي
+• تفعيل - تعطيل ↣ ↢ ردود الاعضاء
+• تفعيل - تعطيل ↢ البلاغات
+• تفعيل - تعطيل ↢ القفل التلقائي
+• تفعيل - تعطيل ↢ التوديع
+]]
+edit(ChatId,Msg_id,TextHelp, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/help4') then
+local UserId = Text:match('(%d+)/help4')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{
+{text = '❶', data = IdUser..'/help1'}, {text = '❷', data = IdUser..'/help2'}, {text = '❸', data = IdUser..'/help3'},
+},
+{
+{text = '› ❹ ‹', data = IdUser..'/help4'}, {text = '❺', data = IdUser..'/help5'}, {text = '❻', data = IdUser..'/help6'},
+},
+{
+{text = 'التالي', data = IdUser..'/help5'}, {text = 'السابق', data = IdUser..'/help3'},
+},
+{
+{text = 'القائمه الرئيسية', data = IdUser..'/helpall'},
+},
+}
+}
+local TextHelp = [[
+⤶ *اوامر التسليه*
+
+- اوامر الرفع والتنزيل
+
+• رفع - تنزيل ↢ كيكه
+• رفع - تنزيل ↢ عسل
+• رفع - تنزيل ↢ زق
+• رفع - تنزيل ↢ حمار
+• رفع - تنزيل ↢ بقره
+• رفع - تنزيل ↢ كلب
+• رفع - تنزيل ↢ قرد
+• رفع - تنزيل ↢ تيس
+• رفع - تنزيل ↢ هطف
+• رفع - تنزيل ↢ خاروف
+• رفع لقلبي - تنزيل من قلبي
+
+- اوامر القائمه 
+
+• قائمة الكيك
+• قائمة العسل
+• قائمة الزق
+• قائمة الحمير
+• قائمة البقر
+• قائمة الكلاب
+• قائمة القرود
+• قائمة التيس
+• قائمة الهطوف
+• قائمة الخرفان
+• قائمة قلبي
+]]
+edit(ChatId,Msg_id,TextHelp, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/help5') then
+local UserId = Text:match('(%d+)/help5')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{
+{text = '❶', data = IdUser..'/help1'}, {text = '❷', data = IdUser..'/help2'}, {text = '❸', data = IdUser..'/help3'},
+},
+{
+{text = '❹', data = IdUser..'/help4'}, {text = '› ❺ ‹', data = IdUser..'/help5'}, {text = '❻', data = IdUser..'/help6'},
+},
+{
+{text = 'التالي', data = IdUser..'/help6'}, {text = 'السابق', data = IdUser..'/help4'},
+},
+{
+{text = 'القائمه الرئيسية', data = IdUser..'/helpall'},
+},
+}
+}
+local TextHelp = [[
+⤶ *اوامر الترفيه*
+
+• اضف ردي
+• غنيلي
+• ميمز 
+• ثنائي 
+• نبذه
+• شعر
+• قرأن
+• الوقت 
+• الساعه 
+• التاريخ
+• ستوري 
+• لوكيت
+• ريمكس
+• عبارات
+• انا مين
+• تحدي
+• اقتباس
+• اقتباسات
+• موسيقى 
+• اقتباسات
+• هيدرات 
+• جداريات 
+• شخصيتي 
+• ايدت 
+• ايدت انمي
+• مسلسل - فلم
+• اكتموه - بالرد
+• شبيهي - شبيهتي
+• تتزوجيني - بالرد
+• زوجتي ↣ ↢ زوجي
+• زوجني ↣ ↢ زوجيني
+• معنى اسم + الاسم
+• همسه - اهمس بالرد
+• احسب العمر
+• الطقس + اسم المدينة
+• اذان + اسم المدينة
+• زخرفه - زخرفه + اسم
+• نسبه الحب ↣ ↢ الكره
+• نسبه الذكاء ↣ ↢ الغباء
+• نسبه الرجوله ↣ ↢ الانوثه
+• برج + اسم برجك - صورتي
+• قيفات بنات ، عيال ، كيبوب
+• قيفات قطط ، كوكسال ، انمي
+• افتارات بنات ، عيال ، كيبوب
+• افتارات رسم ، انمي ، سنمائيه
+• افتارات كيبوب ، لاعبين ، فكتوري
+]]
+edit(ChatId,Msg_id,TextHelp, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/help6') then
+local UserId = Text:match('(%d+)/help6')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{
+{text = 'الالعاب المتطورة', data = IdUser..'/gamesmtor'}, {text = 'لعبه البنك', data = IdUser..'/helpts'},
+},
+{
+{text = 'القائمه الرئيسية', data = IdUser..'/helpall'},
+},
+}
+}
+local TextHelp = [[
+⤶ *العاب لويس ♪ *
+
+⇜ البنك
+⇜ كرسي
+⇜ حزر
+⇜ صور
+⇜ عقاب
+⇜ احكام
+⇜ مشاهير
+⇜ حيوانات
+⇜ زوم
+⇜ المختلف
+⇜ امثله 
+⇜ العكس
+⇜ حزوره 
+⇜ معاني 
+⇜ بات 
+⇜ خمن 
+⇜ ترتيب 
+⇜ سمايلات
+⇜ اسئله 
+⇜ اسالني
+⇜ لغز
+⇜ الروليت
+⇜ رياضيات 
+⇜ انكليزي
+⇜ اعلام 
+⇜ جمل 
+⇜ عواصم
+⇜ كلمات 
+⇜ الحظ 
+⇜ حظي 
+⇜ عربي 
+⇜ دين
+⇜ تفكيك
+⇜ حجره
+⇜ نمله
+•• •• •• •• •• •• ••
+⇜ نقاطي ↢ لعرض عدد نقاطك
+⇜ بيع نقاطي + العدد
+]]
+edit(ChatId,Msg_id,TextHelp, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/helpp6') then
+local UserId = Text:match('(%d+)/helpp6')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{
+{text = 'الالعاب المتطورة', data = IdUser..'/gamesmtor'}, {text = 'لعبه البنك', data = IdUser..'/helpts'},
+},
+{
+{text = 'القائمه الرئيسية', data = IdUser..'/helpall'},
+},
+}
+}
+local TextHelp = [[
+⤶ *العاب لويس ♪ *
+
+⇜ البنك
+⇜ كرسي
+⇜ حزر
+⇜ صور
+⇜ عقاب
+⇜ احكام
+⇜ مشاهير
+⇜ حيوانات
+⇜ زوم
+⇜ المختلف
+⇜ امثله 
+⇜ العكس
+⇜ حزوره 
+⇜ معاني 
+⇜ بات 
+⇜ خمن 
+⇜ ترتيب 
+⇜ سمايلات
+⇜ اسئله 
+⇜ اسالني
+⇜ لغز
+⇜ الروليت
+⇜ رياضيات 
+⇜ انكليزي
+⇜ اعلام 
+⇜ جمل 
+⇜ عواصم
+⇜ كلمات 
+⇜ الحظ 
+⇜ حظي 
+⇜ عربي 
+⇜ دين
+⇜ تفكيك
+⇜ حجره
+⇜ نمله
+•• •• •• •• •• ••
+⇜ نقاطي  ↢ لعرض عدد نقاطك
+⇜ بيع نقاطي + العدد
+]]
+edit(ChatId,Msg_id,TextHelp, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/helpall') then
+local UserId = Text:match('(%d+)/helpall')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{
+{text = '❶', data = IdUser..'/help1'}, {text = '❷', data = IdUser..'/help2'},{text = '❸', data = IdUser..'/help3'},
+},
+{
+{text = '❹', data = IdUser..'/help4'},{text = '❺', data = IdUser..'/help5'}, {text = '❻', data = IdUser..'/helpp6'},
+},
+{
+{text = 'اوامر القفل', data = IdUser..'/NoNextSeting'}, {text = 'اوامر التعطيل', data = IdUser..'/listallAddorrem'}, 
+},
+}
+}
+local TextHelp = [[
+*⤶ اهلين فيك بـ أوامر لويس
+
+𝟏 ↢ اوامر الادارة 
+𝟐 ↢ اوامر الاعدادات
+𝟑 ↢ اوامر القفل والتعطيل
+𝟒 ↢ اوامر التسلية
+𝟓 ↢ اوامر الترفية
+𝟔 ↢ اوامر الالعاب
+
+⌯ Master* [Zaid](T.me/DevZaid)
+]]
+edit(ChatId,Msg_id,TextHelp, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/helpsudo') and data.Developers then
+local UserId = Text:match('(%d+)/helpsudo')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{
+{text = 'القائمه الرئيسية', data = IdUser..'/helpall'},
+},
+}
+}
+local TextHelp = [[
+⌯ رفع - تنزيل ↣ ↢ مطور اساسي
+⌯ المطورين الاساسيين
+⌯ مسح المطورين الاساسيين
+⌯ رفع - تنزيل ↣ ↢ MY
+⌯ المطورين الثانويين  
+⌯ مسح المطورين الثانويين
+⌯ رفع - تنزيل ↣ ↢ مطور
+⌯ المطورين ↣ ↢ مسح المطورين
+⌯ تغيير المطور الاساسي
+━━━━━━━━━━━
+⌯ تفعيل الوضع المدفوع
+⌯ الغاء الوضع المدفوع
+⌯ تفعيل الوضع المدفوع + الايدي
+⌯ الغاء الوضع المدفوع + الايدي
+⌯ معلومات القروب + الايدي
+⌯ حظر قروب + الايدي
+⌯ غادر + الايدي
+⌯ اسم بوتك + غادر بالقروب
+⌯ تفعيل - تعطيل ↣ ↢ الاشتراك الاجباري
+⌯ الاشتراك الاجباري
+⌯ تغيير الاشتراك الاجباري
+⌯ تعيين عدد الاعضاء + العدد
+━━━━━━━━━━━
+⌯ حظر عام ↣ ↢ الغاء حظر عام 
+⌯ قائمه العام ↣ ↢ مسح قائمه العام
+⌯ كتم عام ↣ ↢ الغاء كتم عام
+⌯ المكتومين عام
+⌯ مسح المكتومين عام
+⌯ رفع القيود عام + المعرف 
+━━━━━━━━━━━
+⌯ تغيير - مسح ↣ ↢ اسم البوت
+⌯ ضع صوره للترحيب 
+⌯ الاحصائيات
+⌯ ذيع + ايدي القروب بالرد
+⌯ اذاعه ↣ ↢ اذاعه خاص
+⌯ اذاعه بالتوجيه ↣ ↢ اذاعه بالتثبيت
+⌯ اذاعه خاص بالتوجيه
+━━━━━━━━━━━
+⌯ تفعيل - تعطيل ↣ ↢ جلب النسخ تلقائي
+⌯ جلب النسخه الاحتياطيه
+⌯ رفع النسخه الاحتياطيه بالرد
+⌯ جلب نسخه الردود 
+⌯ رفع نسخه الردود بالرد
+⌯ جلب نسخه الردود العامه
+⌯ رفع نسخه الردود العامه بالرد
+⌯ اشتراك البوت
+⌯ معلومات التنصيب
+━━━━━━━━━━━
+⌯ تعيين - مسح ↣ ↢ الايدي عام
+⌯ اضف - مسح ↣ ↢ رد عام
+⌯ اضف - مسح ↣ ↢ رد عام متعدد
+⌯ اضف - مسح ↣ ↢ رد مميز عام
+⌯ اضف - مسح ↣ ↢ رد انلاين عام
+⌯ ضع - مسح ↣ ↢ الترحيب عام 
+⌯ ضع - مسح ↣ ↢ كليشه المطور 
+⌯ الردود العامه ↣ ↢ مسح الردود العامه
+⌯ اضف - مسح ↣ ↢ صوت عام
+⌯ الصوتيات عام
+⌯ مسح الصوتيات عام
+⌯ تغيير رمز السورس
+⌯ منع عام ↣ ↢ الغاء منع عام
+⌯ قائمه المنع عام
+⌯ مسح قائمه المنع عام
+⌯ تفعيل - تعطيل ↣ ↢ ردود البوت عام
+⌯ تفعيل - تعطيل ↣ ↢ البنك عام
+━━━━━━━━━━━
+⌯ اضف - مسح ↣ ↢ سؤال
+⌯ الاسئله المضافه
+⌯ مسح الاسئله المضافه
+⌯ اضف - مسح ↣ ↢ لغز 
+⌯ الالغاز ↣ ↢ مسح الالغاز
+⌯ اضف - مسح ↣ ↢ سؤال كت 
+⌯ اسئله كت
+⌯ اضف اسئله كت
+⌯ مسح اسئله كت
+⌯ اضف - مسح ↣ ↢ سؤال - جمل
+⌯ مسح الجمل
+━━━━━━━━━━━
+⌯ تفعيل - تعطيل ↓
+⌯ البوت الخدمي - المغادرة - الاذاعه
+⌯ التواصل - الاحصائيات
+⌯ ملف ↣ ↢ اسم الملف
+━━━━━━━━━━━
+⌯ مسح جميع الملفات 
+⌯ المتجر ↣ ↢ الملفات
+⌯ تحديث ↣ ↢ تحديث السورس
+━━━━━━━━━━━
+⌯ رفع - تنزيل ↣ ↢ مالك اساسي
+⌯ المالكين الاساسيين
+⌯ مسح المالكين الاساسيين 
+⌯ رفع - تنزيل ↣ ↢ مالك 
+⌯ المالكين ↣ ↢ مسح المالكين
+⌯ تنزيل جميع الرتب
+⌯ تغيير كليشه المالك ( اذا كان حساب المالك محذوف يمكنك وضع يوزر جديد )
+⌯ مسح كليشه المالك 
+]]
+edit(ChatId,Msg_id,TextHelp, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/helpts') then
+local UserId = Text:match('(%d+)/helpts')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{
+{text = 'رجوع', data = IdUser..'/help6'},
+},
+}
+}
+local TextHelp = [[
+• اوامر البنك
+
+⌯ انشاء حساب بنكي  ↢ تسوي حساب وتقدر تحول فلوس مع مزايا ثانيه
+
+⌯ مسح حساب بنكي  ↢ تلغي حسابك البنكي
+
+⌯ تحويل ↢ تطلب رقم حساب الشخص وتحول له فلوس
+
+⌯ حسابي  ↢ يطلع لك رقم حسابك عشان تعطيه للشخص اللي بيحول لك
+
+⌯ فلوسي ↢ يعلمك كم فلوسك
+
+⌯ راتب ↢ يعطيك راتب كل ١٠ دقائق
+
+⌯ بخشيش ↢ يعطيك بخشيش كل ١٠ دقايق
+
+⌯ زرف ↢ تزرف فلوس اشخاص كل ١٠ دقايق
+
+⌯ استثمار ↢ تستثمر بالمبلغ اللي تبيه مع نسبة ربح مضمونه من ١٪؜ الى ١٥٪؜
+
+⌯ حظ ↢ تلعبها بأي مبلغ ياتدبله ياتخسره انت وحظك
+
+⌯ مضاربه ↢ تضارب بأي مبلغ تبيه والنسبة من ٩٠٪؜ الى -٩٠٪؜ انت وحظك
+
+⌯ هجوم ↢ تهجم عالخصم مع زيادة نسبة كل هجوم
+
+⌯ كنز ↢ يعطيك كنز بسعر مختلف انتا وحظك
+
+⌯ مراهنه ↢ تحط مبلغ وتراهن عليه
+
+⌯ توب الفلوس ↢ يطلع توب اكثر ناس معهم فلوس بكل القروبات
+
+⌯ توب الحراميه ↢ يطلع لك اكثر ناس زرفوا
+
+⌯ زواج  ↢ تكتبه بالرد على رسالة شخص مع المهر ويزوجك
+
+⌯ زواجي  ↢ يطلع وثيقة زواجك اذا متزوج
+
+⌯ طلاق ↢ يطلقك اذا متزوج
+
+⌯ خلع  ↢ يخلع زوجك ويرجع له المهر
+
+⌯ زواجات ↢ يطلع اغلى ٣٠ زواجات
+
+⌯ ترتيبي ↢ يطلع ترتيبك باللعبة
+
+⌯ المعرض ↢ يمديك تشتري سيارات وعقارات وكثير اشياء
+
+⌯ ممتلكاتي ↢ يطلع لك مشترياتك من المعرض
+
+⌯ تبرع ↢ تتبرع الى افقر اللاعبين
+
+⌯ انشاء شركه ↢ تنشئ شركتك وتضيف اصدقائك
+
+⌯ بناء مزرعه ↢ تبني مزرعتك وتزرع وتحصد خضار
+
+⌯ لعبه الكره ↢ تنشئ ناديك وتشتري لاعبين وتنافس الخصم
+]]
+edit(ChatId,Msg_id,TextHelp, 'md', true, false, reply_markup)
+end
+end
+if Text and Text:match('(%d+)/lock_link') then
+local UserId = Text:match('(%d+)/lock_link')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Link"..ChatId,"del")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الروابط").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_spam') then
+local UserId = Text:match('(%d+)/lock_spam')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Spam"..ChatId,"del")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الكلايش").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_keypord') then
+local UserId = Text:match('(%d+)/lock_keypord')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Keyboard"..ChatId,"del")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الكيبورد").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_voice') then
+local UserId = Text:match('(%d+)/lock_voice')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:vico"..ChatId,"del")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الاغاني").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_gif') then
+local UserId = Text:match('(%d+)/lock_gif')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Animation"..ChatId,"del")
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل المتحركات").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_files') then
+local UserId = Text:match('(%d+)/lock_files')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Document"..ChatId,"del")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الملفات").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_text') then
+local UserId = Text:match('(%d+)/lock_text')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:text"..ChatId,true) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الشات").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_video') then
+local UserId = Text:match('(%d+)/lock_video')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Video"..ChatId,"del")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الفيديو").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_photo') then
+local UserId = Text:match('(%d+)/lock_photo')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Photo"..ChatId,"del")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الصور").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_username') then
+local UserId = Text:match('(%d+)/lock_username')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:User:Name"..ChatId,"del")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل المعرفات").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_tags') then
+local UserId = Text:match('(%d+)/lock_tags')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:hashtak"..ChatId,"del")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = '- رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل التاك").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_bots') then
+local UserId = Text:match('(%d+)/lock_bots')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Bot:kick"..ChatId,"del")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل البوتات").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_fwd') then
+local UserId = Text:match('(%d+)/lock_fwd')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:forward"..ChatId,"del")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل التوجيه").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_audio') then
+local UserId = Text:match('(%d+)/lock_audio')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Audio"..ChatId,"del")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الصوت").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_stikear') then
+local UserId = Text:match('(%d+)/lock_stikear')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Sticker"..ChatId,"del")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الملصقات").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_phone') then
+local UserId = Text:match('(%d+)/lock_phone')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Contact"..ChatId,"del")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الجهات").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_joine') then
+local UserId = Text:match('(%d+)/lock_joine')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Join"..ChatId,"kick")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الدخول").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_addmem') then
+local UserId = Text:match('(%d+)/lock_addmem')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:AddMempar"..ChatId,"kick")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الاضافه").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_videonote') then
+local UserId = Text:match('(%d+)/lock_videonote')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Unsupported"..ChatId,"del")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل بصمة الفيديو").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_pin') then
+local UserId = Text:match('(%d+)/lock_pin')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:lockpin"..ChatId,(bot.getChatPinnedMessage(ChatId).id or true)) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل التثبيت").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_tgservir') then
+local UserId = Text:match('(%d+)/lock_tgservir')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:tagservr"..ChatId,true)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الاشعارات").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_markdaun') then
+local UserId = Text:match('(%d+)/lock_markdaun')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Markdaun"..ChatId,"del")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الماركدون").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_edits') and data.Originators then
+local UserId = Text:match('(%d+)/lock_edits')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:edit"..ChatId,true) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل التعديل").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_games') then
+local UserId = Text:match('(%d+)/lock_games')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:geam"..ChatId,"del")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الالعاب").Lock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_flood') then
+local UserId = Text:match('(%d+)/lock_flood')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:hset(TheFRADM.."FRADM:Spam:Group:User"..ChatId ,"Spam:User","del")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل التكرار").Lock, 'md', true, false, reply_markup)
+end
+end
+if Text and Text:match('(%d+)/lock_linkkid') then
+local UserId = Text:match('(%d+)/lock_linkkid')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Link"..ChatId,"ked")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الروابط").lockKid, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_spamkid') then
+local UserId = Text:match('(%d+)/lock_spamkid')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Spam"..ChatId,"ked")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الكلايش").lockKid, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_keypordkid') then
+local UserId = Text:match('(%d+)/lock_keypordkid')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Keyboard"..ChatId,"ked")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الكيبورد").lockKid, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_voicekid') then
+local UserId = Text:match('(%d+)/lock_voicekid')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:vico"..ChatId,"ked")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الاغاني").lockKid, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_gifkid') then
+local UserId = Text:match('(%d+)/lock_gifkid')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Animation"..ChatId,"ked")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل المتحركات").lockKid, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_fileskid') then
+local UserId = Text:match('(%d+)/lock_fileskid')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Document"..ChatId,"ked")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الملفات").lockKid, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_videokid') then
+local UserId = Text:match('(%d+)/lock_videokid')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Video"..ChatId,"ked")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الفيديو").lockKid, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_photokid') then
+local UserId = Text:match('(%d+)/lock_photokid')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Photo"..ChatId,"ked")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الصور").lockKid, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_usernamekid') then
+local UserId = Text:match('(%d+)/lock_usernamekid')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:User:Name"..ChatId,"ked")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل المعرفات").lockKid, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_tagskid') then
+local UserId = Text:match('(%d+)/lock_tagskid')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:hashtak"..ChatId,"ked")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل التاك").lockKid, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_fwdkid') then
+local UserId = Text:match('(%d+)/lock_fwdkid')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:forward"..ChatId,"ked")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل التوجيه").lockKid, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_audiokid') then
+local UserId = Text:match('(%d+)/lock_audiokid')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Audio"..ChatId,"ked")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الصوت").lockKid, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_stikearkid') then
+local UserId = Text:match('(%d+)/lock_stikearkid')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Sticker"..ChatId,"ked")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الملصقات").lockKid, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_phonekid') then
+local UserId = Text:match('(%d+)/lock_phonekid')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Contact"..ChatId,"ked")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الجهات").lockKid, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_videonotekid') then
+local UserId = Text:match('(%d+)/lock_videonotekid')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Unsupported"..ChatId,"ked")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل بصمة الفيديو").lockKid, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_markdaunkid') then
+local UserId = Text:match('(%d+)/lock_markdaunkid')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Markdaun"..ChatId,"ked")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الماركدون").lockKid, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_gameskid') then
+local UserId = Text:match('(%d+)/lock_gameskid')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:geam"..ChatId,"ked")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الالعاب").lockKid, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_floodkid') then
+local UserId = Text:match('(%d+)/lock_floodkid')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:hset(TheFRADM.."FRADM:Spam:Group:User"..ChatId ,"Spam:User","keed")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل التكرار").lockKid, 'md', true, false, reply_markup)
+end
+end
+if Text and Text:match('(%d+)/lock_linkktm') then
+local UserId = Text:match('(%d+)/lock_linkktm')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Link"..ChatId,"ktm")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الروابط").lockKtm, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_spamktm') then
+local UserId = Text:match('(%d+)/lock_spamktm')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Spam"..ChatId,"ktm")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الكلايش").lockKtm, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_keypordktm') then
+local UserId = Text:match('(%d+)/lock_keypordktm')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Keyboard"..ChatId,"ktm")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الكيبورد").lockKtm, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_voicektm') then
+local UserId = Text:match('(%d+)/lock_voicektm')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:vico"..ChatId,"ktm")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الاغاني").lockKtm, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_gifktm') then
+local UserId = Text:match('(%d+)/lock_gifktm')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Animation"..ChatId,"ktm")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل المتحركات").lockKtm, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_filesktm') then
+local UserId = Text:match('(%d+)/lock_filesktm')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Document"..ChatId,"ktm")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الملفات").lockKtm, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_videoktm') then
+local UserId = Text:match('(%d+)/lock_videoktm')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Video"..ChatId,"ktm")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الفيديو").lockKtm, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_photoktm') then
+local UserId = Text:match('(%d+)/lock_photoktm')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Photo"..ChatId,"ktm")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الصور").lockKtm, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_usernamektm') then
+local UserId = Text:match('(%d+)/lock_usernamektm')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:User:Name"..ChatId,"ktm")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل المعرفات").lockKtm, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_tagsktm') then
+local UserId = Text:match('(%d+)/lock_tagsktm')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:hashtak"..ChatId,"ktm")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل التاك").lockKtm, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_fwdktm') then
+local UserId = Text:match('(%d+)/lock_fwdktm')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:forward"..ChatId,"ktm")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل التوجيه").lockKtm, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_audioktm') then
+local UserId = Text:match('(%d+)/lock_audioktm')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Audio"..ChatId,"ktm")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الصوت").lockKtm, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_stikearktm') then
+local UserId = Text:match('(%d+)/lock_stikearktm')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Sticker"..ChatId,"ktm")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الملصقات").lockKtm, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_phonektm') then
+local UserId = Text:match('(%d+)/lock_phonektm')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Contact"..ChatId,"ktm")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الجهات").lockKtm, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_videonotektm') then
+local UserId = Text:match('(%d+)/lock_videonotektm')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Unsupported"..ChatId,"ktm")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل بصمة الفيديو").lockKtm, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_markdaunktm') then
+local UserId = Text:match('(%d+)/lock_markdaunktm')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Markdaun"..ChatId,"ktm")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الماركدون").lockKtm, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_gamesktm') then
+local UserId = Text:match('(%d+)/lock_gamesktm')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:geam"..ChatId,"ktm")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الالعاب").lockKtm, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_floodktm') then
+local UserId = Text:match('(%d+)/lock_floodktm')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:hset(TheFRADM.."FRADM:Spam:Group:User"..ChatId ,"Spam:User","mute")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل التكرار").lockKtm, 'md', true, false, reply_markup)
+end
+end
+if Text and Text:match('(%d+)/lock_linkkick') then
+local UserId = Text:match('(%d+)/lock_linkkick')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Link"..ChatId,"kick")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الروابط").lockKick, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_spamkick') then
+local UserId = Text:match('(%d+)/lock_spamkick')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Spam"..ChatId,"kick")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الكلايش").lockKick, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_keypordkick') then
+local UserId = Text:match('(%d+)/lock_keypordkick')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Keyboard"..ChatId,"kick")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الكيبورد").lockKick, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_voicekick') then
+local UserId = Text:match('(%d+)/lock_voicekick')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:vico"..ChatId,"kick")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الاغاني").lockKick, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_gifkick') then
+local UserId = Text:match('(%d+)/lock_gifkick')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Animation"..ChatId,"kick")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل المتحركات").lockKick, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_fileskick') then
+local UserId = Text:match('(%d+)/lock_fileskick')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Document"..ChatId,"kick")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الملفات").lockKick, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_videokick') then
+local UserId = Text:match('(%d+)/lock_videokick')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Video"..ChatId,"kick")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الفيديو").lockKick, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_photokick') then
+local UserId = Text:match('(%d+)/lock_photokick')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Photo"..ChatId,"kick")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الصور").lockKick, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_usernamekick') then
+local UserId = Text:match('(%d+)/lock_usernamekick')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:User:Name"..ChatId,"kick")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل المعرفات").lockKick, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_tagskick') then
+local UserId = Text:match('(%d+)/lock_tagskick')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:hashtak"..ChatId,"kick")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل التاك").lockKick, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_fwdkick') then
+local UserId = Text:match('(%d+)/lock_fwdkick')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:forward"..ChatId,"kick")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل التوجيه").lockKick, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_audiokick') then
+local UserId = Text:match('(%d+)/lock_audiokick')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Audio"..ChatId,"kick")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الصوت").lockKick, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_stikearkick') then
+local UserId = Text:match('(%d+)/lock_stikearkick')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Sticker"..ChatId,"kick")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الملصقات").lockKick, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_phonekick') then
+local UserId = Text:match('(%d+)/lock_phonekick')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Contact"..ChatId,"kick")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الجهات").lockKick, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_videonotekick') then
+local UserId = Text:match('(%d+)/lock_videonotekick')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Unsupported"..ChatId,"kick")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل بصمة الفيديو").lockKick, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_markdaunkick') then
+local UserId = Text:match('(%d+)/lock_markdaunkick')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:Markdaun"..ChatId,"kick")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الماركدون").lockKick, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_gameskick') then
+local UserId = Text:match('(%d+)/lock_gameskick')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:geam"..ChatId,"kick")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الالعاب").lockKick, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_floodkick') then
+local UserId = Text:match('(%d+)/lock_floodkick')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:hset(TheFRADM.."FRADM:Spam:Group:User"..ChatId ,"Spam:User","kick")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل التكرار").lockKick, 'md', true, false, reply_markup)
+end
+end
+if Text and Text:match('(%d+)/unmute_link') then
+local UserId = Text:match('(%d+)/unmute_link')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Status:Link"..ChatId) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'listallAddorrem'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم تعطيل الرابط").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unmute_welcome') then
+local UserId = Text:match('(%d+)/unmute_welcome')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Status:Welcome"..ChatId) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'listallAddorrem'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم تعطيل الترحيب").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unmute_Id') then
+local UserId = Text:match('(%d+)/unmute_Id')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Status:Id"..ChatId) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'listallAddorrem'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم تعطيل الايدي").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unmute_IdPhoto') then
+local UserId = Text:match('(%d+)/unmute_IdPhoto')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Status:IdPhoto"..ChatId) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'listallAddorrem'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم تعطيل الايدي بالصوره").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unmute_ryple') then
+local UserId = Text:match('(%d+)/unmute_ryple')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Status:Reply"..ChatId) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'listallAddorrem'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم تعطيل الردود").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unmute_ryplesudo') then
+local UserId = Text:match('(%d+)/unmute_ryplesudo')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Status:ReplySudo"..ChatId) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'listallAddorrem'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم تعطيل الردود عام").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unmute_setadmib') then
+local UserId = Text:match('(%d+)/unmute_setadmib')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Status:SetId"..ChatId) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'listallAddorrem'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم تعطيل الرفع").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unmute_kickmembars') then
+local UserId = Text:match('(%d+)/unmute_kickmembars')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Status:BanId"..ChatId) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'listallAddorrem'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم تعطيل ( الطرد - الحظر)").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unmute_games') then
+local UserId = Text:match('(%d+)/unmute_games')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Status:Games"..ChatId) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'listallAddorrem'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم تعطيل الالعاب").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unmute_kickme') then
+local UserId = Text:match('(%d+)/unmute_kickme')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Status:KickMe"..ChatId) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'listallAddorrem'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم تعطيل اطردني").unLock, 'md', true, false, reply_markup)
+end
+end
+if Text and Text:match('(%d+)/mute_link') then
+local UserId = Text:match('(%d+)/mute_link')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Status:Link"..ChatId,true) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'listallAddorrem'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم تفعيل الرابط").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/mute_welcome') then
+local UserId = Text:match('(%d+)/mute_welcome')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Status:Welcome"..ChatId,true) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'listallAddorrem'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم تفعيل الترحيب").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/mute_Id') then
+local UserId = Text:match('(%d+)/mute_Id')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Status:Id"..ChatId,true) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'listallAddorrem'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم تفعيل الايدي").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/mute_IdPhoto') then
+local UserId = Text:match('(%d+)/mute_IdPhoto')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Status:IdPhoto"..ChatId,true) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'listallAddorrem'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم تفعيل الايدي بالصوره").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/mute_ryple') then
+local UserId = Text:match('(%d+)/mute_ryple')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Status:Reply"..ChatId,true) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'listallAddorrem'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم تفعيل الردود").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/mute_ryplesudo') then
+local UserId = Text:match('(%d+)/mute_ryplesudo')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Status:ReplySudo"..ChatId,true) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'listallAddorrem'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم تفعيل الردود عام").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/mute_setadmib') then
+local UserId = Text:match('(%d+)/mute_setadmib')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Status:SetId"..ChatId,true) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'listallAddorrem'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم تفعيل الرفع").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/mute_kickmembars') then
+local UserId = Text:match('(%d+)/mute_kickmembars')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Status:BanId"..ChatId,true) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'listallAddorrem'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم تفعيل ( الطرد - الحظر )").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/mute_games') then
+local UserId = Text:match('(%d+)/mute_games')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Status:Games"..ChatId,true) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'listallAddorrem'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم تفعيل الالعاب").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/mute_kickme') then
+local UserId = Text:match('(%d+)/mute_kickme')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Status:KickMe"..ChatId,true) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'listallAddorrem'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم تفعيل اطردني").unLock, 'md', true, false, reply_markup)
+end
+end
+if Text and Text:match('(%d+)/addAdmins@(.*)') then
+local UserId = {Text:match('(%d+)/addAdmins@(.*)')}
+if tonumber(IdUser) == tonumber(UserId[1]) then
+local Info_Members = bot.getSupergroupMembers(UserId[2], "Administrators", "*", 0, 200)
+local List_Members = Info_Members.members
+x = 0
+y = 0
+for k, v in pairs(List_Members) do
+if Info_Members.members[k].bot_info == nil then
+if Info_Members.members[k].status.luatele == "chatMemberStatusCreator" then
+Redis:sadd(TheFRADM.."FRADM:TheBasicsQ:Group"..UserId[2],v.member_id.user_id) 
+x = x + 1
+else
+Redis:sadd(TheFRADM.."FRADM:Addictive:Group"..UserId[2],v.member_id.user_id) 
+y = y + 1
+end
+end
+end
+bot.answerCallbackQuery(data.id, "⇜ تم رفع ("..y..") ادمنية \n⇜ وتم رفع المالك ", true)
+end
+end
+if Text and Text:match('(%d+)/LockAllGroup@(.*)') then
+local UserId = {Text:match('(%d+)/LockAllGroup@(.*)')}
+if tonumber(IdUser) == tonumber(UserId[1]) then
+Redis:set(TheFRADM.."FRADM:Lock:tagservrbot"..UserId[2],true)   
+list ={"Lock:Bot:kick","Lock:User:Name","Lock:hashtak","Lock:Cmd","Lock:Link","Lock:forward","Lock:Keyboard","Lock:geam","Lock:Photo","Lock:Animation","Lock:Video","Lock:Audio","Lock:vico","Lock:Sticker","Lock:Document","Lock:Unsupported","Lock:Markdaun","Lock:Contact","Lock:Spam"}
+for i,lock in pairs(list) do 
+Redis:set(TheFRADM..'FRADM:'..lock..UserId[2],"del")    
+end
+bot.answerCallbackQuery(data.id, "⇜ تم قفل جميع الاوامر ", true)
+end
+end
+if Text and Text:match('/leftgroup@(.*)') then
+local UserId = Text:match('/leftgroup@(.*)')
+bot.answerCallbackQuery(data.id, "⇜ تم مغادره البوت من القروب", true)
+bot.leaveChat(UserId)
+end
+if Text and Text:match('(%d+)/trtep@(.*)') then
+local UserId = {Text:match('(%d+)/trtep@(.*)')}
+if tonumber(IdUser) == tonumber(UserId[1]) then
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'تعط','تعطيل الايدي بالصوره')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'تفع','تفعيل الايدي بالصوره')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'ا','ايدي')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'م','رفع مميز')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'اد', 'رفع ادمن')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'مد','رفع مدير')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'منش', 'رفع منشئ')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'اس', 'رفع منشئ اساسي')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'مط','رفع M')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'تن','تنزيل الكل')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'را','الرابط')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'رر','الردود')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'،،','مسح المكتومين')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'رد','اضف رد')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'غ','غنيلي')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'رس','رسائلي')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'ثانوي','رفع مطور ثانوي')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'مس','مسح تعديلاتي')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'ن','نقاطي')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'س','اسالني')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'ل','لغز')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'مع','معاني')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'ح','حزوره')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'رف','رفع القيود')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'الغ','الغاء حظر')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'ث','تثبيت')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'ك','كشف')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'تت','تاك')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'تك','تاك للكل')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'تغ','تغيير الايدي')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'تنز','تنزيل جميع الرتب')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'قق','قفل الاشعارات')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'فف','فتح الاشعارات')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'مر','مسح رد')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'امر','اضف امر')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'ش','شعر')
+Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..UserId[2]..":"..'غغ','اغنيه')
+bot.answerCallbackQuery(data.id, "⇜ تم ترتيب الاوامر ", true)
+end
+end
+if Text and Text:match('(%d+)/groupNumseteng//(%d+)') then
+local UserId = {Text:match('(%d+)/groupNumseteng//(%d+)')}
+if tonumber(IdUser) == tonumber(UserId[1]) then
+return GetAdminsSlahe(ChatId,UserId[1],UserId[2],Msg_id)
+end
+end
+if Text and Text:match('(%d+)/rankup//(%d+)') then
+local UserId = {Text:match('(%d+)/rankup//(%d+)')}
+if tonumber(IdUser) == tonumber(UserId[1]) then
+return editrtp(ChatId,UserId[1],Msg_id,UserId[2])
+end
+end
+if Text and Text:match('(%d+)/sting//(%d+)') then
+local UserId = {Text:match('(%d+)/sting//(%d+)')}
+if tonumber(IdUser) == tonumber(UserId[1]) then
+return muteUser(ChatId,UserId[1],Msg_id,UserId[2])
+end
+end
+if Text and Text:match('(%d+)/groupNum1//(%d+)') then
+local UserId = {Text:match('(%d+)/groupNum1//(%d+)')}
+if tonumber(IdUser) == tonumber(UserId[1]) then
+if tonumber(GetAdminsNum(ChatId,UserId[2]).change_info) == 1 then
+bot.answerCallbackQuery(data.id, "⌯ تم تعطيل صلاحيه تغيير المعلومات", true)
+GetAdminsSlahe(ChatId,UserId[1],UserId[2],Msg_id,'لا',nil,nil,nil,nil,nil)
+bot.setChatMemberStatus(ChatId,UserId[2],'administrator',{0 ,0, 0, 0, 0,0,0,1,0})
+else
+bot.answerCallbackQuery(data.id, "⌯ تم تفعيل صلاحيه تغيير المعلومات", true)
+GetAdminsSlahe(ChatId,UserId[1],UserId[2],Msg_id,'نعم',nil,nil,nil,nil,nil)
+bot.setChatMemberStatus(ChatId,UserId[2],'administrator',{0 ,1, 0, 0, GetAdminsNum(ChatId,UserId[2]).delete_messages, GetAdminsNum(ChatId,UserId[2]).invite_users, GetAdminsNum(ChatId,UserId[2]).restrict_members ,GetAdminsNum(ChatId,UserId[2]).pin_messages, GetAdminsNum(ChatId,UserId[2]).promote})
+end
+end
+end
+if Text and Text:match('(%d+)/groupNum2//(%d+)') then
+local UserId = {Text:match('(%d+)/groupNum2//(%d+)')}
+if tonumber(IdUser) == tonumber(UserId[1]) then
+if tonumber(GetAdminsNum(ChatId,UserId[2]).pin_messages) == 1 then
+bot.answerCallbackQuery(data.id, "⌯ تم تعطيل صلاحيه التثبيت", true)
+GetAdminsSlahe(ChatId,UserId[1],UserId[2],Msg_id,nil,'لا',nil,nil,nil,nil)
+bot.setChatMemberStatus(ChatId,UserId[2],'administrator',{0 ,GetAdminsNum(ChatId,UserId[2]).change_info, 0, 0, GetAdminsNum(ChatId,UserId[2]).delete_messages, GetAdminsNum(ChatId,UserId[2]).invite_users, GetAdminsNum(ChatId,UserId[2]).restrict_members ,0, GetAdminsNum(ChatId,UserId[2]).promote})
+else
+bot.answerCallbackQuery(data.id, "⌯ تم تفعيل صلاحيه التثبيت", true)
+GetAdminsSlahe(ChatId,UserId[1],UserId[2],Msg_id,nil,'نعم',nil,nil,nil,nil)
+bot.setChatMemberStatus(ChatId,UserId[2],'administrator',{0 ,GetAdminsNum(ChatId,UserId[2]).change_info, 0, 0, GetAdminsNum(ChatId,UserId[2]).delete_messages, GetAdminsNum(ChatId,UserId[2]).invite_users, GetAdminsNum(ChatId,UserId[2]).restrict_members ,1, GetAdminsNum(ChatId,UserId[2]).promote})
+end
+end
+end
+if Text and Text:match('(%d+)/groupNum3//(%d+)') then
+local UserId = {Text:match('(%d+)/groupNum3//(%d+)')}
+if tonumber(IdUser) == tonumber(UserId[1]) then
+if tonumber(GetAdminsNum(ChatId,UserId[2]).restrict_members) == 1 then
+bot.answerCallbackQuery(data.id, "⌯ تم تعطيل صلاحيه الحظر", true)
+GetAdminsSlahe(ChatId,UserId[1],UserId[2],Msg_id,nil,nil,'لا',nil,nil,nil)
+bot.setChatMemberStatus(ChatId,UserId[2],'administrator',{0 ,GetAdminsNum(ChatId,UserId[2]).change_info, 0, 0, GetAdminsNum(ChatId,UserId[2]).delete_messages, GetAdminsNum(ChatId,UserId[2]).invite_users, 0 ,GetAdminsNum(ChatId,UserId[2]).pin_messages, GetAdminsNum(ChatId,UserId[2]).promote})
+else
+bot.answerCallbackQuery(data.id, "⌯ تم تفعيل صلاحيه الحظر", true)
+GetAdminsSlahe(ChatId,UserId[1],UserId[2],Msg_id,nil,nil,'نعم',nil,nil,nil)
+bot.setChatMemberStatus(ChatId,UserId[2],'administrator',{0 ,GetAdminsNum(ChatId,UserId[2]).change_info, 0, 0, GetAdminsNum(ChatId,UserId[2]).delete_messages, GetAdminsNum(ChatId,UserId[2]).invite_users, 1 ,GetAdminsNum(ChatId,UserId[2]).pin_messages, GetAdminsNum(ChatId,UserId[2]).promote})
+end
+end
+end
+if Text and Text:match('(%d+)/groupNum4//(%d+)') then
+local UserId = {Text:match('(%d+)/groupNum4//(%d+)')}
+if tonumber(IdUser) == tonumber(UserId[1]) then
+if tonumber(GetAdminsNum(ChatId,UserId[2]).invite_users) == 1 then
+bot.answerCallbackQuery(data.id, "⌯ تم تعطيل صلاحيه دعوه المستخدمين", true)
+GetAdminsSlahe(ChatId,UserId[1],UserId[2],Msg_id,nil,nil,nil,'لا',nil,nil)
+bot.setChatMemberStatus(ChatId,UserId[2],'administrator',{0 ,GetAdminsNum(ChatId,UserId[2]).change_info, 0, 0, GetAdminsNum(ChatId,UserId[2]).delete_messages, 0, GetAdminsNum(ChatId,UserId[2]).restrict_members ,GetAdminsNum(ChatId,UserId[2]).pin_messages, GetAdminsNum(ChatId,UserId[2]).promote})
+else
+bot.answerCallbackQuery(data.id, "⌯ تم تفعيل صلاحيه دعوه المستخدمين", true)
+GetAdminsSlahe(ChatId,UserId[1],UserId[2],Msg_id,nil,nil,nil,'نعم',nil,nil)
+bot.setChatMemberStatus(ChatId,UserId[2],'administrator',{0 ,GetAdminsNum(ChatId,UserId[2]).change_info, 0, 0, GetAdminsNum(ChatId,UserId[2]).delete_messages, 1, GetAdminsNum(ChatId,UserId[2]).restrict_members ,GetAdminsNum(ChatId,UserId[2]).pin_messages, GetAdminsNum(ChatId,UserId[2]).promote})
+end
+end
+end
+if Text and Text:match('(%d+)/groupNum5//(%d+)') then
+local UserId = {Text:match('(%d+)/groupNum5//(%d+)')}
+if tonumber(IdUser) == tonumber(UserId[1]) then
+if tonumber(GetAdminsNum(ChatId,UserId[2]).delete_messages) == 1 then
+bot.answerCallbackQuery(data.id, "⌯ تم تعطيل صلاحيه مسح الرسائل", true)
+GetAdminsSlahe(ChatId,UserId[1],UserId[2],Msg_id,nil,nil,nil,nil,'لا',nil)
+bot.setChatMemberStatus(ChatId,UserId[2],'administrator',{0 ,GetAdminsNum(ChatId,UserId[2]).change_info, 0, 0, 0, GetAdminsNum(ChatId,UserId[2]).invite_users, GetAdminsNum(ChatId,UserId[2]).restrict_members ,GetAdminsNum(ChatId,UserId[2]).pin_messages, GetAdminsNum(ChatId,UserId[2]).promote})
+else
+bot.answerCallbackQuery(data.id, "⌯ تم تفعيل صلاحيه مسح الرسائل", true)
+GetAdminsSlahe(ChatId,UserId[1],UserId[2],Msg_id,nil,nil,nil,nil,'نعم',nil)
+bot.setChatMemberStatus(ChatId,UserId[2],'administrator',{0 ,GetAdminsNum(ChatId,UserId[2]).change_info, 0, 0, 1, GetAdminsNum(ChatId,UserId[2]).invite_users, GetAdminsNum(ChatId,UserId[2]).restrict_members ,GetAdminsNum(ChatId,UserId[2]).pin_messages, GetAdminsNum(ChatId,UserId[2]).promote})
+end
+end
+end
+if Text and Text:match('(%d+)/groupNum6//(%d+)') then
+local UserId = {Text:match('(%d+)/groupNum6//(%d+)')}
+if tonumber(IdUser) == tonumber(UserId[1]) then
+if tonumber(GetAdminsNum(ChatId,UserId[2]).promote) == 1 then
+bot.answerCallbackQuery(data.id, "⌯ تم تعطيل صلاحيه اضافه مشرفين", true)
+GetAdminsSlahe(ChatId,UserId[1],UserId[2],Msg_id,nil,nil,nil,nil,nil,'لا')
+bot.setChatMemberStatus(ChatId,UserId[2],'administrator',{0 ,GetAdminsNum(ChatId,UserId[2]).change_info, 0, 0, GetAdminsNum(ChatId,UserId[2]).delete_messages, GetAdminsNum(ChatId,UserId[2]).invite_users, GetAdminsNum(ChatId,UserId[2]).restrict_members ,GetAdminsNum(ChatId,UserId[2]).pin_messages, 0})
+else
+bot.answerCallbackQuery(data.id, "⌯ تم تفعيل صلاحيه اضافه مشرفين", true)
+GetAdminsSlahe(ChatId,UserId[1],UserId[2],Msg_id,nil,nil,nil,nil,nil,'نعم')
+bot.setChatMemberStatus(ChatId,UserId[2],'administrator',{0 ,GetAdminsNum(ChatId,UserId[2]).change_info, 0, 0, GetAdminsNum(ChatId,UserId[2]).delete_messages, GetAdminsNum(ChatId,UserId[2]).invite_users, GetAdminsNum(ChatId,UserId[2]).restrict_members ,GetAdminsNum(ChatId,UserId[2]).pin_messages, 1})
+end
+end
+end
+if Text and Text:match('(%d+)/web') then
+local UserId = Text:match('(%d+)/web')
+if tonumber(IdUser) == tonumber(UserId) then
+if Getpermissions(ChatId).web == true then
+bot.setChatPermissions(ChatId, Getpermissions(ChatId).messges, Getpermissions(ChatId).media, Getpermissions(ChatId).polls, Getpermissions(ChatId).other, false, Getpermissions(ChatId).info, Getpermissions(ChatId).invite, Getpermissions(ChatId).pin)
+else
+bot.setChatPermissions(ChatId, Getpermissions(ChatId).messges, Getpermissions(ChatId).media, Getpermissions(ChatId).polls, Getpermissions(ChatId).other, true, Getpermissions(ChatId).info, Getpermissions(ChatId).invite, Getpermissions(ChatId).pin)
+end
+Get_permissions(ChatId,IdUser,Msg_id)
+end
+elseif Text and Text:match('(%d+)/info') then
+local UserId = Text:match('(%d+)/info')
+if tonumber(IdUser) == tonumber(UserId) then
+if Getpermissions(ChatId).info == true then
+bot.setChatPermissions(ChatId, Getpermissions(ChatId).messges, Getpermissions(ChatId).media, Getpermissions(ChatId).polls, Getpermissions(ChatId).other, Getpermissions(ChatId).web, false, Getpermissions(ChatId).invite, Getpermissions(ChatId).pin)
+else
+bot.setChatPermissions(ChatId, Getpermissions(ChatId).messges, Getpermissions(ChatId).media, Getpermissions(ChatId).polls, Getpermissions(ChatId).other, Getpermissions(ChatId).web, true, Getpermissions(ChatId).invite, Getpermissions(ChatId).pin)
+end
+Get_permissions(ChatId,IdUser,Msg_id)
+end
+elseif Text and Text:match('(%d+)/invite') then
+local UserId = Text:match('(%d+)/invite')
+if tonumber(IdUser) == tonumber(UserId) then
+if Getpermissions(ChatId).invite == true then
+bot.setChatPermissions(ChatId, Getpermissions(ChatId).messges, Getpermissions(ChatId).media, Getpermissions(ChatId).polls, Getpermissions(ChatId).other, Getpermissions(ChatId).web, Getpermissions(ChatId).info, false, Getpermissions(ChatId).pin)
+else
+bot.setChatPermissions(ChatId, Getpermissions(ChatId).messges, Getpermissions(ChatId).media, Getpermissions(ChatId).polls, Getpermissions(ChatId).other, Getpermissions(ChatId).web, Getpermissions(ChatId).info, true, Getpermissions(ChatId).pin)
+end
+Get_permissions(ChatId,IdUser,Msg_id)
+end
+elseif Text and Text:match('(%d+)/pin') then
+local UserId = Text:match('(%d+)/pin')
+if tonumber(IdUser) == tonumber(UserId) then
+if Getpermissions(ChatId).pin == true then
+bot.setChatPermissions(ChatId, Getpermissions(ChatId).messges, Getpermissions(ChatId).media, Getpermissions(ChatId).polls, Getpermissions(ChatId).other, Getpermissions(ChatId).web, Getpermissions(ChatId).info, Getpermissions(ChatId).invite, false)
+else
+bot.setChatPermissions(ChatId, Getpermissions(ChatId).messges, Getpermissions(ChatId).media, Getpermissions(ChatId).polls, Getpermissions(ChatId).other, Getpermissions(ChatId).web, Getpermissions(ChatId).info, Getpermissions(ChatId).invite, true)
+end
+Get_permissions(ChatId,IdUser,Msg_id)
+end
+elseif Text and Text:match('(%d+)/media') then
+local UserId = Text:match('(%d+)/media')
+if tonumber(IdUser) == tonumber(UserId) then
+if Getpermissions(ChatId).media == true then
+bot.setChatPermissions(ChatId, Getpermissions(ChatId).messges, false, Getpermissions(ChatId).polls, Getpermissions(ChatId).other, Getpermissions(ChatId).web, Getpermissions(ChatId).info, Getpermissions(ChatId).invite, Getpermissions(ChatId).pin)
+else
+bot.setChatPermissions(ChatId, Getpermissions(ChatId).messges, true, Getpermissions(ChatId).polls, Getpermissions(ChatId).other, Getpermissions(ChatId).web, Getpermissions(ChatId).info, Getpermissions(ChatId).invite, Getpermissions(ChatId).pin)
+end
+Get_permissions(ChatId,IdUser,Msg_id)
+end
+elseif Text and Text:match('(%d+)/messges') then
+local UserId = Text:match('(%d+)/messges')
+if tonumber(IdUser) == tonumber(UserId) then
+if Getpermissions(ChatId).messges == true then
+bot.setChatPermissions(ChatId, false, Getpermissions(ChatId).media, Getpermissions(ChatId).polls, Getpermissions(ChatId).other, Getpermissions(ChatId).web, Getpermissions(ChatId).info, Getpermissions(ChatId).invite, Getpermissions(ChatId).pin)
+else
+bot.setChatPermissions(ChatId, true, Getpermissions(ChatId).media, Getpermissions(ChatId).polls, Getpermissions(ChatId).other, Getpermissions(ChatId).web, Getpermissions(ChatId).info, Getpermissions(ChatId).invite, Getpermissions(ChatId).pin)
+end
+Get_permissions(ChatId,IdUser,Msg_id)
+end
+elseif Text and Text:match('(%d+)/other') then
+local UserId = Text:match('(%d+)/other')
+if tonumber(IdUser) == tonumber(UserId) then
+if Getpermissions(ChatId).other == true then
+bot.setChatPermissions(ChatId, Getpermissions(ChatId).messges, Getpermissions(ChatId).media, Getpermissions(ChatId).polls, false, Getpermissions(ChatId).web, Getpermissions(ChatId).info, Getpermissions(ChatId).invite, Getpermissions(ChatId).pin)
+else
+bot.setChatPermissions(ChatId, Getpermissions(ChatId).messges, Getpermissions(ChatId).media, Getpermissions(ChatId).polls, true, Getpermissions(ChatId).web, Getpermissions(ChatId).info, Getpermissions(ChatId).invite, Getpermissions(ChatId).pin)
+end
+Get_permissions(ChatId,IdUser,Msg_id)
+end
+elseif Text and Text:match('(%d+)/polls') then
+local UserId = Text:match('(%d+)/polls')
+if tonumber(IdUser) == tonumber(UserId) then
+if Getpermissions(ChatId).polls == true then
+bot.setChatPermissions(ChatId, Getpermissions(ChatId).messges, Getpermissions(ChatId).media, false, Getpermissions(ChatId).other, Getpermissions(ChatId).web, Getpermissions(ChatId).info, Getpermissions(ChatId).invite, Getpermissions(ChatId).pin)
+else
+bot.setChatPermissions(ChatId, Getpermissions(ChatId).messges, Getpermissions(ChatId).media, true, Getpermissions(ChatId).other, Getpermissions(ChatId).web, Getpermissions(ChatId).info, Getpermissions(ChatId).invite, Getpermissions(ChatId).pin)
+end
+Get_permissions(ChatId,IdUser,Msg_id)
+end
+end
+if Text and Text:match('(%d+)/listallAddorrem') then
+local UserId = Text:match('(%d+)/listallAddorrem')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{
+{text = 'تعطيل الرابط', data = IdUser..'/'.. 'unmute_link'},{text = 'تفعيل الرابط', data = IdUser..'/'.. 'mute_link'},
+},
+{
+{text = 'تعطيل الترحيب', data = IdUser..'/'.. 'unmute_welcome'},{text = 'تفعيل الترحيب', data = IdUser..'/'.. 'mute_welcome'},
+},
+{
+{text = 'تعطيل الايدي', data = IdUser..'/'.. 'unmute_Id'},{text = 'تفعيل الايدي', data = IdUser..'/'.. 'mute_Id'},
+},
+{
+{text = 'تعطيل الايدي بالصوره', data = IdUser..'/'.. 'unmute_IdPhoto'},{text = 'تفعيل الايدي بالصوره', data = IdUser..'/'.. 'mute_IdPhoto'},
+},
+{
+{text = 'تعطيل الردود', data = IdUser..'/'.. 'unmute_ryple'},{text = 'تفعيل الردود', data = IdUser..'/'.. 'mute_ryple'},
+},
+{
+{text = 'تعطيل الردود العامه', data = IdUser..'/'.. 'unmute_ryplesudo'},{text = 'تفعيل الردود العامه', data = IdUser..'/'.. 'mute_ryplesudo'},
+},
+{
+{text = 'تعطيل الرفع', data = IdUser..'/'.. 'unmute_setadmib'},{text = 'تفعيل الرفع', data = IdUser..'/'.. 'mute_setadmib'},
+},
+{
+{text = 'تعطيل الطرد', data = IdUser..'/'.. 'unmute_kickmembars'},{text = 'تفعيل الطرد', data = IdUser..'/'.. 'mute_kickmembars'},
+},
+{
+{text = 'تعطيل الالعاب', data = IdUser..'/'.. 'unmute_games'},{text = 'تفعيل الالعاب', data = IdUser..'/'.. 'mute_games'},
+},
+{
+{text = 'تعطيل اطردني', data = IdUser..'/'.. 'unmute_kickme'},{text = 'تفعيل اطردني', data = IdUser..'/'.. 'mute_kickme'},
+},
+{
+{text = 'تعطيل التسليه', data = IdUser..'/'.. 'unmute_thshesh'},{text = 'تفعيل التسليه', data = IdUser..'/'.. 'mute_thshesh'},
+},
+{
+{text = 'تعطيل الحظر المحدود', data = IdUser..'/'.. 'unmute_kicknum'},{text = 'تفعيل الحظر المحدود', data = IdUser..'/'.. 'mute_kicknum'},
+},
+{
+{text = 'تعطيل الصيغ', data = IdUser..'/'.. 'unmute_seck'},{text = 'تفعيل الصيغ', data = IdUser..'/'.. 'mute_seck'},
+},
+{
+{text = 'تعطيل غنيلي', data = IdUser..'/'.. 'unmute_knile'},{text = 'تفعيل غنيلي', data = IdUser..'/'.. 'mute_knile'},
+},
+{
+{text = 'تعطيل الابراح', data = IdUser..'/'.. 'unmute_brj'},{text = 'تفعيل الابراج', data = IdUser..'/'.. 'mute_brj'},
+},
+{
+{text = 'تعطيل الصوتيات', data = IdUser..'/'.. 'unmute_audio'},{text = 'تفعيل الصوتيات', data = IdUser..'/'.. 'mute_audio'},
+},
+{
+{text = 'تعطيل الصوتيات العامه', data = IdUser..'/'.. 'unmute_audioall'},{text = 'تفعيل الصوتيات العامه', data = IdUser..'/'.. 'mute_audioall'},
+},
+{
+{text = 'تعطيل تاك عام', data = IdUser..'/'.. 'unmute_takall'},{text = 'تفعيل تاك عام', data = IdUser..'/'.. 'mute_takall'},
+},
+{
+{text = 'تعطيل التنبيه', data = IdUser..'/'.. 'unmute_namemy'},{text = 'تفعيل التنبيه', data = IdUser..'/'.. 'mute_namemy'},
+},
+{
+{text = 'القائمة الرئيسية', data = IdUser..'/helpall'},
+},
+{
+{text = '- اخفاء الامر ', data ='/delAmr'}
+},
+}
+}
+return edit(ChatId,Msg_id,'⇜ اوامر التفعيل والتعطيل ', 'md', false, false, reply_markup)
+end
+end
+if Text and Text:match('(%d+)/NextSeting') then
+local UserId = Text:match('(%d+)/NextSeting')
+if tonumber(IdUser) == tonumber(UserId) then
+local Text = "\n⇜ اعدادات القروب ".."\n⇜ نعم تعني - مقفل".."\n⇜ لا تعني - مفتوح\n✧"
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{
+{text = GetSetieng(ChatId).lock_fwd, data =IdUser..'/'.. 'Status_fwd'},{text = 'التوجبه : ', data =IdUser..'/'.. 'Status_fwd'},
+{text = GetSetieng(ChatId).lock_muse, data =IdUser..'/'.. 'Status_audio'},{text = 'الصوت : ', data =IdUser..'/'.. 'Status_audio'},
+},
+{
+{text = GetSetieng(ChatId).lock_ste, data =IdUser..'/'.. 'Status_stikear'},{text = 'الملصقات : ', data =IdUser..'/'.. 'Status_stikear'},
+{text = GetSetieng(ChatId).lock_phon, data =IdUser..'/'.. 'Status_phone'},{text = 'الجهات : ', data =IdUser..'/'.. 'Status_phone'},
+},
+{
+{text = GetSetieng(ChatId).lock_join, data =IdUser..'/'.. 'Status_joine'},{text = 'الدخول : ', data =IdUser..'/'.. 'Status_joine'},
+{text = GetSetieng(ChatId).lock_add, data =IdUser..'/'.. 'Status_addmem'},{text = 'الاضافه : ', data =IdUser..'/'.. 'Status_addmem'},
+},
+{
+{text = GetSetieng(ChatId).lock_self, data =IdUser..'/'.. 'Status_videonote'},{text = 'بصمه فيديو : ', data =IdUser..'/'.. 'Status_videonote'},
+{text = GetSetieng(ChatId).lock_pin, data =IdUser..'/'.. 'Status_pin'},{text = 'التثبيت : ', data =IdUser..'/'.. 'Status_pin'},
+},
+{
+{text = GetSetieng(ChatId).lock_tagservr, data =IdUser..'/'.. 'Status_tgservir'},{text = 'الاشعارات : ', data =IdUser..'/'.. 'Status_tgservir'},
+{text = GetSetieng(ChatId).lock_mark, data =IdUser..'/'.. 'Status_markdaun'},{text = 'الماركدون : ', data =IdUser..'/'.. 'Status_markdaun'},
+},
+{
+{text = GetSetieng(ChatId).lock_edit, data =IdUser..'/'.. 'Status_edits'},{text = 'التعديل : ', data =IdUser..'/'.. 'Status_edits'},
+{text = GetSetieng(ChatId).lock_geam, data =IdUser..'/'.. 'Status_games'},{text = 'الالعاب : ', data =IdUser..'/'.. 'Status_games'},
+},
+{
+{text = GetSetieng(ChatId).flood, data =IdUser..'/'.. 'Status_flood'},{text = 'التكرار : ', data =IdUser..'/'.. 'Status_flood'},
+},
+{
+{text = '- الرجوع .. ', data =IdUser..'/'.. 'NoNextSeting'}
+},
+{
+{text = 'القائمة الرئيسية', data = IdUser..'/helpall'},
+},
+{
+{text = '- اخفاء الامر ', data ='/delAmr'}
+},
+}
+}
+edit(ChatId,Msg_id,Text, 'md', false, false, reply_markup)
+end
+end
+if Text and Text:match('(%d+)/NoNextSeting') then
+local UserId = Text:match('(%d+)/NoNextSeting')
+if tonumber(IdUser) == tonumber(UserId) then
+local Text = "\n⇜ اعدادات القروب ".."\n⇜ نعم تعني - مقفل".."\n⇜ لا تعني - مفتوح\n✧"
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{
+{text = GetSetieng(ChatId).lock_links, data =IdUser..'/'.. 'Status_link'},{text = 'الروابط : ', data =IdUser..'/'.. 'Status_link'},
+{text = GetSetieng(ChatId).lock_spam, data =IdUser..'/'.. 'Status_spam'},{text = 'الكلايش : ', data =IdUser..'/'.. 'Status_spam'},
+},
+{
+{text = GetSetieng(ChatId).lock_inlin, data =IdUser..'/'.. 'Status_keypord'},{text = 'الكيبورد : ', data =IdUser..'/'.. 'Status_keypord'},
+{text = GetSetieng(ChatId).lock_vico, data =IdUser..'/'.. 'Status_voice'},{text = 'الاغاني : ', data =IdUser..'/'.. 'Status_voice'},
+},
+{
+{text = GetSetieng(ChatId).lock_gif, data =IdUser..'/'.. 'Status_gif'},{text = 'المتحركه : ', data =IdUser..'/'.. 'Status_gif'},
+{text = GetSetieng(ChatId).lock_file, data =IdUser..'/'.. 'Status_files'},{text = 'الملفات : ', data =IdUser..'/'.. 'Status_files'},
+},
+{
+{text = GetSetieng(ChatId).lock_text, data =IdUser..'/'.. 'Status_text'},{text = 'الشات : ', data =IdUser..'/'.. 'Status_text'},
+{text = GetSetieng(ChatId).lock_ved, data =IdUser..'/'.. 'Status_video'},{text = 'الفيديو : ', data =IdUser..'/'.. 'Status_video'},
+},
+{
+{text = GetSetieng(ChatId).lock_photo, data =IdUser..'/'.. 'Status_photo'},{text = 'الصور : ', data =IdUser..'/'.. 'Status_photo'},
+{text = GetSetieng(ChatId).lock_user, data =IdUser..'/'.. 'Status_username'},{text = 'المعرفات : ', data =IdUser..'/'.. 'Status_username'},
+},
+{
+{text = GetSetieng(ChatId).lock_hash, data =IdUser..'/'.. 'Status_tags'},{text = 'التاك : ', data =IdUser..'/'.. 'Status_tags'},
+{text = GetSetieng(ChatId).lock_bots, data =IdUser..'/'.. 'Status_bots'},{text = 'البوتات : ', data =IdUser..'/'.. 'Status_bots'},
+},
+{
+{text = GetSetieng(ChatId).farsia, data =IdUser..'/'.. 'Status_farsia'},{text = 'الفارسيه : ', data =IdUser..'/'.. 'Status_farsia'},
+{text = GetSetieng(ChatId).tphlesh, data =IdUser..'/'.. 'Status_tphlesh'},{text = 'الحمايه : ', data =IdUser..'/'.. 'Status_tphlesh'},
+},
+{
+{text = GetSetieng(ChatId).alphsar, data =IdUser..'/'.. 'Status_alphsar'},{text = 'السب : ', data =IdUser..'/'.. 'Status_alphsar'},
+},
+{
+{text = '- التالي .. ', data =IdUser..'/'.. 'NextSeting'}
+},
+{
+{text = 'القائمة الرئيسية', data = IdUser..'/helpall'},
+},
+{
+{text = '- اخفاء الامر ', data ='/delAmr'}
+},
+}
+}
+edit(ChatId,Msg_id,Text, 'md', false, false, reply_markup)
+end
+end  
+if Text and Text:match('/delAmr') then
+local UserId = Text:match('/delAmr')
+if data.Managers then
+return bot.deleteMessages(ChatId,{[1]= Msg_id})
+end
+end
+
+if Text and Text:match('/gamesmtor') then
+local UserId = Text:match('/gamesmtor')
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{{text="♟ شطرنج ♟",url='https://t.me/T4TTTTBOT?game=chess'}},
+{{text="لعبة فلابي بيرد 🐥",url='https://t.me/awesomebot?game=FlappyBird'},{text="تحداني فالرياضيات 🔢",url='https://t.me/gamebot?game=MathBattle'}},
+{{text="تحداني في ❌⭕️",url='t.me/XO_AABOT?start3836619'},{text="سباق الدراجات 🏍",url='https://t.me/gamee?game=MotoFX'}},
+{{text="سباق سيارات 🏎",url='https://t.me/gamee?game=F1Racer'},{text="متشابه 👾",url='https://t.me/gamee?game=DiamondRows'}},
+{{text="كرة قدم ⚽",url='https://t.me/gamee?game=FootballStar'}},
+{{text="دومنا🥇",url='https://vipgames.com/play/?affiliateId=wpDom/#/games/domino/lobby'},{text="❕ليدو",url='https://vipgames.com/play/?affiliateId=wpVG#/games/ludo/lobby'}},
+{{text="ورق🤹‍♂",url='https://t.me/gamee?game=Hexonix'},{text="Hexonix❌",url='https://t.me/gamee?game=Hexonix'}},
+{{text="MotoFx🏍️",url='https://t.me/gamee?game=MotoFx'}},
+{{text="لعبة 2048 🎰",url='https://t.me/awesomebot?game=g2048'},{text="Squares🏁",url='https://t.me/gamee?game=Squares'}},
+{{text="Atomic 1▶️",url='https://t.me/gamee?game=AtomicDrop1'},{text="Corsairs",url='https://t.me/gamebot?game=Corsairs'}},
+{{text="LumberJack",url='https://t.me/gamebot?game=LumberJack'}},
+{{text="LittlePlane",url='https://t.me/gamee?game=LittlePlane'},{text="RollerDisco",url='https://t.me/gamee?game=RollerDisco'}},
+{{text="🦖 Dragon Game 🦖",url='https://t.me/T4TTTTBOT?game=dragon'},{text="🐍 3D Snake Game 🐍",url='https://t.me/T4TTTTBOT?game=snake'}},
+{{text="🔵 Color Game 🔴",url='https://t.me/T4TTTTBOT?game=color'}},
+{{text="🚀 Rocket Game 🚀",url='https://t.me/T4TTTTBOT?game=rocket'},{text="🏹 Arrow Game 🏹",url='https://t.me/T4TTTTBOT?game=arrow'}},
+{{text = 'رجوع', data = IdUser..'/help6'},},
+}
+}
+edit(ChatId,Msg_id,'⇜ قائمة الالعاب المتطورة ',"md", true, false, reply_markup)
+end
+
+if Text and Text:match('(%d+)/Status_link') then
+local UserId = Text:match('(%d+)/Status_link')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل الروابط', data =UserId..'/'.. 'lock_link'},{text = 'قفل الروابط بالكتم', data =UserId..'/'.. 'lock_linkktm'},
+},
+{
+{text = 'قفل الروابط بالطرد', data =UserId..'/'.. 'lock_linkkick'},{text = 'قفل الروابط بالتقييد', data =UserId..'/'.. 'lock_linkkid'},
+},
+{
+{text = 'فتح الروابط', data =UserId..'/'.. 'unlock_link'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_farsia') then
+local UserId = Text:match('(%d+)/Status_farsia')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل الفارسيه', data =UserId..'/'.. 'lock_Status_farsia'},
+},
+{
+{text = 'فتح الفارسيه', data =UserId..'/'.. 'unlock_Status_farsia'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_tphlesh') then
+local UserId = Text:match('(%d+)/Status_tphlesh')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل الحمايه', data =UserId..'/'.. 'lock_Status_tphlesh'},
+},
+{
+{text = 'فتح الحمايه', data =UserId..'/'.. 'unlock_Status_tphlesh'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_alphsar') then
+local UserId = Text:match('(%d+)/Status_alphsar')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل السب', data =UserId..'/'.. 'lock_Status_alphsar'},
+},
+{
+{text = 'فتح السب', data =UserId..'/'.. 'unlock_Status_alphsar'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_spam') then
+local UserId = Text:match('(%d+)/Status_spam')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل الكلايش', data =UserId..'/'.. 'lock_spam'},{text = 'قفل الكلايش بالكتم', data =UserId..'/'.. 'lock_spamktm'},
+},
+{
+{text = 'قفل الكلايش بالطرد', data =UserId..'/'.. 'lock_spamkick'},{text = 'قفل الكلايش بالتقييد', data =UserId..'/'.. 'lock_spamid'},
+},
+{
+{text = 'فتح الكلايش', data =UserId..'/'.. 'unlock_spam'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_keypord') then
+local UserId = Text:match('(%d+)/Status_keypord')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل الكيبورد', data =UserId..'/'.. 'lock_keypord'},{text = 'قفل الكيبورد بالكتم', data =UserId..'/'.. 'lock_keypordktm'},
+},
+{
+{text = 'قفل الكيبورد بالطرد', data =UserId..'/'.. 'lock_keypordkick'},{text = 'قفل الكيبورد بالتقييد', data =UserId..'/'.. 'lock_keypordkid'},
+},
+{
+{text = 'فتح الكيبورد', data =UserId..'/'.. 'unlock_keypord'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_voice') then
+local UserId = Text:match('(%d+)/Status_voice')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل الاغاني', data =UserId..'/'.. 'lock_voice'},{text = 'قفل الاغاني بالكتم', data =UserId..'/'.. 'lock_voicektm'},
+},
+{
+{text = 'قفل الاغاني بالطرد', data =UserId..'/'.. 'lock_voicekick'},{text = 'قفل الاغاني بالتقييد', data =UserId..'/'.. 'lock_voicekid'},
+},
+{
+{text = 'فتح الاغاني', data =UserId..'/'.. 'unlock_voice'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_gif') then
+local UserId = Text:match('(%d+)/Status_gif')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل المتحركه', data =UserId..'/'.. 'lock_gif'},{text = 'قفل المتحركه بالكتم', data =UserId..'/'.. 'lock_gifktm'},
+},
+{
+{text = 'قفل المتحركه بالطرد', data =UserId..'/'.. 'lock_gifkick'},{text = 'قفل المتحركه بالتقييد', data =UserId..'/'.. 'lock_gifkid'},
+},
+{
+{text = 'فتح المتحركه', data =UserId..'/'.. 'unlock_gif'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_files') then
+local UserId = Text:match('(%d+)/Status_files')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل الملفات', data =UserId..'/'.. 'lock_files'},{text = 'قفل الملفات بالكتم', data =UserId..'/'.. 'lock_filesktm'},
+},
+{
+{text = 'قفل الملفات بالطرد', data =UserId..'/'.. 'lock_fileskick'},{text = 'قفل الملفات بالتقييد', data =UserId..'/'.. 'lock_fileskid'},
+},
+{
+{text = 'فتح الملفات', data =UserId..'/'.. 'unlock_files'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_text') then
+local UserId = Text:match('(%d+)/Status_text')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل الشات', data =UserId..'/'.. 'lock_text'},
+},
+{
+{text = 'فتح الشات', data =UserId..'/'.. 'unlock_text'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_video') then
+local UserId = Text:match('(%d+)/Status_video')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل الفيديو', data =UserId..'/'.. 'lock_video'},{text = 'قفل الفيديو بالكتم', data =UserId..'/'.. 'lock_videoktm'},
+},
+{
+{text = 'قفل الفيديو بالطرد', data =UserId..'/'.. 'lock_videokick'},{text = 'قفل الفيديو بالتقييد', data =UserId..'/'.. 'lock_videokid'},
+},
+{
+{text = 'فتح الفيديو', data =UserId..'/'.. 'unlock_video'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_photo') then
+local UserId = Text:match('(%d+)/Status_photo')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل الصور', data =UserId..'/'.. 'lock_photo'},{text = 'قفل الصور بالكتم', data =UserId..'/'.. 'lock_photoktm'},
+},
+{
+{text = 'قفل الصور بالطرد', data =UserId..'/'.. 'lock_photokick'},{text = 'قفل الصور بالتقييد', data =UserId..'/'.. 'lock_photokid'},
+},
+{
+{text = 'فتح الصور', data =UserId..'/'.. 'unlock_photo'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_username') then
+local UserId = Text:match('(%d+)/Status_username')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل المعرفات', data =UserId..'/'.. 'lock_username'},{text = 'قفل المعرفات بالكتم', data =UserId..'/'.. 'lock_usernamektm'},
+},
+{
+{text = 'قفل المعرفات بالطرد', data =UserId..'/'.. 'lock_usernamekick'},{text = 'قفل المعرفات بالتقييد', data =UserId..'/'.. 'lock_usernamekid'},
+},
+{
+{text = 'فتح المعرفات', data =UserId..'/'.. 'unlock_username'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_tags') then
+local UserId = Text:match('(%d+)/Status_tags')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل التاك', data =UserId..'/'.. 'lock_tags'},{text = 'قفل التاك بالكتم', data =UserId..'/'.. 'lock_tagsktm'},
+},
+{
+{text = 'قفل التاك بالطرد', data =UserId..'/'.. 'lock_tagskick'},{text = 'قفل التاك بالتقييد', data =UserId..'/'.. 'lock_tagskid'},
+},
+{
+{text = 'فتح التاك', data =UserId..'/'.. 'unlock_tags'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_bots') then
+local UserId = Text:match('(%d+)/Status_bots')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل البوتات', data =UserId..'/'.. 'lock_bots'},{text = 'قفل البوتات بالطرد', data =UserId..'/'.. 'lock_botskick'},
+},
+{
+{text = 'فتح البوتات', data =UserId..'/'.. 'unlock_bots'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_fwd') then
+local UserId = Text:match('(%d+)/Status_fwd')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل التوجيه', data =UserId..'/'.. 'lock_fwd'},{text = 'قفل التوجيه بالكتم', data =UserId..'/'.. 'lock_fwdktm'},
+},
+{
+{text = 'قفل التوجيه بالطرد', data =UserId..'/'.. 'lock_fwdkick'},{text = 'قفل التوجيه بالتقييد', data =UserId..'/'.. 'lock_fwdkid'},
+},
+{
+{text = 'فتح التوجيه', data =UserId..'/'.. 'unlock_link'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_audio') then
+local UserId = Text:match('(%d+)/Status_audio')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل الصوت', data =UserId..'/'.. 'lock_audio'},{text = 'قفل الصوت بالكتم', data =UserId..'/'.. 'lock_audioktm'},
+},
+{
+{text = 'قفل الصوت بالطرد', data =UserId..'/'.. 'lock_audiokick'},{text = 'قفل الصوت بالتقييد', data =UserId..'/'.. 'lock_audiokid'},
+},
+{
+{text = 'فتح الصوت', data =UserId..'/'.. 'unlock_audio'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_stikear') then
+local UserId = Text:match('(%d+)/Status_stikear')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل الملصقات', data =UserId..'/'.. 'lock_stikear'},{text = 'قفل الملصقات بالكتم', data =UserId..'/'.. 'lock_stikearktm'},
+},
+{
+{text = 'قفل الملصقات بالطرد', data =UserId..'/'.. 'lock_stikearkick'},{text = 'قفل الملصقات بالتقييد', data =UserId..'/'.. 'lock_stikearkid'},
+},
+{
+{text = 'فتح الملصقات', data =UserId..'/'.. 'unlock_stikear'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_phone') then
+local UserId = Text:match('(%d+)/Status_phone')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل الجهات', data =UserId..'/'.. 'lock_phone'},{text = 'قفل الجهات بالكتم', data =UserId..'/'.. 'lock_phonektm'},
+},
+{
+{text = 'قفل الجهات بالطرد', data =UserId..'/'.. 'lock_phonekick'},{text = 'قفل الجهات بالتقييد', data =UserId..'/'.. 'lock_phonekid'},
+},
+{
+{text = 'فتح الجهات', data =UserId..'/'.. 'unlock_phone'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_joine') then
+local UserId = Text:match('(%d+)/Status_joine')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل الدخول', data =UserId..'/'.. 'lock_joine'},
+},
+{
+{text = 'فتح الدخول', data =UserId..'/'.. 'unlock_joine'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_addmem') then
+local UserId = Text:match('(%d+)/Status_addmem')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل الاضافه', data =UserId..'/'.. 'lock_addmem'},
+},
+{
+{text = 'فتح الاضافه', data =UserId..'/'.. 'unlock_addmem'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_videonote') then
+local UserId = Text:match('(%d+)/Status_videonote')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل السيلفي', data =UserId..'/'.. 'lock_videonote'},{text = 'قفل السيلفي بالكتم', data =UserId..'/'.. 'lock_videonotektm'},
+},
+{
+{text = 'قفل السيلفي بالطرد', data =UserId..'/'.. 'lock_videonotekick'},{text = 'قفل السيلفي بالتقييد', data =UserId..'/'.. 'lock_videonotekid'},
+},
+{
+{text = 'فتح السيلفي', data =UserId..'/'.. 'unlock_videonote'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_pin') then
+local UserId = Text:match('(%d+)/Status_pin')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل التثبيت', data =UserId..'/'.. 'lock_pin'},
+},
+{
+{text = 'فتح التثبيت', data =UserId..'/'.. 'unlock_pin'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_tgservir') then
+local UserId = Text:match('(%d+)/Status_tgservir')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل الاشعارات', data =UserId..'/'.. 'lock_tgservir'},
+},
+{
+{text = 'فتح الاشعارات', data =UserId..'/'.. 'unlock_tgservir'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_markdaun') then
+local UserId = Text:match('(%d+)/Status_markdaun')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل الماركداون', data =UserId..'/'.. 'lock_markdaun'},{text = 'قفل الماركداون بالكتم', data =UserId..'/'.. 'lock_markdaunktm'},
+},
+{
+{text = 'قفل الماركداون بالطرد', data =UserId..'/'.. 'lock_markdaunkick'},{text = 'قفل الماركداون بالتقييد', data =UserId..'/'.. 'lock_markdaunkid'},
+},
+{
+{text = 'فتح الماركداون', data =UserId..'/'.. 'unlock_markdaun'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_edits') then
+local UserId = Text:match('(%d+)/Status_edits')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل التعديل', data =UserId..'/'.. 'lock_edits'},
+},
+{
+{text = 'فتح التعديل', data =UserId..'/'.. 'unlock_edits'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_games') then
+local UserId = Text:match('(%d+)/Status_games')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل الالعاب', data =UserId..'/'.. 'lock_games'},{text = 'قفل الالعاب بالكتم', data =UserId..'/'.. 'lock_gamesktm'},
+},
+{
+{text = 'قفل الالعاب بالطرد', data =UserId..'/'.. 'lock_gameskick'},{text = 'قفل الالعاب بالتقييد', data =UserId..'/'.. 'lock_gameskid'},
+},
+{
+{text = 'فتح الالعاب', data =UserId..'/'.. 'unlock_games'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Status_flood') then
+local UserId = Text:match('(%d+)/Status_flood')
+if tonumber(IdUser) == tonumber(UserId) then
+
+local reply_markup = bot.replyMarkup{type = 'inline',data = {
+{
+{text = 'قفل التكرار', data =UserId..'/'.. 'lock_flood'},{text = 'قفل التكرار بالكتم', data =UserId..'/'.. 'lock_floodktm'},
+},
+{
+{text = 'قفل التكرار بالطرد', data =UserId..'/'.. 'lock_floodkick'},{text = 'قفل التكرار بالتقييد', data =UserId..'/'.. 'lock_floodkid'},
+},
+{
+{text = 'فتح التكرار', data =UserId..'/'.. 'unlock_flood'},
+},
+{
+{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ اختار نوع القفل :", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_link') then
+local UserId = Text:match('(%d+)/unlock_link')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:Link"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح الروابط").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_Status_farsia') then
+local UserId = Text:match('(%d+)/unlock_Status_farsia')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:farsia"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح الفارسيه").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_Status_tphlesh') then
+local UserId = Text:match('(%d+)/unlock_Status_tphlesh')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:tphlesh"..ChatId)  
+Redis:del(TheFRADM.."FRADM:Status:IdPhoto"..ChatId) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح الحمايه").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_Status_alphsar') then
+local UserId = Text:match('(%d+)/unlock_Status_alphsar')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:phshar"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح السب").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_Status_farsia') then
+local UserId = Text:match('(%d+)/lock_Status_farsia')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:farsia"..ChatId,true)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الفارسيه").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_Status_tphlesh') and data.Managers then
+local UserId = Text:match('(%d+)/lock_Status_tphlesh')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:tphlesh"..ChatId,true)
+Redis:set(TheFRADM.."FRADM:Status:IdPhoto"..ChatId,true)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل الحمايه").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/lock_Status_alphsar') then
+local UserId = Text:match('(%d+)/lock_Status_alphsar')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:set(TheFRADM.."FRADM:Lock:phshar"..ChatId,true)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم قفل السب").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_spam') then
+local UserId = Text:match('(%d+)/unlock_spam')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:Spam"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح الكلايش").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_keypord') then
+local UserId = Text:match('(%d+)/unlock_keypord')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:Keyboard"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح الكيبورد").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_voice') then
+local UserId = Text:match('(%d+)/unlock_voice')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:vico"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح الاغاني").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_gif') then
+local UserId = Text:match('(%d+)/unlock_gif')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:Animation"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح المتحركات").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_files') then
+local UserId = Text:match('(%d+)/unlock_files')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:Document"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح الملفات").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_text') then
+local UserId = Text:match('(%d+)/unlock_text')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:text"..ChatId,true) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح الشات").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_video') then
+local UserId = Text:match('(%d+)/unlock_video')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:Video"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح الفيديو").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_photo') then
+local UserId = Text:match('(%d+)/unlock_photo')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:Photo"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح الصور").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_username') then
+local UserId = Text:match('(%d+)/unlock_username')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:User:Name"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح المعرفات").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_tags') then
+local UserId = Text:match('(%d+)/unlock_tags')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:hashtak"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح التاك").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_bots') then
+local UserId = Text:match('(%d+)/unlock_bots')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:Bot:kick"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح البوتات").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_fwd') then
+local UserId = Text:match('(%d+)/unlock_fwd')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:forward"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح التوجيه").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_audio') then
+local UserId = Text:match('(%d+)/unlock_audio')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:Audio"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح الصوت").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_stikear') then
+local UserId = Text:match('(%d+)/unlock_stikear')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:Sticker"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح الملصقات").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_phone') then
+local UserId = Text:match('(%d+)/unlock_phone')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:Contact"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح الجهات").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_joine') then
+local UserId = Text:match('(%d+)/unlock_joine')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:Join"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح الدخول").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_addmem') then
+local UserId = Text:match('(%d+)/unlock_addmem')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:AddMempar"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح الاضافه").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_videonote') then
+local UserId = Text:match('(%d+)/unlock_videonote')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:Unsupported"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح بصمه الفيديو").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_pin') then
+local UserId = Text:match('(%d+)/unlock_pin')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:lockpin"..ChatId) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح التثبيت").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_tgservir') then
+local UserId = Text:match('(%d+)/unlock_tgservir')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:tagservr"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح الاشعارات").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_markdaun') then
+local UserId = Text:match('(%d+)/unlock_markdaun')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:Markdaun"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح الماركدون").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_edits') then
+local UserId = Text:match('(%d+)/unlock_edits')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:edit"..ChatId) 
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح التعديل").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_games') then
+local UserId = Text:match('(%d+)/unlock_games')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Lock:geam"..ChatId)  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح الالعاب").unLock, 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/unlock_flood') then
+local UserId = Text:match('(%d+)/unlock_flood')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:hdel(TheFRADM.."FRADM:Spam:Group:User"..ChatId ,"Spam:User")  
+local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = 'رجوع', data =UserId..'/'.. 'NoNextSeting'},},}}
+edit(ChatId,Msg_id,Reply_Status(IdUser,"⇜ تم فتح التكرار").unLock, 'md', true, false, reply_markup)
+end
+end
+if Text and Text:match('(%d+)/backbio') then
+local UserId = Text:match('(%d+)/backbio')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{
+{text = 'شباب', data = IdUser..'/bioold'},{text = 'بنات', data = IdUser..'/biobnt'},
+},
+}
+}
+return edit(ChatId,Msg_id,"اختر نوع البايو", 'md', true, false, reply_markup)
+end
+end
+if Text and Text:match('(%d+)/bioold') then
+local UserId = Text:match('(%d+)/bioold')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{
+{text = 'بايو آخر', data = UserId..'/bioold'},
+},
+{
+{text = 'رجوع', data = UserId..'/backbio'},
+},
+}
+}
+local list = {
+"ابتليت بحُب ابتسامَته وعيُونه.",
+"انتَ فكره رائعه وضعها الربُ في عقلي.",
+"اتأمل صورتك وتطيب الدنيا في عيني.",
+"ماذا لو اخَترتكَ موِسيقتي.",
+"مبسّمك يأخذ من الليّل نُوره.",
+"يا ضمادَ جُروحِي و أطيّب أشخاصي.",
+"كلما أتبعُ قلبي يدُلني إليك.",
+"كُل شيء بجوارك جميل جدًا.‍",
+"صُباح الخير يامُلهميِ وشخصيِ الأول.",
+"ليتنَي آكثر الناظرينَ اليكِ.",
+"حتى الخيال فيّك جبر خاطَر.",
+"عنْ ألف نِعمة أنا وقلبي مكتفّين فيك . .",
+"﮼سأحاول ، أقـنـاع نَـفسـي بـآن ڪُل شـيء ڪان مُـجرد حلم🥀!",
+"حاولت أن لا انظر اليك ، لڪن عيناي تمردت 🖤👁️",
+"لا تهمل وردتكَ ، حتى لا يُسقيها غيرك🔥🖤",
+"أخبࢪتـك ذات ليلـه أنك ستمـل وتتغيـࢪ ، فأنڪࢪت، 🖤",
+"اللهُم إجعل لي نصيب في كل شيء أحببته.",
+"ربي .. إني اعوذ بك من طول التمني ، و حرمان الوصول ♥️",
+"رسالة واحدة منهُ تعادل سحابة سعادة  🎻🖤",
+"العالم الذي نسير إليه، مُختلف تمامًا عن العالم الذي يجول بداخلنا .🤍✨",
+"تكاد تنزلق من أطراف قلبي، ولأول مرة أشعر بأني سئمت من الاحتفاظ بك",
+"أُعَمّم رَسائلي، وأعنيك أنتَ.",
+"لا أجيد إكمال نصف الأشياء، إمَّا أن تأتيني بأكملها، أو لتذهب بجميعها.",
+"لم تحملي على كتفك إلا شعرك من أين أتى هذا العِبء؟",
+"كأن الحياة تأتي من جِهتك🖤.",
+"فمن وثق بالله أغناه ومن توكل عليه كفاه.",
+"في فمه حديث متكسر ، يجرح اطراف صوته .",
+"ظننتها عابرة ، لكنها ظلت في داخلي الى الأبد ."
+}
+local bioold = list[math.random(#list)]
+return edit(ChatId,Msg_id,"["..bioold.."]", 'md', true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/biobnt') then
+local UserId = Text:match('(%d+)/biobnt')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{
+type = 'inline',
+data = {
+{
+{text = 'بايو آخر', data = UserId..'/biobnt'},
+},
+{
+{text = 'رجوع', data = UserId..'/backbio'},
+},
+}
+}
+local list = {
+"ابتليت بحُب ابتسامَته وعيُونه.",
+"انتَ فكره رائعه وضعها الربُ في عقلي.",
+"اتأمل صورتك وتطيب الدنيا في عيني.",
+"ماذا لو اخَترتكَ موِسيقتي.",
+"مبسّمك يأخذ من الليّل نُوره.",
+"يا ضمادَ جُروحِي و أطيّب أشخاصي.",
+"كلما أتبعُ قلبي يدُلني إليك.",
+"كُل شيء بجوارك جميل جدًا.‍",
+"صُباح الخير يامُلهميِ وشخصيِ الأول.",
+"ليتنَي آكثر الناظرينَ اليكِ.",
+"حتى الخيال فيّك جبر خاطَر.",
+"عنْ ألف نِعمة أنا وقلبي مكتفّين فيك . .",
+"﮼سأحاول ، أقـنـاع نَـفسـي بـآن ڪُل شـيء ڪان مُـجرد حلم🥀!",
+"حاولت أن لا انظر اليك ، لڪن عيناي تمردت 🖤👁️",
+"لا تهمل وردتكَ ، حتى لا يُسقيها غيرك🔥🖤",
+"أخبࢪتـك ذات ليلـه أنك ستمـل وتتغيـࢪ ، فأنڪࢪت، 🖤",
+"اللهُم إجعل لي نصيب في كل شيء أحببته.",
+"ربي .. إني اعوذ بك من طول التمني ، و حرمان الوصول ♥️",
+"رسالة واحدة منهُ تعادل سحابة سعادة  🎻🖤",
+"العالم الذي نسير إليه، مُختلف تمامًا عن العالم الذي يجول بداخلنا .🤍✨",
+"تكاد تنزلق من أطراف قلبي، ولأول مرة أشعر بأني سئمت من الاحتفاظ بك",
+"أُعَمّم رَسائلي، وأعنيك أنتَ.",
+"لا أجيد إكمال نصف الأشياء، إمَّا أن تأتيني بأكملها، أو لتذهب بجميعها.",
+"لم تحملي على كتفك إلا شعرك من أين أتى هذا العِبء؟",
+"كأن الحياة تأتي من جِهتك🖤.",
+"فمن وثق بالله أغناه ومن توكل عليه كفاه.",
+"في فمه حديث متكسر ، يجرح اطراف صوته .",
+"ظننتها عابرة ، لكنها ظلت في داخلي الى الأبد ."
+}
+local biobnt = list[math.random(#list)]
+return edit(ChatId,Msg_id,"["..biobnt.."]", 'md', true, false, reply_markup)
+end
+end
+if Text and Text:match('^(%d+)/back_lists$') then
+local UserId = Text:match('^(%d+)/back_lists$')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = bot.replyMarkup{
+type = "inline",
+data = {
+{
+{text="قائمه Dev",data=UserId..'/Redis:Devall'},
+},
+{
+{text="المكتومين عام",data=UserId..'/KtmAll'},{text="المحظورين عام",data=UserId..'/BanAll'},
+},
+{
+{text="قائمه MY",data=UserId..'/DevelopersQ'},{text="قائمه M",data=UserId..'/Developers'},
+},
+{
+{text="المالكين",data=UserId..'/TheBasicsQ'},{text="المنشئين الاساسيين",data=UserId..'/TheBasics'},
+},
+{
+{text="المنشئين",data=UserId..'/Originators'},{text="المدراء",data=UserId..'/Managers'},
+},
+{
+{text="الادمنيه",data=UserId..'/Addictive'},{text="المميزين",data=UserId..'/DelDistinguished'},
+},
+{
+{text="المكتومين",data=UserId..'/SilentGroupGroup'},{text="المحظورين",data=UserId..'/BanGroup'},
+},
+{
+{text = "- اخفاء الامر ", data =UserId.."/delAmr"}
+},
+}
+}
+return edit(ChatId,Msg_id,"⇜ اختر احدى القوائم لمسحها", "md",true, false, reply_markup)
+end
+end
+if Text and Text:match('(%d+)/DevelopersQ') and data.ControllerBot then
+local UserId = Text:match('(%d+)/DevelopersQ')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:DevelopersQ:Groups") 
+local reply_markup = bot.replyMarkup{
+type = "inline",
+data = {
+{
+{text="رجوع",data=UserId..'/back_lists'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ تم مسح قائمه Myth🎖️", "md",true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Developers') and data.DevelopersQ then
+local UserId = Text:match('(%d+)/Developers')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Developers:Groups") 
+local reply_markup = bot.replyMarkup{
+type = "inline",
+data = {
+{
+{text="رجوع",data=UserId..'/back_lists'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ تم مسح Myth", "md",true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Redis:Devall') and data.ControllerBot then
+local UserId = Text:match('(%d+)/Redis:Devall')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:ControlAll:Groups") 
+local reply_markup = bot.replyMarkup{
+type = "inline",
+data = {
+{
+{text="رجوع",data=UserId..'/back_lists'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ تم مسح قائمه Dev²🎖", "md",true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/TheBasicsQ') and data.Developers then
+local UserId = Text:match('(%d+)/TheBasicsQ')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:TheBasicsQ:Group"..ChatId) 
+local reply_markup = bot.replyMarkup{
+type = "inline",
+data = {
+{
+{text="رجوع",data=UserId..'/back_lists'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ تم مسح المالكين", "md",true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/MalekAsase') and data.Developers then
+local UserId = Text:match('(%d+)/MalekAsase')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:MalekAsase:Group"..ChatId) 
+local reply_markup = bot.replyMarkup{
+type = "inline",
+data = {
+{
+{text="رجوع",data=UserId..'/back_lists'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ تم مسح المالكين", "md",true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/TheBasics') and data.TheBasicsQ then
+local UserId = Text:match('(%d+)/TheBasics')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:TheBasics:Group"..ChatId) 
+local reply_markup = bot.replyMarkup{
+type = "inline",
+data = {
+{
+{text="رجوع",data=UserId..'/back_lists'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ تم مسح المنشئين الاساسيين", "md",true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Originators') and data.TheBasics then
+local UserId = Text:match('(%d+)/Originators')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Originators:Group"..ChatId) 
+local reply_markup = bot.replyMarkup{
+type = "inline",
+data = {
+{
+{text="رجوع",data=UserId..'/back_lists'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ تم مسح المنشئين", "md",true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Managers') and data.Originators then
+local UserId = Text:match('(%d+)/Managers')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Managers:Group"..ChatId) 
+local reply_markup = bot.replyMarkup{
+type = "inline",
+data = {
+{
+{text="رجوع",data=UserId..'/back_lists'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ تم مسح المدراء", "md",true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/Addictive') and data.Managers then
+local UserId = Text:match('(%d+)/Addictive')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Addictive:Group"..ChatId) 
+local reply_markup = bot.replyMarkup{
+type = "inline",
+data = {
+{
+{text="رجوع",data=UserId..'/back_lists'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ تم مسح الادمنيه", "md",true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/DelDistinguished') then
+local UserId = Text:match('(%d+)/DelDistinguished')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:Distinguished:Group"..ChatId) 
+local reply_markup = bot.replyMarkup{
+type = "inline",
+data = {
+{
+{text="رجوع",data=UserId..'/back_lists'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ تم مسح المميزين", "md",true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/KtmAll') and data.ControllerBot then
+local UserId = Text:match('(%d+)/KtmAll')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:KtmAll:Groups") 
+local reply_markup = bot.replyMarkup{
+type = "inline",
+data = {
+{
+{text="رجوع",data=UserId..'/back_lists'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ تم مسح المكتومين عام", "md",true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/BanAll') and data.ControllerBot then
+local UserId = Text:match('(%d+)/BanAll')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:BanAll:Groups") 
+local reply_markup = bot.replyMarkup{
+type = "inline",
+data = {
+{
+{text="رجوع",data=UserId..'/back_lists'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ تم مسح المحظورين عام", "md",true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/BanGroup') and data.Addictive then
+local UserId = Text:match('(%d+)/BanGroup')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:BanGroup:Group"..ChatId) 
+local reply_markup = bot.replyMarkup{
+type = "inline",
+data = {
+{
+{text="رجوع",data=UserId..'/back_lists'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ تم مسح المحظورين", "md",true, false, reply_markup)
+end
+elseif Text and Text:match('(%d+)/SilentGroupGroup') and data.Addictive then
+local UserId = Text:match('(%d+)/SilentGroupGroup')
+if tonumber(IdUser) == tonumber(UserId) then
+Redis:del(TheFRADM.."FRADM:SilentGroup:Group"..ChatId) 
+local reply_markup = bot.replyMarkup{
+type = "inline",
+data = {
+{
+{text="رجوع",data=UserId..'/back_lists'},
+},
+}
+}
+edit(ChatId,Msg_id,"⇜ تم مسح المكتومين", "md",true, false, reply_markup)
+end
+end
+end
+end
