@@ -20398,7 +20398,6 @@ Redis:set(TheFRADM.."youtidche"..msg.chat_id..msg.sender_id.user_id,search)
 local datar = {data = {{text = "Louis", url = 'https://t.me/Y88F8'}}}
 link = link:gsub("https://youtu.be/",'') 
 datar[i] = {{text = titlee , data = search..":yout:"..link}}
-end
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = datar
