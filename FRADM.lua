@@ -2,12 +2,11 @@ URL     = require("./libs/url")
 JSON    = require("./libs/dkjson")
 serpent = require("libs/serpent")
 json = require('libs/json')
-utf8 = require("libs/utf8")
 Redis = require('libs/redis').connect('127.0.0.1', 6379)
 http  = require("socket.http")
 https   = require("ssl.https")
 SshId = io.popen("echo $SSH_CLIENT ︙ awk '{ print $1}'"):read('*a')
-Merotele = require('./libs/Merotele')
+Merotele = require 'MeroTele'
 local FileInformation = io.open("./Information.lua","r")
 if not FileInformation then
 if not Redis:get(SshId.."Info:Redis:Token") then
@@ -28,7 +27,7 @@ end
 else
 print('\27[1;34mلم يتم حفظ التوكن جرب مره اخرى \nToken not saved, try again')
 end 
-os.execute('lua5.3 FRADM.lua')
+os.execute('lua5.2 FREDM.lua')
 end
 if not Redis:get(SshId.."Info:Redis:User") then
 io.write('\27[1;31mارسل معرف المطور الاساسي الان \nDeveloper UserName saved ↡\n\27[0;39;49m')
@@ -39,7 +38,7 @@ Redis:set(SshId.."Info:Redis:User",UserSudo)
 else
 print('\n\27[1;34mلم يتم حفظ معرف المطور الاساسي \nDeveloper UserName not saved\n')
 end 
-os.execute('lua5.3 FRADM.lua')
+os.execute('lua5.2 FREDM.lua')
 end
 if not Redis:get(SshId.."Info:Redis:User:ID") then
 io.write('\27[1;31mارسل ايدي المطور الاساسي الان \nDeveloper ID saved ↡\n\27[0;39;49m')
