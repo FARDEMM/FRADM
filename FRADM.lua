@@ -361,13 +361,13 @@ local conis = tonumber(Coins)
 return conis
 end
 function RunCallBack(msg)
-plugin = dofile("plugin/Callback.lua")
+plugin = dofile("./Callback.lua")
 if plugin and plugin.TheFRADM and msg then
 results = plugin.TheFRADM(msg)
 end
 end
 function RunGames(msg)
-plugin = dofile("plugin/Games.lua")
+plugin = dofile("./Games.lua")
 if plugin and plugin.TheFRADM and msg then
 results = plugin.TheFRADM(msg)
 end
