@@ -1,4 +1,4 @@
-function RunBank(msg)
+function Feilbank(msg)
 plugin = dofile("./Bank.lua")
 if plugin and plugin.TheFREDM and msg then
 results = plugin.TheFREDM(msg)
@@ -376,7 +376,7 @@ end
 if msg.The_Controller == 1 or msg.The_Controller == 2 or msg.The_Controller == 3 or msg.The_Controller == 444 or msg.The_Controller == 44 or msg.The_Controller == 4 or msg.The_Controller == 5 or msg.The_Controller == 6 or msg.The_Controller == 7 or msg.The_Controller == 8 or msg.The_Controller == 9 then
 msg.Distinguished = true
 end
-RunBank(msg)
+Feilbank(msg)
 ------------------------------------------------------------------
 end
 File_Bot_Run(data.message,data.message)
