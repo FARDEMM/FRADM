@@ -4272,19 +4272,19 @@ return merolua.send(msg_chat_id,msg_id,'\nUser Dev : [@'..UserSudo..'\n'..(Redis
 end
 if text == 'رفع سورس' and msg.reply_to_message_id ~= 0  then
 if not msg.ControllerBot then 
-return bot.sendText(msg_chat_id,msg_id,'\n• عذرا الامو يخص { مطور السـورس 𖦴 } بس !',"md",true)  
+return merolua.sendText(msg_chat_id,msg_id,'\n• عذرا الامو يخص { مطور السـورس 𖦴 } بس !',"md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
 if Message_Reply.content.document then
 local File_Id = Message_Reply.content.document.document.remote.id
 local Name_File = Message_Reply.content.document.file_name
 if Name_File ~= 'FRADM.lua' then
-return bot.sendText(msg_chat_id,msg_id,'• عذرا هذا الملف ليس سورسك')
+return merolua.sendText(msg_chat_id,msg_id,'• عذرا هذا الملف ليس سورسك')
 end 
 os.execute('rm -rf FRADM.lua')
 local File = json:decode(https.request('https://api.telegram.org/bot'..Token..'/getfile?file_id='..File_Id)) 
 local download_ = download('https://api.telegram.org/file/bot'..Token..'/'..File.result.file_path,''..Name_File) 
-return bot.sendText(msg_chat_id,msg_id,'• تم رفع سورس اكتب تحديث')
+return merolua.sendText(msg_chat_id,msg_id,'• تم رفع سورس اكتب تحديث')
 end 
 end
 if text == 'جلب النسخه الاحتياطية' or text == 'جلب النسخه الاحتياطيه' then
@@ -8359,7 +8359,7 @@ data = {
 },
 }
 }
-return bot.sendText(msg_chat_id,msg_id,Get_Is_Id,"md",false, false, false, false, reply_markup)
+return merolua.sendText(msg_chat_id,msg_id,Get_Is_Id,"md",false, false, false, false, reply_markup)
 end
 else
 if photo.total_count > 0 then
@@ -8412,7 +8412,7 @@ data = {
 },
 }
 }
-return bot.sendText(msg.chat_id, msg.id,
+return merolua.sendText(msg.chat_id, msg.id,
 '\n• 𝖭𝖺𝗆𝖾 𖦹 '..UserInfo.first_name..
 '\n• 𝖨𝖣 𖦹 '..UserId..
 '\n• 𝖴𝗌𝖾𝗋𝗇𝖺𝗆𝖾 𖦹 ['..UserInfousername..
@@ -8445,7 +8445,7 @@ data = {
 },
 }
 }
-return bot.sendText(msg_chat_id,msg_id,'['..Get_Is_Id..']',"md",false, false, false, false, reply_markup)
+return merolua.sendText(msg_chat_id,msg_id,'['..Get_Is_Id..']',"md",false, false, false, false, reply_markup)
 else
 local reply_markup = bot.replyMarkup{
 type = 'inline',
@@ -8455,7 +8455,7 @@ data = {
 },
 }
 }
-return bot.sendText(msg.chat_id, msg.id,
+return merolua.sendText(msg.chat_id, msg.id,
 '\n• 𝖭𝖺𝗆𝖾 𖦹 '..UserInfo.first_name..
 '\n• 𝖨𝖣 𖦹 '..UserId..
 '\n• 𝖴𝗌𝖾𝗋𝗇𝖺𝗆𝖾 𖦹 ['..UserInfousername..
@@ -8494,7 +8494,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {
 {{text = 'رفع وتنزيل', data = msg.sender_id.user_id..'/rankup//'..UserId_Info.id},},
 {{text = 'كتم وطرد', data = msg.sender_id.user_id..'/sting//'..UserId_Info.id},},
 {{text = '- اخفاء الامر -', data ='/delAmr1'}}}}
-return bot.sendText(msg.chat_id,msg.id,'- تستطيع التحكم في '..news..' من خلال الازرار',"md",false, false, false, false, reply_markup)
+return merolua.sendText(msg.chat_id,msg.id,'- تستطيع التحكم في '..news..' من خلال الازرار',"md",false, false, false, false, reply_markup)
 end
 if text == 'تحكم' and msg.reply_to_message_id ~= 0 then
 if not msg.Addictive then
@@ -8515,7 +8515,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {
 {{text = 'رفع وتنزيل', data = msg.sender_id.user_id..'/rankup//'..Message_Reply.sender_id.user_id},},
 {{text = 'كتم وطرد', data = msg.sender_id.user_id..'/sting//'..Message_Reply.sender_id.user_id},},
 {{text = '- اخفاء الامر -', data ='/delAmr1'}}}}
-return bot.sendText(msg.chat_id,msg.id,'- تستطيع التحكم في '..news..' من خلال الازرار',"md",false, false, false, false, reply_markup)
+return merolua.sendText(msg.chat_id,msg.id,'- تستطيع التحكم في '..news..' من خلال الازرار',"md",false, false, false, false, reply_markup)
 end
 -------------------------------------------------------------------------------------------
 
@@ -17768,7 +17768,7 @@ local List = {
 ]],
 [[
 ➞: 𝒔𝒕𝒂𓂅 {الرتبه} 𓍯
-➞: 𝒖𝒔𝒆𝒓𓂅 {اليوزر} 𓍯
+➞: 𝒖𝒔𝒆𝒓𓂅 {اليوزر} ??
 ➞: 𝒎𝒔𝒈𝒆𓂅 {الرسائل} 𓍯
 ➞: 𝒊𝒅 𓂅 {الايدي} 𓍯
 {بايو}
@@ -20737,7 +20737,7 @@ data = {
 },
 }
 }
-return bot.sendText(msg_chat_id,msg_id,
+return merolua.sendText(msg_chat_id,msg_id,
 '\n• Name 𖦹 '..news..
 '\n• 𝖴𝗌𝖾𝗋𝗇𝖺𝗆𝖾 𖦹 ['..UserInfousername..
 ']\n• 𝖡𝗂𝗈 𖦹 ['..Bio..
@@ -20829,7 +20829,7 @@ data = {
 },
 }
 }
-return bot.sendText(msg_chat_id,msg_id,
+return merolua.sendText(msg_chat_id,msg_id,
 '\n• Name 𖦹 '..news..
 '\n• 𝖴𝗌𝖾𝗋𝗇𝖺𝗆𝖾 𖦹 ['..UserInfousername..
 ']\n• 𝖡𝗂𝗈 𖦹 ['..Bio..
@@ -20923,7 +20923,7 @@ data = {
 },
 }
 }
-return bot.sendText(msg.chat_id, msg.id,
+return merolua.sendText(msg.chat_id, msg.id,
 'لا يمكنني عرض الصورة رقم '..numberid..' لان عدد صورك '..photo.total_count..
 '\n• 𝖭𝖺𝗆𝖾 𖦹 '..UserInfo.first_name..
 '\n• 𝖨𝖣 𖦹 '..UserId..
@@ -20984,7 +20984,7 @@ data = {
 },
 }
 }
-return bot.sendText(msg.chat_id, msg.id,
+return merolua.sendText(msg.chat_id, msg.id,
 '\n• 𝖭𝖺𝗆𝖾 𖦹 '..UserInfo.first_name..
 '\n• 𝖨𝖣 𖦹 '..UserId..
 '\n• 𝖴𝗌𝖾𝗋𝗇𝖺𝗆𝖾 𖦹 ['..UserInfousername..
@@ -21730,7 +21730,7 @@ data = {
 },
 }
 }
-return bot.sendText(msg.chat_id,msg.id,Text_mira,"md",false, false, false, false, reply_markup)
+return merolua.sendText(msg.chat_id,msg.id,Text_mira,"md",false, false, false, false, reply_markup)
 end
 if text and (text:match("^ضع قناتي (.*)$") or text:match("^وضع قناتي (.*)$")) then
 local UserId = Text:match("^ضع قناتي (.*)$") or text:match("^وضع قناتي (.*)$") 
@@ -22069,7 +22069,7 @@ data = {
 }
 }
 Redis:set(TheFRADM.."korsi:"..testkorsi.."text:", text)
-return bot.sendText(msg_chat_id,msg_id,"⇜ هل انتا متأكد من السؤال ؟","md",true,false,false,false,reply_markup)
+return merolua.sendText(msg_chat_id,msg_id,"⇜ هل انتا متأكد من السؤال ؟","md",true,false,false,false,reply_markup)
 end
 
 if text and text:match("/start saraha(.*)from_id(%d+)") then
@@ -22096,7 +22096,7 @@ data = {
 }
 }
 Redis:set(TheFRADM.."saraha:"..testsaraha.."text:", text)
-return bot.sendText(msg_chat_id,msg_id,"⇜ سيتم ارسال السؤال بسرية تامة اضغط نعم","md",true,false,false,false,reply_markup)
+return merolua.sendText(msg_chat_id,msg_id,"⇜ سيتم ارسال السؤال بسرية تامة اضغط نعم","md",true,false,false,false,reply_markup)
 end
 
 if text and text:match("/start koorsi(.*)") then
@@ -22123,7 +22123,7 @@ data = {
 }
 }
 Redis:set(TheFRADM.."koorsi:"..testkoorsi.."text:", text)
-return bot.sendText(msg_chat_id,msg_id,"⇜ هل انتا متأكد من السؤال ؟","md",true,false,false,false,reply_markup)
+return merolua.sendText(msg_chat_id,msg_id,"⇜ هل انتا متأكد من السؤال ؟","md",true,false,false,false,reply_markup)
 end
 
 if text == 'قسم الافتارات' then 
@@ -22150,7 +22150,7 @@ data = {
 },
 }
 }
-return bot.sendText(msg_chat_id,msg_id,'⇜ اهلا عزيزي العضو ، في بوت .\n⇜ اليك بعض الاوامر الترفيه الخاصه بك ، ', 'md', false, false, false, false, reply_markup)
+return merolua.sendText(msg_chat_id,msg_id,'⇜ اهلا عزيزي العضو ، في بوت .\n⇜ اليك بعض الاوامر الترفيه الخاصه بك ، ', 'md', false, false, false, false, reply_markup)
 end
 ------------------------------------ كود لوحة الاعضاء  
 -------------------
@@ -22178,7 +22178,7 @@ data = {
 },
 }
 }
-return bot.sendText(msg_chat_id,msg_id,'⇜ اهلا عزيزي العضو ، في قسم المتحركات .\n⇜ اليك الاوامر الترفيه الخاصه في هاذه القسم ،', 'md', false, false, false, false, reply_markup)
+return merolua.sendText(msg_chat_id,msg_id,'⇜ اهلا عزيزي العضو ، في قسم المتحركات .\n⇜ اليك الاوامر الترفيه الخاصه في هاذه القسم ،', 'md', false, false, false, false, reply_markup)
 end
 ----------------------------------------------------
 -------------------
@@ -22215,7 +22215,7 @@ data = {
 },
 }
 }
-return bot.sendText(msg_chat_id,msg_id,'⇜ اختار ماتريده من الازرار .', 'md', false, false, false, false, reply_markup)
+return merolua.sendText(msg_chat_id,msg_id,'⇜ اختار ماتريده من الازرار .', 'md', false, false, false, false, reply_markup)
 end
 -------------------------------------------------------------------------
 if text == '/start' then 
@@ -22305,7 +22305,7 @@ data = {
 },
 }
 }
-return bot.sendText(msg_chat_id,msg_id,'⇜ اهلا بك عزيزي المطور', 'md', false, false, false, false, reply_markup)
+return merolua.sendText(msg_chat_id,msg_id,'⇜ اهلا بك عزيزي المطور', 'md', false, false, false, false, reply_markup)
 end
 end
 if text == "اوامر المطور" and msg.ControllerBot then
@@ -22551,7 +22551,7 @@ data = {
 },
 }
 }
-return bot.sendText(msg_chat_id,msg_id,'⇜ اهلا بك في كيبورد الاعضاء ', 'md', false, false, false, false, reply_markup)
+return merolua.sendText(msg_chat_id,msg_id,'⇜ اهلا بك في كيبورد الاعضاء ', 'md', false, false, false, false, reply_markup)
 end
 end
 
