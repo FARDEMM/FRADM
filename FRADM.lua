@@ -10,7 +10,7 @@ Merotele = require 'MeroTele'
 local FileInformation = io.open("./Information.lua","r")
 if not FileInformation then
 if not Redis:get(SshId.."Info:Redis:Token") then
-io.write('\27[1;31mارسل لي توكن البوت الان \nreturn merolua.send Me a Bot Token Now ↡\n\27[0;39;49m')
+io.write('\27[1;31mارسل لي توكن البوت الان \nSend Me a Bot Token Now ↡\n\27[0;39;49m')
 local TokenBot = io.read()
 if TokenBot and TokenBot:match('(%d+):(.*)') then
 local url , res = https.request('https://api.telegram.org/bot'..TokenBot..'/getMe')
@@ -104,7 +104,7 @@ return ControllerAll
 end
 function mderall(msg)
 mderall = false
-local statuse = Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.return merolua.sender_id.user_id)
+local statuse = Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.sender_id.user_id)
 if statuse then
 mderall = true
 end
@@ -132,8 +132,8 @@ end
 return Status
 end
 function GetByName(msg)
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-Name_py = '⇜ من : ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..')\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+Name_py = '⇜ من : ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..')\n'
 return Name_py
 end
 function Controller(ChatId,UserId)
@@ -895,16 +895,16 @@ end
 if Get_Chat.permissions.can_pin_messages then
 pin = true else pin = false
 end
-if Get_Chat.permissions.can_return merolua.send_media_messages then
+if Get_Chat.permissions.can_send_media_messages then
 media = true else media = false
 end
-if Get_Chat.permissions.can_return merolua.send_messages then
+if Get_Chat.permissions.can_send_messages then
 messges = true else messges = false
 end
-if Get_Chat.permissions.can_return merolua.send_other_messages then
+if Get_Chat.permissions.can_send_other_messages then
 other = true else other = false
 end
-if Get_Chat.permissions.can_return merolua.send_polls then
+if Get_Chat.permissions.can_send_polls then
 polls = true else polls = false
 end
 return{
@@ -932,16 +932,16 @@ end
 if Get_Chat.permissions.can_pin_messages then
 pin = ' نعم ' else pin = ' لا '
 end
-if Get_Chat.permissions.can_return merolua.send_media_messages then
+if Get_Chat.permissions.can_send_media_messages then
 media = ' نعم ' else media = ' لا '
 end
-if Get_Chat.permissions.can_return merolua.send_messages then
+if Get_Chat.permissions.can_send_messages then
 messges = ' نعم ' else messges = ' لا '
 end
-if Get_Chat.permissions.can_return merolua.send_other_messages then
+if Get_Chat.permissions.can_send_other_messages then
 other = ' نعم ' else other = ' لا '
 end
-if Get_Chat.permissions.can_return merolua.send_polls then
+if Get_Chat.permissions.can_send_polls then
 polls = ' نعم ' else polls = ' لا '
 end
 local reply_markup = bot.replyMarkup{
@@ -1238,7 +1238,7 @@ function ChannelJoinch(msg)
 JoinChannel = true
 local Channel = Redis:get(TheFRADM..'FRADM:Chat:Channel:Join'..msg.chat_id)
 if Channel then
-local url , res = https.request('https://api.telegram.org/bot'..Token..'/getchatmember?chat_id=@'..Channel..'&user_id='..msg.return merolua.sender_id.user_id)
+local url , res = https.request('https://api.telegram.org/bot'..Token..'/getchatmember?chat_id=@'..Channel..'&user_id='..msg.sender_id.user_id)
 local ChannelJoin = JSON.decode(url)
 var(ChannelJoin)
 if ChannelJoin.result.status == "left" then
@@ -1252,7 +1252,7 @@ JoinChannel = true
 if not Redis:sismember(TheFRADM.."BotFree:Group:",msg.chat_id) then
 local Channel = Redis:get(TheFRADM..'FRADM:Channel:Join')
 if Channel then
-local url , res = https.request('https://api.telegram.org/bot'..Token..'/getchatmember?chat_id=@'..Channel..'&user_id='..msg.return merolua.sender_id.user_id)
+local url , res = https.request('https://api.telegram.org/bot'..Token..'/getchatmember?chat_id=@'..Channel..'&user_id='..msg.sender_id.user_id)
 if res == 200 then
 local ChannelJoin = JSON.decode(url)
 if ChannelJoin.result.status == "left" then
@@ -1282,7 +1282,7 @@ end
 end
 bot.editMessageText(chat,rep,shh, parse, dis, disn, reply_markup)
 end
-function return merolua.send(chat,rep,text,parse,dis,clear,disn,back,markup)
+function send(chat,rep,text,parse,dis,clear,disn,back,markup)
 sh = text
 if Redis:get(TheFRADM..'rmzsource') then
 sh = sh:gsub("⇜",Redis:get(TheFRADM..'rmzsource'))
@@ -1298,13 +1298,13 @@ else
 sh = sh
 end
 end
-return merolua.sendText(chat,rep,sh,parse,dis, clear, disn, back, markup)
+bot.sendText(chat,rep,sh,parse,dis, clear, disn, back, markup)
 end
 
 function File_Bot_Run(msg,data)  
 local msg_chat_id = msg.chat_id
 local msg_reply_id = msg.reply_to_message_id
-local msg_user_return merolua.send_id = msg.return merolua.sender_id.user_id
+local msg_user_send_id = msg.sender_id.user_id
 local msg_id = msg.id
 local text = nil
 if msg.date and msg.date < tonumber(os.time() - 15) then
@@ -1314,17 +1314,17 @@ end
 if data.content.text then
 text = data.content.text.text
 end
-if tonumber(msg.return merolua.sender_id.user_id) == tonumber(TheFRADM) then
+if tonumber(msg.sender_id.user_id) == tonumber(TheFRADM) then
 print('This is reply for Bot')
 return false
 end
-if msg.return merolua.sender_id.Merotele == "messagereturn merolua.senderChat" then
-if Redis:sismember(TheFRADM.."FRADM:SilentGroup:Group"..msg_chat_id,msg.return merolua.sender_id.chat_id) then
+if msg.sender_id.Merotele == "messageSenderChat" then
+if Redis:sismember(TheFRADM.."FRADM:SilentGroup:Group"..msg_chat_id,msg.sender_id.chat_id) then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 end
-if Redis:get(TheFRADM.."FRADM:Lock:return merolua.senderChat"..msg_chat_id) then
+if Redis:get(TheFRADM.."FRADM:Lock:SenderChat"..msg_chat_id) then
 local m = Redis:get(TheFRADM.."chadmin"..msg_chat_id) 
-if msg.return merolua.sender_id.chat_id == tonumber(m) then
+if msg.sender_id.chat_id == tonumber(m) then
 return false
 else
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
@@ -1332,47 +1332,47 @@ end
 end
 return false
 end
-if tonumber(msg.return merolua.sender_id.user_id) == 5117901887 then
+if tonumber(msg.sender_id.user_id) == 5117901887 then
 msg.Name_Controller = 'مبــرمج السـورس 𖦴'
 msg.The_Controller = 1
-elseif tonumber(msg.return merolua.sender_id.user_id) == 2089102006 then
+elseif tonumber(msg.sender_id.user_id) == 2089102006 then
 msg.Name_Controller = 'مطور السـورس 𖦴🎖️️'
 msg.The_Controller = 1
-elseif The_ControllerAll(msg.return merolua.sender_id.user_id) == true then  
+elseif The_ControllerAll(msg.sender_id.user_id) == true then  
 msg.The_Controller = 1
 msg.Name_Controller = 'المطـور الاساسي'
-elseif Redis:sismember(TheFRADM.."FRADM:DevelopersQ:Groups",msg.return merolua.sender_id.user_id) == true then
+elseif Redis:sismember(TheFRADM.."FRADM:DevelopersQ:Groups",msg.sender_id.user_id) == true then
 msg.The_Controller = 2
 msg.Name_Controller = 'المطور الثانوي'
-elseif Redis:sismember(TheFRADM.."FRADM:Developers:Groups",msg.return merolua.sender_id.user_id) == true then
+elseif Redis:sismember(TheFRADM.."FRADM:Developers:Groups",msg.sender_id.user_id) == true then
 msg.The_Controller = 3
-msg.Name_Controller = Redis:get(TheFRADM..'FRADM:SetRt'..msg.chat_id..':'..msg.return merolua.sender_id.user_id) or Redis:get(TheFRADM.."FRADM:Developer:Bot:Reply"..msg.chat_id) or 'Myth'
-elseif Redis:sismember(TheFRADM.."FRADM:MalekAsase:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) == true then
+msg.Name_Controller = Redis:get(TheFRADM..'FRADM:SetRt'..msg.chat_id..':'..msg.sender_id.user_id) or Redis:get(TheFRADM.."FRADM:Developer:Bot:Reply"..msg.chat_id) or 'Myth'
+elseif Redis:sismember(TheFRADM.."FRADM:MalekAsase:Group"..msg.chat_id,msg.sender_id.user_id) == true then
 msg.The_Controller = 444
-msg.Name_Controller = Redis:get(TheFRADM..'FRADM:SetRt'..msg.chat_id..':'..msg.return merolua.sender_id.user_id) or Redis:get(TheFRADM.."FRADM:PresidentQ:Group:Reply"..msg.chat_id) or 'المالك'
-elseif Redis:sismember(TheFRADM.."FRADM:TheBasicsQ:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) == true then
+msg.Name_Controller = Redis:get(TheFRADM..'FRADM:SetRt'..msg.chat_id..':'..msg.sender_id.user_id) or Redis:get(TheFRADM.."FRADM:PresidentQ:Group:Reply"..msg.chat_id) or 'المالك'
+elseif Redis:sismember(TheFRADM.."FRADM:TheBasicsQ:Group"..msg.chat_id,msg.sender_id.user_id) == true then
 msg.The_Controller = 44
-msg.Name_Controller = Redis:get(TheFRADM..'FRADM:SetRt'..msg.chat_id..':'..msg.return merolua.sender_id.user_id) or Redis:get(TheFRADM.."FRADM:PresidentQ:Group:Reply"..msg.chat_id) or 'المالك'
-elseif Redis:sismember(TheFRADM.."FRADM:TheBasics:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) == true then
+msg.Name_Controller = Redis:get(TheFRADM..'FRADM:SetRt'..msg.chat_id..':'..msg.sender_id.user_id) or Redis:get(TheFRADM.."FRADM:PresidentQ:Group:Reply"..msg.chat_id) or 'المالك'
+elseif Redis:sismember(TheFRADM.."FRADM:TheBasics:Group"..msg.chat_id,msg.sender_id.user_id) == true then
 msg.The_Controller = 4
-msg.Name_Controller = Redis:get(TheFRADM..'FRADM:SetRt'..msg.chat_id..':'..msg.return merolua.sender_id.user_id) or Redis:get(TheFRADM.."FRADM:President:Group:Reply"..msg.chat_id) or 'المنشئ الاساسي'
-elseif Redis:sismember(TheFRADM.."FRADM:Originators:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) == true then
+msg.Name_Controller = Redis:get(TheFRADM..'FRADM:SetRt'..msg.chat_id..':'..msg.sender_id.user_id) or Redis:get(TheFRADM.."FRADM:President:Group:Reply"..msg.chat_id) or 'المنشئ الاساسي'
+elseif Redis:sismember(TheFRADM.."FRADM:Originators:Group"..msg.chat_id,msg.sender_id.user_id) == true then
 msg.The_Controller = 5
-msg.Name_Controller = Redis:get(TheFRADM..'FRADM:SetRt'..msg.chat_id..':'..msg.return merolua.sender_id.user_id) or Redis:get(TheFRADM.."FRADM:Constructor:Group:Reply"..msg.chat_id) or 'المنشئ'
-elseif Redis:sismember(TheFRADM.."FRADM:Managers:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) == true then
+msg.Name_Controller = Redis:get(TheFRADM..'FRADM:SetRt'..msg.chat_id..':'..msg.sender_id.user_id) or Redis:get(TheFRADM.."FRADM:Constructor:Group:Reply"..msg.chat_id) or 'المنشئ'
+elseif Redis:sismember(TheFRADM.."FRADM:Managers:Group"..msg.chat_id,msg.sender_id.user_id) == true then
 msg.The_Controller = 6
-msg.Name_Controller = Redis:get(TheFRADM..'FRADM:SetRt'..msg.chat_id..':'..msg.return merolua.sender_id.user_id) or Redis:get(TheFRADM.."FRADM:Manager:Group:Reply"..msg.chat_id) or 'المدير'
-elseif Redis:sismember(TheFRADM.."FRADM:Addictive:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) == true then
+msg.Name_Controller = Redis:get(TheFRADM..'FRADM:SetRt'..msg.chat_id..':'..msg.sender_id.user_id) or Redis:get(TheFRADM.."FRADM:Manager:Group:Reply"..msg.chat_id) or 'المدير'
+elseif Redis:sismember(TheFRADM.."FRADM:Addictive:Group"..msg.chat_id,msg.sender_id.user_id) == true then
 msg.The_Controller = 7
-msg.Name_Controller = Redis:get(TheFRADM..'FRADM:SetRt'..msg.chat_id..':'..msg.return merolua.sender_id.user_id) or Redis:get(TheFRADM.."FRADM:Admin:Group:Reply"..msg.chat_id) or 'الادمن'
-elseif Redis:sismember(TheFRADM.."FRADM:Distinguished:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) == true then
+msg.Name_Controller = Redis:get(TheFRADM..'FRADM:SetRt'..msg.chat_id..':'..msg.sender_id.user_id) or Redis:get(TheFRADM.."FRADM:Admin:Group:Reply"..msg.chat_id) or 'الادمن'
+elseif Redis:sismember(TheFRADM.."FRADM:Distinguished:Group"..msg.chat_id,msg.sender_id.user_id) == true then
 msg.The_Controller = 8
-msg.Name_Controller = Redis:get(TheFRADM..'FRADM:SetRt'..msg.chat_id..':'..msg.return merolua.sender_id.user_id) or Redis:get(TheFRADM.."FRADM:Vip:Group:Reply"..msg.chat_id) or 'مميز'
-elseif tonumber(msg.return merolua.sender_id.user_id) == tonumber(TheFRADM) then
+msg.Name_Controller = Redis:get(TheFRADM..'FRADM:SetRt'..msg.chat_id..':'..msg.sender_id.user_id) or Redis:get(TheFRADM.."FRADM:Vip:Group:Reply"..msg.chat_id) or 'مميز'
+elseif tonumber(msg.sender_id.user_id) == tonumber(TheFRADM) then
 msg.The_Controller = 9
 else
 msg.The_Controller = 10
-msg.Name_Controller = Redis:get(TheFRADM..'FRADM:SetRt'..msg.chat_id..':'..msg.return merolua.sender_id.user_id) or Redis:get(TheFRADM.."FRADM:Mempar:Group:Reply"..msg.chat_id) or 'عضو'
+msg.Name_Controller = Redis:get(TheFRADM..'FRADM:SetRt'..msg.chat_id..':'..msg.sender_id.user_id) or Redis:get(TheFRADM.."FRADM:Mempar:Group:Reply"..msg.chat_id) or 'عضو'
 end  
 if msg.The_Controller == 1 then  
 msg.ControllerBot = true
@@ -1405,21 +1405,21 @@ if msg.The_Controller == 1 or msg.The_Controller == 2 or msg.The_Controller == 3
 msg.Distinguished = true
 end
 
-if msg.return merolua.sender_id.Merotele ~= "messagereturn merolua.senderChat" then
-if Redis:get(TheFRADM.."FRADM:Game:akape"..msg.chat_id..msg.return merolua.sender_id.user_id) then
-if text == Redis:get(TheFRADM.."FRADM:Game:akape"..msg.chat_id..msg.return merolua.sender_id.user_id) then 
-Redis:del(TheFRADM.."FRADM:Game:akape"..msg.chat_id..msg.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) 
+if msg.sender_id.Merotele ~= "messageSenderChat" then
+if Redis:get(TheFRADM.."FRADM:Game:akape"..msg.chat_id..msg.sender_id.user_id) then
+if text == Redis:get(TheFRADM.."FRADM:Game:akape"..msg.chat_id..msg.sender_id.user_id) then 
+Redis:del(TheFRADM.."FRADM:Game:akape"..msg.chat_id..msg.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.sender_id.user_id) 
 return merolua.send(msg_chat_id,msg_id,"\n‌⇜ اجابتك صحيحة\n‌⇜ تم رفع القيود عنك","md",true)  
 end
 end
-if Statusrestricted(msg.chat_id,msg.return merolua.sender_id.user_id).KtmAll == true then
+if Statusrestricted(msg.chat_id,msg.sender_id.user_id).KtmAll == true then
 return bot.deleteMessages(msg.chat_id,{[1]= msg.id})
-elseif Statusrestricted(msg.chat_id,msg.return merolua.sender_id.user_id).BanAll == true then
-return bot.deleteMessages(msg.chat_id,{[1]= msg.id}),bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
-elseif Statusrestricted(msg.chat_id,msg.return merolua.sender_id.user_id).BanGroup == true then
-return bot.deleteMessages(msg.chat_id,{[1]= msg.id}),bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
-elseif Statusrestricted(msg.chat_id,msg.return merolua.sender_id.user_id).SilentGroup == true then
+elseif Statusrestricted(msg.chat_id,msg.sender_id.user_id).BanAll == true then
+return bot.deleteMessages(msg.chat_id,{[1]= msg.id}),bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
+elseif Statusrestricted(msg.chat_id,msg.sender_id.user_id).BanGroup == true then
+return bot.deleteMessages(msg.chat_id,{[1]= msg.id}),bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
+elseif Statusrestricted(msg.chat_id,msg.sender_id.user_id).SilentGroup == true then
 return bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 end
 end
@@ -1438,14 +1438,14 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'انا لست بوت', data = msg.return merolua.sender_id.user_id..'/UnKed'},
+{text = 'انا لست بوت', data = msg.sender_id.user_id..'/UnKed'},
 },
 }
 } 
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 return merolua.send(msg.chat_id, msg.id, '‌⇜ اختر انا لست بوت لكي اتحقق منك', 'md',false, false, false, false, reply_markup)
 end
-if (Redis:get(TheFRADM..'FRADM:All:FilterText'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) == 'DelFilterq') then   
+if (Redis:get(TheFRADM..'FRADM:All:FilterText'..msg_chat_id..':'..msg.sender_id.user_id) == 'DelFilterq') then   
 if text or msg.content.photo or msg.content.animation or msg.content.sticker then
 print('&')
 if msg.content.Merotele == "messagePhoto" then
@@ -1465,7 +1465,7 @@ Redis:srem(TheFRADM.."FRADM:All:List:Filter",'text:'..text)
 Redis:del(TheFRADM.."FRADM:All:Filter:Group:"..text)  
 Filters = 'النص'
 end
-Redis:del(TheFRADM..'FRADM:All:FilterText'..msg_chat_id..':'..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM..'FRADM:All:FilterText'..msg_chat_id..':'..msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,"‌⇜ تم الغاء منع ("..Filters..") عام","md",true)  
 end
 end
@@ -1475,7 +1475,7 @@ return false
 end 
 if msg.content.Merotele == "messageChatJoinByLink" and not msg.Distinguished then
 if Redis:get(TheFRADM.."FRADM:Lock:Join"..msg.chat_id) == "kick" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 return false
 end
@@ -1489,7 +1489,7 @@ if Info_User.type.Merotele == "userTypeBot" then
 if Lock_Bots == "del" and not msg.Managers then
 bot.setChatMemberStatus(msg.chat_id,v,'banned',0)
 elseif Lock_Bots == "kick" and not msg.Managers then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
 bot.setChatMemberStatus(msg.chat_id,v,'banned',0)
 end
 end
@@ -1497,11 +1497,11 @@ end
 end
 end
 if msg.content.Merotele == "messageChatAddMembers" then
-Redis:incr(TheFRADM.."FRADM:Num:Add:Memp"..msg_chat_id..":"..msg.return merolua.sender_id.user_id) 
+Redis:incr(TheFRADM.."FRADM:Num:Add:Memp"..msg_chat_id..":"..msg.sender_id.user_id) 
 end
 if msg.content.Merotele == "messageChatJoinByLink" then
 if Redis:get(TheFRADM.."FRADM:Status:Welcome"..msg_chat_id) then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(msg.sender_id.user_id)
 local Get_Chat = bot.getChat(msg_chat_id)
 local Info_Chats = bot.getSupergroupFullInfo(msg_chat_id)
 local Info_Members = bot.getSupergroupMembers(msg_chat_id, "Administrators", "*", 0, 200)
@@ -1540,7 +1540,7 @@ UserInfousername = '@'..UserInfo.username
 else
 UserInfousername = 'لا يوجد '
 end
-Welcome = Welcome:gsub('{الاسم}',"["..(FlterBio(UserInfo.first_name)..'](tg://user?id='..msg.return merolua.sender_id.user_id..')' or '---')) 
+Welcome = Welcome:gsub('{الاسم}',"["..(FlterBio(UserInfo.first_name)..'](tg://user?id='..msg.sender_id.user_id..')' or '---')) 
 Welcome = Welcome:gsub('{اليوزر}',("@"..UserInfo.username or '---')) 
 Welcome = Welcome:gsub('{المجموعه}',(Get_Chat.title or '---')) 
 Welcome = Welcome:gsub('{الاعضاء}',Info_Chats.member_count) 
@@ -1548,11 +1548,11 @@ Welcome = Welcome:gsub('{الادمنيه}',Info_Chats.administrator_count)
 Welcome = Welcome:gsub('{الوقت}',os.date("%H:%M:%S")) 
 Welcome = Welcome:gsub('{التاريخ}',os.date("%Y/%m/%d")) 
 local msg_id = msg.id/2097152/0.5 
-return https.request("https://api.telegram.org/bot"..Token..'/return merolua.sendMessage?chat_id=' .. msg.chat_id .. '&text=' .. URL.escape(Welcome)..'&parse_mode=markdown&disable_web_page_preview=true&reply_markup='..JSON.encode(keyboardd))
+return https.request("https://api.telegram.org/bot"..Token..'/sendMessage?chat_id=' .. msg.chat_id .. '&text=' .. URL.escape(Welcome)..'&parse_mode=markdown&disable_web_page_preview=true&reply_markup='..JSON.encode(keyboardd))
 else 
 local GroupsWelcome = Redis:get(TheFRADM.."FRADM:Welcome:Groups")
 if GroupsWelcome then
-GroupsWelcome = GroupsWelcome:gsub('{الاسم}',"["..(FlterBio(UserInfo.first_name)..'](tg://user?id='..msg.return merolua.sender_id.user_id..')' or '---')) 
+GroupsWelcome = GroupsWelcome:gsub('{الاسم}',"["..(FlterBio(UserInfo.first_name)..'](tg://user?id='..msg.sender_id.user_id..')' or '---')) 
 GroupsWelcome = GroupsWelcome:gsub('{اليوزر}',("@"..UserInfo.username or '---')) 
 GroupsWelcome = GroupsWelcome:gsub('{المجموعه}',(Get_Chat.title or '---')) 
 GroupsWelcome = GroupsWelcome:gsub('{الاعضاء}',Info_Chats.member_count) 
@@ -1562,40 +1562,40 @@ GroupsWelcome = GroupsWelcome:gsub('{التاريخ}',os.date("%Y/%m/%d"))
 local TextWelcome = (GroupsWelcome or "يآهلا وسهلآ بغالي\nالله يحييك نوّرت قروبنا\n✧")
 local Info_Chats = bot.getSupergroupFullInfo(msg_chat_id)
 local msg_id = msg.id/2097152/0.5 
-return https.request("https://api.telegram.org/bot"..Token..'/return merolua.sendMessage?chat_id=' .. msg.chat_id .. '&text=' .. URL.escape(TextWelcome)..'&parse_mode=markdown&disable_web_page_preview=true&reply_markup='..JSON.encode(keyboardd))
+return https.request("https://api.telegram.org/bot"..Token..'/sendMessage?chat_id=' .. msg.chat_id .. '&text=' .. URL.escape(TextWelcome)..'&parse_mode=markdown&disable_web_page_preview=true&reply_markup='..JSON.encode(keyboardd))
 else
 local TextWelcome = ("يآهلا وسهلآ بالغآلي \nالله يحييك نوّرت قروبنا\n✧")
 local Info_Chats = bot.getSupergroupFullInfo(msg_chat_id)
 local msg_id = msg.id/2097152/0.5 
-return https.request("https://api.telegram.org/bot"..Token..'/return merolua.sendMessage?chat_id=' .. msg.chat_id .. '&text=' .. URL.escape(TextWelcome)..'&parse_mode=markdown&disable_web_page_preview=true&reply_markup='..JSON.encode(keyboardd))
+return https.request("https://api.telegram.org/bot"..Token..'/sendMessage?chat_id=' .. msg.chat_id .. '&text=' .. URL.escape(TextWelcome)..'&parse_mode=markdown&disable_web_page_preview=true&reply_markup='..JSON.encode(keyboardd))
 end
 end
 end
 end
 if not msg.Distinguished and msg.content.Merotele ~= "messageChatAddMembers" and Redis:hget(TheFRADM.."FRADM:Spam:Group:User"..msg_chat_id,"Spam:User") then 
-if tonumber(msg.return merolua.sender_id.user_id) == tonumber(TheFRADM) then
+if tonumber(msg.sender_id.user_id) == tonumber(TheFRADM) then
 return false
 end
 local floods = Redis:hget(TheFRADM.."FRADM:Spam:Group:User"..msg_chat_id,"Spam:User") or "nil"
 local Num_Msg_Max = Redis:hget(TheFRADM.."FRADM:Spam:Group:User"..msg_chat_id,"Num:Spam") or 5
-local post_count = tonumber(Redis:get(TheFRADM.."FRADM:Spam:Cont"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) or 0)
+local post_count = tonumber(Redis:get(TheFRADM.."FRADM:Spam:Cont"..msg.sender_id.user_id..":"..msg_chat_id) or 0)
 if post_count >= tonumber(Redis:hget(TheFRADM.."FRADM:Spam:Group:User"..msg_chat_id,"Num:Spam") or 5) then 
 local type = Redis:hget(TheFRADM.."FRADM:Spam:Group:User"..msg_chat_id,"Spam:User") 
 if type == "kick" then 
-return bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0), return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"‌⇜ كرر نفس الرسالة وتم طرده").Reply,"md",true)
+return bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0), send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"‌⇜ كرر نفس الرسالة وتم طرده").Reply,"md",true)
 end
 if type == "del" then 
 return bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 end
 if type == "keed" then
-return bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0}), return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ كرر نفس الرسالة وتم تقييده").Reply,"md",true)  
+return bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0}), send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ كرر نفس الرسالة وتم تقييده").Reply,"md",true)  
 end
 if type == "mute" then
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ كرر نفس الرسالة وتم كتمه").Reply,"md",true)  
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ كرر نفس الرسالة وتم كتمه").Reply,"md",true)  
 end
 end
-Redis:setex(TheFRADM.."FRADM:Spam:Cont"..msg.return merolua.sender_id.user_id..":"..msg_chat_id, tonumber(5), post_count+1) 
+Redis:setex(TheFRADM.."FRADM:Spam:Cont"..msg.sender_id.user_id..":"..msg_chat_id, tonumber(5), post_count+1) 
 local edit_id = data.text_ or "nil"  
 Num_Msg_Max = 5
 if Redis:hget(TheFRADM.."FRADM:Spam:Group:User"..msg_chat_id,"Num:Spam") then
@@ -1609,32 +1609,32 @@ sens = 400
 if Redis:get(TheFRADM.."FRADM:Lock:Spam"..msg.chat_id) == "del" and string.len(text) > (sens) or ctrl_ > (sens) or real_ > (sens) then 
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل الكلايش \n✧',"md")
 end
 elseif Redis:get(TheFRADM.."FRADM:Lock:Spam"..msg.chat_id) == "ked" and string.len(text) > (sens) or ctrl_ > (sens) or real_ > (sens) then 
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل الكلايش \n✧',"md")
 end
 elseif Redis:get(TheFRADM.."FRADM:Lock:Spam"..msg.chat_id) == "kick" and string.len(text) > (sens) or ctrl_ > (sens) or real_ > (sens) then 
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل الكلايش \n✧',"md")
 end
 elseif Redis:get(TheFRADM.."FRADM:Lock:Spam"..msg.chat_id) == "ktm" and string.len(text) > (sens) or ctrl_ > (sens) or real_ > (sens) then 
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) 
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.sender_id.user_id) 
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل الكلايش \n✧',"md")
 end
 end
@@ -1644,32 +1644,32 @@ local Fwd_Group = Redis:get(TheFRADM.."FRADM:Lock:forward"..msg_chat_id)
 if Fwd_Group == "del" then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل توجيه \n✧',"md")
 end
 elseif Fwd_Group == "ked" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل توجيه \n✧',"md")
 end
 elseif Fwd_Group == "ktm" then
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) 
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.sender_id.user_id) 
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل توجيه \n✧',"md")
 end
 elseif Fwd_Group == "kick" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل توجيه \n✧',"md")
 end
 end
@@ -1689,52 +1689,52 @@ local Keyboard_Group = Redis:get(TheFRADM.."FRADM:Lock:Keyboard"..msg_chat_id)
 if Keyboard_Group == "del" then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل كيبورد \n✧',"md")
 end
 elseif Keyboard_Group == "ked" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل كيبورد \n✧',"md")
 end
 elseif Keyboard_Group == "ktm" then
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) 
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.sender_id.user_id) 
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل كيبورد \n✧',"md")
 end
 elseif Keyboard_Group == "kick" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل كيبورد \n✧',"md")
 end
 end
 end
 print('This is reply_markup')
 end 
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-if msg.return merolua.sender_id.user_id ~= 5117901887 then 
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+if msg.sender_id.user_id ~= 5117901887 then 
 local names = (UserInfo.first_name or '...')..(UserInfo.last_name or '...')
 if names and  names:find("𝐁𝐎𝐁") then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
-return merolua.send(msg_chat_id,0,'[ليه منتحل اسم مطور السورس ياورع](tg://user?id='..msg.return merolua.sender_id.user_id..')',"md")
+return merolua.send(msg_chat_id,0,'[ليه منتحل اسم مطور السورس ياورع](tg://user?id='..msg.sender_id.user_id..')',"md")
 end
 end
 if msg.content.location and not msg.Distinguished then  -- الموقع
 if location then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل مواقع \n✧',"md")
 end
 end
@@ -1746,32 +1746,32 @@ local Markduan_Gtoup = Redis:get(TheFRADM.."FRADM:Lock:Markdaun"..msg_chat_id)
 if Markduan_Gtoup == "del" then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..')\n 」'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..')\n 」'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل الماركداون \n✧',"md")
 end
 elseif Markduan_Gtoup == "ked" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل الماركداون \n✧',"md")
 end
 elseif Markduan_Gtoup == "ktm" then
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) 
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.sender_id.user_id) 
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل الماركداون \n✧',"md")
 end
 elseif Markduan_Gtoup == "kick" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل الماركداون \n✧',"md")
 end
 end
@@ -1783,32 +1783,32 @@ local Games_Group = Redis:get(TheFRADM.."FRADM:Lock:geam"..msg_chat_id)
 if Games_Group == "del" then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل الالعاب \n✧',"md")
 end
 elseif Games_Group == "ked" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل الالعاب \n✧',"md")
 end
 elseif Games_Group == "ktm" then
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) 
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.sender_id.user_id) 
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل الالعاب \n✧',"md")
 end
 elseif Games_Group == "kick" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل الالعاب \n✧',"md")
 end
 end
@@ -1833,30 +1833,30 @@ print('This is message Pin')
 end 
 if msg.content.Merotele == "messageChatJoinByLink" then
 if Redis:get(TheFRADM.."FRADM:Lock:Join"..msg.chat_id) == "kick" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 return false
 end
 end
 if msg.content.Merotele == "messageChatDeleteMember" and not Redis:get(TheFRADM.."spammkick"..msg.chat_id) then 
-if msg.return merolua.sender_id.user_id ~= TheFRADM then
+if msg.sender_id.user_id ~= TheFRADM then
 Num_Msg_Max = 4
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(msg.sender_id.user_id)
 local names = UserInfo.first_name
 local monsha = Redis:smembers(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id) 
-if Redis:ttl(TheFRADM.."mkal:setex:" .. msg.chat_id .. ":" .. msg.return merolua.sender_id.user_id) < 0 then
-Redis:del(TheFRADM.."delmembars"..msg.chat_id..msg.return merolua.sender_id.user_id)
+if Redis:ttl(TheFRADM.."mkal:setex:" .. msg.chat_id .. ":" .. msg.sender_id.user_id) < 0 then
+Redis:del(TheFRADM.."delmembars"..msg.chat_id..msg.sender_id.user_id)
 end
-local ttsaa = (Redis:get(TheFRADM.."delmembars"..msg.chat_id..msg.return merolua.sender_id.user_id) or 0)
+local ttsaa = (Redis:get(TheFRADM.."delmembars"..msg.chat_id..msg.sender_id.user_id) or 0)
 if tonumber(ttsaa) >= tonumber(3) then 
 local type = Redis:hget(TheFRADM.."Storm:Spam:Group:User"..msg.chat_id,"Spam:User") 
-local removeMembars = https.request("https://api.telegram.org/bot" .. Token .. "/promoteChatMember?chat_id=" .. msg.chat_id .. "&user_id=" ..msg.return merolua.sender_id.user_id.."&can_change_info=false&can_manage_chat=false&can_manage_voice_chats=false&can_delete_messages=false&can_invite_users=false&can_restrict_members=false&can_pin_messages=false&can_promote_members=false")
+local removeMembars = https.request("https://api.telegram.org/bot" .. Token .. "/promoteChatMember?chat_id=" .. msg.chat_id .. "&user_id=" ..msg.sender_id.user_id.."&can_change_info=false&can_manage_chat=false&can_manage_voice_chats=false&can_delete_messages=false&can_invite_users=false&can_restrict_members=false&can_pin_messages=false&can_promote_members=false")
 local Json_Info = JSON.decode(removeMembars)
-Redis:srem(TheFRADM.."FRADM:TheBasics:Group"..msg.chat_id,msg.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Originators:Group"..msg.chat_id,msg.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Managers:Group"..msg.chat_id,msg.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Addictive:Group"..msg.chat_id,msg.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Distinguished:Group"..msg.chat_id,msg.return merolua.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:TheBasics:Group"..msg.chat_id,msg.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Originators:Group"..msg.chat_id,msg.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Managers:Group"..msg.chat_id,msg.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Addictive:Group"..msg.chat_id,msg.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Distinguished:Group"..msg.chat_id,msg.sender_id.user_id)
 if Json_Info.ok == false and Json_Info.error_code == 400 and Json_Info.description == "Bad Request: CHAT_ADMIN_REQUIRED" then
 if #monsha ~= 0 then 
 local ListMembers = '\n⇜ تاك للمالكين  \n ━━━━━━━━━━━\n'
@@ -1869,9 +1869,9 @@ ListMembers = ListMembers..""..k.." - ["..v.."](tg://user?id="..v..")\n"
 end
 end
 local tecxt = ListMembers.."\n⇜ نداء للمالك {[ > Click < ](tg://user?id="..v..")}"..
-"\n⇜ المشرف {["..names.." ](tg://user?id="..msg.return merolua.sender_id.user_id..")}"..
+"\n⇜ المشرف {["..names.." ](tg://user?id="..msg.sender_id.user_id..")}"..
 "\n⇜ قام بالتكرار في ازاله الاعضاء \n⇜ لا يمكنني تنزيله من المشرفين"
-return merolua.send(msg_chat_id,msg_id,tecxt,"md")
+send(msg_chat_id,msg_id,tecxt,"md")
 end
 end
 if Json_Info.ok == false and Json_Info.error_code == 400 and Json_Info.description == "Bad Request: can't remove chat owner" then
@@ -1886,9 +1886,9 @@ ListMembers = ListMembers..""..k.." - ["..v.."](tg://user?id="..v..")\n"
 end
 end
 local tecxt = ListMembers.."\n⇜ نداء للمالك [ > Click < ](tg://user?id="..v..")"..
-"\n⇜ المشرف ["..names.." ](tg://user?id="..msg.return merolua.sender_id.user_id..")"..
+"\n⇜ المشرف ["..names.." ](tg://user?id="..msg.sender_id.user_id..")"..
 "\n⇜ هناك عملية تخريب وطرد الاعضاء , ليست لدي صلاحيه اضافه مشرفين لتنزيله"
-return merolua.send(msg_chat_id,msg_id,tecxt,"md")
+send(msg_chat_id,msg_id,tecxt,"md")
 end
 end
 if Json_Info.ok == true and Json_Info.result == true then
@@ -1903,37 +1903,37 @@ ListMembers = ListMembers..""..k.." - ["..v.."](tg://user?id="..v..")\n"
 end
 end
 local tecxt = ListMembers.."\n⇜ نداء للمالك [ > Click < ](tg://user?id="..v..")"..
-"\n⇜ المشرف ["..names.." ](tg://user?id="..msg.return merolua.sender_id.user_id..")}"..
+"\n⇜ المشرف ["..names.." ](tg://user?id="..msg.sender_id.user_id..")}"..
 "\n⇜ قام بتكرار طرد الاعضاء وطرد اكثر من 3 وتم تنزيله من المشرفين "
-return merolua.send(msg_chat_id,msg_id,tecxt,"md")
+send(msg_chat_id,msg_id,tecxt,"md")
 end
 end
-Redis:del(TheFRADM.."delmembars"..msg.chat_id..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."delmembars"..msg.chat_id..msg.sender_id.user_id)
 end
-Redis:setex(TheFRADM.."mkal:setex:" .. msg.chat_id .. ":" .. msg.return merolua.sender_id.user_id, 3600, true) 
-Redis:incrby(TheFRADM.."delmembars"..msg.chat_id..msg.return merolua.sender_id.user_id, 1)  
+Redis:setex(TheFRADM.."mkal:setex:" .. msg.chat_id .. ":" .. msg.sender_id.user_id, 3600, true) 
+Redis:incrby(TheFRADM.."delmembars"..msg.chat_id..msg.sender_id.user_id, 1)  
 end
 end 
 if text and text:match('طرد @(.*)') or text and text:match('حظر @(.*)') or text and text:match('طرد (%d+)') or text and text:match('حظر (%d+)') then 
 if not Redis:get(TheFRADM.."spammkick"..msg.chat_id) then 
-if msg.return merolua.sender_id.user_id ~= TheFRADM then
+if msg.sender_id.user_id ~= TheFRADM then
 Num_Msg_Max = 4
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(msg.sender_id.user_id)
 local names = UserInfo.first_name 
 local monsha = Redis:smembers(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id) 
-if Redis:ttl(TheFRADM.."qmkal:setex:" .. msg.chat_id .. ":" .. msg.return merolua.sender_id.user_id) < 0 then
-Redis:del(TheFRADM.."qdelmembars"..msg.chat_id..msg.return merolua.sender_id.user_id)
+if Redis:ttl(TheFRADM.."qmkal:setex:" .. msg.chat_id .. ":" .. msg.sender_id.user_id) < 0 then
+Redis:del(TheFRADM.."qdelmembars"..msg.chat_id..msg.sender_id.user_id)
 end
-local ttsaa = (Redis:get(TheFRADM.."qdelmembars"..msg.chat_id..msg.return merolua.sender_id.user_id) or 0)
+local ttsaa = (Redis:get(TheFRADM.."qdelmembars"..msg.chat_id..msg.sender_id.user_id) or 0)
 if tonumber(ttsaa) >= tonumber(5) then 
 print('spammmmm')
-local removeMembars = https.request("https://api.telegram.org/bot" .. Token .. "/promoteChatMember?chat_id=" .. msg.chat_id .. "&user_id=" ..msg.return merolua.sender_id.user_id.."&can_change_info=false&can_manage_chat=false&can_manage_voice_chats=false&can_delete_messages=false&can_invite_users=false&can_restrict_members=false&can_pin_messages=false&can_promote_members=false")
+local removeMembars = https.request("https://api.telegram.org/bot" .. Token .. "/promoteChatMember?chat_id=" .. msg.chat_id .. "&user_id=" ..msg.sender_id.user_id.."&can_change_info=false&can_manage_chat=false&can_manage_voice_chats=false&can_delete_messages=false&can_invite_users=false&can_restrict_members=false&can_pin_messages=false&can_promote_members=false")
 local Json_Info = JSON.decode(removeMembars)
-Redis:srem(TheFRADM.."FRADM:TheBasics:Group"..msg.chat_id,msg.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Originators:Group"..msg.chat_id,msg.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Managers:Group"..msg.chat_id,msg.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Addictive:Group"..msg.chat_id,msg.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Distinguished:Group"..msg.chat_id,msg.return merolua.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:TheBasics:Group"..msg.chat_id,msg.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Originators:Group"..msg.chat_id,msg.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Managers:Group"..msg.chat_id,msg.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Addictive:Group"..msg.chat_id,msg.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Distinguished:Group"..msg.chat_id,msg.sender_id.user_id)
 if Json_Info.ok == false and Json_Info.error_code == 400 and Json_Info.description == "Bad Request: CHAT_ADMIN_REQUIRED" then
 if #monsha ~= 0 then 
 local ListMembers = '\n• تاك للمالكين \n ━━━━━━━━━━━\n'
@@ -1945,9 +1945,9 @@ else
 ListMembers = ListMembers..""..k.." - ["..v.."](tg://user?id="..v..")\n"
 end
 end
-local tecxt = ListMembers.."\n⇜ المشرف ["..names.." ](tg://user?id="..msg.return merolua.sender_id.user_id..")"..
+local tecxt = ListMembers.."\n⇜ المشرف ["..names.." ](tg://user?id="..msg.sender_id.user_id..")"..
 "\n⇜ قام بالتكرار في ازالة الاعضاء \n⇜ لا يمكنني تنزيله من المشرفين"
-return merolua.send(msg_chat_id,msg_id,tecxt,"md")
+send(msg_chat_id,msg_id,tecxt,"md")
 end
 end
 if Json_Info.ok == false and Json_Info.error_code == 400 and Json_Info.description == "Bad Request: can't remove chat owner" then
@@ -1961,9 +1961,9 @@ else
 ListMembers = ListMembers..""..k.." - ["..v.."](tg://user?id="..v..")\n"
 end
 end
-local tecxt = ListMembers.."\n⇜ المشرف ["..names.." ](tg://user?id="..msg.return merolua.sender_id.user_id..")"..
+local tecxt = ListMembers.."\n⇜ المشرف ["..names.." ](tg://user?id="..msg.sender_id.user_id..")"..
 "\n⇜ هناك عملية تخريب وطرد الاعضاء , ليست لدي صلاحيه اضافه مشرفين لتنزيله"
-return merolua.send(msg_chat_id,msg_id,tecxt,"md")
+send(msg_chat_id,msg_id,tecxt,"md")
 end
 end
 if Json_Info.ok == true and Json_Info.result == true then
@@ -1977,19 +1977,19 @@ else
 ListMembers = ListMembers..""..k.." - ["..v.."](tg://user?id="..v..")\n"
 end
 end
-local tecxt = ListMembers.."\n⇜ المشرف ["..names.." ](tg://user?id="..msg.return merolua.sender_id.user_id..")"..
+local tecxt = ListMembers.."\n⇜ المشرف ["..names.." ](tg://user?id="..msg.sender_id.user_id..")"..
 "\n⇜ هناك عملية تخريب وطرد الاعضاء , ليست لدي صلاحيه اضافه مشرفين لتنزيله"
-return merolua.send(msg_chat_id,msg_id,tecxt,"md")
+send(msg_chat_id,msg_id,tecxt,"md")
 end
 end
-Redis:del(TheFRADM.."qdelmembars"..msg.chat_id..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."qdelmembars"..msg.chat_id..msg.sender_id.user_id)
 end
-Redis:setex(TheFRADM.."qmkal:setex:" .. msg.chat_id .. ":" .. msg.return merolua.sender_id.user_id, 3600, true) 
-Redis:incrby(TheFRADM.."qdelmembars"..msg.chat_id..msg.return merolua.sender_id.user_id, 1)  
+Redis:setex(TheFRADM.."qmkal:setex:" .. msg.chat_id .. ":" .. msg.sender_id.user_id, 3600, true) 
+Redis:incrby(TheFRADM.."qdelmembars"..msg.chat_id..msg.sender_id.user_id, 1)  
 end
 end 
 end
-if msg.content.Merotele == "messagePhoto" and Redis:get(TheFRADM..'welcom_ph:witting'..msg.return merolua.sender_id.user_id) then  -- الصور
+if msg.content.Merotele == "messagePhoto" and Redis:get(TheFRADM..'welcom_ph:witting'..msg.sender_id.user_id) then  -- الصور
 if msg.content.photo.sizes[1].photo.remote.id then
 idPhoto = msg.content.photo.sizes[1].photo.remote.id
 elseif msg.content.photo.sizes[2].photo.remote.id then
@@ -1998,18 +1998,18 @@ elseif msg.content.photo.sizes[3].photo.remote.id then
 idPhoto = msg.content.photo.sizes[3].photo.remote.id
 end
 Redis:set(TheFRADM..':WELCOME_BOT',idPhoto)
-Redis:del(TheFRADM..'welcom_ph:witting'..msg.return merolua.sender_id.user_id) 
+Redis:del(TheFRADM..'welcom_ph:witting'..msg.sender_id.user_id) 
 return merolua.send(msg_chat_id,msg_id, '⇜ تم تغيير صورة ترحيب البوت\n✧')
 end
 if msg.content.Merotele == "messageChatAddMembers" then -- اضافه اشخاص
 print('This is Add Membeers ')
-Redis:incr(TheFRADM.."FRADM:Num:Add:Memp"..msg_chat_id..":"..msg.return merolua.sender_id.user_id) 
+Redis:incr(TheFRADM.."FRADM:Num:Add:Memp"..msg_chat_id..":"..msg.sender_id.user_id) 
 local AddMembrs = Redis:get(TheFRADM.."FRADM:Lock:AddMempar"..msg_chat_id) 
 local Lock_Bots = Redis:get(TheFRADM.."FRADM:Lock:Bot:kick"..msg_chat_id)
 for k,v in pairs(msg.content.member_user_ids) do
 local Info_User = bot.getUser(v) 
 if Info_User.type.Merotele == "userTypeRegular" then
-Redis:incr(TheFRADM.."FRADM:Num:Add:Memp"..msg.chat_id..":"..msg.return merolua.sender_id.user_id) 
+Redis:incr(TheFRADM.."FRADM:Num:Add:Memp"..msg.chat_id..":"..msg.sender_id.user_id) 
 if AddMembrs == "kick" and not msg.Distinguished then
 bot.setChatMemberStatus(msg.chat_id,v,'banned',0)
 end
@@ -2022,32 +2022,32 @@ local Contact_Group = Redis:get(TheFRADM.."FRADM:Lock:Contact"..msg_chat_id)
 if Contact_Group == "del" then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل جهات \n✧',"md")
 end
 elseif Contact_Group == "ked" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل جهات \n✧',"md")
 end
 elseif Contact_Group == "ktm" then
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) 
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.sender_id.user_id) 
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل جهات \n✧',"md")
 end
 elseif Contact_Group == "kick" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل جهات \n✧',"md")
 end
 end
@@ -2059,32 +2059,32 @@ local Videonote_Group = Redis:get(TheFRADM.."FRADM:Lock:Unsupported"..msg_chat_i
 if Videonote_Group == "del" then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل بصمات الفيديو \n✧',"md")
 end
 elseif Videonote_Group == "ked" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل بصمات الفيديو \n✧',"md")
 end
 elseif Videonote_Group == "ktm" then
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) 
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.sender_id.user_id) 
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل بصمات الفيديو \n✧',"md")
 end
 elseif Videonote_Group == "kick" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل بصمات الفيديو \n✧',"md")
 end
 end
@@ -2095,32 +2095,32 @@ local Document_Group = Redis:get(TheFRADM.."FRADM:Lock:Document"..msg_chat_id)
 if Document_Group == "del" then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل الملفات \n✧',"md")
 end
 elseif Document_Group == "ked" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل الملفات \n✧',"md")
 end
 elseif Document_Group == "ktm" then
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) 
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.sender_id.user_id) 
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل الملفات \n✧',"md")
 end
 elseif Document_Group == "kick" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل الملفات \n✧',"md")
 end
 end
@@ -2131,39 +2131,39 @@ local Audio_Group = Redis:get(TheFRADM.."FRADM:Lock:Audio"..msg_chat_id)
 if Audio_Group == "del" then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل مقاطع صوت \n✧',"md")
 end
 elseif Audio_Group == "ked" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل مقاطع صوت \n✧',"md")
 end
 elseif Audio_Group == "ktm" then
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) 
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.sender_id.user_id) 
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل مقاطع صوت \n✧',"md")
 end
 elseif Audio_Group == "kick" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل مقاطع صوت \n✧',"md")
 end
 end
 print('This is Audio')
 end 
 if msg.content.Merotele == "messageVideo" then  -- الفيديو
-if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.sender_id.user_id) then
 testmod = true
 elseif msg.Distinguished then
 testmod = true
@@ -2175,32 +2175,32 @@ local Video_Grouo = Redis:get(TheFRADM.."FRADM:Lock:Video"..msg_chat_id)
 if Video_Grouo == "del" then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل مقاطع فيديو \n✧',"md")
 end
 elseif Video_Grouo == "ked" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل مقاطع فيديو \n✧',"md")
 end
 elseif Video_Grouo == "ktm" then
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) 
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.sender_id.user_id) 
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل مقاطع فيديو \n✧',"md")
 end
 elseif Video_Grouo == "kick" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل مقاطع فيديو \n✧',"md")
 end
 end
@@ -2211,8 +2211,8 @@ if text and text:match("[A-Z]") or text and text:match("[a-z]") then
 if not msg.Distinguished and Redis:get(TheFRADM.."FRADM:Lock:english"..msg_chat_id) then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع الكلام باللغة الانكليزية هنا \n✧',"md")
 end
 end
@@ -2222,39 +2222,39 @@ local Voice_Group = Redis:get(TheFRADM.."FRADM:Lock:vico"..msg_chat_id)
 if Voice_Group == "del" then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل فويسات \n✧',"md")
 end
 elseif Voice_Group == "ked" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل فويسات \n✧',"md")
 end
 elseif Voice_Group == "ktm" then
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) 
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.sender_id.user_id) 
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل فويسات \n✧',"md")
 end
 elseif Voice_Group == "kick" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل فويسات \n✧',"md")
 end
 end
 print('This is Voice')
 end
 if msg.content.Merotele == "messageSticker" then  -- الملصقات
-if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.sender_id.user_id) then
 testmod = true
 elseif msg.Distinguished then
 testmod = true
@@ -2267,32 +2267,32 @@ local Sticker_Group = Redis:get(TheFRADM.."FRADM:Lock:Sticker"..msg_chat_id)
 if Sticker_Group == "del" then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل ستيكرات \n✧',"md")
 end
 elseif Sticker_Group == "ked" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل ستيكرات \n✧',"md")
 end
 elseif Sticker_Group == "ktm" then
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) 
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.sender_id.user_id) 
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل ستيكرات \n✧',"md")
 end
 elseif Sticker_Group == "kick" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل ستيكرات \n✧',"md")
 end
 end
@@ -2304,39 +2304,39 @@ local Inlen_Group = Redis:get(TheFRADM.."FRADM:Lock:Inlen"..msg_chat_id)
 if Inlen_Group == "del" then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل الانلاين \n✧',"md")
 end
 elseif Inlen_Group == "ked" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل الانلاين \n✧',"md")
 end
 elseif Inlen_Group == "ktm" then
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) 
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.sender_id.user_id) 
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل الانلاين \n✧',"md")
 end
 elseif Inlen_Group == "kick" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل الانلاين \n✧',"md")
 end
 end
 print('This is viabot')
 end
 if msg.content.Merotele == "messageAnimation"  then  -- المتحركات
-if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.sender_id.user_id) then
 testmod = true
 elseif msg.Distinguished then
 testmod = true
@@ -2348,32 +2348,32 @@ local Gif_group = Redis:get(TheFRADM.."FRADM:Lock:Animation"..msg_chat_id)
 if Gif_group == "del" then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل متحركات \n✧',"md")
 end
 elseif Gif_group == "ked" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل متحركات \n✧',"md")
 end
 elseif Gif_group == "ktm" then
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) 
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.sender_id.user_id) 
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل متحركات \n✧',"md")
 end
 elseif Gif_group == "kick" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل متحركات \n✧',"md")
 end
 end
@@ -2385,8 +2385,8 @@ local phshar_Group = Redis:get(TheFRADM.."FRADM:Lock:farsia"..msg_chat_id)
 if phshar_Group then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع الكلام باللغة الفارسية هنا',"md")
 end
 end
@@ -2396,8 +2396,8 @@ local phshar_Group = Redis:get(TheFRADM.."FRADM:Lock:phshar"..msg_chat_id)
 if phshar_Group then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ لا ترسل كلمات بذيئة هون \n✧',"md")
 end
 end
@@ -2407,14 +2407,14 @@ local phsharr_Group = not Redis:get(TheFRADM.."FRADM:Lock:alkfr"..msg_chat_id)
 if phsharr_Group then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ لا تكفر ياحمار \n✧',"md")
 end
 end
 end
 if msg.content.Merotele == "messagePhoto" then  -- الصور
-if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.sender_id.user_id) then
 testmod = true
 elseif msg.Distinguished then
 testmod = true
@@ -2426,45 +2426,45 @@ local Photo_Group = Redis:get(TheFRADM.."FRADM:Lock:Photo"..msg_chat_id)
 if Photo_Group == "del" then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل صور \n✧',"md")
 end
 elseif Photo_Group == "ked" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل صور \n✧',"md")
 end
 elseif Photo_Group == "ktm" then
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) 
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.sender_id.user_id) 
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل صور \n✧',"md")
 end
 elseif Photo_Group == "kick" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل صور \n✧',"md")
 end
 end
 end
 print('This is Photo delete')
 end
-if msg.content.photo and Redis:get(TheFRADM.."FRADM:Chat:Photo"..msg_chat_id..":"..msg.return merolua.sender_id.user_id) then
+if msg.content.photo and Redis:get(TheFRADM.."FRADM:Chat:Photo"..msg_chat_id..":"..msg.sender_id.user_id) then
 local ChatPhoto = bot.setChatPhoto(msg_chat_id,msg.content.photo.sizes[2].photo.remote.id)
 if (ChatPhoto.Merotele == "error") then
-Redis:del(TheFRADM.."FRADM:Chat:Photo"..msg_chat_id..":"..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."FRADM:Chat:Photo"..msg_chat_id..":"..msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,"⇜ لا استطيع تغيير صورة القروب لاني لست ادمن او ليست لدي الصلاحية ","md",true)    
 end
-Redis:del(TheFRADM.."FRADM:Chat:Photo"..msg_chat_id..":"..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."FRADM:Chat:Photo"..msg_chat_id..":"..msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,"⇜ تم تغيير صورة القروب ","md",true)    
 end
 if  (text and text:match("[Tt][Ee][Ll][Ee][Gg][Rr][Aa][Mm].[Mm][Ee]/") 
@@ -2489,8 +2489,8 @@ local tphlesh_Group = Redis:get(TheFRADM.."FRADM:Lock:tphlesh"..msg_chat_id)
 if not msg.Distinguished and tphlesh_Group then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ الحماية مفعلة تم مسح ما ارسلته\n✧',"md")
 end
 end
@@ -2509,32 +2509,32 @@ if not msg.Addictive then
 if link_Group == "del" then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل روابط \n✧',"md")
 end
 elseif link_Group == "ked" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل روابط \n✧',"md")
 end
 elseif link_Group == "ktm" then
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) 
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.sender_id.user_id) 
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل روابط \n✧',"md")
 end
 elseif link_Group == "kick" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل روابط \n✧',"md")
 end
 end
@@ -2543,7 +2543,7 @@ return false
 end
 end
 if text and text:match("@[%a%d_]+") then 
-if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.sender_id.user_id) then
 testmod = true
 elseif msg.Distinguished then
 testmod = true
@@ -2555,32 +2555,32 @@ local UserName_Group = Redis:get(TheFRADM.."FRADM:Lock:User:Name"..msg_chat_id)
 if UserName_Group == "del" then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل يوزرات \n✧',"md")
 end
 elseif UserName_Group == "ked" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل يوزرات \n✧',"md")
 end
 elseif UserName_Group == "ktm" then
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) 
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.sender_id.user_id) 
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل يوزرات \n✧',"md")
 end
 elseif UserName_Group == "kick" then
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل يوزرات \n✧',"md")
 end
 end
@@ -2592,32 +2592,32 @@ local Hashtak_Group = Redis:get(TheFRADM.."FRADM:Lock:hashtak"..msg_chat_id)
 if Hashtak_Group == "del" then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل هاشتاق \n✧',"md")
 end
 elseif Hashtak_Group == "ked" then
- bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+ bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
  bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل هاشتاق \n✧',"md")
 end
 elseif Hashtak_Group == "ktm" then
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) 
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.sender_id.user_id) 
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل هاشتاق \n✧',"md")
 end
 elseif Hashtak_Group == "kick" then
- bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
+ bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
  bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل هاشتاق \n✧',"md")
 end
 end
@@ -2628,69 +2628,69 @@ local comd_Group = Redis:get(TheFRADM.."FRADM:Lock:Cmd"..msg_chat_id)
 if comd_Group == "del" then
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل اوامر بوتات ثانية \n✧',"md")
 end
 elseif comd_Group == "ked" then
- bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+ bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
  bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل اوامر بوتات ثانية \n✧',"md")
 end
 elseif comd_Group == "ktm" then
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) 
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.sender_id.user_id) 
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل اوامر بوتات ثانية \n✧',"md")
 end
 elseif comd_Group == "kick" then
- bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
+ bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
  bot.deleteMessages(msg.chat_id,{[1]= msg.id})
 if Redis:get(TheFRADM..'FRADM:AlThther:Chat'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') 」\n'
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '「 ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') 」\n'
 return merolua.send(msg_chat_id,msg_id,Teext..'⇜ ممنوع ترسل اوامر بوتات ثانية \n✧',"md")
 end
 end
 end
-if (Redis:get(TheFRADM..'FRADM:FilterText'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) == 'true') then
+if (Redis:get(TheFRADM..'FRADM:FilterText'..msg_chat_id..':'..msg.sender_id.user_id) == 'true') then
 if text or msg.content.photo or msg.content.animation or msg.content.sticker then
 if msg.content.photo then
 Filters = 'صوره'
 Redis:sadd(TheFRADM.."FRADM:List:Filter"..msg_chat_id,'photo:'..msg.content.photo.sizes[1].photo.id)  
-Redis:set(TheFRADM.."FRADM:Filter:Text"..msg.return merolua.sender_id.user_id..':'..msg_chat_id, msg.content.photo.sizes[1].photo.id)  
+Redis:set(TheFRADM.."FRADM:Filter:Text"..msg.sender_id.user_id..':'..msg_chat_id, msg.content.photo.sizes[1].photo.id)  
 elseif msg.content.animation then
 Filters = 'متحركه'
 Redis:sadd(TheFRADM.."FRADM:List:Filter"..msg_chat_id,'animation:'..msg.content.animation.animation.id)  
-Redis:set(TheFRADM.."FRADM:Filter:Text"..msg.return merolua.sender_id.user_id..':'..msg_chat_id, msg.content.animation.animation.id)  
+Redis:set(TheFRADM.."FRADM:Filter:Text"..msg.sender_id.user_id..':'..msg_chat_id, msg.content.animation.animation.id)  
 elseif msg.content.sticker then
 Filters = 'ملصق'
 Redis:sadd(TheFRADM.."FRADM:List:Filter"..msg_chat_id,'sticker:'..msg.content.sticker.sticker.id)  
-Redis:set(TheFRADM.."FRADM:Filter:Text"..msg.return merolua.sender_id.user_id..':'..msg_chat_id, msg.content.sticker.sticker.id)  
+Redis:set(TheFRADM.."FRADM:Filter:Text"..msg.sender_id.user_id..':'..msg_chat_id, msg.content.sticker.sticker.id)  
 elseif text then
-Redis:set(TheFRADM.."FRADM:Filter:Text"..msg.return merolua.sender_id.user_id..':'..msg_chat_id, text)  
+Redis:set(TheFRADM.."FRADM:Filter:Text"..msg.sender_id.user_id..':'..msg_chat_id, text)  
 Redis:sadd(TheFRADM.."FRADM:List:Filter"..msg_chat_id,'text:'..text)  
 Filters = 'نص'
 end
-Redis:set(TheFRADM..'FRADM:FilterText'..msg_chat_id..':'..msg.return merolua.sender_id.user_id,'true1')
+Redis:set(TheFRADM..'FRADM:FilterText'..msg_chat_id..':'..msg.sender_id.user_id,'true1')
 return merolua.send(msg_chat_id,msg_id,"\n⇜ اعطني تحذير ( "..Filters.." ) عند ارساله","md",true)  
 end
 end
-if text and (Redis:get(TheFRADM..'FRADM:FilterText'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) == 'true1') then
-local Text_Filter = Redis:get(TheFRADM.."FRADM:Filter:Text"..msg.return merolua.sender_id.user_id..':'..msg_chat_id)  
+if text and (Redis:get(TheFRADM..'FRADM:FilterText'..msg_chat_id..':'..msg.sender_id.user_id) == 'true1') then
+local Text_Filter = Redis:get(TheFRADM.."FRADM:Filter:Text"..msg.sender_id.user_id..':'..msg_chat_id)  
 if Text_Filter then   
 Redis:set(TheFRADM.."FRADM:Filter:Group:"..Text_Filter..msg_chat_id,text)  
 end  
-Redis:del(TheFRADM.."FRADM:Filter:Text"..msg.return merolua.sender_id.user_id..':'..msg_chat_id)  
-Redis:del(TheFRADM..'FRADM:FilterText'..msg_chat_id..':'..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."FRADM:Filter:Text"..msg.sender_id.user_id..':'..msg_chat_id)  
+Redis:del(TheFRADM..'FRADM:FilterText'..msg_chat_id..':'..msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,"\n⇜ تم اضافه رد التحذير","md",true)  
 end
-if (Redis:get(TheFRADM..'FRADM:FilterText'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) == 'DelFilter') then   
+if (Redis:get(TheFRADM..'FRADM:FilterText'..msg_chat_id..':'..msg.sender_id.user_id) == 'DelFilter') then   
 if text or msg.content.photo or msg.content.animation or msg.content.sticker then
 if msg.content.photo then
 Filters = 'الصوره'
@@ -2709,7 +2709,7 @@ Redis:srem(TheFRADM.."FRADM:List:Filter"..msg_chat_id,'text:'..text)
 Redis:del(TheFRADM.."FRADM:Filter:Group:"..text..msg_chat_id)  
 Filters = 'النص'
 end
-Redis:del(TheFRADM..'FRADM:FilterText'..msg_chat_id..':'..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM..'FRADM:FilterText'..msg_chat_id..':'..msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,"⇜ لقد تم منع ("..Filters..") هنا\n✧","md",true)  
 end
 end
@@ -2734,116 +2734,116 @@ return merolua.send(msg_chat_id,msg_id,"⇜ لقد تم منع ( "..statusfilter
 end
 end
 
-if text and Redis:get(TheFRADM..msg_chat_id..msg.return merolua.sender_id.user_id.."replace") == "true1" then
-Redis:del(TheFRADM..msg_chat_id..msg.return merolua.sender_id.user_id.."replace")
-local word = Redis:get(TheFRADM..msg_chat_id..msg.return merolua.sender_id.user_id.."word")
+if text and Redis:get(TheFRADM..msg_chat_id..msg.sender_id.user_id.."replace") == "true1" then
+Redis:del(TheFRADM..msg_chat_id..msg.sender_id.user_id.."replace")
+local word = Redis:get(TheFRADM..msg_chat_id..msg.sender_id.user_id.."word")
 Redis:set(TheFRADM..msg_chat_id.."Word:Replace"..word,text)
 Redis:sadd(TheFRADM..msg_chat_id..'Words:r',word)  
-return merolua.send(msg_chat_id,msg_id,"⇜ تم حفظ الكلمة","md",true)  
+send(msg_chat_id,msg_id,"⇜ تم حفظ الكلمة","md",true)  
 return false 
 end
-if text and Redis:get(TheFRADM..msg_chat_id..msg.return merolua.sender_id.user_id.."replace") == "true" then
-Redis:set(TheFRADM..msg_chat_id..msg.return merolua.sender_id.user_id.."word",text)
-Redis:set(TheFRADM..msg_chat_id..msg.return merolua.sender_id.user_id.."replace","true1")
-return merolua.send(msg_chat_id,msg_id,'\n⇜ ارسل كلمة جديدة ليتم استبدالها مكان ( '..text..' )',"md",true)  
+if text and Redis:get(TheFRADM..msg_chat_id..msg.sender_id.user_id.."replace") == "true" then
+Redis:set(TheFRADM..msg_chat_id..msg.sender_id.user_id.."word",text)
+Redis:set(TheFRADM..msg_chat_id..msg.sender_id.user_id.."replace","true1")
+send(msg_chat_id,msg_id,'\n⇜ ارسل كلمة جديدة ليتم استبدالها مكان ( '..text..' )',"md",true)  
 return false 
 end
 
-if text and Redis:get(TheFRADM.."All:Command:Reids:Group:Del"..msg_chat_id..":"..msg.return merolua.sender_id.user_id) == "true" then
+if text and Redis:get(TheFRADM.."All:Command:Reids:Group:Del"..msg_chat_id..":"..msg.sender_id.user_id) == "true" then
 local NewCmmd = Redis:get(TheFRADM.."All:Get:Reides:Commands:Group"..text)
 if NewCmmd then
 Redis:del(TheFRADM.."All:Get:Reides:Commands:Group"..text)
 Redis:del(TheFRADM.."All:Command:Reids:Group:New"..msg_chat_id)
 Redis:srem(TheFRADM.."All:Command:List:Group",text)
-return merolua.send(msg_chat_id,msg_id,"⇜ ابشر مسحت ( "..text.." )\n✧","md",true)
+send(msg_chat_id,msg_id,"⇜ ابشر مسحت ( "..text.." )\n✧","md",true)
 else
-return merolua.send(msg_chat_id,msg_id,"⇜ مافي امر عام بهذا الاسم\n✧","md",true)
+send(msg_chat_id,msg_id,"⇜ مافي امر عام بهذا الاسم\n✧","md",true)
 end
-Redis:del(TheFRADM.."All:Command:Reids:Group:Del"..msg_chat_id..":"..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."All:Command:Reids:Group:Del"..msg_chat_id..":"..msg.sender_id.user_id)
 return false
 end
-if text and Redis:get(TheFRADM.."All:Command:Reids:Group"..msg_chat_id..":"..msg.return merolua.sender_id.user_id) == "true" then
+if text and Redis:get(TheFRADM.."All:Command:Reids:Group"..msg_chat_id..":"..msg.sender_id.user_id) == "true" then
 Redis:set(TheFRADM.."All:Command:Reids:Group:New"..msg_chat_id,text)
-Redis:del(TheFRADM.."All:Command:Reids:Group"..msg_chat_id..":"..msg.return merolua.sender_id.user_id)
-Redis:set(TheFRADM.."All:Command:Reids:Group:End"..msg_chat_id..":"..msg.return merolua.sender_id.user_id,"true1") 
+Redis:del(TheFRADM.."All:Command:Reids:Group"..msg_chat_id..":"..msg.sender_id.user_id)
+Redis:set(TheFRADM.."All:Command:Reids:Group:End"..msg_chat_id..":"..msg.sender_id.user_id,"true1") 
 return merolua.send(msg_chat_id,msg_id,"⇜ ارسل الامر الجديد ليتم وضعه مكان القديم\n✧","md",true)  
 end
-if text and Redis:get(TheFRADM.."All:Command:Reids:Group:End"..msg_chat_id..":"..msg.return merolua.sender_id.user_id) == "true1" then
+if text and Redis:get(TheFRADM.."All:Command:Reids:Group:End"..msg_chat_id..":"..msg.sender_id.user_id) == "true1" then
 local NewCmd = Redis:get(TheFRADM.."All:Command:Reids:Group:New"..msg_chat_id)
 Redis:set(TheFRADM.."All:Get:Reides:Commands:Group"..text,NewCmd)
 Redis:sadd(TheFRADM.."All:Command:List:Group",text)
-Redis:del(TheFRADM.."All:Command:Reids:Group:End"..msg_chat_id..":"..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."All:Command:Reids:Group:End"..msg_chat_id..":"..msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,"⇜ ابشر حفظت الامر باسم ← ( "..text..' )\n✧',"md",true)
 end
-if text and Redis:get(TheFRADM.."FRADM:Command:Reids:Group:Del"..msg_chat_id..":"..msg.return merolua.sender_id.user_id) == "true" then
+if text and Redis:get(TheFRADM.."FRADM:Command:Reids:Group:Del"..msg_chat_id..":"..msg.sender_id.user_id) == "true" then
 local NewCmmd = Redis:get(TheFRADM.."FRADM:Get:Reides:Commands:Group"..msg_chat_id..":"..text)
 if NewCmmd then
 Redis:del(TheFRADM.."FRADM:Get:Reides:Commands:Group"..msg_chat_id..":"..text)
 Redis:del(TheFRADM.."FRADM:Command:Reids:Group:New"..msg_chat_id)
 Redis:srem(TheFRADM.."FRADM:Command:List:Group"..msg_chat_id,text)
-return merolua.send(msg_chat_id,msg_id,"⇜ تم ازالة الامر ← ( "..text.." )","md",true)
+send(msg_chat_id,msg_id,"⇜ تم ازالة الامر ← ( "..text.." )","md",true)
 else
-return merolua.send(msg_chat_id,msg_id,"⇜ لا يوجد امر بهذا الاسم","md",true)
+send(msg_chat_id,msg_id,"⇜ لا يوجد امر بهذا الاسم","md",true)
 end
-Redis:del(TheFRADM.."FRADM:Command:Reids:Group:Del"..msg_chat_id..":"..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."FRADM:Command:Reids:Group:Del"..msg_chat_id..":"..msg.sender_id.user_id)
 return false
 end
-if text and Redis:get(TheFRADM.."FRADM:Command:Reids:Group"..msg_chat_id..":"..msg.return merolua.sender_id.user_id) == "true" then
+if text and Redis:get(TheFRADM.."FRADM:Command:Reids:Group"..msg_chat_id..":"..msg.sender_id.user_id) == "true" then
 Redis:set(TheFRADM.."FRADM:Command:Reids:Group:New"..msg_chat_id,text)
-Redis:del(TheFRADM.."FRADM:Command:Reids:Group"..msg_chat_id..":"..msg.return merolua.sender_id.user_id)
-Redis:set(TheFRADM.."FRADM:Command:Reids:Group:End"..msg_chat_id..":"..msg.return merolua.sender_id.user_id,"true1") 
+Redis:del(TheFRADM.."FRADM:Command:Reids:Group"..msg_chat_id..":"..msg.sender_id.user_id)
+Redis:set(TheFRADM.."FRADM:Command:Reids:Group:End"..msg_chat_id..":"..msg.sender_id.user_id,"true1") 
 return merolua.send(msg_chat_id,msg_id,"⇜ اعطني الامر الجديد ليتم وضعه مكان القديم","md",true)  
 end
-if text and Redis:get(TheFRADM.."FRADM:Command:Reids:Group:End"..msg_chat_id..":"..msg.return merolua.sender_id.user_id) == "true1" then
+if text and Redis:get(TheFRADM.."FRADM:Command:Reids:Group:End"..msg_chat_id..":"..msg.sender_id.user_id) == "true1" then
 local NewCmd = Redis:get(TheFRADM.."FRADM:Command:Reids:Group:New"..msg_chat_id)
 Redis:set(TheFRADM.."FRADM:Get:Reides:Commands:Group"..msg_chat_id..":"..text,NewCmd)
 Redis:sadd(TheFRADM.."FRADM:Command:List:Group"..msg_chat_id,text)
-Redis:del(TheFRADM.."FRADM:Command:Reids:Group:End"..msg_chat_id..":"..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."FRADM:Command:Reids:Group:End"..msg_chat_id..":"..msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,"⇜ تم حفظ الامر باسم ← ( "..text..' )',"md",true)
 end
-if Redis:get(TheFRADM.."FRADM:Set:Link"..msg_chat_id..""..msg.return merolua.sender_id.user_id) then
+if Redis:get(TheFRADM.."FRADM:Set:Link"..msg_chat_id..""..msg.sender_id.user_id) then
 if text == "الغاء" then
-Redis:del(TheFRADM.."FRADM:Set:Link"..msg_chat_id..""..msg.return merolua.sender_id.user_id) 
+Redis:del(TheFRADM.."FRADM:Set:Link"..msg_chat_id..""..msg.sender_id.user_id) 
 return merolua.send(msg_chat_id,msg_id,"⇜ تم الغاء حفظ الرابط","md",true)         
 end
 if text and text:match("(https://telegram.me/joinchat/%S+)") or text and text:match("(https://t.me/joinchat/%S+)") then     
 local LinkGroup = text:match("(https://telegram.me/joinchat/%S+)") or text:match("(https://t.me/joinchat/%S+)")   
 Redis:set(TheFRADM.."FRADM:Group:Link"..msg_chat_id,LinkGroup)
-Redis:del(TheFRADM.."FRADM:Set:Link"..msg_chat_id..""..msg.return merolua.sender_id.user_id) 
+Redis:del(TheFRADM.."FRADM:Set:Link"..msg_chat_id..""..msg.sender_id.user_id) 
 return merolua.send(msg_chat_id,msg_id,"⇜ تم حفظ الرابط","md",true)         
 end
 end 
-if Redis:get(TheFRADM.."Tshake:Welcome:Group" .. msg_chat_id .. "" .. msg.return merolua.sender_id.user_id) then 
+if Redis:get(TheFRADM.."Tshake:Welcome:Group" .. msg_chat_id .. "" .. msg.sender_id.user_id) then 
 if text == "الغاء" then 
-Redis:del(TheFRADM.."Tshake:Welcome:Group" .. msg_chat_id .. "" .. msg.return merolua.sender_id.user_id)  
+Redis:del(TheFRADM.."Tshake:Welcome:Group" .. msg_chat_id .. "" .. msg.sender_id.user_id)  
 return merolua.send(msg_chat_id,msg_id,"⇜ تم الغاء حفظ الترحيب","md",true)   
 end 
-Redis:del(TheFRADM.."Tshake:Welcome:Group" .. msg_chat_id .. "" .. msg.return merolua.sender_id.user_id)  
+Redis:del(TheFRADM.."Tshake:Welcome:Group" .. msg_chat_id .. "" .. msg.sender_id.user_id)  
 Redis:set(TheFRADM.."FRADM:Welcome:Group"..msg_chat_id,text) 
 return merolua.send(msg_chat_id,msg_id,"⇜ تم حفظ ترحيب القروب","md",true)     
 end
-if Redis:get(TheFRADM.."FRADM:Set:Rules:" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id) then 
+if Redis:get(TheFRADM.."FRADM:Set:Rules:" .. msg_chat_id .. ":" .. msg.sender_id.user_id) then 
 if text == "الغاء" then 
-Redis:del(TheFRADM.."FRADM:Set:Rules:" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."FRADM:Set:Rules:" .. msg_chat_id .. ":" .. msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,"⇜ تم الغاء حفظ القوانين","md",true)   
 end 
 Redis:set(TheFRADM.."FRADM:Group:Rules" .. msg_chat_id,text) 
-Redis:del(TheFRADM.."FRADM:Set:Rules:" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."FRADM:Set:Rules:" .. msg_chat_id .. ":" .. msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,"⇜ تم حفظ قوانين القروب","md",true)  
 end  
-if Redis:get(TheFRADM.."FRADM:Set:Description:" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id) then 
+if Redis:get(TheFRADM.."FRADM:Set:Description:" .. msg_chat_id .. ":" .. msg.sender_id.user_id) then 
 if text == "الغاء" then 
-Redis:del(TheFRADM.."FRADM:Set:Description:" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."FRADM:Set:Description:" .. msg_chat_id .. ":" .. msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,"⇜ تم الغاء حفظ وصف القروب","md",true)   
 end 
 bot.setChatDescription(msg_chat_id,text) 
-Redis:del(TheFRADM.."FRADM:Set:Description:" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."FRADM:Set:Description:" .. msg_chat_id .. ":" .. msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,"⇜ تم حفظ وصف القروب","md",true)  
 end  
 if text or msg.content.video_note or msg.content.document or msg.content.audio or msg.content.video or msg.content.voice_note or msg.content.sticker or msg.content.animation or msg.content.photo then
-local test = Redis:get(TheFRADM.."FRADM:Text:Manager"..msg.return merolua.sender_id.user_id..":"..msg_chat_id.."")
-if Redis:get(TheFRADM.."FRADM:Set:Manager:rd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == "true1" then
-Redis:del(TheFRADM.."FRADM:Set:Manager:rd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
+local test = Redis:get(TheFRADM.."FRADM:Text:Manager"..msg.sender_id.user_id..":"..msg_chat_id.."")
+if Redis:get(TheFRADM.."FRADM:Set:Manager:rd"..msg.sender_id.user_id..":"..msg_chat_id) == "true1" then
+Redis:del(TheFRADM.."FRADM:Set:Manager:rd"..msg.sender_id.user_id..":"..msg_chat_id)
 if msg.content.sticker then   
 Redis:set(TheFRADM.."FRADM:Add:Rd:Manager:Stekrs"..test..msg_chat_id, msg.content.sticker.sticker.remote.id)  
 end   
@@ -2898,9 +2898,9 @@ return merolua.send(msg_chat_id,msg_id,"「 "..test.." 」\nواضفنا الر�
 end  
 end
 if text and text:match("^(.*)$") then
-if Redis:get(TheFRADM.."FRADM:Set:Manager:rd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == "true" then
-Redis:set(TheFRADM.."FRADM:Set:Manager:rd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,"true1")
-Redis:set(TheFRADM.."FRADM:Text:Manager"..msg.return merolua.sender_id.user_id..":"..msg_chat_id, text)
+if Redis:get(TheFRADM.."FRADM:Set:Manager:rd"..msg.sender_id.user_id..":"..msg_chat_id) == "true" then
+Redis:set(TheFRADM.."FRADM:Set:Manager:rd"..msg.sender_id.user_id..":"..msg_chat_id,"true1")
+Redis:set(TheFRADM.."FRADM:Text:Manager"..msg.sender_id.user_id..":"..msg_chat_id, text)
 Redis:del(TheFRADM.."FRADM:Add:Rd:Manager:Gif"..text..msg_chat_id)   
 Redis:del(TheFRADM.."FRADM:Add:Rd:Manager:Vico"..text..msg_chat_id)   
 Redis:del(TheFRADM.."FRADM:Add:Rd:Manager:Stekrs"..text..msg_chat_id)     
@@ -2911,7 +2911,7 @@ Redis:del(TheFRADM.."FRADM:Add:Rd:Manager:File"..text..msg_chat_id)
 Redis:del(TheFRADM.."FRADM:Add:Rd:Manager:video_note"..text..msg_chat_id)
 Redis:del(TheFRADM.."FRADM:Add:Rd:Manager:Audio"..text..msg_chat_id)
 Redis:sadd(TheFRADM.."FRADM:List:Manager"..msg_chat_id.."", text)
-return merolua.send(msg_chat_id,msg_id,[[
+send(msg_chat_id,msg_id,[[
 ⇜ حلو , الحين ارسل جواب الرد
 ⇜ ( نص,صوره,فيديو,متحركه,بصمه,اغنيه ) 
 ـــــــــــــــــــــــــــــــــــــــــ
@@ -2927,7 +2927,7 @@ return false
 end
 end
 if text and text:match("^(.*)$") then
-if Redis:get(TheFRADM.."FRADM:Set:Manager:rd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id.."") == "true2" then
+if Redis:get(TheFRADM.."FRADM:Set:Manager:rd"..msg.sender_id.user_id..":"..msg_chat_id.."") == "true2" then
 Redis:del(TheFRADM.."FRADM:Add:Rd:Manager:Gif"..text..msg_chat_id)   
 Redis:del(TheFRADM.."FRADM:Add:Rd:Manager:Vico"..text..msg_chat_id)   
 Redis:del(TheFRADM.."FRADM:Add:Rd:Manager:Stekrs"..text..msg_chat_id)     
@@ -2937,9 +2937,9 @@ Redis:del(TheFRADM.."FRADM:Add:Rd:Manager:Video"..text..msg_chat_id)
 Redis:del(TheFRADM.."FRADM:Add:Rd:Manager:File"..text..msg_chat_id)
 Redis:del(TheFRADM.."FRADM:Add:Rd:Manager:Audio"..text..msg_chat_id)
 Redis:del(TheFRADM.."FRADM:Add:Rd:Manager:video_note"..text..msg_chat_id)
-Redis:del(TheFRADM.."FRADM:Set:Manager:rd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
+Redis:del(TheFRADM.."FRADM:Set:Manager:rd"..msg.sender_id.user_id..":"..msg_chat_id)
 Redis:srem(TheFRADM.."FRADM:List:Manager"..msg_chat_id.."", text)
-return merolua.send(msg_chat_id,msg_id,"⇜ ابشر مسحت الرد من الردود ","md",true)  
+send(msg_chat_id,msg_id,"⇜ ابشر مسحت الرد من الردود ","md",true)  
 return false
 end
 end
@@ -2954,46 +2954,46 @@ local document = Redis:get(TheFRADM.."FRADM:Add:Rd:Sudo:File"..text)
 local audio = Redis:get(TheFRADM.."FRADM:Add:Rd:Sudo:Audio"..text)
 local video_note = Redis:get(TheFRADM.."FRADM:Add:Rd:Sudo:video_note"..text)
 if Text then 
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local NumMsg = Redis:get(TheFRADM..'FRADM:Num:Message:User'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) or 0
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local NumMsg = Redis:get(TheFRADM..'FRADM:Num:Message:User'..msg_chat_id..':'..msg.sender_id.user_id) or 0
 local TotalMsg = Total_message(NumMsg)
 local Status_Gps = msg.Name_Controller
-local NumMessageEdit = Redis:get(TheFRADM..'FRADM:Num:Message:Edit'..msg_chat_id..msg.return merolua.sender_id.user_id) or 0
+local NumMessageEdit = Redis:get(TheFRADM..'FRADM:Num:Message:Edit'..msg_chat_id..msg.sender_id.user_id) or 0
 local Text = Text:gsub('{اليوزر}',(UserInfo.username or 'لا يوجد')) 
 local Text = Text:gsub('{الاسم}',UserInfo.first_name)
-local Text = Text:gsub('{الايدي}',msg.return merolua.sender_id.user_id)
+local Text = Text:gsub('{الايدي}',msg.sender_id.user_id)
 local Text = Text:gsub('{التعديل}',NumMessageEdit)
 local Text = Text:gsub('{الرسائل}',NumMsg)
 local Text = Text:gsub('{الرتبه}',Status_Gps)
 if Text:match("]") then
-return merolua.send(msg_chat_id,msg_id,""..Text.."","md",true)  
+send(msg_chat_id,msg_id,""..Text.."","md",true)  
 else
-return merolua.send(msg_chat_id,msg_id,"["..Text.."]","md",true)  
+send(msg_chat_id,msg_id,"["..Text.."]","md",true)  
 end
 end
 if video_note then
-return merolua.sendVideoNote(msg_chat_id, msg.id, video_note)
+bot.sendVideoNote(msg_chat_id, msg.id, video_note)
 end
 if photo then
-return merolua.sendPhoto(msg.chat_id, msg.id, photo,'')
+bot.sendPhoto(msg.chat_id, msg.id, photo,'')
 end  
 if stekr then 
-return merolua.sendSticker(msg_chat_id, msg.id, stekr)
+bot.sendSticker(msg_chat_id, msg.id, stekr)
 end
 if veico then 
-return merolua.sendVoiceNote(msg_chat_id, msg.id, veico, '', 'md')
+bot.sendVoiceNote(msg_chat_id, msg.id, veico, '', 'md')
 end
 if video then 
-return merolua.sendVideo(msg_chat_id, msg.id, video, '', "md")
+bot.sendVideo(msg_chat_id, msg.id, video, '', "md")
 end
 if anemi then 
-return merolua.sendAnimation(msg_chat_id,msg.id, anemi, '', 'md')
+bot.sendAnimation(msg_chat_id,msg.id, anemi, '', 'md')
 end
 if document then
-return merolua.sendDocument(msg_chat_id, msg.id, document, '', 'md')
+bot.sendDocument(msg_chat_id, msg.id, document, '', 'md')
 end  
 if audio then
-return merolua.sendAudio(msg_chat_id, msg.id, audio, '', "md") 
+bot.sendAudio(msg_chat_id, msg.id, audio, '', "md") 
 end
 end
 if text and Redis:get(TheFRADM.."FRADM:Status:Reply"..msg_chat_id) then
@@ -3007,56 +3007,56 @@ local document = Redis:get(TheFRADM.."FRADM:Add:Rd:Manager:File"..text..msg_chat
 local audio = Redis:get(TheFRADM.."FRADM:Add:Rd:Manager:Audio"..text..msg_chat_id)
 local video_note = Redis:get(TheFRADM.."FRADM:Add:Rd:Manager:video_note"..text..msg_chat_id)
 if Texingt then 
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local NumMsg = Redis:get(TheFRADM..'FRADM:Num:Message:User'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) or 0
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local NumMsg = Redis:get(TheFRADM..'FRADM:Num:Message:User'..msg_chat_id..':'..msg.sender_id.user_id) or 0
 local TotalMsg = Total_message(NumMsg) 
 local Status_Gps = msg.Name_Controller
-local NumMessageEdit = Redis:get(TheFRADM..'FRADM:Num:Message:Edit'..msg_chat_id..msg.return merolua.sender_id.user_id) or 0
+local NumMessageEdit = Redis:get(TheFRADM..'FRADM:Num:Message:Edit'..msg_chat_id..msg.sender_id.user_id) or 0
 local Texingt = Texingt:gsub('{اليوزر}',(UserInfo.username or 'لا يوجد')) 
 local Texingt = Texingt:gsub('{الاسم}',UserInfo.first_name)
-local Texingt = Texingt:gsub('{الايدي}',msg.return merolua.sender_id.user_id)
+local Texingt = Texingt:gsub('{الايدي}',msg.sender_id.user_id)
 local Texingt = Texingt:gsub('{التعديل}',NumMessageEdit)
 local Texingt = Texingt:gsub('{الرسائل}',NumMsg)
 local Texingt = Texingt:gsub('{الرتبه}',Status_Gps)
 if Texingt:match("]") then
-return merolua.send(msg_chat_id,msg_id,""..Texingt.."","md",true)  
+send(msg_chat_id,msg_id,""..Texingt.."","md",true)  
 else
-return merolua.send(msg_chat_id,msg_id,"["..Texingt.."]","md",true)  
+send(msg_chat_id,msg_id,"["..Texingt.."]","md",true)  
 end
 end
 if video_note then
-return merolua.sendVideoNote(msg_chat_id, msg.id, video_note)
+bot.sendVideoNote(msg_chat_id, msg.id, video_note)
 end
 if photo then
-local captionreturn merolua.send = Redis:get(TheFRADM.."FRADM:Add:Rd:caption:Photo"..photo..msg_chat_id) or ''
-return merolua.sendPhoto(msg.chat_id, msg.id, photo,'['..captionreturn merolua.send..']',"md")
+local captionsend = Redis:get(TheFRADM.."FRADM:Add:Rd:caption:Photo"..photo..msg_chat_id) or ''
+bot.sendPhoto(msg.chat_id, msg.id, photo,'['..captionsend..']',"md")
 end  
 if stekr then 
-return merolua.sendSticker(msg_chat_id, msg.id, stekr)
+bot.sendSticker(msg_chat_id, msg.id, stekr)
 end
 if veico then 
-return merolua.sendVoiceNote(msg_chat_id, msg.id, veico, '', 'md')
+bot.sendVoiceNote(msg_chat_id, msg.id, veico, '', 'md')
 end
 if video then 
-local captionreturn merolua.send = Redis:get(TheFRADM.."FRADM:Add:Rd:caption:video"..video..msg_chat_id) or ''
-return merolua.sendVideo(msg_chat_id, msg.id, video, '['..captionreturn merolua.send..']', "md")
+local captionsend = Redis:get(TheFRADM.."FRADM:Add:Rd:caption:video"..video..msg_chat_id) or ''
+bot.sendVideo(msg_chat_id, msg.id, video, '['..captionsend..']', "md")
 end
 if anemi then 
-return merolua.sendAnimation(msg_chat_id,msg.id, anemi, '', 'md')
+bot.sendAnimation(msg_chat_id,msg.id, anemi, '', 'md')
 end
 if document then
-local captionreturn merolua.send = Redis:get(TheFRADM.."FRADM:Add:Rd:caption:document"..document..msg_chat_id) or ''
-return merolua.sendDocument(msg_chat_id, msg.id, document, '['..captionreturn merolua.send..']', 'md')
+local captionsend = Redis:get(TheFRADM.."FRADM:Add:Rd:caption:document"..document..msg_chat_id) or ''
+bot.sendDocument(msg_chat_id, msg.id, document, '['..captionsend..']', 'md')
 end  
 if audio then
-local captionreturn merolua.send = Redis:get(TheFRADM.."FRADM:Add:Rd:caption:audio"..audio..msg_chat_id) or ''
-return merolua.sendAudio(msg_chat_id, msg.id, audio, '['..captionreturn merolua.send..']',"md")
+local captionsend = Redis:get(TheFRADM.."FRADM:Add:Rd:caption:audio"..audio..msg_chat_id) or ''
+bot.sendAudio(msg_chat_id, msg.id, audio, '['..captionsend..']',"md")
 end
 end
 if text or msg.content.video_note or msg.content.document or msg.content.audio or msg.content.video or msg.content.voice_note or msg.content.sticker or msg.content.animation or msg.content.photo then
-local test = Redis:get(TheFRADM.."FRADM:Text:Sudo:Bot"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
-if Redis:get(TheFRADM.."FRADM:Set:Rd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == "true1" then
-Redis:del(TheFRADM.."FRADM:Set:Rd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
+local test = Redis:get(TheFRADM.."FRADM:Text:Sudo:Bot"..msg.sender_id.user_id..":"..msg_chat_id)
+if Redis:get(TheFRADM.."FRADM:Set:Rd"..msg.sender_id.user_id..":"..msg_chat_id) == "true1" then
+Redis:del(TheFRADM.."FRADM:Set:Rd"..msg.sender_id.user_id..":"..msg_chat_id)
 if msg.content.sticker then   
 Redis:set(TheFRADM.."FRADM:Add:Rd:Sudo:stekr"..test, msg.content.sticker.sticker.remote.id)  
 end   
@@ -3095,16 +3095,16 @@ idPhoto = msg.content.photo.sizes[3].photo.remote.id
 end
 Redis:set(TheFRADM.."FRADM:Add:Rd:Sudo:Photo"..test, idPhoto)  
 end
-return merolua.send(msg_chat_id,msg_id,"「 "..test.." 」\nواضفنا الرد ياحلو \n✧","md",true)  
+send(msg_chat_id,msg_id,"「 "..test.." 」\nواضفنا الرد ياحلو \n✧","md",true)  
 return false
 end  
 end
 if text and text:match("^(.*)$") then
-if Redis:get(TheFRADM.."FRADM:Set:Rd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == "true" then
-Redis:set(TheFRADM.."FRADM:Set:Rd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id, "true1")
-Redis:set(TheFRADM.."FRADM:Text:Sudo:Bot"..msg.return merolua.sender_id.user_id..":"..msg_chat_id, text)
+if Redis:get(TheFRADM.."FRADM:Set:Rd"..msg.sender_id.user_id..":"..msg_chat_id) == "true" then
+Redis:set(TheFRADM.."FRADM:Set:Rd"..msg.sender_id.user_id..":"..msg_chat_id, "true1")
+Redis:set(TheFRADM.."FRADM:Text:Sudo:Bot"..msg.sender_id.user_id..":"..msg_chat_id, text)
 Redis:sadd(TheFRADM.."FRADM:List:Rd:Sudo", text)
-return merolua.send(msg_chat_id,msg_id,[[
+send(msg_chat_id,msg_id,[[
 ⇜ حلو , الحين ارسل جواب الرد
 ⇜ ( نص,صوره,فيديو,متحركه,بصمه,اغنيه ) 
 ـــــــــــــــــــــــــــــــــــــــــ
@@ -3120,56 +3120,56 @@ return false
 end
 end
 if text and text:match("^(.*)$") then
-if Redis:get(TheFRADM.."FRADM:Set:On"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == "true" then
+if Redis:get(TheFRADM.."FRADM:Set:On"..msg.sender_id.user_id..":"..msg_chat_id) == "true" then
 list = {"Add:Rd:Sudo:video_note","Add:Rd:Sudo:Audio","Add:Rd:Sudo:File","Add:Rd:Sudo:Video","Add:Rd:Sudo:Photo","Add:Rd:Sudo:Text","Add:Rd:Sudo:stekr","Add:Rd:Sudo:vico","Add:Rd:Sudo:Gif"}
 for k,v in pairs(list) do
 Redis:del(TheFRADM..'FRADM:'..v..text)
 end
-Redis:del(TheFRADM.."FRADM:Set:On"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
+Redis:del(TheFRADM.."FRADM:Set:On"..msg.sender_id.user_id..":"..msg_chat_id)
 Redis:srem(TheFRADM.."FRADM:List:Rd:Sudo", text)
 return merolua.send(msg_chat_id,msg_id,"⇜ ابشر مسحت الرد من الردود العامة","md",true)  
 end
 end
-if Redis:get(TheFRADM..'Set:array'..msg.return merolua.sender_id.user_id..':'..msg_chat_id) == 'true1' then
+if Redis:get(TheFRADM..'Set:array'..msg.sender_id.user_id..':'..msg_chat_id) == 'true1' then
 text = text:gsub('"','') 
 text = text:gsub("'",'') 
 text = text:gsub('`','') 
 text = text:gsub('*','') 
-local test = Redis:get(TheFRADM..'Text:array'..msg.return merolua.sender_id.user_id..':'..msg_chat_id..'')
+local test = Redis:get(TheFRADM..'Text:array'..msg.sender_id.user_id..':'..msg_chat_id..'')
 Redis:sadd(TheFRADM.."Add:Rd:array:Text"..test..msg_chat_id,text)  
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text="انهاء الاضافة",data="EndAddarray"..msg.return merolua.sender_id.user_id},
+{text="انهاء الاضافة",data="EndAddarray"..msg.sender_id.user_id},
 },
 }
 }
-return merolua.send(msg_chat_id, msg_id, ' ⇜ تم حفظ الرد يمكنك ارسال رد اخر او اكمال العمليه من خلال الزر اسفل ', 'md', false, false, false, false, reply_markup)
+send(msg_chat_id, msg_id, ' ⇜ تم حفظ الرد يمكنك ارسال رد اخر او اكمال العمليه من خلال الزر اسفل ', 'md', false, false, false, false, reply_markup)
 return false  
 end
 if text then
-if Redis:get(TheFRADM.."Set:array:Ssd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == 'dttd' then
-Redis:del(TheFRADM.."Set:array:Ssd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
-gery = Redis:get(TheFRADM.."Set:array:addpu"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
+if Redis:get(TheFRADM.."Set:array:Ssd"..msg.sender_id.user_id..":"..msg_chat_id) == 'dttd' then
+Redis:del(TheFRADM.."Set:array:Ssd"..msg.sender_id.user_id..":"..msg_chat_id)
+gery = Redis:get(TheFRADM.."Set:array:addpu"..msg.sender_id.user_id..":"..msg_chat_id)
 if not Redis:sismember(TheFRADM.."Add:Rd:array:Text"..gery..msg_chat_id,text) then
-return merolua.send(msg_chat_id, msg_id,' ⇜ مافي رد ياعيني',"md",true)
+send(msg_chat_id, msg_id,' ⇜ مافي رد ياعيني',"md",true)
 return false
 end
 Redis:srem(TheFRADM.."Add:Rd:array:Text"..gery..msg_chat_id,text)
-return merolua.send(msg_chat_id, msg_id,' ⇜ ابشر حذفت الرد',"md",true)
+send(msg_chat_id, msg_id,' ⇜ ابشر حذفت الرد',"md",true)
 end
 end
 if text then
-if Redis:get(TheFRADM.."Set:array:Ssd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == 'delrd' then
-Redis:del(TheFRADM.."Set:array:Ssd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
+if Redis:get(TheFRADM.."Set:array:Ssd"..msg.sender_id.user_id..":"..msg_chat_id) == 'delrd' then
+Redis:del(TheFRADM.."Set:array:Ssd"..msg.sender_id.user_id..":"..msg_chat_id)
 if not Redis:sismember(TheFRADM..'List:array'..msg_chat_id,text) then
-return merolua.send(msg_chat_id, msg_id,' ⇜ مافي رد ياعيني ',"md",true)
+send(msg_chat_id, msg_id,' ⇜ مافي رد ياعيني ',"md",true)
 return false
 end
-Redis:set(TheFRADM.."Set:array:addpu"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,text)
-Redis:set(TheFRADM.."Set:array:Ssd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,"dttd")
-return merolua.send(msg_chat_id, msg_id,' ⇜ تمام عيني \n⇜ الحين ارسل الرد عشان امسحه',"md",true)
+Redis:set(TheFRADM.."Set:array:addpu"..msg.sender_id.user_id..":"..msg_chat_id,text)
+Redis:set(TheFRADM.."Set:array:Ssd"..msg.sender_id.user_id..":"..msg_chat_id,"dttd")
+send(msg_chat_id, msg_id,' ⇜ تمام عيني \n⇜ الحين ارسل الرد عشان امسحه',"md",true)
 return false
 end
 end
@@ -3181,66 +3181,66 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'الغاء', data = msg.return merolua.sender_id.user_id..'/cancelamr'},
+{text = 'الغاء', data = msg.sender_id.user_id..'/cancelamr'},
 },
 }
 }
-return merolua.send(msg_chat_id, msg_id, '⇜ تمام عيني \n⇜ الحين ارسل الرد عشان امسحه \n✧', 'md', false, false, false, false, reply_markup)
-Redis:set(TheFRADM.."Set:array:Ssd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,"delrd")
+send(msg_chat_id, msg_id, '⇜ تمام عيني \n⇜ الحين ارسل الرد عشان امسحه \n✧', 'md', false, false, false, false, reply_markup)
+Redis:set(TheFRADM.."Set:array:Ssd"..msg.sender_id.user_id..":"..msg_chat_id,"delrd")
 return false 
 end
 if text then
-if Redis:get(TheFRADM.."Set:array"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == 'true' then
+if Redis:get(TheFRADM.."Set:array"..msg.sender_id.user_id..":"..msg_chat_id) == 'true' then
 Redis:sadd(TheFRADM..'List:array'..msg_chat_id, text)
-Redis:set(TheFRADM..'Text:array'..msg.return merolua.sender_id.user_id..':'..msg_chat_id, text)
-return merolua.send(msg_chat_id, msg_id,'⇜ حلو ، الحين ارسل الكلمة',"md",true)
-Redis:del(TheFRADM.."Set:array"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
-Redis:set(TheFRADM..'Set:array'..msg.return merolua.sender_id.user_id..':'..msg_chat_id,'true1')
+Redis:set(TheFRADM..'Text:array'..msg.sender_id.user_id..':'..msg_chat_id, text)
+send(msg_chat_id, msg_id,'⇜ حلو ، الحين ارسل الكلمة',"md",true)
+Redis:del(TheFRADM.."Set:array"..msg.sender_id.user_id..":"..msg_chat_id)
+Redis:set(TheFRADM..'Set:array'..msg.sender_id.user_id..':'..msg_chat_id,'true1')
 Redis:del(TheFRADM.."Add:Rd:array:Text"..text..msg_chat_id)   
 return false
 end
 end
 if text then
-if Redis:get(TheFRADM.."Set:array:rd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == 'delrd' then
-Redis:del(TheFRADM.."Set:array:rd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
+if Redis:get(TheFRADM.."Set:array:rd"..msg.sender_id.user_id..":"..msg_chat_id) == 'delrd' then
+Redis:del(TheFRADM.."Set:array:rd"..msg.sender_id.user_id..":"..msg_chat_id)
 Redis:del(TheFRADM.."Add:Rd:array:Text"..text..msg_chat_id)
 Redis:srem(TheFRADM..'List:array'..msg_chat_id, text)
-return merolua.send(msg_chat_id, msg_id,'⇜ ابشر مسحت الرد المتعدد ',"md",true)
+send(msg_chat_id, msg_id,'⇜ ابشر مسحت الرد المتعدد ',"md",true)
 return false
 end
 end
 if text and text:match("^(.*)$") then
-if Redis:get(TheFRADM.."Set:array:rdd"..msg.return merolua.sender_id.user_id..":"..msg.chat_id) == 'delrd' then
-Redis:del(TheFRADM.."Set:array:rdd"..msg.return merolua.sender_id.user_id..":"..msg.chat_id)
+if Redis:get(TheFRADM.."Set:array:rdd"..msg.sender_id.user_id..":"..msg.chat_id) == 'delrd' then
+Redis:del(TheFRADM.."Set:array:rdd"..msg.sender_id.user_id..":"..msg.chat_id)
 Redis:del(TheFRADM.."Add:Rd:array:Textt"..text)
 Redis:srem(TheFRADM..'List:arrayy', text)
-return merolua.send(msg.chat_id,msg.id,"⇜ تم مسح الرد المتعدد عام ","md",true)  
+send(msg.chat_id,msg.id,"⇜ تم مسح الرد المتعدد عام ","md",true)  
 return false
 end
 end
 
 if text and text:match("^(.*)$") then
-if Redis:get(TheFRADM.."Set:array:Ssdd"..msg.return merolua.sender_id.user_id..":"..msg.chat_id) == 'dttd' then
-Redis:del(TheFRADM.."Set:array:Ssdd"..msg.return merolua.sender_id.user_id..":"..msg.chat_id)
-gery = Redis:get(TheFRADM.."Set:array:addpuu"..msg.return merolua.sender_id.user_id..":"..msg.chat_id)
+if Redis:get(TheFRADM.."Set:array:Ssdd"..msg.sender_id.user_id..":"..msg.chat_id) == 'dttd' then
+Redis:del(TheFRADM.."Set:array:Ssdd"..msg.sender_id.user_id..":"..msg.chat_id)
+gery = Redis:get(TheFRADM.."Set:array:addpuu"..msg.sender_id.user_id..":"..msg.chat_id)
 if not Redis:sismember(TheFRADM.."Add:Rd:array:Textt"..gery,text) then
-return merolua.send(msg.chat_id,msg.id,"⇜ لا يوجد رد متعدد ","md",true)  
+send(msg.chat_id,msg.id,"⇜ لا يوجد رد متعدد ","md",true)  
 return false
 end
 Redis:srem(TheFRADM.."Add:Rd:array:Textt"..gery,text)
-return merolua.send(msg.chat_id,msg.id,' ⇜ تم مسحه بنجاح ',"md",true)  
+send(msg.chat_id,msg.id,' ⇜ تم مسحه بنجاح ',"md",true)  
 end
 end
 if text and text:match("^(.*)$") then
-if Redis:get(TheFRADM.."Set:array:Ssdd"..msg.return merolua.sender_id.user_id..":"..msg.chat_id) == 'delrd' then
-Redis:del(TheFRADM.."Set:array:Ssdd"..msg.return merolua.sender_id.user_id..":"..msg.chat_id)
+if Redis:get(TheFRADM.."Set:array:Ssdd"..msg.sender_id.user_id..":"..msg.chat_id) == 'delrd' then
+Redis:del(TheFRADM.."Set:array:Ssdd"..msg.sender_id.user_id..":"..msg.chat_id)
 if not Redis:sismember(TheFRADM..'List:arrayy',text) then
-return merolua.send(msg.chat_id,msg.id,"⇜ لا يوجد رد متعدد ","md",true)  
+send(msg.chat_id,msg.id,"⇜ لا يوجد رد متعدد ","md",true)  
 return false
 end
-Redis:set(TheFRADM.."Set:array:addpuu"..msg.return merolua.sender_id.user_id..":"..msg.chat_id,text)
-Redis:set(TheFRADM.."Set:array:Ssdd"..msg.return merolua.sender_id.user_id..":"..msg.chat_id,"dttd")
-return merolua.send(msg.chat_id,msg.id,' ⇜ ارسل الرد الذي تريد مسحه منه ',"md",true)  
+Redis:set(TheFRADM.."Set:array:addpuu"..msg.sender_id.user_id..":"..msg.chat_id,text)
+Redis:set(TheFRADM.."Set:array:Ssdd"..msg.sender_id.user_id..":"..msg.chat_id,"dttd")
+send(msg.chat_id,msg.id,' ⇜ ارسل الرد الذي تريد مسحه منه ',"md",true)  
 return false
 end
 end
@@ -3250,15 +3250,15 @@ local list = Redis:smembers(TheFRADM.."Add:Rd:array:Textt"..text)
 return merolua.send(msg_chat_id,msg_id,"["..list[math.random(#list)].."]","md",true)  
 end  
 
-if Redis:get(TheFRADM.."FRADM:Broadcasting:Groups:Pin" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id) then 
+if Redis:get(TheFRADM.."FRADM:Broadcasting:Groups:Pin" .. msg_chat_id .. ":" .. msg.sender_id.user_id) then 
 if text == "الغاء" or text == 'الغاء الامر' then   
-Redis:del(TheFRADM.."FRADM:Broadcasting:Groups:Pin" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id) 
+Redis:del(TheFRADM.."FRADM:Broadcasting:Groups:Pin" .. msg_chat_id .. ":" .. msg.sender_id.user_id) 
 return merolua.send(msg_chat_id,msg_id, "\n⇜ الغاء الاذاعه للقروبات","md",true)  
 end 
 local list = Redis:smembers(TheFRADM.."FRADM:ChekBotAdd") 
 if msg.content.video_note then
 for k,v in pairs(list) do 
-return merolua.sendVideoNote(v, 0, msg.content.video_note.video.remote.id)
+bot.sendVideoNote(v, 0, msg.content.video_note.video.remote.id)
 Redis:set(TheFRADM.."FRADM:PinMsegees:"..v,msg.content.video_note.video.remote.id)
 end
 elseif msg.content.photo then
@@ -3270,59 +3270,59 @@ elseif msg.content.photo.sizes[3].photo.remote.id then
 idPhoto = msg.content.photo.sizes[3].photo.remote.id
 end
 for k,v in pairs(list) do 
-return merolua.sendPhoto(v, 0, idPhoto,'')
+bot.sendPhoto(v, 0, idPhoto,'')
 Redis:set(TheFRADM.."FRADM:PinMsegees:"..v,idPhoto)
 end
 elseif msg.content.sticker then 
 for k,v in pairs(list) do 
-return merolua.sendSticker(v, 0, msg.content.sticker.sticker.remote.id)
+bot.sendSticker(v, 0, msg.content.sticker.sticker.remote.id)
 Redis:set(TheFRADM.."FRADM:PinMsegees:"..v,msg.content.sticker.sticker.remote.id)
 end
 elseif msg.content.voice_note then 
 for k,v in pairs(list) do 
-return merolua.sendVoiceNote(v, 0, msg.content.voice_note.voice.remote.id, '', 'md')
+bot.sendVoiceNote(v, 0, msg.content.voice_note.voice.remote.id, '', 'md')
 Redis:set(TheFRADM.."FRADM:PinMsegees:"..v,msg.content.voice_note.voice.remote.id)
 end
 elseif msg.content.video then 
 for k,v in pairs(list) do 
-return merolua.sendVideo(v, 0, msg.content.video.video.remote.id, '', "md")
+bot.sendVideo(v, 0, msg.content.video.video.remote.id, '', "md")
 Redis:set(TheFRADM.."FRADM:PinMsegees:"..v,msg.content.video.video.remote.id)
 end
 elseif msg.content.animation then 
 for k,v in pairs(list) do 
-return merolua.sendAnimation(v,0, msg.content.animation.animation.remote.id, '', 'md')
+bot.sendAnimation(v,0, msg.content.animation.animation.remote.id, '', 'md')
 Redis:set(TheFRADM.."FRADM:PinMsegees:"..v,msg.content.animation.animation.remote.id)
 end
 elseif msg.content.document then
 for k,v in pairs(list) do 
-return merolua.sendDocument(v, 0, msg.content.document.document.remote.id, '', 'md')
+bot.sendDocument(v, 0, msg.content.document.document.remote.id, '', 'md')
 Redis:set(TheFRADM.."FRADM:PinMsegees:"..v,msg.content.document.document.remote.id)
 end
 elseif msg.content.audio then
 for k,v in pairs(list) do 
-return merolua.sendAudio(v, 0, msg.content.audio.audio.remote.id, '', "md") 
+bot.sendAudio(v, 0, msg.content.audio.audio.remote.id, '', "md") 
 Redis:set(TheFRADM.."FRADM:PinMsegees:"..v,msg.content.audio.audio.remote.id)
 end
 elseif text then
 for k,v in pairs(list) do 
-return merolua.send(v,0,text,"md",true)
+send(v,0,text,"md",true)
 Redis:set(TheFRADM.."FRADM:PinMsegees:"..v,text)
 end
 end
-return merolua.send(msg_chat_id,msg_id,"⇜ تمت الاذاعة الى ( "..#list.." ) قروب ","md",true)      
-Redis:del(TheFRADM.."FRADM:Broadcasting:Groups:Pin" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id) 
+send(msg_chat_id,msg_id,"⇜ تمت الاذاعة الى ( "..#list.." ) قروب ","md",true)      
+Redis:del(TheFRADM.."FRADM:Broadcasting:Groups:Pin" .. msg_chat_id .. ":" .. msg.sender_id.user_id) 
 return false
 end
 ------------------------------------------------------------------------------------------------------------
-if Redis:get(TheFRADM.."FRADM:Broadcasting:Users" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id) then 
+if Redis:get(TheFRADM.."FRADM:Broadcasting:Users" .. msg_chat_id .. ":" .. msg.sender_id.user_id) then 
 if text == "الغاء" or text == 'الغاء الامر' then   
-Redis:del(TheFRADM.."FRADM:Broadcasting:Users" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id) 
+Redis:del(TheFRADM.."FRADM:Broadcasting:Users" .. msg_chat_id .. ":" .. msg.sender_id.user_id) 
 return merolua.send(msg_chat_id,msg_id, "\n⇜ تم الغاء الاذاعه خاص","md",true)  
 end 
 local list = Redis:smembers(TheFRADM..'FRADM:Num:User:Pv')  
 if msg.content.video_note then
 for k,v in pairs(list) do 
-return merolua.sendVideoNote(v, 0, msg.content.video_note.video.remote.id)
+bot.sendVideoNote(v, 0, msg.content.video_note.video.remote.id)
 end
 elseif msg.content.photo then
 if msg.content.photo.sizes[1].photo.remote.id then
@@ -3333,51 +3333,51 @@ elseif msg.content.photo.sizes[3].photo.remote.id then
 idPhoto = msg.content.photo.sizes[3].photo.remote.id
 end
 for k,v in pairs(list) do 
-return merolua.sendPhoto(v, 0, idPhoto,'')
+bot.sendPhoto(v, 0, idPhoto,'')
 end
 elseif msg.content.sticker then 
 for k,v in pairs(list) do 
-return merolua.sendSticker(v, 0, msg.content.sticker.sticker.remote.id)
+bot.sendSticker(v, 0, msg.content.sticker.sticker.remote.id)
 end
 elseif msg.content.voice_note then 
 for k,v in pairs(list) do 
-return merolua.sendVoiceNote(v, 0, msg.content.voice_note.voice.remote.id, '', 'md')
+bot.sendVoiceNote(v, 0, msg.content.voice_note.voice.remote.id, '', 'md')
 end
 elseif msg.content.video then 
 for k,v in pairs(list) do 
-return merolua.sendVideo(v, 0, msg.content.video.video.remote.id, '', "md")
+bot.sendVideo(v, 0, msg.content.video.video.remote.id, '', "md")
 end
 elseif msg.content.animation then 
 for k,v in pairs(list) do 
-return merolua.sendAnimation(v,0, msg.content.animation.animation.remote.id, '', 'md')
+bot.sendAnimation(v,0, msg.content.animation.animation.remote.id, '', 'md')
 end
 elseif msg.content.document then
 for k,v in pairs(list) do 
-return merolua.sendDocument(v, 0, msg.content.document.document.remote.id, '', 'md')
+bot.sendDocument(v, 0, msg.content.document.document.remote.id, '', 'md')
 end
 elseif msg.content.audio then
 for k,v in pairs(list) do 
-return merolua.sendAudio(v, 0, msg.content.audio.audio.remote.id, '', "md") 
+bot.sendAudio(v, 0, msg.content.audio.audio.remote.id, '', "md") 
 end
 elseif text then
 for k,v in pairs(list) do 
-return merolua.send(v,0,text,"md",true)
+send(v,0,text,"md",true)
 end
 end
-return merolua.send(msg_chat_id,msg_id,"⇜ تمت الاذاعه الى ( "..#list.." ) مشترك ","md",true)      
-Redis:del(TheFRADM.."FRADM:Broadcasting:Users" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id) 
+send(msg_chat_id,msg_id,"⇜ تمت الاذاعه الى ( "..#list.." ) مشترك ","md",true)      
+Redis:del(TheFRADM.."FRADM:Broadcasting:Users" .. msg_chat_id .. ":" .. msg.sender_id.user_id) 
 return false
 end
 ------------------------------------------------------------------------------------------------------------
-if Redis:get(TheFRADM.."FRADM:Broadcasting:Groups" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id) then 
+if Redis:get(TheFRADM.."FRADM:Broadcasting:Groups" .. msg_chat_id .. ":" .. msg.sender_id.user_id) then 
 if text == "الغاء" or text == 'الغاء الامر' then   
-Redis:del(TheFRADM.."FRADM:Broadcasting:Groups" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id) 
+Redis:del(TheFRADM.."FRADM:Broadcasting:Groups" .. msg_chat_id .. ":" .. msg.sender_id.user_id) 
 return merolua.send(msg_chat_id,msg_id, "\n⇜ تم الغاء الاذاعه للقروبات","md",true)  
 end 
 local list = Redis:smembers(TheFRADM.."FRADM:ChekBotAdd") 
 if msg.content.video_note then
 for k,v in pairs(list) do 
-return merolua.sendVideoNote(v, 0, msg.content.video_note.video.remote.id)
+bot.sendVideoNote(v, 0, msg.content.video_note.video.remote.id)
 end
 elseif msg.content.photo then
 if msg.content.photo.sizes[1].photo.remote.id then
@@ -3388,132 +3388,132 @@ elseif msg.content.photo.sizes[3].photo.remote.id then
 idPhoto = msg.content.photo.sizes[3].photo.remote.id
 end
 for k,v in pairs(list) do 
-return merolua.sendPhoto(v, 0, idPhoto,'')
+bot.sendPhoto(v, 0, idPhoto,'')
 end
 elseif msg.content.sticker then 
 for k,v in pairs(list) do 
-return merolua.sendSticker(v, 0, msg.content.sticker.sticker.remote.id)
+bot.sendSticker(v, 0, msg.content.sticker.sticker.remote.id)
 end
 elseif msg.content.voice_note then 
 for k,v in pairs(list) do 
-return merolua.sendVoiceNote(v, 0, msg.content.voice_note.voice.remote.id, '', 'md')
+bot.sendVoiceNote(v, 0, msg.content.voice_note.voice.remote.id, '', 'md')
 end
 elseif msg.content.video then 
 for k,v in pairs(list) do 
-return merolua.sendVideo(v, 0, msg.content.video.video.remote.id, '', "md")
+bot.sendVideo(v, 0, msg.content.video.video.remote.id, '', "md")
 end
 elseif msg.content.animation then 
 for k,v in pairs(list) do 
-return merolua.sendAnimation(v,0, msg.content.animation.animation.remote.id, '', 'md')
+bot.sendAnimation(v,0, msg.content.animation.animation.remote.id, '', 'md')
 end
 elseif msg.content.document then
 for k,v in pairs(list) do 
-return merolua.sendDocument(v, 0, msg.content.document.document.remote.id, '', 'md')
+bot.sendDocument(v, 0, msg.content.document.document.remote.id, '', 'md')
 end
 elseif msg.content.audio then
 for k,v in pairs(list) do 
-return merolua.sendAudio(v, 0, msg.content.audio.audio.remote.id, '', "md") 
+bot.sendAudio(v, 0, msg.content.audio.audio.remote.id, '', "md") 
 end
 elseif text then
 for k,v in pairs(list) do 
-return merolua.send(v,0,text,"md",true)
+send(v,0,text,"md",true)
 end
 end
-return merolua.send(msg_chat_id,msg_id,"⇜ تمت الاذاعه الى ( "..#list.." ) قروب ","md",true)      
-Redis:del(TheFRADM.."FRADM:Broadcasting:Groups" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id) 
+send(msg_chat_id,msg_id,"⇜ تمت الاذاعه الى ( "..#list.." ) قروب ","md",true)      
+Redis:del(TheFRADM.."FRADM:Broadcasting:Groups" .. msg_chat_id .. ":" .. msg.sender_id.user_id) 
 return false
 end
 ------------------------------------------------------------------------------------------------------------
-if Redis:get(TheFRADM.."FRADM:Broadcasting:Groups:Fwd" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id) then 
+if Redis:get(TheFRADM.."FRADM:Broadcasting:Groups:Fwd" .. msg_chat_id .. ":" .. msg.sender_id.user_id) then 
 if text == "الغاء" or text == 'الغاء الامر' then   
-Redis:del(TheFRADM.."FRADM:Broadcasting:Groups:Fwd" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id) 
+Redis:del(TheFRADM.."FRADM:Broadcasting:Groups:Fwd" .. msg_chat_id .. ":" .. msg.sender_id.user_id) 
 return merolua.send(msg_chat_id,msg_id, "\n⇜ تم الغاء الاذاعه بالتوجيه للقروبات","md",true)    
 end 
 if msg.forward_info then 
 local list = Redis:smembers(TheFRADM.."FRADM:ChekBotAdd")   
-return merolua.send(msg_chat_id,msg_id,"⇜ تم التوجيه الى ( "..#list.." ) قروب ","md",true)      
+send(msg_chat_id,msg_id,"⇜ تم التوجيه الى ( "..#list.." ) قروب ","md",true)      
 for k,v in pairs(list) do  
 bot.forwardMessages(v, msg_chat_id, msg_id,0,0,true,false,false)
 end   
-Redis:del(TheFRADM.."FRADM:Broadcasting:Groups:Fwd" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id) 
+Redis:del(TheFRADM.."FRADM:Broadcasting:Groups:Fwd" .. msg_chat_id .. ":" .. msg.sender_id.user_id) 
 end 
 return false
 end
 ------------------------------------------------------------------------------------------------------------
-if Redis:get(TheFRADM.."FRADM:Broadcasting:Users:Fwd" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id) then 
+if Redis:get(TheFRADM.."FRADM:Broadcasting:Users:Fwd" .. msg_chat_id .. ":" .. msg.sender_id.user_id) then 
 if text == "الغاء" or text == 'الغاء الامر' then   
-Redis:del(TheFRADM.."FRADM:Broadcasting:Users:Fwd" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id) 
+Redis:del(TheFRADM.."FRADM:Broadcasting:Users:Fwd" .. msg_chat_id .. ":" .. msg.sender_id.user_id) 
 return merolua.send(msg_chat_id,msg_id, "\n⇜ تم الغاء الاذاعه بالتوجيه خاص","md",true)    
 end 
 if msg.forward_info then 
 local list = Redis:smembers(TheFRADM.."FRADM:Num:User:Pv")   
-return merolua.send(msg_chat_id,msg_id,"⇜ تم التوجيه الى ( "..#list.." ) مشترك في البوت ","md",true) 
+send(msg_chat_id,msg_id,"⇜ تم التوجيه الى ( "..#list.." ) مشترك في البوت ","md",true) 
 for k,v in pairs(list) do  
 bot.forwardMessages(v, msg_chat_id, msg_id,0,1,msg.media_album_id,false,true)
 end   
-Redis:del(TheFRADM.."FRADM:Broadcasting:Users:Fwd" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id) 
+Redis:del(TheFRADM.."FRADM:Broadcasting:Users:Fwd" .. msg_chat_id .. ":" .. msg.sender_id.user_id) 
 end 
 return false
 end
-if text and Redis:get(TheFRADM..'FRADM:GetTexting:DevTheFRADM'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) then
+if text and Redis:get(TheFRADM..'FRADM:GetTexting:DevTheFRADM'..msg_chat_id..':'..msg.sender_id.user_id) then
 if text == 'الغاء' or text == 'الغاء الامر' then 
-Redis:del(TheFRADM..'FRADM:GetTexting:DevTheFRADM'..msg_chat_id..':'..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM..'FRADM:GetTexting:DevTheFRADM'..msg_chat_id..':'..msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,'⇜ تم الغاء حفظ كليشة المطور')
 end
 Redis:set(TheFRADM..'FRADM:Texting:DevTheFRADM',text)
-Redis:del(TheFRADM..'FRADM:GetTexting:DevTheFRADM'..msg_chat_id..':'..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM..'FRADM:GetTexting:DevTheFRADM'..msg_chat_id..':'..msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,'⇜ تم حفظ كليشة المطور')
 end
-if Redis:get(TheFRADM.."FRADM:Redis:Id:Group"..msg.chat_id..""..msg.return merolua.sender_id.user_id) then 
+if Redis:get(TheFRADM.."FRADM:Redis:Id:Group"..msg.chat_id..""..msg.sender_id.user_id) then 
 if text == 'الغاء' then 
-return merolua.send(msg_chat_id,msg_id, "\n⇜ تم الغاء امر تعيين الايدي","md",true)  
-Redis:del(TheFRADM.."FRADM:Redis:Id:Group"..msg.chat_id..""..msg.return merolua.sender_id.user_id) 
+send(msg_chat_id,msg_id, "\n⇜ تم الغاء امر تعيين الايدي","md",true)  
+Redis:del(TheFRADM.."FRADM:Redis:Id:Group"..msg.chat_id..""..msg.sender_id.user_id) 
 return false  
 end 
-Redis:del(TheFRADM.."FRADM:Redis:Id:Group"..msg.chat_id..""..msg.return merolua.sender_id.user_id) 
+Redis:del(TheFRADM.."FRADM:Redis:Id:Group"..msg.chat_id..""..msg.sender_id.user_id) 
 Redis:set(TheFRADM.."FRADM:Set:Id:Group"..msg.chat_id,text:match("(.*)"))
-return merolua.send(msg_chat_id,msg_id,'⇜ وسوينا الايدي \n⇜ يمديك تجرب شكل الايدي الجديد الحين \n✧',"md",true)  
+send(msg_chat_id,msg_id,'⇜ وسوينا الايدي \n⇜ يمديك تجرب شكل الايدي الجديد الحين \n✧',"md",true)  
 end
-if Redis:get(TheFRADM.."FRADM:Redis:Id:Groups"..msg.chat_id..""..msg.return merolua.sender_id.user_id) then 
+if Redis:get(TheFRADM.."FRADM:Redis:Id:Groups"..msg.chat_id..""..msg.sender_id.user_id) then 
 if text == 'الغاء' then 
-return merolua.send(msg_chat_id,msg_id, "\n⇜ تم الغاء امر تعيين الايدي","md",true)  
-Redis:del(TheFRADM.."FRADM:Redis:Id:Groups"..msg.chat_id..""..msg.return merolua.sender_id.user_id) 
+send(msg_chat_id,msg_id, "\n⇜ تم الغاء امر تعيين الايدي","md",true)  
+Redis:del(TheFRADM.."FRADM:Redis:Id:Groups"..msg.chat_id..""..msg.sender_id.user_id) 
 return false  
 end 
-Redis:del(TheFRADM.."FRADM:Redis:Id:Groups"..msg.chat_id..""..msg.return merolua.sender_id.user_id) 
+Redis:del(TheFRADM.."FRADM:Redis:Id:Groups"..msg.chat_id..""..msg.sender_id.user_id) 
 Redis:set(TheFRADM.."FRADM:Set:Id:Groups",text:match("(.*)"))
-return merolua.send(msg_chat_id,msg_id,'⇜ وسوينا الايدي العام\n⇜ يمديك تجرب شكل الايدي الجديد الحين \n✧',"md",true)  
+send(msg_chat_id,msg_id,'⇜ وسوينا الايدي العام\n⇜ يمديك تجرب شكل الايدي الجديد الحين \n✧',"md",true)  
 end
-if Redis:get(TheFRADM.."FRADM:Change:Name:Bot"..msg.return merolua.sender_id.user_id) then 
+if Redis:get(TheFRADM.."FRADM:Change:Name:Bot"..msg.sender_id.user_id) then 
 if text == "الغاء" or text == 'الغاء الامر' then   
-Redis:del(TheFRADM.."FRADM:Change:Name:Bot"..msg.return merolua.sender_id.user_id) 
+Redis:del(TheFRADM.."FRADM:Change:Name:Bot"..msg.sender_id.user_id) 
 return merolua.send(msg_chat_id,msg_id, "\n⇜ تم الغاء امر تغير اسم البوت","md",true)  
 end 
-Redis:del(TheFRADM.."FRADM:Change:Name:Bot"..msg.return merolua.sender_id.user_id) 
+Redis:del(TheFRADM.."FRADM:Change:Name:Bot"..msg.sender_id.user_id) 
 Redis:set(TheFRADM.."FRADM:Name:Bot",text) 
 return merolua.send(msg_chat_id,msg_id, "⇜ تم تغير اسم البوت الى "..text,"md",true)    
 end 
-if Redis:get(TheFRADM.."FRADM:Change:Start:Bot"..msg.return merolua.sender_id.user_id) then 
+if Redis:get(TheFRADM.."FRADM:Change:Start:Bot"..msg.sender_id.user_id) then 
 if text == "الغاء" or text == 'الغاء الامر' then   
-Redis:del(TheFRADM.."FRADM:Change:Start:Bot"..msg.return merolua.sender_id.user_id) 
+Redis:del(TheFRADM.."FRADM:Change:Start:Bot"..msg.sender_id.user_id) 
 return merolua.send(msg_chat_id,msg_id, "\n⇜ تم الغاء امر تغير كليشه start","md",true)  
 end 
-Redis:del(TheFRADM.."FRADM:Change:Start:Bot"..msg.return merolua.sender_id.user_id) 
+Redis:del(TheFRADM.."FRADM:Change:Start:Bot"..msg.sender_id.user_id) 
 Redis:set(TheFRADM.."FRADM:Start:Bot",text) 
 return merolua.send(msg_chat_id,msg_id, "⇜ تم تغيير كليشه start الى "..text,"md",true)    
 end 
 
 if text and text:match("^(.*)$") then
-if Redis:get(TheFRADM.."botss:FRADMx:Set:Rd"..msg.return merolua.sender_id.user_id..":"..msg.chat_id) == "true" then
-return merolua.send(msg_chat_id,msg_id, '\n⇜ ارسل الجواب الاول للرد الان ')
-Redis:set(TheFRADM.."botss:FRADMx:Set:Rd"..msg.return merolua.sender_id.user_id..":"..msg.chat_id, "true1")
-Redis:set(TheFRADM.."botss:FRADMx:Text:Sudo:Bot"..msg.return merolua.sender_id.user_id..":"..msg.chat_id, text)
+if Redis:get(TheFRADM.."botss:FRADMx:Set:Rd"..msg.sender_id.user_id..":"..msg.chat_id) == "true" then
+send(msg_chat_id,msg_id, '\n⇜ ارسل الجواب الاول للرد الان ')
+Redis:set(TheFRADM.."botss:FRADMx:Set:Rd"..msg.sender_id.user_id..":"..msg.chat_id, "true1")
+Redis:set(TheFRADM.."botss:FRADMx:Text:Sudo:Bot"..msg.sender_id.user_id..":"..msg.chat_id, text)
 Redis:sadd(TheFRADM.."botss:FRADMx:List:Rd:Sudo"..msg.chat_id, text)
 return false end
 end
 if text and text:match("^(.*)$") then
-if Redis:get(TheFRADM.."botss:FRADMx:Set:On"..msg.return merolua.sender_id.user_id..":"..msg.chat_id) == "true" then
-return merolua.send(msg_chat_id,msg_id,"\n⇜ مسح الرد من الردود المتعدده")
+if Redis:get(TheFRADM.."botss:FRADMx:Set:On"..msg.sender_id.user_id..":"..msg.chat_id) == "true" then
+send(msg_chat_id,msg_id,"\n⇜ مسح الرد من الردود المتعدده")
 Redis:del(TheFRADM.."botss:FRADMx:Add:Rd:Sudo:video"..text..msg.chat_id)  
 Redis:del(TheFRADM.."botss:FRADMx:Add:Rd:Sudo:gif"..text..msg.chat_id)  
 Redis:del(TheFRADM.."botss:FRADMx:Add:Rd:Sudo:photo"..text..msg.chat_id)  
@@ -3527,15 +3527,15 @@ Redis:del(TheFRADM.."botss:FRADMx:Add:Rd:Sudo:photo2"..text..msg.chat_id)
 Redis:del(TheFRADM..'botss:FRADMx:Add:Rd:Sudo:Text'..text..msg.chat_id)
 Redis:del(TheFRADM..'botss:FRADMx:Add:Rd:Sudo:Text1'..text..msg.chat_id)
 Redis:del(TheFRADM..'botss:FRADMx:Add:Rd:Sudo:Text2'..text..msg.chat_id)
-Redis:del(TheFRADM.."botss:FRADMx:Set:On"..msg.return merolua.sender_id.user_id..":"..msg.chat_id)
+Redis:del(TheFRADM.."botss:FRADMx:Set:On"..msg.sender_id.user_id..":"..msg.chat_id)
 Redis:srem(TheFRADM.."botss:FRADMx:List:Rd:Sudo"..msg.chat_id, text)
 return false
 end
 end
 if text or msg.content.video or msg.content.animation or msg.content.photo then
-local test = Redis:get(TheFRADM.."botss:FRADMx:Text:Sudo:Bot"..msg.return merolua.sender_id.user_id..":"..msg.chat_id)
-if Redis:get(TheFRADM.."botss:FRADMx:Set:Rd"..msg.return merolua.sender_id.user_id..":"..msg.chat_id) == "true1" then
-Redis:set(TheFRADM.."botss:FRADMx:Set:Rd"..msg.return merolua.sender_id.user_id..":"..msg.chat_id,'rd1')
+local test = Redis:get(TheFRADM.."botss:FRADMx:Text:Sudo:Bot"..msg.sender_id.user_id..":"..msg.chat_id)
+if Redis:get(TheFRADM.."botss:FRADMx:Set:Rd"..msg.sender_id.user_id..":"..msg.chat_id) == "true1" then
+Redis:set(TheFRADM.."botss:FRADMx:Set:Rd"..msg.sender_id.user_id..":"..msg.chat_id,'rd1')
 if msg.content.photo then
 if msg.content.photo.sizes[1].photo.remote.id then
 idPhoto = msg.content.photo.sizes[1].photo.remote.id
@@ -3556,14 +3556,14 @@ text = text:gsub("`","")
 text = text:gsub("*","") 
 Redis:set(TheFRADM.."botss:FRADMx:Add:Rd:Sudo:Text"..test..msg.chat_id, text)  
 end  
-return merolua.send(msg_chat_id,msg_id,"\n⇜ تم الحفظ ارسل الجواب الثاني")
+send(msg_chat_id,msg_id,"\n⇜ تم الحفظ ارسل الجواب الثاني")
 return false  
 end  
 end
 if text or msg.content.video or msg.content.animation or msg.content.photo then
-local test = Redis:get(TheFRADM.."botss:FRADMx:Text:Sudo:Bot"..msg.return merolua.sender_id.user_id..":"..msg.chat_id)
-if Redis:get(TheFRADM.."botss:FRADMx:Set:Rd"..msg.return merolua.sender_id.user_id..":"..msg.chat_id) == "rd1" then
-Redis:set(TheFRADM.."botss:FRADMx:Set:Rd"..msg.return merolua.sender_id.user_id..":"..msg.chat_id,'rd2')
+local test = Redis:get(TheFRADM.."botss:FRADMx:Text:Sudo:Bot"..msg.sender_id.user_id..":"..msg.chat_id)
+if Redis:get(TheFRADM.."botss:FRADMx:Set:Rd"..msg.sender_id.user_id..":"..msg.chat_id) == "rd1" then
+Redis:set(TheFRADM.."botss:FRADMx:Set:Rd"..msg.sender_id.user_id..":"..msg.chat_id,'rd2')
 if msg.content.photo then
 if msg.content.photo.sizes[1].photo.remote.id then
 idPhoto = msg.content.photo.sizes[1].photo.remote.id
@@ -3584,14 +3584,14 @@ text = text:gsub("`","")
 text = text:gsub("*","") 
 Redis:set(TheFRADM.."botss:FRADMx:Add:Rd:Sudo:Text1"..test..msg.chat_id, text)  
 end  
-return merolua.send(msg_chat_id,msg_id,"\n⇜ الحفظ ارسل الجواب الثالث")
+send(msg_chat_id,msg_id,"\n⇜ الحفظ ارسل الجواب الثالث")
 return false  
 end  
 end
 if text or msg.content.video or msg.content.animation or msg.content.photo then
-local test = Redis:get(TheFRADM.."botss:FRADMx:Text:Sudo:Bot"..msg.return merolua.sender_id.user_id..":"..msg.chat_id)
-if Redis:get(TheFRADM.."botss:FRADMx:Set:Rd"..msg.return merolua.sender_id.user_id..":"..msg.chat_id) == "rd2" then
-Redis:set(TheFRADM.."botss:FRADMx:Set:Rd"..msg.return merolua.sender_id.user_id..":"..msg.chat_id,'rd3')
+local test = Redis:get(TheFRADM.."botss:FRADMx:Text:Sudo:Bot"..msg.sender_id.user_id..":"..msg.chat_id)
+if Redis:get(TheFRADM.."botss:FRADMx:Set:Rd"..msg.sender_id.user_id..":"..msg.chat_id) == "rd2" then
+Redis:set(TheFRADM.."botss:FRADMx:Set:Rd"..msg.sender_id.user_id..":"..msg.chat_id,'rd3')
 if msg.content.photo then
 if msg.content.photo.sizes[1].photo.remote.id then
 idPhoto = msg.content.photo.sizes[1].photo.remote.id
@@ -3612,7 +3612,7 @@ text = text:gsub("`","")
 text = text:gsub("*","") 
 Redis:set(TheFRADM.."botss:FRADMx:Add:Rd:Sudo:Text2"..test..msg.chat_id, text)  
 end  
-return merolua.send(msg_chat_id,msg_id,"\n⇜ تم حفظ الرد المتعدد ")
+send(msg_chat_id,msg_id,"\n⇜ تم حفظ الرد المتعدد ")
 return false  
 end  
 end
@@ -3623,7 +3623,7 @@ local photo2 = Redis:get(TheFRADM.."botss:FRADMx:Add:Rd:Sudo:photo2"..text..msg.
 if photo or photo1 or photo2 then 
 local texting = {photo,photo1,photo2}
 if texting[1] ~= nil or texting[2] ~= nil or texting[3] ~= nil then
-return merolua.sendPhoto(msg_chat_id,msg_id, texting[math.random(#texting)],'')
+bot.sendPhoto(msg_chat_id,msg_id, texting[math.random(#texting)],'')
 end
 end
 local gif = Redis:get(TheFRADM.."botss:FRADMx:Add:Rd:Sudo:gif"..text..msg.chat_id)   
@@ -3632,7 +3632,7 @@ local gif2 = Redis:get(TheFRADM.."botss:FRADMx:Add:Rd:Sudo:gif2"..text..msg.chat
 if gif or gif1 or gif2 then 
 local texting = {gif,gif1,gif2}
 if texting[1] ~= nil or texting[2] ~= nil or texting[3] ~= nil then
-return merolua.sendAnimation(msg_chat_id,msg_id, texting[math.random(#texting)], '', 'md')
+bot.sendAnimation(msg_chat_id,msg_id, texting[math.random(#texting)], '', 'md')
 end
 end
 local video = Redis:get(TheFRADM.."botss:FRADMx:Add:Rd:Sudo:video"..text..msg.chat_id)   
@@ -3641,7 +3641,7 @@ local video2 = Redis:get(TheFRADM.."botss:FRADMx:Add:Rd:Sudo:video2"..text..msg.
 if video or video1 or video2 then 
 local texting = {video,video1,video2}
 if texting[1] ~= nil or texting[2] ~= nil or texting[3] ~= nil then
-return merolua.sendVideo(msg_chat_id,msg_id, texting[math.random(#texting)], '', "md")
+bot.sendVideo(msg_chat_id,msg_id, texting[math.random(#texting)], '', "md")
 end
 end
 local Text = Redis:get(TheFRADM.."botss:FRADMx:Add:Rd:Sudo:Text"..text..msg.chat_id)   
@@ -3649,7 +3649,7 @@ local Text1 = Redis:get(TheFRADM.."botss:FRADMx:Add:Rd:Sudo:Text1"..text..msg.ch
 local Text2 = Redis:get(TheFRADM.."botss:FRADMx:Add:Rd:Sudo:Text2"..text..msg.chat_id)   
 if Text or Text1 or Text2 then 
 local texting = {Text,Text1,Text2}
-return merolua.send(msg_chat_id,msg_id,texting[math.random(#texting)])
+send(msg_chat_id,msg_id,texting[math.random(#texting)])
 end
 end
 if text == "مسح قائمه المنع عام" then   
@@ -3713,7 +3713,7 @@ v = v:gsub('text:',"")
 local Text_Filter = Redis:get(TheFRADM.."FRADM:All:Filter:Group:"..v)   
 Filter = Filter..""..k.."- "..ver.." » ( "..Text_Filter.." )\n"    
 end  
-return merolua.send(msg_chat_id,msg_id,Filter,"md",true)  
+send(msg_chat_id,msg_id,Filter,"md",true)  
 end  
 if text == "منع عام" then       
 if not msg.ControllerBot then
@@ -3727,7 +3727,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:All:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:All:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:set(TheFRADM..'FRADM:All:FilterText'..msg_chat_id..':'..msg.return merolua.sender_id.user_id,'true')
+Redis:set(TheFRADM..'FRADM:All:FilterText'..msg_chat_id..':'..msg.sender_id.user_id,'true')
 return merolua.send(msg_chat_id,msg_id,'\n⇜ ارسل الان ( ملصق ,متحركه ,صوره ,رساله ) ',"md",true)  
 end    
 if text == "الغاء منع عام" then    
@@ -3742,39 +3742,39 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:All:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:All:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:set(TheFRADM..'FRADM:All:FilterText'..msg_chat_id..':'..msg.return merolua.sender_id.user_id,'DelFilterq')
+Redis:set(TheFRADM..'FRADM:All:FilterText'..msg_chat_id..':'..msg.sender_id.user_id,'DelFilterq')
 return merolua.send(msg_chat_id,msg_id,'\n⇜ ارسل الان ( ملصق ,متحركه ,صوره ,رساله ) ',"md",true)  
 end
-if (Redis:get(TheFRADM..'FRADM:All:FilterText'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) == 'true') then
+if (Redis:get(TheFRADM..'FRADM:All:FilterText'..msg_chat_id..':'..msg.sender_id.user_id) == 'true') then
 if text or msg.content.photo or msg.content.animation or msg.content.sticker then
 if msg.content.photo then
 Filters = 'صوره'
 Redis:sadd(TheFRADM.."FRADM:All:List:Filter",'photo:'..msg.content.photo.sizes[1].photo.id)  
-Redis:set(TheFRADM.."FRADM:All:Filter:Text"..msg.return merolua.sender_id.user_id..':'..msg_chat_id, msg.content.photo.sizes[1].photo.id)  
+Redis:set(TheFRADM.."FRADM:All:Filter:Text"..msg.sender_id.user_id..':'..msg_chat_id, msg.content.photo.sizes[1].photo.id)  
 elseif msg.content.animation then
 Filters = 'متحركه'
 Redis:sadd(TheFRADM.."FRADM:All:List:Filter",'animation:'..msg.content.animation.animation.id)  
-Redis:set(TheFRADM.."FRADM:All:Filter:Text"..msg.return merolua.sender_id.user_id..':'..msg_chat_id, msg.content.animation.animation.id)  
+Redis:set(TheFRADM.."FRADM:All:Filter:Text"..msg.sender_id.user_id..':'..msg_chat_id, msg.content.animation.animation.id)  
 elseif msg.content.sticker then
 Filters = 'ملصق'
 Redis:sadd(TheFRADM.."FRADM:All:List:Filter",'sticker:'..msg.content.sticker.sticker.id)  
-Redis:set(TheFRADM.."FRADM:All:Filter:Text"..msg.return merolua.sender_id.user_id..':'..msg_chat_id, msg.content.sticker.sticker.id)  
+Redis:set(TheFRADM.."FRADM:All:Filter:Text"..msg.sender_id.user_id..':'..msg_chat_id, msg.content.sticker.sticker.id)  
 elseif text then
-Redis:set(TheFRADM.."FRADM:All:Filter:Text"..msg.return merolua.sender_id.user_id..':'..msg_chat_id, text)  
+Redis:set(TheFRADM.."FRADM:All:Filter:Text"..msg.sender_id.user_id..':'..msg_chat_id, text)  
 Redis:sadd(TheFRADM.."FRADM:All:List:Filter",'text:'..text)  
 Filters = 'نص'
 end
-Redis:set(TheFRADM..'FRADM:All:FilterText'..msg_chat_id..':'..msg.return merolua.sender_id.user_id,'true1')
+Redis:set(TheFRADM..'FRADM:All:FilterText'..msg_chat_id..':'..msg.sender_id.user_id,'true1')
 return merolua.send(msg_chat_id,msg_id,"\n⇜ ارسل تحذير ( "..Filters.." ) عند ارساله","md",true)  
 end
 end
-if text and (Redis:get(TheFRADM..'FRADM:All:FilterText'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) == 'true1') then
-local Text_Filter = Redis:get(TheFRADM.."FRADM:All:Filter:Text"..msg.return merolua.sender_id.user_id..':'..msg_chat_id)  
+if text and (Redis:get(TheFRADM..'FRADM:All:FilterText'..msg_chat_id..':'..msg.sender_id.user_id) == 'true1') then
+local Text_Filter = Redis:get(TheFRADM.."FRADM:All:Filter:Text"..msg.sender_id.user_id..':'..msg_chat_id)  
 if Text_Filter then   
 Redis:set(TheFRADM.."FRADM:All:Filter:Group:"..Text_Filter,text)  
 end  
-Redis:del(TheFRADM.."FRADM:All:Filter:Text"..msg.return merolua.sender_id.user_id..':'..msg_chat_id)  
-Redis:del(TheFRADM..'FRADM:All:FilterText'..msg_chat_id..':'..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."FRADM:All:Filter:Text"..msg.sender_id.user_id..':'..msg_chat_id)  
+Redis:del(TheFRADM..'FRADM:All:FilterText'..msg_chat_id..':'..msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,"\n⇜ تم اضافة رد التحذير","md",true)  
 end
 if text or msg.content.photo or msg.content.animation or msg.content.sticker then
@@ -3803,18 +3803,18 @@ return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Cont
 end
 local Get_Chat = bot.getChat(msg_chat_id)
 if not data.id then
-return merolua.send(msg_chat_id,msg_id,'⇜ لا يوجد قروب في البوت بهذا الايدي')
+send(msg_chat_id,msg_id,'⇜ لا يوجد قروب في البوت بهذا الايدي')
 return false
 end
 Redis:sadd(TheFRADM.."BotFree:Group:",msg_chat_id)
-return merolua.send(msg_chat_id,msg_id,'⇜ تم تفعيل الوضع المدفوع على : ['..Get_Chat.title..']')
+send(msg_chat_id,msg_id,'⇜ تم تفعيل الوضع المدفوع على : ['..Get_Chat.title..']')
 end 
 if text == "الغاء الوضع المدفوع" then
 if not msg.ControllerBot then 
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(1)..' ) ',"md",true)  
 end
 Redis:srem(TheFRADM.."BotFree:Group:",msg_chat_id)
-return merolua.send(msg_chat_id,msg_id,'⇜ تم الغاء الوضع المدفوع عن المجموعه ')
+send(msg_chat_id,msg_id,'⇜ تم الغاء الوضع المدفوع عن المجموعه ')
 end 
 if text and text:match('^تفعيل الوضع المدفوع (-100%d+)$') then
 local Chatid = text:match('^تفعيل الوضع المدفوع (-100%d+)$')
@@ -3823,11 +3823,11 @@ return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Cont
 end
 local Get_Chat = bot.getChat(Chatid)
 if not data.id then
-return merolua.send(msg_chat_id,msg_id,'⇜ لا يوجد قروب في البوت بهذا الايدي')
+send(msg_chat_id,msg_id,'⇜ لا يوجد قروب في البوت بهذا الايدي')
 return false
 end
 Redis:sadd(TheFRADM.."BotFree:Group:",Chatid)
-return merolua.send(msg_chat_id,msg_id,'⇜ تم تفعيل الوضع المدفوع على : ['..Get_Chat.title..']')
+send(msg_chat_id,msg_id,'⇜ تم تفعيل الوضع المدفوع على : ['..Get_Chat.title..']')
 end 
 if text and text:match('^الغاء الوضع المدفوع (-100%d+)$') then
 local Chatid = text:match('^الغاء الوضع المدفوع (-100%d+)$')
@@ -3835,7 +3835,7 @@ if not msg.ControllerBot then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(1)..' ) ',"md",true)  
 end
 Redis:srem(TheFRADM.."BotFree:Group:",Chatid)
-return merolua.send(msg_chat_id,msg_id,'⇜ تم الغاء الوضع المدفوع عن القروب ')
+send(msg_chat_id,msg_id,'⇜ تم الغاء الوضع المدفوع عن القروب ')
 end 
 if text and text:match("^حظر قناة @(%S+)$") or text and text:match("^حظر قناه @(%S+)$") then
 local User = text:match("^حظر قناة @(%S+)$") or text:match("^حظر قناه @(%S+)$")
@@ -3844,13 +3844,13 @@ return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Cont
 end
 local UserInfo = bot.searchPublicChat(User)
 if not UserInfo.id then
-return merolua.send(msg.chat_id,msg.id,"\n⇜ اليوزر غير صحيح","md",true)  
+send(msg.chat_id,msg.id,"\n⇜ اليوزر غير صحيح","md",true)  
 end
 if UserInfo.type.is_channel == true then
-https.request("https://api.telegram.org/bot"..Token..'/banChatreturn merolua.senderChat?chat_id=' .. msg.chat_id .. '&return merolua.sender_chat_id='..UserInfo.id)
-return merolua.send(msg.chat_id,msg.id,"\n⇜ تم حظر القناه ⇜ [@"..User.."] ","md",true)  
+https.request("https://api.telegram.org/bot"..Token..'/banChatSenderChat?chat_id=' .. msg.chat_id .. '&sender_chat_id='..UserInfo.id)
+send(msg.chat_id,msg.id,"\n⇜ تم حظر القناه ⇜ [@"..User.."] ","md",true)  
 else
-return merolua.send(msg.chat_id,msg.id,"\n⇜ حدث خطأ ...","md",true)  
+send(msg.chat_id,msg.id,"\n⇜ حدث خطأ ...","md",true)  
 end
 end
 if text and text:match("^الغاء حظر قناة @(%S+)$") or text and text:match("^الغاء حظر قناه @(%S+)$") then
@@ -3860,13 +3860,13 @@ if not msg.Originators then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(5).." ) ","md",true)  
 end
 if not UserInfo.id then
-return merolua.send(msg.chat_id,msg.id,"\n⇜ اليوزر غير صحيح","md",true)  
+send(msg.chat_id,msg.id,"\n⇜ اليوزر غير صحيح","md",true)  
 end
 if UserInfo.type.is_channel == true then
-https.request("https://api.telegram.org/bot"..Token..'/unbanChatreturn merolua.senderChat?chat_id=' .. msg.chat_id .. '&return merolua.sender_chat_id='..UserInfo.id)
-return merolua.send(msg.chat_id,msg.id,"\n⇜ تم الغاء حظر القناة ⇜ [@"..User.."] ","md",true)  
+https.request("https://api.telegram.org/bot"..Token..'/unbanChatSenderChat?chat_id=' .. msg.chat_id .. '&sender_chat_id='..UserInfo.id)
+send(msg.chat_id,msg.id,"\n⇜ تم الغاء حظر القناة ⇜ [@"..User.."] ","md",true)  
 else
-return merolua.send(msg.chat_id,msg.id,"\n⇜ حدث خطأ ...","md",true)  
+send(msg.chat_id,msg.id,"\n⇜ حدث خطأ ...","md",true)  
 end
 end
 if text == ('حظر قناة') and msg.reply_to_message_id ~= 0 then
@@ -3874,12 +3874,12 @@ if not msg.Originators then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(5).." ) ","md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-if Message_Reply.return merolua.sender_id.chat_id == "messagereturn merolua.senderChat" then
---var(Message_Reply.return merolua.sender_id.chat_id)
-https.request("https://api.telegram.org/bot"..Token..'/banChatreturn merolua.senderChat?chat_id=' .. msg.chat_id .. '&return merolua.sender_chat_id='..Message_Reply.return merolua.sender_id.chat_id)
+if Message_Reply.sender_id.chat_id == "messageSenderChat" then
+--var(Message_Reply.sender_id.chat_id)
+https.request("https://api.telegram.org/bot"..Token..'/banChatSenderChat?chat_id=' .. msg.chat_id .. '&sender_chat_id='..Message_Reply.sender_id.chat_id)
 return merolua.send(msg_chat_id,msg_id,"⇜ تم حظر القناة من القروب  ","md",true)  
 else
-return merolua.send(msg.chat_id,msg.id,"\n⇜ حدث خطأ ...","md",true)  
+send(msg.chat_id,msg.id,"\n⇜ حدث خطأ ...","md",true)  
 end
 end
 if text == ('الغاء حظر قناة') and msg.reply_to_message_id ~= 0 then
@@ -3887,12 +3887,12 @@ if not msg.Originators then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(5).." ) ","md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-if Message_Reply.return merolua.sender_id.chat_id == "messagereturn merolua.senderChat" then
---var(Message_Reply.return merolua.sender_id.chat_id)
-https.request("https://api.telegram.org/bot"..Token..'/unbanChatreturn merolua.senderChat?chat_id=' .. msg.chat_id .. '&return merolua.sender_chat_id='..Message_Reply.return merolua.sender_id.chat_id)
+if Message_Reply.sender_id.chat_id == "messageSenderChat" then
+--var(Message_Reply.sender_id.chat_id)
+https.request("https://api.telegram.org/bot"..Token..'/unbanChatSenderChat?chat_id=' .. msg.chat_id .. '&sender_chat_id='..Message_Reply.sender_id.chat_id)
 return merolua.send(msg_chat_id,msg_id,"⇜ تم الغاء حظر القناة من القروب  ","md",true)  
 else
-return merolua.send(msg.chat_id,msg.id,"\n⇜ حدث خطا ...","md",true)  
+send(msg.chat_id,msg.id,"\n⇜ حدث خطا ...","md",true)  
 end
 end
 RunGames(msg)
@@ -3928,7 +3928,7 @@ local FilesJson = JSON.decode(Get_Info)
 if tonumber(TheFRADM) ~= tonumber(FilesJson.BotId) then
 return merolua.send(msg_chat_id,msg_id,'⇜ عذراً هذا الملف غير مطابق مع البوت يرجى جلب النسخه الحقيقيه')
 end -- end botid
-return merolua.send(msg_chat_id,msg_id,'⇜ جاري استرجاع المشتركين والقروبات ...')
+send(msg_chat_id,msg_id,'⇜ جاري استرجاع المشتركين والقروبات ...')
 Y = 0
 for k,v in pairs(FilesJson.UsersBot) do
 Y = Y + 1
@@ -4042,16 +4042,16 @@ return merolua.send(msg_chat_id,msg_id,'⇜ الملف لا يدعم هذا ال
 end
 end
 end
-if (Redis:get(TheFRADM..'FRADM:Channel:Redis'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) == 'true') then
+if (Redis:get(TheFRADM..'FRADM:Channel:Redis'..msg_chat_id..':'..msg.sender_id.user_id) == 'true') then
 if text == 'الغاء' or text == 'الغاء الامر' then 
-Redis:del(TheFRADM..'FRADM:Channel:Redis'..msg_chat_id..':'..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM..'FRADM:Channel:Redis'..msg_chat_id..':'..msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,'⇜ تم الغاء حفظ قناة الاشتراك')
 end
-Redis:del(TheFRADM..'FRADM:Channel:Redis'..msg_chat_id..':'..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM..'FRADM:Channel:Redis'..msg_chat_id..':'..msg.sender_id.user_id)
 if text and text:match("^@[%a%d_]+$") then
 local UserId_Info = bot.searchPublicChat(text)
 if not UserId_Info.id then
-Redis:del(TheFRADM..'FRADM:Channel:Redis'..msg_chat_id..':'..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM..'FRADM:Channel:Redis'..msg_chat_id..':'..msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً لا يوجد حساب بهذا المعرف ","md",true)  
 end
 local ChannelUser = text:gsub('@','')
@@ -4072,7 +4072,7 @@ if text == 'تفعيل الاشتراك الاجباري' or text == 'تفعيل
 if not msg.ControllerBot then 
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(1)..' ) ',"md",true)  
 end
-Redis:set(TheFRADM..'FRADM:Channel:Redis'..msg_chat_id..':'..msg.return merolua.sender_id.user_id,true)
+Redis:set(TheFRADM..'FRADM:Channel:Redis'..msg_chat_id..':'..msg.sender_id.user_id,true)
 return merolua.send(msg_chat_id,msg_id,"\n⇜ ارسل لي الان قناة الاشتراك ","md",true)  
 end
 if text == 'تعطيل الاشتراك الاجباري' or text == 'تعطيل الاشتراك الاجباري' then
@@ -4086,7 +4086,7 @@ if text == 'تغيير الاشتراك الاجباري' or text == 'تغير �
 if not msg.ControllerBot then 
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(1)..' ) ',"md",true)  
 end
-Redis:set(TheFRADM..'FRADM:Channel:Redis'..msg_chat_id..':'..msg.return merolua.sender_id.user_id,true)
+Redis:set(TheFRADM..'FRADM:Channel:Redis'..msg_chat_id..':'..msg.sender_id.user_id,true)
 return merolua.send(msg_chat_id,msg_id,"\n⇜ ارسل لي الان قناة الاشتراك ","md",true)  
 end
 if text == 'الاشتراك الاجباري' or text == 'الاشتراك الاجباري' then
@@ -4101,16 +4101,16 @@ return merolua.send(msg_chat_id,msg_id,"\n⇜ لا توجد قناة في الا
 end
 end
 
-if (Redis:get(TheFRADM..'FRADM:Chat:Channel:Redis'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) == 'true') then
+if (Redis:get(TheFRADM..'FRADM:Chat:Channel:Redis'..msg_chat_id..':'..msg.sender_id.user_id) == 'true') then
 if text == 'الغاء' or text == 'الغاء الامر' then 
-Redis:del(TheFRADM..'FRADM:Chat:Channel:Redis'..msg_chat_id..':'..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM..'FRADM:Chat:Channel:Redis'..msg_chat_id..':'..msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,'⇜ تم الغاء حفظ قناة الاشتراك')
 end
-Redis:del(TheFRADM..'FRADM:Chat:Channel:Redis'..msg_chat_id..':'..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM..'FRADM:Chat:Channel:Redis'..msg_chat_id..':'..msg.sender_id.user_id)
 if text and text:match("^@[%a%d_]+$") then
 local UserId_Info = bot.searchPublicChat(text)
 if not UserId_Info.id then
-Redis:del(TheFRADM..'FRADM:Chat:Channel:Redis'..msg_chat_id..':'..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM..'FRADM:Chat:Channel:Redis'..msg_chat_id..':'..msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً لا يوجد حساب بهذا المعرف ","md",true)  
 end
 local ChannelUser = text:gsub('@','')
@@ -4131,7 +4131,7 @@ if text == 'تفعيل الاشتراك الاجباري للقروب' then
 if not msg.TheBasics then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(4)..' ) ',"md",true)  
 end
-Redis:set(TheFRADM..'FRADM:Chat:Channel:Redis'..msg_chat_id..':'..msg.return merolua.sender_id.user_id,true)
+Redis:set(TheFRADM..'FRADM:Chat:Channel:Redis'..msg_chat_id..':'..msg.sender_id.user_id,true)
 return merolua.send(msg_chat_id,msg_id,"\n⇜ ارسلي قناة الاشتراك ","md",true)  
 end
 if text == 'تعطيل الاشتراك الاجباري للقروب' then
@@ -4145,7 +4145,7 @@ if text == 'تغيير الاشتراك الاجباري للقروب' then
 if not msg.TheBasics then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(4)..' ) ',"md",true)  
 end
-Redis:set(TheFRADM..'FRADM:Chat:Channel:Redis'..msg_chat_id..':'..msg.return merolua.sender_id.user_id,true)
+Redis:set(TheFRADM..'FRADM:Chat:Channel:Redis'..msg_chat_id..':'..msg.sender_id.user_id,true)
 return merolua.send(msg_chat_id,msg_id,"\n⇜ ارسل لي الان قناة الاشتراك ","md",true)  
 end
 if text == 'الاشتراك الاجباري للقروب' then
@@ -4186,7 +4186,7 @@ SudoId = ]]..UserId_Info.id..[[
 }
 ]])
 Informationlua:close()
-return merolua.send(msg_chat_id,msg_id,"\n⇜ تم تغيير المطور الاساسي اصبح : [@"..text:gsub('@','').."]","md",true)  
+send(msg_chat_id,msg_id,"\n⇜ تم تغيير المطور الاساسي اصبح : [@"..text:gsub('@','').."]","md",true)  
 dofile('FRADM.lua')  
 return false
 end
@@ -4206,7 +4206,7 @@ end
 return merolua.send(msg_chat_id,msg_id,'\n⇜ تم تحديث السورس  ',"md",true)  
 end
 if text == "مسح تخزين البوت" or text == "مسح تخزين البوت" then
-if tonumber(msg.return merolua.sender_id.user_id) == tonumber(5117901887) then 
+if tonumber(msg.sender_id.user_id) == tonumber(5117901887) then 
 local keys = Redis:keys(TheFRADM..'*')
 for i = 1, #keys do
 Redis:del(keys[i])
@@ -4215,14 +4215,14 @@ return merolua.send(msg_chat_id,msg_id,'\n⇜ تم مسح تخزين البوت 
 end
 end
 if text == 'معلومات التنصيب' or text == 'معلومات التنصيب' then
- if tonumber(msg.return merolua.sender_id.user_id) == tonumber(Sudo_Id) then 
- userreturn merolua.send = true
- elseif tonumber(msg.return merolua.sender_id.user_id) == tonumber(5117901887) then 
- userreturn merolua.send = true
+ if tonumber(msg.sender_id.user_id) == tonumber(Sudo_Id) then 
+ usersend = true
+ elseif tonumber(msg.sender_id.user_id) == tonumber(5117901887) then 
+ usersend = true
  else
- userreturn merolua.send = false
+ usersend = false
  end
-if userreturn merolua.send ~= true then 
+if usersend ~= true then 
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(1)..' ) ',"md",true)  
 end
 local UserInfo = bot.getUser(Sudo_Id)
@@ -4244,24 +4244,24 @@ if photo.total_count > 0 then
 Redis:set(TheFRADM..':WELCOME_BOT',photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id)
 return merolua.send(msg_chat_id,msg_id, '⇜ تم استدعاء صورة البوت ووضعها \n' )
 else
-Redis:setex(TheFRADM..'welcom_ph:witting'..msg.return merolua.sender_id.user_id,300,true) 
+Redis:setex(TheFRADM..'welcom_ph:witting'..msg.sender_id.user_id,300,true) 
 return merolua.send(msg_chat_id,msg_id, '⇜ حسناً عزيزي \n⇜ الان قم بارسال صورة للترحيب \n' )
 end 
 end
 if text == "ضع تاريخ الاشتراك" or text == "وضع تاريخ الاشتراك" then
-if msg.return merolua.sender_id.user_id ~= 5117901887 then 
+if msg.sender_id.user_id ~= 5117901887 then 
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( مطور السورس ) ',"md",true)  
 end
-Redis:set(TheFRADM.."data:botsashtrak"..msg_chat_id..msg.return merolua.sender_id.user_id,true)
+Redis:set(TheFRADM.."data:botsashtrak"..msg_chat_id..msg.sender_id.user_id,true)
 return merolua.send(msg_chat_id,msg_id,'\n⇜ ارسل تاريخ الاشتراك ',"md",true)  
 end
-if Redis:get(TheFRADM.."data:botsashtrak"..msg_chat_id..msg.return merolua.sender_id.user_id) then
+if Redis:get(TheFRADM.."data:botsashtrak"..msg_chat_id..msg.sender_id.user_id) then
 if text == 'الغاء' or text == 'الغاء الامر' then
-Redis:del(TheFRADM.."data:botsashtrak"..msg_chat_id..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."data:botsashtrak"..msg_chat_id..msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,'\n⇜ تم الغاء الامر  ',"md",true)  
 end
 Redis:set(TheFRADM.."data:bots:ashtrak",text)
-Redis:del(TheFRADM.."data:botsashtrak"..msg_chat_id..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."data:botsashtrak"..msg_chat_id..msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,'\n⇜ تم تعيين تاريخ الاشتراك  ',"md",true)  
 end
 if text == "اشتراك البوت" or text == "اشتراك بوت" then
@@ -4272,19 +4272,19 @@ return merolua.send(msg_chat_id,msg_id,'\nUser Dev : [@'..UserSudo..'\n'..(Redis
 end
 if text == 'رفع سورس' and msg.reply_to_message_id ~= 0  then
 if not msg.ControllerBot then 
-return merolua.sendText(msg_chat_id,msg_id,'\n• عذرا الامو يخص { مطور السـورس 𖦴 } بس !',"md",true)  
+return bot.sendText(msg_chat_id,msg_id,'\n• عذرا الامو يخص { مطور السـورس 𖦴 } بس !',"md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
 if Message_Reply.content.document then
 local File_Id = Message_Reply.content.document.document.remote.id
 local Name_File = Message_Reply.content.document.file_name
 if Name_File ~= 'FRADM.lua' then
-return merolua.sendText(msg_chat_id,msg_id,'• عذرا هذا الملف ليس سورسك')
+return bot.sendText(msg_chat_id,msg_id,'• عذرا هذا الملف ليس سورسك')
 end 
 os.execute('rm -rf FRADM.lua')
 local File = json:decode(https.request('https://api.telegram.org/bot'..Token..'/getfile?file_id='..File_Id)) 
 local download_ = download('https://api.telegram.org/file/bot'..Token..'/'..File.result.file_path,''..Name_File) 
-return merolua.sendText(msg_chat_id,msg_id,'• تم رفع سورس اكتب تحديث')
+return bot.sendText(msg_chat_id,msg_id,'• تم رفع سورس اكتب تحديث')
 end 
 end
 if text == 'جلب النسخه الاحتياطية' or text == 'جلب النسخه الاحتياطيه' then
@@ -4410,26 +4410,26 @@ Get_Json = Get_Json..'}}'
 local File = io.open('./'..UserBot..'.json', "w")
 File:write(Get_Json)
 File:close()
-return merolua.sendDocument(msg_chat_id,msg_id,'./'..UserBot..'.json', '⇜ تم جلب النسخه الاحتياطيه\n⇜ تحتوي على ( '..#Groups..' ) قروب \n⇜ وتحتوي على ( '..#UsersBot..' ) مشترك \n', 'md')
+return bot.sendDocument(msg_chat_id,msg_id,'./'..UserBot..'.json', '⇜ تم جلب النسخه الاحتياطيه\n⇜ تحتوي على ( '..#Groups..' ) قروب \n⇜ وتحتوي على ( '..#UsersBot..' ) مشترك \n', 'md')
 end
 if text == 'تفعيل جلب النسخ تلقائي' or text == 'تفعيل جلب النسخه تلقائيا' then   
 if not msg.DevelopersQ then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(2)..' ) ',"md",true)  
 end
-Redis:setex(TheFRADM.."Status:return merolua.sendFile",86400,true) 
-Redis:set(TheFRADM.."Status:return merolua.sendFile1",true)
+Redis:setex(TheFRADM.."Status:SendFile",86400,true) 
+Redis:set(TheFRADM.."Status:SendFile1",true)
 return merolua.send(msg_chat_id,msg_id,"⇜ تم تفعيل جلب نسخة القروبات التلقائيه","md")
 end
 if text == 'تعطيل جلب النسخ تلقائي' or text == 'تعطيل جلب النسخه تلقائيا' then   
 if not msg.DevelopersQ then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(2)..' ) ',"md",true)  
 end
-Redis:del(TheFRADM.."Status:return merolua.sendFile") 
-Redis:del(TheFRADM.."Status:return merolua.sendFile1") 
+Redis:del(TheFRADM.."Status:SendFile") 
+Redis:del(TheFRADM.."Status:SendFile1") 
 return merolua.send(msg_chat_id,msg_id,"⇜ تم تعطيل جلب نسخة القروبات التلقائيه","md")
 end
 
-if Redis:get(TheFRADM.."Status:return merolua.sendFile1") and tonumber(Redis:ttl(TheFRADM.."Status:return merolua.sendFile")) <= 1 then
+if Redis:get(TheFRADM.."Status:SendFile1") and tonumber(Redis:ttl(TheFRADM.."Status:SendFile")) <= 1 then
 local Get_Json = '{"BotId": '..TheFRADM..','  
 Get_Json = Get_Json..'"GroupsBotreply":{'
 local Groups = Redis:smembers(TheFRADM..'FRADM:ChekBotAdd')  
@@ -4480,7 +4480,7 @@ Get_Json = Get_Json..'}}'
 local File = io.open('./ReplyGroups.json', "w")
 File:write(Get_Json)
 File:close()
-return merolua.sendDocument(Sudo_Id,0,'./ReplyGroups.json', '', 'md')
+bot.sendDocument(Sudo_Id,0,'./ReplyGroups.json', '', 'md')
 
 local Groups = Redis:smembers(TheFRADM..'FRADM:ChekBotAdd')  
 local UsersBot = Redis:smembers(TheFRADM..'FRADM:Num:User:Pv')  
@@ -4569,8 +4569,8 @@ Get_Json = Get_Json..'}}'
 local File = io.open('./'..UserBot..'.json', "w")
 File:write(Get_Json)
 File:close()
-return merolua.sendDocument(Sudo_Id,0,'./'..UserBot..'.json', '⇜ تم جلب النسخه الاحتياطيه\n⇜ تحتوي على ( '..#Groups..' ) قروب \n⇜ وتحتوي على ( '..#UsersBot..' ) مشترك \n', 'md')
-Redis:setex(TheFRADM.."Status:return merolua.sendFile",86400,true) 
+bot.sendDocument(Sudo_Id,0,'./'..UserBot..'.json', '⇜ تم جلب النسخه الاحتياطيه\n⇜ تحتوي على ( '..#Groups..' ) قروب \n⇜ وتحتوي على ( '..#UsersBot..' ) مشترك \n', 'md')
+Redis:setex(TheFRADM.."Status:SendFile",86400,true) 
 end
 if text == 'جلب نسخه الردود العامه' or text == 'جلب نسخه الردود عام' then
 if not msg.ControllerBot then 
@@ -4618,7 +4618,7 @@ Get_Json = Get_Json..'}}'
 local File = io.open('./Groups_all.json', "w")
 File:write(Get_Json)
 File:close()
-return merolua.sendDocument(msg_chat_id,msg_id,'./Groups_all.json', '', 'md')
+return bot.sendDocument(msg_chat_id,msg_id,'./Groups_all.json', '', 'md')
 end
 if text == 'رفع نسخه الردود العامه' or text == 'رفع نسخه الردود عام' and msg.reply_to_message_id ~= 0 then
 if not msg.ControllerBot then 
@@ -4712,7 +4712,7 @@ Get_Json = Get_Json..'}}'
 local File = io.open('./ReplyGroups.json', "w")
 File:write(Get_Json)
 File:close()
-return merolua.sendDocument(msg_chat_id,msg_id,'./ReplyGroups.json', '', 'md')
+return bot.sendDocument(msg_chat_id,msg_id,'./ReplyGroups.json', '', 'md')
 end
 if text == 'رفع نسخه الردود' and msg.reply_to_message_id ~= 0 then
 if not msg.ControllerBot then 
@@ -4768,7 +4768,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM..'FRADM:Num:Add:Bot',text:match("تعيين عدد الاعضاء (%d+)$") ) 
-return merolua.send(msg_chat_id,msg_id,'⇜ تم تعيين عدد اعضاء تفعيل البوت اكثر من : '..text:match("تعيين عدد الاعضاء (%d+)$")..' عضو ',"md",true)  
+send(msg_chat_id,msg_id,'⇜ تم تعيين عدد اعضاء تفعيل البوت اكثر من : '..text:match("تعيين عدد الاعضاء (%d+)$")..' عضو ',"md",true)  
 elseif text =='الاحصائيات' then 
 if not msg.ControllerBot then 
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(1)..' ) ',"md",true)  
@@ -4781,7 +4781,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-return merolua.send(msg_chat_id,msg_id,'⇜ عدد احصائيات البوت \n━━━━━━━━━━━\n⇜ عدد القروبات : '..(Redis:scard(TheFRADM..'FRADM:ChekBotAdd') or 0)..'\n⇜ عدد المشتركين : '..(Redis:scard(TheFRADM..'FRADM:Num:User:Pv') or 0)..'',"md",true)  
+send(msg_chat_id,msg_id,'⇜ عدد احصائيات البوت \n━━━━━━━━━━━\n⇜ عدد القروبات : '..(Redis:scard(TheFRADM..'FRADM:ChekBotAdd') or 0)..'\n⇜ عدد المشتركين : '..(Redis:scard(TheFRADM..'FRADM:Num:User:Pv') or 0)..'',"md",true)  
 end
 if text == 'تفعيل' and msg.Developers then
 if msg.can_be_deleted_for_all_users == false then
@@ -4797,7 +4797,7 @@ local Info_Chats = bot.getSupergroupFullInfo(msg_chat_id)
 return merolua.send(msg_chat_id,msg_id,'\n⇜ القروب : ['..Get_Chat.title..']('..Info_Chats.invite_link.invite_link..')\n⇜ تم تفعيله مسبقاً \n✧',"md",true)  
 else
 if not msg.ControllerBot then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(msg.sender_id.user_id)
 for Name_User in string.gmatch(UserInfo.first_name, "[^%s]+" ) do
 UserInfo.first_name = Name_User
 break
@@ -4810,9 +4810,9 @@ data = {
 },
 }
 }
-return merolua.send(Sudo_Id,0,'\n⇜ تم تفعيل قروب جديد \n⇜ من قبل : ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..') \n⇜ معلومات القروب :\n⇜ عدد الاعضاء : '..Info_Chats.member_count..'\n⇜ عدد الادمنيه : '..Info_Chats.administrator_count..'\n⇜ عدد المطرودين : '..Info_Chats.banned_count..'\n⇜ عدد المقيدين : '..Info_Chats.restricted_count..'\n⇜ الرابط : ['..Get_Chat.title..']('..Info_Chats.invite_link.invite_link..')\n⇜ ايدي القروب : `'..msg_chat_id..'`',"md",true, false, false, false, reply_markup)
+send(Sudo_Id,0,'\n⇜ تم تفعيل قروب جديد \n⇜ من قبل : ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..') \n⇜ معلومات القروب :\n⇜ عدد الاعضاء : '..Info_Chats.member_count..'\n⇜ عدد الادمنيه : '..Info_Chats.administrator_count..'\n⇜ عدد المطرودين : '..Info_Chats.banned_count..'\n⇜ عدد المقيدين : '..Info_Chats.restricted_count..'\n⇜ الرابط : ['..Get_Chat.title..']('..Info_Chats.invite_link.invite_link..')\n⇜ ايدي القروب : `'..msg_chat_id..'`',"md",true, false, false, false, reply_markup)
 end
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id)
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id)
 if (StatusMember.status.Merotele == "chatMemberStatusAdministrator") then
 if StatusMember.status.can_change_info == true and
 StatusMember.status.can_delete_messages == true and
@@ -4820,7 +4820,7 @@ StatusMember.status.can_invite_users == true and
 StatusMember.status.can_pin_messages == true and
 StatusMember.status.can_promote_members == true and
 StatusMember.status.can_restrict_members == true then
-Redis:sadd(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id,msg.return merolua.sender_id.user_id) 
+Redis:sadd(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id,msg.sender_id.user_id) 
 end
 end
 local Info_Members = bot.getSupergroupMembers(msg_chat_id, "Administrators", "*", 0, 200)
@@ -4875,7 +4875,7 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'اعدادات الحماية',data =msg.return merolua.sender_id.user_id..'/'.. 'NoNextSeting'}, 
+{text = 'اعدادات الحماية',data =msg.sender_id.user_id..'/'.. 'NoNextSeting'}, 
 },
 }
 }
@@ -4890,7 +4890,7 @@ end
 if Redis:sismember(TheFRADM..'Black:listBan:',msg_chat_id) then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً القروب محظور من قبل المطور ","md",true)  
 end
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 local AddedBot = true
 elseif (StatusMember == "chatMemberStatusAdministrator") then
@@ -4914,7 +4914,7 @@ local Info_Chats = bot.getSupergroupFullInfo(msg_chat_id)
 return merolua.send(msg_chat_id,msg_id,'\n⇜ القروب : ['..Get_Chat.title..']('..Info_Chats.invite_link.invite_link..')\n⇜ تم تفعيله مسبقاً \n✧',"md",true)  
 else
 if not msg.ControllerBot then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(msg.sender_id.user_id)
 for Name_User in string.gmatch(UserInfo.first_name, "[^%s]+" ) do
 UserInfo.first_name = Name_User
 break
@@ -4927,7 +4927,7 @@ data = {
 },
 }
 }
-return merolua.send(Sudo_Id,0,'\n⇜ تم تفعيل قروب جديد \n⇜ من قبل : ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..')\n⇜ معلومات القروب :\n⇜ عدد الاعضاء : '..Info_Chats.member_count..'\n⇜ عدد الادمنيه : '..Info_Chats.administrator_count..'\n⇜ عدد المطرودين : '..Info_Chats.banned_count..'\n⇜ عدد المقيدين : '..Info_Chats.restricted_count..'\n⇜ الرابط : ['..Get_Chat.title..']('..Info_Chats.invite_link.invite_link..')\n⇜ ايدي القروب : `'..msg_chat_id..'`',"md",true, false, false, false, reply_markup)
+send(Sudo_Id,0,'\n⇜ تم تفعيل قروب جديد \n⇜ من قبل : ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..')\n⇜ معلومات القروب :\n⇜ عدد الاعضاء : '..Info_Chats.member_count..'\n⇜ عدد الادمنيه : '..Info_Chats.administrator_count..'\n⇜ عدد المطرودين : '..Info_Chats.banned_count..'\n⇜ عدد المقيدين : '..Info_Chats.restricted_count..'\n⇜ الرابط : ['..Get_Chat.title..']('..Info_Chats.invite_link.invite_link..')\n⇜ ايدي القروب : `'..msg_chat_id..'`',"md",true, false, false, false, reply_markup)
 end
 local reply_markup = bot.replyMarkup{
 type = 'inline',
@@ -4937,7 +4937,7 @@ data = {
 },
 }
 }
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id)
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id)
 if (StatusMember.status.Merotele == "chatMemberStatusAdministrator") then
 if StatusMember.status.can_change_info == true and
 StatusMember.status.can_delete_messages == true and
@@ -4945,8 +4945,8 @@ StatusMember.status.can_invite_users == true and
 StatusMember.status.can_pin_messages == true and
 StatusMember.status.can_promote_members == true and
 StatusMember.status.can_restrict_members == true then
-print(msg.return merolua.sender_id.user_id)
-Redis:sadd(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id,msg.return merolua.sender_id.user_id) 
+print(msg.sender_id.user_id)
+Redis:sadd(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id,msg.sender_id.user_id) 
 end
 end
 local Info_Members = bot.getSupergroupMembers(msg_chat_id, "Administrators", "*", 0, 200)
@@ -5001,7 +5001,7 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'اعدادات الحماية',data =msg.return merolua.sender_id.user_id..'/'.. 'NoNextSeting'}, 
+{text = 'اعدادات الحماية',data =msg.sender_id.user_id..'/'.. 'NoNextSeting'}, 
 },
 }
 }
@@ -5016,7 +5016,7 @@ if not Redis:sismember(TheFRADM.."FRADM:ChekBotAdd",msg_chat_id) then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ القروب ['..Get_Chat.title..']('..Info_Chats.invite_link.invite_link..')\n⇜ تم تعطيله مسبقاً \n✧',"md",true)  
 else
 if not msg.ControllerBot then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(msg.sender_id.user_id)
 for Name_User in string.gmatch(UserInfo.first_name, "[^%s]+" ) do
 UserInfo.first_name = Name_User
 break
@@ -5029,7 +5029,7 @@ data = {
 },
 }
 }
-return merolua.send(Sudo_Id,0,'\n⇜ تم تعطيل قروب جديد \n⇜ من قبل : ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..')\n⇜ عدد الاعضاء : '..Info_Chats.member_count..'\n⇜ عدد الادمنيه : '..Info_Chats.administrator_count..'\n⇜ عدد المطرودين : '..Info_Chats.banned_count..'\n⇜ عدد المقيدين : '..Info_Chats.restricted_count..'',"md",true, false, false, false, reply_markup)
+send(Sudo_Id,0,'\n⇜ تم تعطيل قروب جديد \n⇜ من قبل : ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..')\n⇜ عدد الاعضاء : '..Info_Chats.member_count..'\n⇜ عدد الادمنيه : '..Info_Chats.administrator_count..'\n⇜ عدد المطرودين : '..Info_Chats.banned_count..'\n⇜ عدد المقيدين : '..Info_Chats.restricted_count..'',"md",true, false, false, false, reply_markup)
 end
 Redis:del(TheFRADM.."FRADM:Status:Games"..msg_chat_id) 
 Redis:del(TheFRADM..'tagallgroup'..msg.chat_id,'open') 
@@ -5063,7 +5063,7 @@ if text == 'تعطيل' and not msg.Developers then
 if not msg.TheBasicsQ then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(8).." ) ","md",true)  
 end
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 AddedBot = true
 elseif (StatusMember == "chatMemberStatusAdministrator") then
@@ -5080,7 +5080,7 @@ if not Redis:sismember(TheFRADM.."FRADM:ChekBotAdd",msg_chat_id) then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ القروب ['..Get_Chat.title..']('..Info_Chats.invite_link.invite_link..')\n⇜ تم تعطيله مسبقاً \n✧',"md",true)  
 else
 if not msg.ControllerBot then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(msg.sender_id.user_id)
 for Name_User in string.gmatch(UserInfo.first_name, "[^%s]+" ) do
 UserInfo.first_name = Name_User
 break
@@ -5093,7 +5093,7 @@ data = {
 },
 }
 }
-return merolua.send(Sudo_Id,0,'\n⇜ تم تعطيل قروب جديد \n⇜ من قبل : ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..')\n⇜ عدد الاعضاء : '..Info_Chats.member_count..'\n⇜ عدد الادمنيه : '..Info_Chats.administrator_count..'\n⇜ عدد المطرودين : '..Info_Chats.banned_count..'\n⇜ عدد المقيدين : '..Info_Chats.restricted_count..'',"md",true, false, false, false, reply_markup)
+send(Sudo_Id,0,'\n⇜ تم تعطيل قروب جديد \n⇜ من قبل : ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..')\n⇜ عدد الاعضاء : '..Info_Chats.member_count..'\n⇜ عدد الادمنيه : '..Info_Chats.administrator_count..'\n⇜ عدد المطرودين : '..Info_Chats.banned_count..'\n⇜ عدد المقيدين : '..Info_Chats.restricted_count..'',"md",true, false, false, false, reply_markup)
 end
 Redis:del(TheFRADM.."FRADM:Status:Games"..msg_chat_id) 
 Redis:del(TheFRADM..'tagallgroup'..msg.chat_id,'open') 
@@ -5137,7 +5137,7 @@ Redis:del(TheFRADM.."Status:tagdev")
 return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜  تم تعطيل نداء المطور","md",true )
 end
 if chat_type(msg.chat_id) == "GroupBot" and Redis:sismember(TheFRADM.."FRADM:ChekBotAdd",msg_chat_id) then
-Redis:incr(TheFRADM..'FRADM:Num:Message:User'..msg.chat_id..':'..msg.return merolua.sender_id.user_id) 
+Redis:incr(TheFRADM..'FRADM:Num:Message:User'..msg.chat_id..':'..msg.sender_id.user_id) 
 
 if text == "تفعيل اكتموه" then
 if ChannelJoinch(msg) == false then
@@ -5243,13 +5243,13 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'كتم', data = UserId_Info.id..'/iktm/'..msg.return merolua.sender_id.user_id},{text = 'حظر', data = UserId_Info.id..'/iban/'..msg.return merolua.sender_id.user_id},
+{text = 'كتم', data = UserId_Info.id..'/iktm/'..msg.sender_id.user_id},{text = 'حظر', data = UserId_Info.id..'/iban/'..msg.sender_id.user_id},
 },
 {
-{text = 'تقييد', data = UserId_Info.id..'/ikide/'..msg.return merolua.sender_id.user_id}, {text = 'طرد', data = UserId_Info.id..'/ikick/'..msg.return merolua.sender_id.user_id}, 
+{text = 'تقييد', data = UserId_Info.id..'/ikide/'..msg.sender_id.user_id}, {text = 'طرد', data = UserId_Info.id..'/ikick/'..msg.sender_id.user_id}, 
 },
 {
-{text = 'تنزيل الرتب', data = UserId_Info.id..'/iTnzelall/'..msg.return merolua.sender_id.user_id},{text = 'رفع القيود', data = UserId_Info.id..'/rafaall/'..msg.return merolua.sender_id.user_id}, 
+{text = 'تنزيل الرتب', data = UserId_Info.id..'/iTnzelall/'..msg.sender_id.user_id},{text = 'رفع القيود', data = UserId_Info.id..'/rafaall/'..msg.sender_id.user_id}, 
 },
 }
 }
@@ -5266,29 +5266,29 @@ if not msg.Addictive then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(7).." ) ","md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-if StatusCanOrNotCanin(msg_chat_id,Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر على ( "..Controller(msg_chat_id,Message_Reply.return merolua.sender_id.user_id).." ) ","md",true)  
+if StatusCanOrNotCanin(msg_chat_id,Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر على ( "..Controller(msg_chat_id,Message_Reply.sender_id.user_id).." ) ","md",true)  
 end  
-Redis:incrby(TheFRADM.."inthar:UserNum"..msg.chat_id..Message_Reply.return merolua.sender_id.user_id,1)
-local Numinthar = Redis:get(TheFRADM.."inthar:UserNum"..msg.chat_id..Message_Reply.return merolua.sender_id.user_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
-local Name = '['..UserInfo.first_name..'](tg://user?id='..Message_Reply.return merolua.sender_id.user_id..')'
+Redis:incrby(TheFRADM.."inthar:UserNum"..msg.chat_id..Message_Reply.sender_id.user_id,1)
+local Numinthar = Redis:get(TheFRADM.."inthar:UserNum"..msg.chat_id..Message_Reply.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
+local Name = '['..UserInfo.first_name..'](tg://user?id='..Message_Reply.sender_id.user_id..')'
 if tonumber(Numinthar) >= tonumber(3) then
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'كتم', data = Message_Reply.return merolua.sender_id.user_id..'/iktm/'..msg.return merolua.sender_id.user_id},{text = 'حظر', data = Message_Reply.return merolua.sender_id.user_id..'/iban/'..msg.return merolua.sender_id.user_id},
+{text = 'كتم', data = Message_Reply.sender_id.user_id..'/iktm/'..msg.sender_id.user_id},{text = 'حظر', data = Message_Reply.sender_id.user_id..'/iban/'..msg.sender_id.user_id},
 },
 {
-{text = 'تقييد', data = Message_Reply.return merolua.sender_id.user_id..'/ikide/'..msg.return merolua.sender_id.user_id}, {text = 'طرد', data = Message_Reply.return merolua.sender_id.user_id..'/ikick/'..msg.return merolua.sender_id.user_id}, 
+{text = 'تقييد', data = Message_Reply.sender_id.user_id..'/ikide/'..msg.sender_id.user_id}, {text = 'طرد', data = Message_Reply.sender_id.user_id..'/ikick/'..msg.sender_id.user_id}, 
 },
 {
-{text = 'تنزيل الرتب', data = Message_Reply.return merolua.sender_id.user_id..'/iTnzelall/'..msg.return merolua.sender_id.user_id},{text = 'رفع القيود', data = Message_Reply.return merolua.sender_id.user_id..'/rafaall/'..msg.return merolua.sender_id.user_id}, 
+{text = 'تنزيل الرتب', data = Message_Reply.sender_id.user_id..'/iTnzelall/'..msg.sender_id.user_id},{text = 'رفع القيود', data = Message_Reply.sender_id.user_id..'/rafaall/'..msg.sender_id.user_id}, 
 },
 }
 }
-Redis:del(TheFRADM.."inthar:UserNum"..msg.chat_id..Message_Reply.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."inthar:UserNum"..msg.chat_id..Message_Reply.sender_id.user_id)
 return merolua.send(msg.chat_id,msg.id,"⇜ المستخدم : "..Name.."\n⇜ تم انذاره 3 مرات والان يمكنك اختيار ماذا ستفعل به ","md",false, false, false, false, reply_markup)
 end
 return merolua.send(msg.chat_id,msg.id,"⇜ تم اعطائه الانذار رقم : "..Numinthar,"md")
@@ -5513,28 +5513,28 @@ if text == "تفعيل شعر" then
 if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل الشعر","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل الشعر","md",true )
 Redis:del(TheFRADM.."FRADM:sh3ir:Abs"..msg.chat_id) 
 end
 if text == "تعطيل شعر" then
 if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل الشعر","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل الشعر","md",true )
 Redis:set(TheFRADM.."FRADM:sh3ir:Abs"..msg.chat_id,true)  
 end
 if text == "تفعيل نبذه" or text == "تفعيل النبذه" or text == "تفعيل البايو" then
 if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل البايو","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل البايو","md",true )
 Redis:del(TheFRADM.."FRADM:biousers"..msg.chat_id) 
 end
 if text == "تعطيل نبذه" or text == "تعطيل النبذه" or text == "تعطيل البايو" then
 if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل البايو","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل البايو","md",true )
 Redis:set(TheFRADM.."FRADM:biousers"..msg.chat_id,true)  
 end
 if text == "تعطيل التسليه" then
@@ -5741,10 +5741,10 @@ if not msg.Originators then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(5).." ) ","md",true)  
 end
 if (Redis:get(TheFRADM.."tagall@all"..msg.chat_id) == "open") then
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر @all مسبقاً","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر @all مسبقاً","md",true )
 else
 Redis:set(TheFRADM.."tagall@all"..msg.chat_id,"open") 
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر @all","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر @all","md",true )
 end
 end
 if text == "تعطيل تاك عام" then
@@ -5760,10 +5760,10 @@ if not msg.Originators then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(5).." ) ","md",true)  
 end
 if (Redis:get(TheFRADM.."tagall@all"..msg.chat_id) == "close") then
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر @all مسبقاً","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر @all مسبقاً","md",true )
 else
 Redis:set(TheFRADM.."tagall@all"..msg.chat_id,"close") 
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر @all","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر @all","md",true )
 end
 end
 if text == "تفعيل التاك" or text == "تفعيل التاق" or text == "تفعيل المنشن" then
@@ -5779,10 +5779,10 @@ if not msg.Originators then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(5).." ) ","md",true)  
 end
 if (Redis:get(TheFRADM.."tagallgroup"..msg.chat_id) == "open") then
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر التاق مسبقاً","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر التاق مسبقاً","md",true )
 else
 Redis:set(TheFRADM.."tagallgroup"..msg.chat_id,"open") 
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر التاق","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر التاق","md",true )
 end
 end
 if text == "تعطيل التاك" or text == "تعطيل التاق" or text == "تعطيل المنشن" then
@@ -5798,10 +5798,10 @@ if not msg.Originators then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(5).." ) ","md",true)  
 end
 if (Redis:get(TheFRADM.."tagallgroup"..msg.chat_id) == "close") then
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر التاق مسبقاً","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر التاق مسبقاً","md",true )
 else
 Redis:set(TheFRADM.."tagallgroup"..msg.chat_id,"close") 
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر التاق","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر التاق","md",true )
 end
 end
 if text == "تعطيل الصيغ" then
@@ -5817,10 +5817,10 @@ if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
 if Redis:get(TheFRADM.."kadmeat"..msg.chat_id)  then
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل اوامر الصيغ مسبقاً","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل اوامر الصيغ مسبقاً","md",true )
 else
 Redis:set(TheFRADM.."kadmeat"..msg.chat_id,"true")
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل اوامر الصيغ","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل اوامر الصيغ","md",true )
 end
 end
 if text == "تفعيل الصيغ" then
@@ -5836,10 +5836,10 @@ if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
 if not Redis:get(TheFRADM.."kadmeat"..msg.chat_id)  then
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل اوامر التحويلات مسبقاً","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل اوامر التحويلات مسبقاً","md",true )
 else
 Redis:del(TheFRADM.."kadmeat"..msg.chat_id)
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل اوامر الصيغ","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل اوامر الصيغ","md",true )
 end
 end
 if text == "تعطيل انطق" then
@@ -5855,10 +5855,10 @@ if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
 if Redis:get(TheFRADM.."intg"..msg.chat_id)  then
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر انطق مسبقاً","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر انطق مسبقاً","md",true )
 else
 Redis:set(TheFRADM.."intg"..msg.chat_id,"true")
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر انطق","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر انطق","md",true )
 end
 end
 if text == "تفعيل انطق" then
@@ -5874,10 +5874,10 @@ if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
 if not Redis:get(TheFRADM.."intg"..msg.chat_id)  then
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر انطق مسبقاً","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر انطق مسبقاً","md",true )
 else
 Redis:del(TheFRADM.."intg"..msg.chat_id)
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر انطق","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر انطق","md",true )
 end
 end
 if text == "تعطيل الابراج" then
@@ -5893,10 +5893,10 @@ if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
 if Redis:get(TheFRADM.."brjj"..msg.chat_id)  then
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر الابراج مسبقاً","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر الابراج مسبقاً","md",true )
 else
 Redis:set(TheFRADM.."brjj"..msg.chat_id,"true")
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر الابراج","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر الابراج","md",true )
 end
 end
 if text == "تفعيل الابراج" then
@@ -5912,10 +5912,10 @@ if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
 if not Redis:get(TheFRADM.."brjj"..msg.chat_id)  then
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر الابراج مسبقاً","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر الابراج مسبقاً","md",true )
 else
 Redis:del(TheFRADM.."brjj"..msg.chat_id)
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر الابراج","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر الابراج","md",true )
 end
 end
 if text == "تعطيل الزخرفه" then
@@ -5931,10 +5931,10 @@ if not msg.Originators then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(5).." ) ","md",true)  
 end
 if Redis:get(TheFRADM.."zhrfa"..msg.chat_id)  then
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر الزخرفه مسبقاً","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر الزخرفه مسبقاً","md",true )
 else
 Redis:set(TheFRADM.."zhrfa"..msg.chat_id,"true")
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر الزخرفه","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر الزخرفه","md",true )
 end
 end
 if text == "تفعيل الزخرفه" then
@@ -5950,10 +5950,10 @@ if not msg.Originators then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(5).." ) ","md",true)  
 end
 if not Redis:get(TheFRADM.."zhrfa"..msg.chat_id)  then
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر الزخرفه مسبقاً","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر الزخرفه مسبقاً","md",true )
 else
 Redis:del(TheFRADM.."zhrfa"..msg.chat_id)
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر الزخرفه","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر الزخرفه","md",true )
 end
 end
 if text == "تعطيل اسمي" then
@@ -5969,10 +5969,10 @@ if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
 if Redis:get(TheFRADM.."idnotmemname"..msg.chat_id)  then
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر اسمي مسبقاً","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر اسمي مسبقاً","md",true )
 else
 Redis:set(TheFRADM.."idnotmemname"..msg.chat_id,"true")
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر اسمي ","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر اسمي ","md",true )
 end
 end
 if text == "تفعيل اسمي" then
@@ -5988,10 +5988,10 @@ if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
 if not Redis:get(TheFRADM.."idnotmemname"..msg.chat_id)  then
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر اسمي مسبقاً","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر اسمي مسبقاً","md",true )
 else
 Redis:del(TheFRADM.."idnotmemname"..msg.chat_id)
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر اسمي ","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر اسمي ","md",true )
 end
 end
 if text == "تعطيل البايو" then
@@ -6007,10 +6007,10 @@ if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
 if Redis:get(TheFRADM.."idnotmembio"..msg.chat_id)  then
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر البايو مسبقاً","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر البايو مسبقاً","md",true )
 else
 Redis:set(TheFRADM.."idnotmembio"..msg.chat_id,"true")
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر البايو ","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر البايو ","md",true )
 end
 end
 if text == "تفعيل البايو" then
@@ -6026,10 +6026,10 @@ if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
 if not Redis:get(TheFRADM.."idnotmembio"..msg.chat_id)  then
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر البايو مسبقاً","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر البايو مسبقاً","md",true )
 else
 Redis:del(TheFRADM.."idnotmembio"..msg.chat_id)
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر البايو ","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر البايو ","md",true )
 end
 end
 if text == "تعطيل ايدي العضو" then
@@ -6045,10 +6045,10 @@ if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
 if Redis:get(TheFRADM.."idnotmem"..msg.chat_id)  then
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر ايدي العضو مسبقاً","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر ايدي العضو مسبقاً","md",true )
 else
 Redis:set(TheFRADM.."idnotmem"..msg.chat_id,"true")
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر ايدي العضو","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تعطيل امر ايدي العضو","md",true )
 end
 end
 if text == "تفعيل ايدي العضو" then
@@ -6064,108 +6064,108 @@ if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
 if not Redis:get(TheFRADM.."idnotmem"..msg.chat_id)  then
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر ايدي العضو مسبقاً","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر ايدي العضو مسبقاً","md",true )
 else
 Redis:del(TheFRADM.."idnotmem"..msg.chat_id)
-return merolua.send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر ايدي العضو","md",true )
+send(msg_chat_id,msg_id, GetByName(msg).."⇜ تم تفعيل امر ايدي العضو","md",true )
 end
 end
 if text == "تفعيل متحركه" or text == "تفعيل المتحركه" or text == "تفعيل المتحركات" then
 if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل المتحركه","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل المتحركه","md",true )
 Redis:del(TheFRADM.."Abs:gif:Abs"..msg.chat_id) 
 end
 if text == "تعطيل متحركه" or text == "تعطيل المتحركه" or text == "تعطيل المتحركات" then
 if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل المتحركه","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل المتحركه","md",true )
 Redis:set(TheFRADM.."Abs:gif:Abs"..msg.chat_id,true)  
 end
 if text == "تفعيل ميمز" then
 if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل الميمز","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل الميمز","md",true )
 Redis:del(TheFRADM.."Abs:memz:Abs"..msg.chat_id) 
 end
 if text == "تعطيل ميمز" then
 if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل الميمز","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل الميمز","md",true )
 Redis:set(TheFRADM.."Abs:memz:Abs"..msg.chat_id,true)  
 end
 if text == "تفعيل ريمكس" then
 if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل الريمكس","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل الريمكس","md",true )
 Redis:del(TheFRADM.."Abs:Remix:Abs"..msg.chat_id) 
 end
 if text == "تعطيل ريمكس" then
 if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل الريمكس","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل الريمكس","md",true )
 Redis:set(TheFRADM.."Abs:Remix:Abs"..msg.chat_id,true)  
 end
 if text == "تفعيل صوره" then
 if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل الصوره","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل الصوره","md",true )
 Redis:del(TheFRADM.."Abs:Photo:Abs"..msg.chat_id) 
 end
 if text == "تعطيل صوره" then
 if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل الصوره","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل الصوره","md",true )
 Redis:set(TheFRADM.."Abs:Photo:Abs"..msg.chat_id,true)  
 end
 if text == "تفعيل انمي" then
 if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل انمي","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل انمي","md",true )
 Redis:del(TheFRADM.."Abs:Anime:Abs"..msg.chat_id) 
 end
 if text == "تعطيل انمي" then
 if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل انمي","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل انمي","md",true )
 Redis:set(TheFRADM.."Abs:Anime:Abs"..msg.chat_id,true)  
 end
 if text == "تفعيل فلم" then
 if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل فلم","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل فلم","md",true )
 Redis:del(TheFRADM.."Abs:Movies:Abs"..msg.chat_id) 
 end
 if text == "تعطيل فلم" then
 if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل فلم","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل فلم","md",true )
 Redis:set(TheFRADM.."Abs:Movies:Abs"..msg.chat_id,true)  
 end
 if text == "تفعيل مسلسل" then
 if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل مسلسل","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل مسلسل","md",true )
 Redis:del(TheFRADM.."Abs:Series:Abs"..msg.chat_id) 
 end
 if text == "تعطيل مسلسل" then
 if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(6).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل مسلسل","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل مسلسل","md",true )
 Redis:set(TheFRADM.."Abs:Series:Abs"..msg.chat_id,true)  
 end
 if text == "تفعيل التحقق" then
@@ -6173,7 +6173,7 @@ if not msg.Addictive then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(7).." ) ","md",true)  
 end
 Redis:set(TheFRADM.."TheFRADM:Status:joinet"..msg_chat_id,true) 
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل التحقق","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل التحقق","md",true )
 end
 if text == "تعطيل التحقق" then
 if not msg.Addictive then
@@ -6195,10 +6195,10 @@ if not msg.Originators then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(5).." ) ","md",true)  
 end
 if Redis:get(TheFRADM.."Redis:setRt"..msg.chat_id)  then
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل رتب التسليه مسيقاً","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل رتب التسليه مسيقاً","md",true )
 else
 Redis:set(TheFRADM.."Redis:setRt"..msg.chat_id,"true")
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل رتب التسليه","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل رتب التسليه","md",true )
 end
 end
 if text == "تفعيل رتب التسليه" or text == "تفعيل رتب التسلية" then
@@ -6214,10 +6214,10 @@ if not msg.Originators then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(5).." ) ","md",true)  
 end
 if not Redis:get(TheFRADM.."Redis:setRt"..msg.chat_id)  then
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل رتب التسليه مسبقاً","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل رتب التسليه مسبقاً","md",true )
 else
 Redis:del(TheFRADM.."Redis:setRt"..msg.chat_id)
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل رتب التسليه","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل رتب التسليه","md",true )
 end
 end
 if text and text:match("^تفعيل (.*)$") and msg.reply_to_message_id == 0 then
@@ -6599,7 +6599,7 @@ if not msg.Originators then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(5).." ) ","md",true)  
 end
 Redis:del(TheFRADM.."FRADM:Status:Del:Media"..msg.chat_id)
- return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل المسح التلقائي","md",true )
+ send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل المسح التلقائي","md",true )
 return false
 end 
 if text == "تفعيل المسح التلقائي" then
@@ -6615,7 +6615,7 @@ if not msg.Originators then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(5).." ) ","md",true)  
 end
 Redis:set(TheFRADM.."FRADM:Status:Del:Media"..msg.chat_id,true)
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل المسح التلقائي","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل المسح التلقائي","md",true )
 return false
 end 
 if text == "تفعيل نزلني" then
@@ -6630,7 +6630,7 @@ end
 if not msg.Originators then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(5).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل امر نزلني","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل امر نزلني","md",true )
 Redis:del(TheFRADM.."FRADM:Nzlne:Abs"..msg.chat_id) 
 end
 if text == "تعطيل نزلني" then
@@ -6645,7 +6645,7 @@ end
 if not msg.Originators then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(5).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل امر نزلني","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل امر نزلني","md",true )
 Redis:set(TheFRADM.."FRADM:Nzlne:Abs"..msg.chat_id,true)  
 end
 if text == "تعطيل صورتي" or text == "تعطيل افتاري" then
@@ -6763,14 +6763,14 @@ if text == "تفعيل البلاغات" or text == "تفعيل بلاغات" th
 if not msg.Addictive then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(7).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل البلاغات","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل البلاغات","md",true )
 Redis:set(TheFRADM.."rebomsg"..msg.chat_id,true)
 end
 if text == "تعطيل البلاغات" or text == "تعطيل بلاغات" then
 if not msg.Originators then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(5).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل البلاغات","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل البلاغات","md",true )
 Redis:del(TheFRADM.."rebomsg"..msg.chat_id)
 end
 
@@ -6778,14 +6778,14 @@ if text == "تفعيل الشعار" or text == "تفعيل شعار" then
 if not msg.Originators then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(5).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل شعار القروب","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تفعيل شعار القروب","md",true )
 Redis:set(TheFRADM.."Bots:Lock:ProNames"..msg.chat_id,true)
 end
 if text == "تعطيل الشعار" or text == "تعطيل شعار" then
 if not msg.Originators then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هذا الامر يخص ( "..Controller_Num(5).." ) ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل شعار القروب","md",true )
+send(msg_chat_id,msg_id,GetByName(msg).."⇜ تم تعطيل شعار القروب","md",true )
 Redis:del(TheFRADM.."Bots:Lock:ProNames"..msg.chat_id)
 end
 if text == "تفعيل التفاعل" then
@@ -6906,23 +6906,23 @@ if msg.Managers then
 if text and (text:match("^ضع الشعار (.*)$") or text:match("^ضع شعار (.*)$") or text:match("^وضع الشعار (.*)$") or text:match("^وضع شعار (.*)$") or text:match("^تعيين شعار (.*)$")) then
 if Redis:get(TheFRADM.."Bots:Lock:ProNames"..msg.chat_id) then
 local Txt = text:match("^ضع الشعار (.*)$") or text:match("^ضع شعار (.*)$") or text:match("^وضع الشعار (.*)$") or text:match("^وضع شعار (.*)$") or text:match("^تعيين شعار (.*)$")
-return merolua.send(msg.chat_id, msg.id, '⇜ تم تعيين ( '..Txt..' ) كشعار للقروب')
+send(msg.chat_id, msg.id, '⇜ تم تعيين ( '..Txt..' ) كشعار للقروب')
 Redis:set(TheFRADM.."Bots:ProNames:Txt"..msg.chat_id,Txt)
 else
-return merolua.send(msg.chat_id, msg.id, '⇜ ميزة الشعار معطله يرجى تفعيلها')
+send(msg.chat_id, msg.id, '⇜ ميزة الشعار معطله يرجى تفعيلها')
 end
 end
 if text == "مسح الشعار" then
 Redis:del(TheFRADM.."Bots:ProNames:Txt"..msg.chat_id)
-return merolua.send(msg.chat_id, msg.id,"⇜ تم مسح الشعار ")
+send(msg.chat_id, msg.id,"⇜ تم مسح الشعار ")
 end
 if text and (text:match("^تعين عدد الكتم (.*)$") or text:match("^تعيين عدد الكتم (.*)$")) then
 if Redis:get(TheFRADM.."Bots:Lock:ProNames"..msg.chat_id) then
 local Num = text:match("^تعين عدد الكتم (.*)$") or text:match("^تعيين عدد الكتم (.*)$")
-return merolua.send(msg.chat_id, msg.id, '⇜ تم تعيين عدد الكتم '..Num..' ')
+send(msg.chat_id, msg.id, '⇜ تم تعيين عدد الكتم '..Num..' ')
 Redis:set(TheFRADM.."Bots:ProNames:Num"..msg.chat_id,Num)
 else
-return merolua.send(msg.chat_id, msg.id, '⇜ ميزة الشعار معطله يرجى تفعيلها')
+send(msg.chat_id, msg.id, '⇜ ميزة الشعار معطله يرجى تفعيلها')
 end
 end
 end
@@ -6930,35 +6930,35 @@ if text == "الشعار" or text == "شعار" then
 if Redis:get(TheFRADM.."Bots:ProNames:Txt"..msg.chat_id) then
 local ProNamesTxt = Redis:get(TheFRADM.."Bots:ProNames:Txt"..msg.chat_id)
 local ProNamesNum = Redis:get(TheFRADM.."Bots:ProNames:Num"..msg.chat_id) or 5
-return merolua.send(msg.chat_id, msg.id, '⇜ شعار القروب ( `'..ProNamesTxt..'` )\n⇜ عدد المحاولات للكتم ↫ '..ProNamesNum,"md")
+send(msg.chat_id, msg.id, '⇜ شعار القروب ( `'..ProNamesTxt..'` )\n⇜ عدد المحاولات للكتم ↫ '..ProNamesNum,"md")
 else
-return merolua.send(msg.chat_id, msg.id, '⇜ لم يتم تعيين شعار للقروب')
+send(msg.chat_id, msg.id, '⇜ لم يتم تعيين شعار للقروب')
 end
 end
 if text and not msg.Originators then
 if Redis:get(TheFRADM.."Bots:Lock:ProNames"..msg.chat_id) and Redis:get(TheFRADM.."Bots:ProNames:Txt"..msg.chat_id) then 
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(msg.sender_id.user_id)
 if UserInfo and UserInfo.first_name then 
 local last_ = UserInfo.last_name or ""
 local first_ = UserInfo.first_name or ""
 local Namer = (first_..""..last_)
 if Namer:match("(.*)"..Redis:get(TheFRADM.."Bots:ProNames:Txt"..msg.chat_id).."(.*)") then 
-Redis:srem(TheFRADM..'Bots:Muted:'..msg.chat_id, msg.return merolua.sender_id.user_id)
+Redis:srem(TheFRADM..'Bots:Muted:'..msg.chat_id, msg.sender_id.user_id)
 else
 local ProNamesTxt = Redis:get(TheFRADM.."Bots:ProNames:Num"..msg.chat_id) or 5
-local UserNum = Redis:get(TheFRADM.."Bots:ProNames:UserNum"..msg.chat_id..msg.return merolua.sender_id.user_id) or 0
+local UserNum = Redis:get(TheFRADM.."Bots:ProNames:UserNum"..msg.chat_id..msg.sender_id.user_id) or 0
 if (tonumber(UserNum) == tonumber(ProNamesTxt) or tonumber(UserNum) > tonumber(ProNamesTxt)) then 
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.return merolua.sender_id.user_id) 
-Redis:del(TheFRADM.."Bots:ProNames:UserNum"..msg.chat_id..msg.return merolua.sender_id.user_id)
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg.chat_id,msg.sender_id.user_id) 
+Redis:del(TheFRADM.."Bots:ProNames:UserNum"..msg.chat_id..msg.sender_id.user_id)
 if UserInfo.username then
 UserInfousername = ''..UserInfo.username..''
 else
 UserInfousername = 'Y88F8'
 end
-return merolua.send(msg.chat_id, msg.id, " ["..UserInfo.first_name.."](https://t.me/"..(UserInfousername or "Y88F8")..")\nكتمتك لانك مو حاط شعار لقروب باسمك ","md",true)
+send(msg.chat_id, msg.id, " ["..UserInfo.first_name.."](https://t.me/"..(UserInfousername or "Y88F8")..")\nكتمتك لانك مو حاط شعار لقروب باسمك ","md",true)
 else 
-Redis:incrby(TheFRADM.."Bots:ProNames:UserNum"..msg.chat_id..msg.return merolua.sender_id.user_id,1)
-return merolua.send(msg.chat_id, msg.id,  " ["..UserInfo.first_name.."](https://t.me/"..(UserInfousername or "Y88F8")..")\n⇜ ضع الشعار ( `"..Redis:get(TheFRADM.."Bots:ProNames:Txt"..msg.chat_id).."` ) بجانب اسمك\n⇜ عدد المحاولات المتبقيه لديك ↫ "..(tonumber(ProNamesTxt) - tonumber(UserNum)).."","md",true)
+Redis:incrby(TheFRADM.."Bots:ProNames:UserNum"..msg.chat_id..msg.sender_id.user_id,1)
+send(msg.chat_id, msg.id,  " ["..UserInfo.first_name.."](https://t.me/"..(UserInfousername or "Y88F8")..")\n⇜ ضع الشعار ( `"..Redis:get(TheFRADM.."Bots:ProNames:Txt"..msg.chat_id).."` ) بجانب اسمك\n⇜ عدد المحاولات المتبقيه لديك ↫ "..(tonumber(ProNamesTxt) - tonumber(UserNum)).."","md",true)
 end
 end
 end
@@ -6981,9 +6981,9 @@ return merolua.send(msg_chat_id,msg_id,
 '',"md",true) 
 end
 if text == "ارفعني مالك" then
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id)
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id)
 if (StatusMember.status.Merotele == "chatMemberStatusCreator") then
-Redis:sadd(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id,msg.return merolua.sender_id.user_id) 
+Redis:sadd(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id,msg.sender_id.user_id) 
 return merolua.send(msg_chat_id,msg_id,'\n⇜ انت مالك القروب تم ترقيتك ',"md",true)  
 elseif (StatusMember.status.Merotele == "chatMemberStatusAdministrator") then
 if StatusMember.status.can_change_info == true and
@@ -6992,7 +6992,7 @@ StatusMember.status.can_invite_users == true and
 StatusMember.status.can_pin_messages == true and
 StatusMember.status.can_promote_members == true and
 StatusMember.status.can_restrict_members == true then
-Redis:sadd(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id,msg.return merolua.sender_id.user_id) 
+Redis:sadd(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id,msg.sender_id.user_id) 
 return merolua.send(msg_chat_id,msg_id,'\n⇜ ابشر رفعتك مالك ',"md",true)  
 else
 return merolua.send(msg_chat_id,msg_id,'\n⇜ لا تمتلك صلاحيات ',"md",true)  
@@ -7017,14 +7017,14 @@ num = tonumber(Redis:get(TheFRADM .. "NUM_CH_MAX" .. msg.chat_id)) or 500
 chars = utf8.len(spam)
 if chars > num then
 lock_del(msg, "⇜ ممنوع سبام الاحرف")
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id) 
+local UserInfo = bot.getUser(msg.sender_id.user_id) 
 return merolua.send(msg.chat_id,msg.id,"( "..UserInfo.first_name.." )\n⇜ عدد الاحرف المسموحة : "..num.."\n✧","md")
 end
 end
-Redis:incr(TheFRADM..'FRADM:Num:Message:User'..msg.chat_id..':'..msg.return merolua.sender_id.user_id)
-local GetMsg = Redis:incr(TheFRADM..'FRADM:Num:Message:Usertrand'..msg.chat_id..':'..msg.return merolua.sender_id.user_id) or 1
-Redis:hset(TheFRADM..':GroupUserCountMsgg:'..msg.chat_id,msg.return merolua.sender_id.user_id,GetMsg)
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id) 
+Redis:incr(TheFRADM..'FRADM:Num:Message:User'..msg.chat_id..':'..msg.sender_id.user_id)
+local GetMsg = Redis:incr(TheFRADM..'FRADM:Num:Message:Usertrand'..msg.chat_id..':'..msg.sender_id.user_id) or 1
+Redis:hset(TheFRADM..':GroupUserCountMsgg:'..msg.chat_id,msg.sender_id.user_id,GetMsg)
+local UserInfo = bot.getUser(msg.sender_id.user_id) 
 if UserInfo.first_name then
 NameLUser = UserInfo.first_name or ''
 else
@@ -7033,10 +7033,10 @@ end
 NameLUser = NameLUser
 NameLUser = NameLUser:gsub("]","")
 NameLUser = NameLUser:gsub("[[]","")
-Redis:hset(TheFRADM..':GroupNameUser:'..msg.chat_id,msg.return merolua.sender_id.user_id,NameLUser)
+Redis:hset(TheFRADM..':GroupNameUser:'..msg.chat_id,msg.sender_id.user_id,NameLUser)
 end
 if text == "ترند" or text == "المتفاعلين" then
-Info_User = bot.getUser(msg.return merolua.sender_id.user_id) 
+Info_User = bot.getUser(msg.sender_id.user_id) 
 if Info_User.type.Merotele == "userTypeRegular" then
 GroupAllRtba = Redis:hgetall(TheFRADM..':GroupUserCountMsgg:'..msg.chat_id)
 GetAllNames = Redis:hgetall(TheFRADM..':GroupNameUser:'..msg.chat_id)
@@ -7132,10 +7132,10 @@ idPhoto = data.content.photo.sizes[3].photo.remote.id
 end
 local File = json:decode(https.request('https://api.telegram.org/bot' .. Token .. '/getfile?file_id='..idPhoto) ) 
 local Name_File = download('https://api.telegram.org/file/bot'..Token..'/'..File.result.file_path, './'..msg.id..'.webp') 
-return merolua.sendSticker(msg.chat_id, msg.id, Name_File)
+bot.sendSticker(msg.chat_id, msg.id, Name_File)
 os.execute('rm -rf '..Name_File) 
 else
-return merolua.send(msg_chat_id,msg_id,'⇜ هذه ليست صوره')
+send(msg_chat_id,msg_id,'⇜ هذه ليست صوره')
 end
 end
 if text == 'صوره' and tonumber(msg.reply_to_message_id) > 0 and not Redis:get(TheFRADM..'kadmeat'..msg.chat_id) then
@@ -7151,10 +7151,10 @@ local data = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
 if data.content.sticker then    
 local File = json:decode(https.request('https://api.telegram.org/bot' .. Token .. '/getfile?file_id='..data.content.sticker.sticker.remote.id) ) 
 local Name_File = download('https://api.telegram.org/file/bot'..Token..'/'..File.result.file_path, './'..msg.id..'.jpg') 
-return merolua.sendPhoto(msg.chat_id, msg.id, Name_File,'')
+bot.sendPhoto(msg.chat_id, msg.id, Name_File,'')
 os.execute('rm -rf '..Name_File) 
 else
-return merolua.send(msg_chat_id,msg_id,'⇜ هذا ليس ملصق')
+send(msg_chat_id,msg_id,'⇜ هذا ليس ملصق')
 end
 end
 if text == 'بصمه' and tonumber(msg.reply_to_message_id) > 0 and not Redis:get(TheFRADM..'kadmeat'..msg.chat_id)   then
@@ -7170,10 +7170,10 @@ local data = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
 if data.content.audio then    
 local File = json:decode(https.request('https://api.telegram.org/bot' .. Token .. '/getfile?file_id='..data.content.audio.audio.remote.id) ) 
 local Name_File = download('https://api.telegram.org/file/bot'..Token..'/'..File.result.file_path, './'..msg.id..'.ogg') 
-return merolua.sendVoiceNote(msg.chat_id, msg.id, Name_File, '', 'md')
+bot.sendVoiceNote(msg.chat_id, msg.id, Name_File, '', 'md')
 os.execute('rm -rf '..Name_File) 
 else
-return merolua.send(msg_chat_id,msg_id,'⇜ هذا ليس ملف صوتي')
+send(msg_chat_id,msg_id,'⇜ هذا ليس ملف صوتي')
 end
 end
 if text == 'صوت' and tonumber(msg.reply_to_message_id) > 0 and not Redis:get(TheFRADM..'kadmeat'..msg.chat_id)   then
@@ -7189,10 +7189,10 @@ local data = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
 if data.content.voice_note then
 local File = json:decode(https.request('https://api.telegram.org/bot' .. Token .. '/getfile?file_id='..data.content.voice_note.voice.remote.id) ) 
 local Name_File = download('https://api.telegram.org/file/bot'..Token..'/'..File.result.file_path, msg.id..'.mp3') 
-return merolua.sendAudio(msg.chat_id, msg.id, Name_File, '', "md") 
+bot.sendAudio(msg.chat_id, msg.id, Name_File, '', "md") 
 os.execute('rm -rf '..Name_File) 
 else
-return merolua.send(msg_chat_id,msg_id,'⇜ هذا ليس بصمه')
+send(msg_chat_id,msg_id,'⇜ هذا ليس بصمه')
 end
 end
 if text == 'mp3' and tonumber(msg.reply_to_message_id) > 0 and not Redis:get(TheFRADM..'kadmeat'..msg.chat_id)   then
@@ -7208,10 +7208,10 @@ local data = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
 if data.content.video then
 local File = json:decode(https.request('https://api.telegram.org/bot' .. Token .. '/getfile?file_id='..data.content.video.video.remote.id) ) 
 local Name_File = download('https://api.telegram.org/file/bot'..Token..'/'..File.result.file_path, msg.id..'.mp3') 
-return merolua.sendAudio(msg.chat_id, msg.id, Name_File, '', "md") 
+return bot.sendAudio(msg.chat_id, msg.id, Name_File, '', "md") 
 --os.execute('rm -rf '..Name_File) 
 else
-return merolua.send(msg_chat_id,msg_id,'⇜ هذا ليس فيديو')
+send(msg_chat_id,msg_id,'⇜ هذا ليس فيديو')
 end
 end
 if text == 'متحركه' and tonumber(msg.reply_to_message_id) > 0 and not Redis:get(TheFRADM..'kadmeat'..msg.chat_id)   then
@@ -7227,10 +7227,10 @@ local data = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
 if data.content.video then
 local File = json:decode(https.request('https://api.telegram.org/bot' .. Token .. '/getfile?file_id='..data.content.video.video.remote.id) ) 
 local Name_File = download('https://api.telegram.org/file/bot'..Token..'/'..File.result.file_path, msg.id..'.gif.mp4') 
-return merolua.sendAnimation(msg.chat_id,msg.id, Name_File, '', 'md')
+bot.sendAnimation(msg.chat_id,msg.id, Name_File, '', 'md')
 --os.execute('rm -rf '..Name_File) 
 else
-return merolua.send(msg_chat_id,msg_id,'⇜ هذا ليس فيديو')
+send(msg_chat_id,msg_id,'⇜ هذا ليس فيديو')
 end
 end
 
@@ -7238,7 +7238,7 @@ if text and text:match("^انطق (.*)$") and not Redis:get(TheFRADM..'intg'..ms
 Text = text:match("^انطق (.*)$") 
 msg_id = msg.id/2097152/0.5  
 https.request("https://api.telegram.org/bot"..Token.. 
-"/return merolua.sendaudio?chat_id="..msg.chat_id.."&caption=الكلمة ".. 
+"/sendaudio?chat_id="..msg.chat_id.."&caption=الكلمة ".. 
 URL.escape(Text).."&audio=http://".. 
 URL.escape('translate.google.com/translate_tts?q='..Text.. 
 '&tl=ar&client=duncan3dc-speaker').. 
@@ -7247,7 +7247,7 @@ URL.escape('translate.google.com/translate_tts?q='..Text..
 end
 -------
 if text == 'الاصدار' then
-return merolua.send(msg_chat_id,msg_id,'⇜ Source Mira 64 : 8.4.9',"md",true)  
+send(msg_chat_id,msg_id,'⇜ Source Mira 64 : 8.4.9',"md",true)  
 end
 if text == 'مسح صوت' then
 if ChannelJoinch(msg) == false then
@@ -7261,7 +7261,7 @@ end
 if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(6)..' ) ',"md",true)  
 end
-Redis:set(TheFRADM.."FRADM:Add:audio:Games"..msg.return merolua.sender_id.user_id..":"..msg.chat_id,'startdel')
+Redis:set(TheFRADM.."FRADM:Add:audio:Games"..msg.sender_id.user_id..":"..msg.chat_id,'startdel')
 return merolua.send(msg_chat_id,msg_id,'⇜ ارسل اسم الصوت',"md")
 end
 if text== 'اضف صوت' then
@@ -7276,7 +7276,7 @@ end
 if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(6)..' ) ',"md",true)  
 end
-Redis:set(TheFRADM.."FRADM:Add:audio:Games"..msg.return merolua.sender_id.user_id..":"..msg.chat_id,'start')
+Redis:set(TheFRADM.."FRADM:Add:audio:Games"..msg.sender_id.user_id..":"..msg.chat_id,'start')
 return merolua.send(msg_chat_id,msg_id, '⇜ ارسل اسم الصوت الان ...',"md")
 end
 if text== ("الصوتيات") then
@@ -7290,14 +7290,14 @@ return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في ق�
 end
 local list = Redis:smembers(TheFRADM.."FRADM:text:Games:Bot"..msg.chat_id)
 if #list == 0 then
-return merolua.send(msg_chat_id,msg_id, "⇜ لا يوجد صوتيات")
+send(msg_chat_id,msg_id, "⇜ لا يوجد صوتيات")
 return false
 end
 message = '⇜ قائمه الصوتيات :\n     للتشغيل اختر اسم من الاتي:\nـــــــــــــــــــــــــــــــــــــــــــــــــــــــ\n'
 for k,v in pairs(list) do
 message = message..""..k.."- ("..v..")\n"
 end
-return merolua.send(msg_chat_id,msg_id,message)
+send(msg_chat_id,msg_id,message)
 end
 if text== ("مسح الصوتيات") then
 if ChannelJoinch(msg) == false then
@@ -7313,14 +7313,14 @@ return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Cont
 end
 local list = Redis:smembers(TheFRADM.."FRADM:text:Games:Bot"..msg.chat_id)
 if #list == 0 then
-return merolua.send(msg_chat_id,msg_id, "⇜ لا يوجد صوتيات ")
+send(msg_chat_id,msg_id, "⇜ لا يوجد صوتيات ")
 return false
 end
 for k,v in pairs(list) do
 Redis:srem(TheFRADM.."FRADM:text:Games:Bot"..msg.chat_id,v)
 Redis:del(TheFRADM.."FRADM:audio:Games"..msg.chat_id..v)
 end
-return merolua.send(msg_chat_id,msg_id, "⇜ تم مسح جميع الصوتيات")
+send(msg_chat_id,msg_id, "⇜ تم مسح جميع الصوتيات")
 end
 if text == 'مسح صوت عام' or text == "مسح الصوت عام" then
 if ChannelJoinch(msg) == false then
@@ -7334,8 +7334,8 @@ end
 if not msg.DevelopersQ then 
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(2)..' ) ',"md",true)  
 end
-Redis:set(TheFRADM.."FRADM:All:Add:audio:Games"..msg.return merolua.sender_id.user_id..":"..msg.chat_id,'startdel')
-return merolua.send(msg_chat_id,msg_id, '⇜ ارسل اسم الصوت',"md")
+Redis:set(TheFRADM.."FRADM:All:Add:audio:Games"..msg.sender_id.user_id..":"..msg.chat_id,'startdel')
+send(msg_chat_id,msg_id, '⇜ ارسل اسم الصوت',"md")
 end
 if text== 'اضف صوت عام' then
 if ChannelJoinch(msg) == false then
@@ -7349,8 +7349,8 @@ end
 if not msg.DevelopersQ then 
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(2)..' ) ',"md",true)  
 end
-Redis:set(TheFRADM.."FRADM:All:Add:audio:Games"..msg.return merolua.sender_id.user_id..":"..msg.chat_id,'start')
-return merolua.send(msg_chat_id,msg_id, '⇜ ارسل اسم الصوت الان ...',"md")
+Redis:set(TheFRADM.."FRADM:All:Add:audio:Games"..msg.sender_id.user_id..":"..msg.chat_id,'start')
+send(msg_chat_id,msg_id, '⇜ ارسل اسم الصوت الان ...',"md")
 end
 if text== ("الصوتيات العامه") or text== ("الصوت عام") or text== ("الاغاني") then
 if ChannelJoinch(msg) == false then
@@ -7363,14 +7363,14 @@ return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في ق�
 end
 local list = Redis:smembers(TheFRADM.."FRADM:All:text:Games:Bot")
 if #list == 0 then
-return merolua.send(msg_chat_id,msg_id, "⇜ لا يوجد صوتيات عامه")
+send(msg_chat_id,msg_id, "⇜ لا يوجد صوتيات عامه")
 return false
 end
 message = '⇜ قائمه الصوتيات العامه:\n     للتشغيل اختر اسم من الاتي:\nـــــــــــــــــــــــــــــــــــــــــــــــــــــــ\n'
 for k,v in pairs(list) do
 message = message..""..k.."- ("..v..")\n"
 end
-return merolua.send(msg_chat_id,msg_id,message)
+send(msg_chat_id,msg_id,message)
 end
 if text== ("مسح الصوتيات العامه") or text== ("مسح الصوت عام") then
 if ChannelJoinch(msg) == false then
@@ -7386,14 +7386,14 @@ return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Cont
 end
 local list = Redis:smembers(TheFRADM.."FRADM:All:text:Games:Bot")
 if #list == 0 then
-return merolua.send(msg_chat_id,msg_id, "⇜ لا يوجد صوتيات")
+send(msg_chat_id,msg_id, "⇜ لا يوجد صوتيات")
 return false
 end
 for k,v in pairs(list) do
 Redis:srem(TheFRADM.."FRADM:All:text:Games:Bot",v)
 Redis:del(TheFRADM.."FRADM:All:audio:Games"..v)
 end
-return merolua.send(msg_chat_id,msg_id, "⇜ تم مسح جميع الصوتيات")
+send(msg_chat_id,msg_id, "⇜ تم مسح جميع الصوتيات")
 end
 if text and text:match('^كتم عام @(%S+)$') then
 local UserName = text:match('^كتم عام @(%S+)$')
@@ -7448,21 +7448,21 @@ if not msg.DevelopersQ then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(2)..' ) ',"md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-if Controllerbanall(msg_chat_id,Message_Reply.return merolua.sender_id.user_id) == true then 
-return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر على ( "..Controller(msg_chat_id,Message_Reply.return merolua.sender_id.user_id).." ) ","md",true)  
+if Controllerbanall(msg_chat_id,Message_Reply.sender_id.user_id) == true then 
+return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر على ( "..Controller(msg_chat_id,Message_Reply.sender_id.user_id).." ) ","md",true)  
 end
-if Redis:sismember(TheFRADM.."FRADM:KtmAll:Groups",Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id," ⇜ تم كتمه عام مسبقاًً ").Reply,"md",true)  
+if Redis:sismember(TheFRADM.."FRADM:KtmAll:Groups",Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id," ⇜ تم كتمه عام مسبقاًً ").Reply,"md",true)  
 else
-Redis:sadd(TheFRADM.."FRADM:KtmAll:Groups",Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id," ⇜ تم كتمه عام ").Reply,"md",true)  
+Redis:sadd(TheFRADM.."FRADM:KtmAll:Groups",Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id," ⇜ تم كتمه عام ").Reply,"md",true)  
 end
 end
 if text == ('الغاء كتم عام') and msg.reply_to_message_id ~= 0 then
@@ -7470,19 +7470,19 @@ if not msg.DevelopersQ then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(2)..' ) ',"md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-if not Redis:sismember(TheFRADM.."FRADM:KtmAll:Groups",Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id," ⇜ تم الغاء كتمه عام مسبقاًً ").Reply,"md",true)  
+if not Redis:sismember(TheFRADM.."FRADM:KtmAll:Groups",Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id," ⇜ تم الغاء كتمه عام مسبقاًً ").Reply,"md",true)  
 else
-Redis:srem(TheFRADM.."FRADM:KtmAll:Groups",Message_Reply.return merolua.sender_id.user_id) 
-bot.setChatMemberStatus(msg.chat_id,Message_Reply.return merolua.sender_id.user_id,'restricted',{1,1,1,1,1,1,1,1,1})
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id," ⇜ تم الغاء كتمه عام  ").Reply,"md",true)  
+Redis:srem(TheFRADM.."FRADM:KtmAll:Groups",Message_Reply.sender_id.user_id) 
+bot.setChatMemberStatus(msg.chat_id,Message_Reply.sender_id.user_id,'restricted',{1,1,1,1,1,1,1,1,1})
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id," ⇜ تم الغاء كتمه عام  ").Reply,"md",true)  
 end
 end
 if text and text:match('^كتم عام (%d+)$') then
@@ -7554,14 +7554,14 @@ end
 end
 local reply_markup = bot.replyMarkup{
 type = 'inline',
-data = {{{text = 'مسح المكتومين عام', data = msg.return merolua.sender_id.user_id..'/KtmAll'},},}}
+data = {{{text = 'مسح المكتومين عام', data = msg.sender_id.user_id..'/KtmAll'},},}}
 return merolua.send(msg_chat_id, msg_id, ListMembers, 'md', false, false, false, false, reply_markup)
 end
 if text and text:match('^رفع Dev @(%S+)$') then
 local UserName = text:match('^رفع Dev @(%S+)$')
-if tonumber(msg.return merolua.sender_id.user_id) == tonumber(Sudo_Id) then
+if tonumber(msg.sender_id.user_id) == tonumber(Sudo_Id) then
 YouCan = true
-elseif tonumber(msg.return merolua.sender_id.user_id) == tonumber(5117901887) then
+elseif tonumber(msg.sender_id.user_id) == tonumber(5117901887) then
 YouCan = true
 else
 YouCan = false
@@ -7588,9 +7588,9 @@ end
 end
 if text and text:match('^تنزيل Dev @(%S+)$') then
 local UserName = text:match('^تنزيل Dev @(%S+)$')
-if tonumber(msg.return merolua.sender_id.user_id) == tonumber(Sudo_Id) then
+if tonumber(msg.sender_id.user_id) == tonumber(Sudo_Id) then
 YouCan = true
-elseif tonumber(msg.return merolua.sender_id.user_id) == tonumber(5117901887) then
+elseif tonumber(msg.sender_id.user_id) == tonumber(5117901887) then
 YouCan = true
 else
 YouCan = false
@@ -7616,9 +7616,9 @@ return merolua.send(msg_chat_id,msg_id,Reply_Status(UserId_Info.id," ⇜ ابش�
 end
 end
 if text == ('رفع Dev') and msg.reply_to_message_id ~= 0 then
-if tonumber(msg.return merolua.sender_id.user_id) == tonumber(Sudo_Id) then
+if tonumber(msg.sender_id.user_id) == tonumber(Sudo_Id) then
 YouCan = true
-elseif tonumber(msg.return merolua.sender_id.user_id) == tonumber(5117901887) then
+elseif tonumber(msg.sender_id.user_id) == tonumber(5117901887) then
 YouCan = true
 else
 YouCan = false
@@ -7627,24 +7627,24 @@ if YouCan == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( المطور الاساسي ) ',"md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-if Redis:sismember(TheFRADM.."FRADM:ControlAll:Groups",Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id," ⇜ هو من قبل المطـور الاساسي² ").Reply,"md",true)  
+if Redis:sismember(TheFRADM.."FRADM:ControlAll:Groups",Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id," ⇜ هو من قبل المطـور الاساسي² ").Reply,"md",true)  
 else
-Redis:sadd(TheFRADM.."FRADM:ControlAll:Groups",Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id," ⇜ ابشر رفعته المطـور الاساسي² ").Reply,"md",true)
+Redis:sadd(TheFRADM.."FRADM:ControlAll:Groups",Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id," ⇜ ابشر رفعته المطـور الاساسي² ").Reply,"md",true)
 end
 end
 if text == ('تنزيل Dev') and msg.reply_to_message_id ~= 0 then
-if tonumber(msg.return merolua.sender_id.user_id) == tonumber(Sudo_Id) then
+if tonumber(msg.sender_id.user_id) == tonumber(Sudo_Id) then
 YouCan = true
-elseif tonumber(msg.return merolua.sender_id.user_id) == tonumber(5117901887) then
+elseif tonumber(msg.sender_id.user_id) == tonumber(5117901887) then
 YouCan = true
 else
 YouCan = false
@@ -7653,25 +7653,25 @@ if YouCan == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( المطور الاساسي ) ',"md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-if not Redis:sismember(TheFRADM.."FRADM:ControlAll:Groups",Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id," ⇜ هو من قبل مو المطـور الاساسي² ").Reply,"md",true)  
+if not Redis:sismember(TheFRADM.."FRADM:ControlAll:Groups",Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id," ⇜ هو من قبل مو المطـور الاساسي² ").Reply,"md",true)  
 else
-Redis:srem(TheFRADM.."FRADM:ControlAll:Groups",Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id," ⇜ ابشر نزلته من المطـور الاساسي²").Reply,"md",true)  
+Redis:srem(TheFRADM.."FRADM:ControlAll:Groups",Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id," ⇜ ابشر نزلته من المطـور الاساسي²").Reply,"md",true)  
 end
 end
 if text and text:match('^رفع Dev (%d+)$') then
 local UserId = text:match('^رفع Dev (%d+)$')
-if tonumber(msg.return merolua.sender_id.user_id) == tonumber(Sudo_Id) then
+if tonumber(msg.sender_id.user_id) == tonumber(Sudo_Id) then
 YouCan = true
-elseif tonumber(msg.return merolua.sender_id.user_id) == tonumber(5117901887) then
+elseif tonumber(msg.sender_id.user_id) == tonumber(5117901887) then
 YouCan = true
 else
 YouCan = false
@@ -7692,9 +7692,9 @@ end
 end
 if text and text:match('^تنزيل Dev (%d+)$') then
 local UserId = text:match('^تنزيل Dev (%d+)$')
-if tonumber(msg.return merolua.sender_id.user_id) == tonumber(Sudo_Id) then
+if tonumber(msg.sender_id.user_id) == tonumber(Sudo_Id) then
 YouCan = true
-elseif tonumber(msg.return merolua.sender_id.user_id) == tonumber(5117901887) then
+elseif tonumber(msg.sender_id.user_id) == tonumber(5117901887) then
 YouCan = true
 else
 YouCan = false
@@ -7714,9 +7714,9 @@ return merolua.send(msg_chat_id,msg_id,Reply_Status(UserId," ⇜ ابشر نزل
 end
 end
 if text == 'مسح قائمه Dev' then
-if tonumber(msg.return merolua.sender_id.user_id) == tonumber(Sudo_Id) then
+if tonumber(msg.sender_id.user_id) == tonumber(Sudo_Id) then
 YouCan = true
-elseif tonumber(msg.return merolua.sender_id.user_id) == tonumber(5117901887) then
+elseif tonumber(msg.sender_id.user_id) == tonumber(5117901887) then
 YouCan = true
 else
 YouCan = false
@@ -7732,9 +7732,9 @@ Redis:del(TheFRADM.."FRADM:ControlAll:Groups")
 return merolua.send(msg_chat_id,msg_id," ⇜ ابشر مسحت ( "..#Info_Members.." ) من المطـور الاساسي² ","md",true)
 end
 if text == 'قائمه Dev' then
-if tonumber(msg.return merolua.sender_id.user_id) == tonumber(Sudo_Id) then
+if tonumber(msg.sender_id.user_id) == tonumber(Sudo_Id) then
 YouCan = true
-elseif tonumber(msg.return merolua.sender_id.user_id) == tonumber(5117901887) then
+elseif tonumber(msg.sender_id.user_id) == tonumber(5117901887) then
 YouCan = true
 else
 YouCan = false
@@ -7758,13 +7758,13 @@ end
 return merolua.send(msg_chat_id, msg_id, ListMembers, 'md', true)
 end
 if text == 'نادي المطور' or text == 'بدي مساعدة' or text == 'بدي مساعده' then  
-return merolua.send(msg_chat_id,msg_id,"⇜ تم إرسال طلبك للمطور سيتم الرد عليك قريباً .")
+send(msg_chat_id,msg_id,"⇜ تم إرسال طلبك للمطور سيتم الرد عليك قريباً .")
 if not Redis:get(TheFRADM.."Status:tagdev") then
 return false
 end
 local Get_Chat = bot.getChat(msg_chat_id)
 local Info_Chats = bot.getSupergroupFullInfo(msg_chat_id)
-local bains = bot.getUser(msg.return merolua.sender_id.user_id)
+local bains = bot.getUser(msg.sender_id.user_id)
 if bains.first_name then
 klajq = '['..bains.first_name..'](tg://user?id='..bains.id..')'
 else
@@ -7787,7 +7787,7 @@ data = {
 },
 }
 }
-return merolua.send(Sudo_Id,0,'\n⇜ مرحباً عزيزي المطور \nشخص ما يحتاج مساعدتك\n━━━━━━━━\n⇜ اسمه : '..klajq..' \n⇜ ايديه : '..msg.return merolua.sender_id.user_id..'\n⇜ يوزره : @'..basgk..'\n⇜ الوقت : '..os.date("%I:%M %p")..'\n⇜ التاريخ : '..os.date("%Y/%m/%d")..'',"md",false, false, false, false, reply_markup)
+send(Sudo_Id,0,'\n⇜ مرحباً عزيزي المطور \nشخص ما يحتاج مساعدتك\n━━━━━━━━\n⇜ اسمه : '..klajq..' \n⇜ ايديه : '..msg.sender_id.user_id..'\n⇜ يوزره : @'..basgk..'\n⇜ الوقت : '..os.date("%I:%M %p")..'\n⇜ التاريخ : '..os.date("%Y/%m/%d")..'',"md",false, false, false, false, reply_markup)
 end
 if text == 'المطور' or text == 'مطور البوت' then
 local UserInfo = bot.getUser(Sudo_Id)
@@ -7809,9 +7809,9 @@ keyboardd.inline_keyboard = {
 },
 }
 local msg_id = msg.id/2097152/0.5 
-https.request("https://api.telegram.org/bot"..Token..'/return merolua.sendPhoto?chat_id='..msg_chat_id..'&caption='..URL.escape(TestText)..'&photo='..photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id..'&reply_to_message_id='..msg_id..'&parse_mode=markdown&disable_web_page_preview=true&reply_markup='..JSON.encode(keyboardd))
+https.request("https://api.telegram.org/bot"..Token..'/sendPhoto?chat_id='..msg_chat_id..'&caption='..URL.escape(TestText)..'&photo='..photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id..'&reply_to_message_id='..msg_id..'&parse_mode=markdown&disable_web_page_preview=true&reply_markup='..JSON.encode(keyboardd))
 else
-return merolua.send(msg_chat_id,msg_id,"المطور 𖦹 "..(t).." ","md",true)  
+send(msg_chat_id,msg_id,"المطور 𖦹 "..(t).." ","md",true)  
 end
 end
 if text == "حذف رد متعدد" or text == "مسح رد متعدد" then 
@@ -7822,19 +7822,19 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'الغاء', data = msg.return merolua.sender_id.user_id..'/cancelamr'},
+{text = 'الغاء', data = msg.sender_id.user_id..'/cancelamr'},
 },
 }
 }
-return merolua.send(msg_chat_id, msg_id, '⇜ تمام عيني \n⇜ الحين ارسل الرد عشان امسحه \n✧', 'md', false, false, false, false, reply_markup)
-Redis:set(TheFRADM.."Set:array:rd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,"delrd")
+send(msg_chat_id, msg_id, '⇜ تمام عيني \n⇜ الحين ارسل الرد عشان امسحه \n✧', 'md', false, false, false, false, reply_markup)
+Redis:set(TheFRADM.."Set:array:rd"..msg.sender_id.user_id..":"..msg_chat_id,"delrd")
 return false 
 end
 if text then
 if  Redis:sismember(TheFRADM..'List:array'..msg_chat_id,text) then
 local list = Redis:smembers(TheFRADM.."Add:Rd:array:Text"..text..msg_chat_id)
 quschen = list[math.random(#list)]
-return merolua.send(msg_chat_id, msg_id,'['..quschen..']',"md",true)
+send(msg_chat_id, msg_id,'['..quschen..']',"md",true)
 end
 end
 if text == ("الردود المتعدده") then
@@ -7849,7 +7849,7 @@ end
 if #list == 0 then
 text = "  ⇜ لا يوجد ردود متعدده ياحلو"
 end
-return merolua.send(msg_chat_id, msg_id,'['..text..']',"md",true)
+send(msg_chat_id, msg_id,'['..text..']',"md",true)
 end
 if text == ("مسح الردود المتعدده") then   
 if not msg.Addictive then
@@ -7860,7 +7860,7 @@ for k,v in pairs(list) do
 Redis:del(TheFRADM.."Add:Rd:array:Text"..v..msg_chat_id)   
 Redis:del(TheFRADM.."List:array"..msg_chat_id)
 end
-return merolua.send(msg_chat_id, msg_id,"⇜ ابشر مسحت الردود المتعدده\n✧","md",true)
+send(msg_chat_id, msg_id,"⇜ ابشر مسحت الردود المتعدده\n✧","md",true)
 end
 if text == "اضف رد متعدد" then   
 if not msg.Addictive then
@@ -7870,27 +7870,27 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'الغاء', data = msg.return merolua.sender_id.user_id..'/cancelamr'},
+{text = 'الغاء', data = msg.sender_id.user_id..'/cancelamr'},
 },
 }
 }
-return merolua.send(msg_chat_id, msg_id, '⇜ حلو ، الحين ارسل الكلمة اللي تبيها', 'md', false, false, false, false, reply_markup)
-Redis:set(TheFRADM.."Set:array"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,true)
+send(msg_chat_id, msg_id, '⇜ حلو ، الحين ارسل الكلمة اللي تبيها', 'md', false, false, false, false, reply_markup)
+Redis:set(TheFRADM.."Set:array"..msg.sender_id.user_id..":"..msg_chat_id,true)
 return false
 end
 ----------------------
 if text and text:match("^(.*)$") then
-if Redis:get(TheFRADM.."Set:arrayy"..msg.return merolua.sender_id.user_id..":"..msg.chat_id) == 'true' then
-Redis:set(TheFRADM..'Set:arrayy'..msg.return merolua.sender_id.user_id..':'..msg.chat_id,'true1')
-Redis:set(TheFRADM..'Text:arrayy'..msg.return merolua.sender_id.user_id, text)
+if Redis:get(TheFRADM.."Set:arrayy"..msg.sender_id.user_id..":"..msg.chat_id) == 'true' then
+Redis:set(TheFRADM..'Set:arrayy'..msg.sender_id.user_id..':'..msg.chat_id,'true1')
+Redis:set(TheFRADM..'Text:arrayy'..msg.sender_id.user_id, text)
 Redis:del(TheFRADM.."Add:Rd:array:Textt"..text)   
 Redis:sadd(TheFRADM..'List:arrayy', text)
-return merolua.send(msg.chat_id,msg.id,"⇜ ارسل الكلمه الرد الذي تريد اضافتها","md",true)
+send(msg.chat_id,msg.id,"⇜ ارسل الكلمه الرد الذي تريد اضافتها","md",true)
 return false
 end
 end
-if text and Redis:get(TheFRADM..'Set:arrayy'..msg.return merolua.sender_id.user_id..':'..msg.chat_id) == 'true1' then
-local test = Redis:get(TheFRADM..'Text:arrayy'..msg.return merolua.sender_id.user_id)
+if text and Redis:get(TheFRADM..'Set:arrayy'..msg.sender_id.user_id..':'..msg.chat_id) == 'true1' then
+local test = Redis:get(TheFRADM..'Text:arrayy'..msg.sender_id.user_id)
 text = text:gsub('"','') 
 text = text:gsub("'",'') 
 text = text:gsub('`','') 
@@ -7898,7 +7898,7 @@ text = text:gsub('*','')
 Redis:sadd(TheFRADM.."Add:Rd:array:Textt"..test,text)  
 reply_ad = bot.replyMarkup{
 type = 'inline',data = {
-{{text="انهاء الاضافة",data="EndAddarrayy"..msg.return merolua.sender_id.user_id}},
+{{text="انهاء الاضافة",data="EndAddarrayy"..msg.sender_id.user_id}},
 }
 }
 return merolua.send(msg.chat_id,msg.id,' ⇜ تم حفظ الرد يمكنك ارسال رد اخر او الانهاء من خلال الزر بالاسفل',"md",true, false, false, false, reply_ad)
@@ -7908,8 +7908,8 @@ if text == "مسح رد من متعدد عام" then
 if not msg.DevelopersQ then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(2)..' ) ',"md",true)  
 end
-Redis:set(TheFRADM.."Set:array:Ssdd"..msg.return merolua.sender_id.user_id..":"..msg.chat_id,"delrd")
-return merolua.send(msg.chat_id,msg.id,"⇜ ارسل كلمة الرد ","md",true)  
+Redis:set(TheFRADM.."Set:array:Ssdd"..msg.sender_id.user_id..":"..msg.chat_id,"delrd")
+send(msg.chat_id,msg.id,"⇜ ارسل كلمة الرد ","md",true)  
 return false
 end
 
@@ -7917,8 +7917,8 @@ if text == "مسح رد متعدد عام" then
 if not msg.DevelopersQ then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(2)..' ) ',"md",true)  
 end
-Redis:set(TheFRADM.."Set:array:rdd"..msg.return merolua.sender_id.user_id..":"..msg.chat_id,"delrd")
-return merolua.send(msg.chat_id,msg.id,"⇜ ارسل الان الكلمه لمسحها من الردود","md",true)  
+Redis:set(TheFRADM.."Set:array:rdd"..msg.sender_id.user_id..":"..msg.chat_id,"delrd")
+send(msg.chat_id,msg.id,"⇜ ارسل الان الكلمه لمسحها من الردود","md",true)  
 return false
 end
 if text == ("الردود المتعدده عام") then
@@ -7933,7 +7933,7 @@ end
 if #list == 0 then
 t = "⇜ لا يوجد ردود متعدده عام"
 end
-return merolua.send(msg.chat_id,msg.id,t,"md",true)  
+send(msg.chat_id,msg.id,t,"md",true)  
 end
 if text == ("مسح الردود المتعدده عام") then
 if not msg.DevelopersQ then
@@ -7944,14 +7944,14 @@ for k,v in pairs(list) do
 Redis:del(TheFRADM.."Add:Rd:array:Textt"..v)   
 Redis:del(TheFRADM..'List:arrayy')
 end
-return merolua.send(msg.chat_id,msg.id,"⇜ تم مسح الردود المتعدده عام","md",true)  
+send(msg.chat_id,msg.id,"⇜ تم مسح الردود المتعدده عام","md",true)  
 end
 if text == "اضف رد متعدد عام" then
 if not msg.DevelopersQ then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(2)..' ) ',"md",true)  
 end
-return merolua.send(msg.chat_id,msg.id,"⇜ ارسل الان الكلمه لاضافتها في الردود","md",true)
-Redis:set(TheFRADM.."Set:arrayy"..msg.return merolua.sender_id.user_id..":"..msg.chat_id,true)
+send(msg.chat_id,msg.id,"⇜ ارسل الان الكلمه لاضافتها في الردود","md",true)
+Redis:set(TheFRADM.."Set:arrayy"..msg.sender_id.user_id..":"..msg.chat_id,true)
 return false 
 end
 if text == 'السيرفر' then
@@ -7966,7 +7966,7 @@ end
 if not msg.ControllerBot then 
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(1)..' ) ',"md",true)  
 end
-return merolua.send(msg_chat_id,msg_id, io.popen([[
+send(msg_chat_id,msg_id, io.popen([[
 linux_version=`lsb_release -ds`
 memUsedPrc=`free -m | awk 'NR==2{printf "%sMB/%sMB {%.2f%}\n", $3,$2,$3*100/$2 }'`
 HardDisk=`df -lh | awk '{if ($6 == "/") { print $3"/"$2" ~ {"$5"}" }}'`
@@ -7989,7 +7989,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 return merolua.send(msg_chat_id,msg_id,"⇜ انتا صاحب القروب","md",true) 
 elseif (StatusMember == "chatMemberStatusAdministrator") then
@@ -7998,7 +7998,7 @@ else
 return merolua.send(msg_chat_id,msg_id,"⇜ عضو فقط" ,"md",true) 
 end
 if StatusMember == "chatMemberStatusAdministrator" then 
-local GetMemberStatus = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.rights
+local GetMemberStatus = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.rights
 if GetMemberStatus.can_change_info then
 change_info = 'نعم' else change_info = 'لا'
 end
@@ -8031,7 +8031,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local StatusMember = bot.getChatMember(msg_chat_id,Message_Reply.return merolua.sender_id.user_id).status.Merotele
+local StatusMember = bot.getChatMember(msg_chat_id,Message_Reply.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 return merolua.send(msg_chat_id,msg_id,"⇜ صاحب القروب","md",true) 
 elseif (StatusMember == "chatMemberStatusAdministrator") then
@@ -8040,7 +8040,7 @@ else
 return merolua.send(msg_chat_id,msg_id,"⇜ عضو فقط" ,"md",true) 
 end
 if StatusMember == "chatMemberStatusAdministrator" then 
-local GetMemberStatus = bot.getChatMember(msg_chat_id,Message_Reply.return merolua.sender_id.user_id).status.rights
+local GetMemberStatus = bot.getChatMember(msg_chat_id,Message_Reply.sender_id.user_id).status.rights
 if GetMemberStatus.can_change_info then
 change_info = 'نعم' else change_info = 'لا'
 end
@@ -8149,7 +8149,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-TotalMsg = Redis:get(TheFRADM..'FRADM:Num:Message:User'..msg_chat_id..':'..Message_Reply.return merolua.sender_id.user_id) or 0
+TotalMsg = Redis:get(TheFRADM..'FRADM:Num:Message:User'..msg_chat_id..':'..Message_Reply.sender_id.user_id) or 0
 TotalMsgT = Total_message(TotalMsg) 
 return merolua.send(msg_chat_id,msg_id,"⇜ تفاعله : "..TotalMsgT, "md")
 end
@@ -8158,14 +8158,14 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'شباب', data = msg.return merolua.sender_id.user_id..'/bioold'},{text = 'بنات', data = msg.return merolua.sender_id.user_id..'/biobnt'},
+{text = 'شباب', data = msg.sender_id.user_id..'/bioold'},{text = 'بنات', data = msg.sender_id.user_id..'/biobnt'},
 },
 }
 }
 return merolua.send(msg_chat_id, msg_id, '⇜ اختر نوع البايو', 'md', false, false, false, false, reply_markup)
 end
 if text == 'معرفي' or text == 'يوزري' then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(msg.sender_id.user_id)
 if UserInfo.username then
 UserInfousername = '[@'..UserInfo.username..']'
 else
@@ -8174,11 +8174,11 @@ end
 return merolua.send(msg_chat_id,msg_id,'\n⇜ يوزرك : '..UserInfousername..' ', "md")
 end
 if text == 'ايديي' then
-return merolua.send(msg_chat_id,msg_id,""..msg.return merolua.sender_id.user_id.." ","md",true) 
+send(msg_chat_id,msg_id,""..msg.sender_id.user_id.." ","md",true) 
 return false
 end
 if text == 'اسمي' and not Redis:get(TheFRADM..'idnotmemname'..msg.chat_id)  then
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,'\n⇜ اسمك : '..FlterBio(UserInfo.first_name)..' ', "md")
 end
 if text and text:match('^الرتبه @(%S+)$') then
@@ -8198,7 +8198,7 @@ return merolua.send(msg_chat_id,msg_id,"⇜ الرتبه : "..RinkBot, "md")
 end
 if text == 'الرتبه' or text == 'رتبته' and msg.reply_to_message_id ~= 0 then
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local RinkBot = Controller(msg_chat_id,Message_Reply.return merolua.sender_id.user_id)
+local RinkBot = Controller(msg_chat_id,Message_Reply.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,"⇜ رتبته : "..RinkBot, "md")
 end
 if text == 'جهاته' and msg.reply_to_message_id ~= 0 then
@@ -8211,7 +8211,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-return merolua.send(msg_chat_id,msg_id,'⇜ عدد جهاته : '..(Redis:get(TheFRADM.."FRADM:Num:Add:Memp"..msg.chat_id..":"..Message_Reply.return merolua.sender_id.user_id) or 0)..' ',"md",true)  
+send(msg_chat_id,msg_id,'⇜ عدد جهاته : '..(Redis:get(TheFRADM.."FRADM:Num:Add:Memp"..msg.chat_id..":"..Message_Reply.sender_id.user_id) or 0)..' ',"md",true)  
 end
 if text and text:match('^جهاته @(%S+)$') then
 local UserName = text:match('^جهاته @(%S+)$') 
@@ -8225,11 +8225,11 @@ end
 if UserName and UserName:match('(%S+)[Bb][Oo][Tt]') then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً لا تستطيع استخدام معرف البوت ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,'⇜ عدد جهاته : '..(Redis:get(TheFRADM.."FRADM:Num:Add:Memp"..msg.chat_id..":"..UserId_Info.id) or 0)..' ',"md",true)  
+send(msg_chat_id,msg_id,'⇜ عدد جهاته : '..(Redis:get(TheFRADM.."FRADM:Num:Add:Memp"..msg.chat_id..":"..UserId_Info.id) or 0)..' ',"md",true)  
 end
 
 if text == 'بايو' and not Redis:get(TheFRADM..'idnotmembio'..msg.chat_id)  then
-return merolua.send(msg_chat_id, msg_id, '['..FlterBio(getbio(msg.return merolua.sender_id.user_id))..']', 'md')
+send(msg_chat_id, msg_id, '['..FlterBio(getbio(msg.sender_id.user_id))..']', 'md')
 end
 if text == "ايدي" or text == "id" or text == 'Id' or text == 'ID' or text == 'ا' or text == 'لونلي' and msg.reply_to_message_id == 0 then
 if ChannelJoinch(msg) == false then
@@ -8246,20 +8246,20 @@ end
 if not msg.Distinguished and Redis:get(TheFRADM..'idnotmem'..msg.chat_id)  then
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عذراً ايدي العضو معطل',"md")
 end
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local InfoUser = bot.getUserFullInfo(msg.return merolua.sender_id.user_id)
-local Bio = FlterBio(getbio(msg.return merolua.sender_id.user_id))
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local InfoUser = bot.getUserFullInfo(msg.sender_id.user_id)
+local Bio = FlterBio(getbio(msg.sender_id.user_id))
 if Redis:get(TheFRADM.."NSFW:"..msg.chat_id) then
 if not msg.ControllerBot then
 if not msg.TheBasicsQ then 
-local photo = bot.getUserProfilePhotos(msg.return merolua.sender_id.user_id)
+local photo = bot.getUserProfilePhotos(msg.sender_id.user_id)
 local TotalPhoto = photo.total_count or 0
 if photo.total_count > 0 then
 local thumb_id = photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id
 local api_ = request('http://161.35.201.62:8080/nsfw?token=' .. Token .. '&file_id='..thumb_id)
 local api = JSON.decode(api_)
 if api.result.is_nsfw == true then
-local ban = bot.getUser(msg.return merolua.sender_id.user_id)
+local ban = bot.getUser(msg.sender_id.user_id)
 if ban.first_name then
 news = ban.first_name
 else
@@ -8271,7 +8271,7 @@ end
 if GetInfoBot(msg).BanUser == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ البوت ليس لديه صلاحيه حظر المستخدمين ',"md",true)
 end
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 return merolua.send(msg_chat_id, msg_id , "「 "..news.." 」\n⇜ قام بارسال ايدي يحتوي على صورة اباحية\n⇜ تم تقييده ومسح رسالته\n✧")
 end
 end
@@ -8279,7 +8279,7 @@ end
 end
 end
 -----------
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id)
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id)
 if StatusMember.status.custom_title ~= "" then
 Lakb = StatusMember.status.custom_title
 else
@@ -8294,15 +8294,15 @@ Lakb = 'عضو'
 end
 -----------
 local nameuser = FlterBio(UserInfo.first_name)
-local photo = bot.getUserProfilePhotos(msg.return merolua.sender_id.user_id)
-local UserId = msg.return merolua.sender_id.user_id
+local photo = bot.getUserProfilePhotos(msg.sender_id.user_id)
+local UserId = msg.sender_id.user_id
 local RinkBot = msg.Name_Controller
-local TotalMsg = Redis:get(TheFRADM..'FRADM:Num:Message:User'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) or 0
+local TotalMsg = Redis:get(TheFRADM..'FRADM:Num:Message:User'..msg_chat_id..':'..msg.sender_id.user_id) or 0
 local TotalPhoto = photo.total_count or 0
-local TotalEdit = Redis:get(TheFRADM..'FRADM:Num:Message:Edit'..msg_chat_id..msg.return merolua.sender_id.user_id) or 0
+local TotalEdit = Redis:get(TheFRADM..'FRADM:Num:Message:Edit'..msg_chat_id..msg.sender_id.user_id) or 0
 local TotalMsgT = Total_message(TotalMsg) 
-local NumberGames = Redis:get(TheFRADM.."FRADM:Num:Add:Games"..msg.chat_id..msg.return merolua.sender_id.user_id) or 0
-local NumAdd = Redis:get(TheFRADM.."FRADM:Num:Add:Memp"..msg.chat_id..":"..msg.return merolua.sender_id.user_id) or 0
+local NumberGames = Redis:get(TheFRADM.."FRADM:Num:Add:Games"..msg.chat_id..msg.sender_id.user_id) or 0
+local NumAdd = Redis:get(TheFRADM.."FRADM:Num:Add:Memp"..msg.chat_id..":"..msg.sender_id.user_id) or 0
 local Texting = {'والله انك جبر خاطر وجبر قلب وجبر حياه.','جابك الله انت وأيديك على شكل جبر خاطر لقلبْي. ','أيديك هو جبر الخاطر الذي لطالما بحثتُ عنه !','أنت وأيديك جبّر خاطر لقلبِي. ','والله انك جبر خاطر وجبر قلب وجبر حياه.','أيديك هو جبر الخاطر الذي لطالما بحثتُ عنه !',' جبر لقلبي ',}
 local Description = Texting[math.random(#Texting)]
 if UserInfo.username then
@@ -8314,7 +8314,7 @@ Get_Is_Id = Redis:get(TheFRADM.."FRADM:Set:Id:Groups") or Redis:get(TheFRADM.."F
 if Redis:get(TheFRADM.."FRADM:Status:IdPhoto"..msg_chat_id) then
 if Get_Is_Id then
 local Get_Is_Id = Get_Is_Id:gsub('{الجهات}',NumAdd) 
-local Get_Is_Id = Get_Is_Id:gsub('{الايدي}',msg.return merolua.sender_id.user_id) 
+local Get_Is_Id = Get_Is_Id:gsub('{الايدي}',msg.sender_id.user_id) 
 local Get_Is_Id = Get_Is_Id:gsub('{اليوزر}',UserInfousername)
 local Get_Is_Id = Get_Is_Id:gsub('{الاسم}',UserInfo.first_name) 
 local Get_Is_Id = Get_Is_Id:gsub('{الرسائل}',TotalMsg) 
@@ -8338,7 +8338,7 @@ data = {
 },
 }
 }
-return merolua.sendAnimation(msg.chat_id, msg.id, Name_File,Get_Is_Id,"md", true, nil, nil, nil, nil, nil, nil, nil, nil, reply_markup)
+return bot.sendAnimation(msg.chat_id, msg.id, Name_File,Get_Is_Id,"md", true, nil, nil, nil, nil, nil, nil, nil, nil, reply_markup)
 else
 local reply_markup = bot.replyMarkup{
 type = 'inline',
@@ -8348,7 +8348,7 @@ data = {
 },
 }
 }
-return merolua.sendPhoto(msg.chat_id, msg.id, photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id,Get_Is_Id,"md", true, nil, nil, nil, nil, nil, nil, nil, nil, reply_markup)
+return bot.sendPhoto(msg.chat_id, msg.id, photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id,Get_Is_Id,"md", true, nil, nil, nil, nil, nil, nil, nil, nil, reply_markup)
 end
 else
 local reply_markup = bot.replyMarkup{
@@ -8359,7 +8359,7 @@ data = {
 },
 }
 }
-return merolua.sendText(msg_chat_id,msg_id,Get_Is_Id,"md",false, false, false, false, reply_markup)
+return bot.sendText(msg_chat_id,msg_id,Get_Is_Id,"md",false, false, false, false, reply_markup)
 end
 else
 if photo.total_count > 0 then
@@ -8375,7 +8375,7 @@ data = {
 },
 }
 }
-return merolua.sendAnimation(msg.chat_id, msg.id, Name_File,
+return bot.sendAnimation(msg.chat_id, msg.id, Name_File,
 '\n• 𝖭𝖺𝗆𝖾 𖦹 '..UserInfo.first_name..
 '\n• 𝖨𝖣 𖦹 '..UserId..
 '\n• 𝖴𝗌𝖾𝗋𝗇𝖺𝗆𝖾 𖦹 ['..UserInfousername..
@@ -8393,7 +8393,7 @@ data = {
 },
 }
 }
-return merolua.sendPhoto(msg.chat_id, msg.id, photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id,
+return bot.sendPhoto(msg.chat_id, msg.id, photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id,
 '\n• 𝖭𝖺𝗆𝖾 𖦹 '..UserInfo.first_name..
 '\n• 𝖨𝖣 𖦹 '..UserId..
 '\n• 𝖴𝗌𝖾𝗋𝗇𝖺𝗆𝖾 𖦹 ['..UserInfousername..
@@ -8412,7 +8412,7 @@ data = {
 },
 }
 }
-return merolua.sendText(msg.chat_id, msg.id,
+return bot.sendText(msg.chat_id, msg.id,
 '\n• 𝖭𝖺𝗆𝖾 𖦹 '..UserInfo.first_name..
 '\n• 𝖨𝖣 𖦹 '..UserId..
 '\n• 𝖴𝗌𝖾𝗋𝗇𝖺𝗆𝖾 𖦹 ['..UserInfousername..
@@ -8426,7 +8426,7 @@ end
 else
 if Get_Is_Id then
 local Get_Is_Id = Get_Is_Id:gsub('#AddMem',NumAdd) 
-local Get_Is_Id = Get_Is_Id:gsub('#id',msg.return merolua.sender_id.user_id) 
+local Get_Is_Id = Get_Is_Id:gsub('#id',msg.sender_id.user_id) 
 local Get_Is_Id = Get_Is_Id:gsub('#username',UserInfousername)
 local Get_Is_Id = Get_Is_Id:gsub('#name',UserInfo.first_name) 
 local Get_Is_Id = Get_Is_Id:gsub('#msgs',TotalMsg) 
@@ -8445,7 +8445,7 @@ data = {
 },
 }
 }
-return merolua.sendText(msg_chat_id,msg_id,'['..Get_Is_Id..']',"md",false, false, false, false, reply_markup)
+return bot.sendText(msg_chat_id,msg_id,'['..Get_Is_Id..']',"md",false, false, false, false, reply_markup)
 else
 local reply_markup = bot.replyMarkup{
 type = 'inline',
@@ -8455,7 +8455,7 @@ data = {
 },
 }
 }
-return merolua.sendText(msg.chat_id, msg.id,
+return bot.sendText(msg.chat_id, msg.id,
 '\n• 𝖭𝖺𝗆𝖾 𖦹 '..UserInfo.first_name..
 '\n• 𝖨𝖣 𖦹 '..UserId..
 '\n• 𝖴𝗌𝖾𝗋𝗇𝖺𝗆𝖾 𖦹 ['..UserInfousername..
@@ -8490,18 +8490,18 @@ else
 news = " لا يوجد اسم"
 end
 local reply_markup = bot.replyMarkup{type = 'inline',data = {
-{{text = 'صلاحيات الاشراف', data = msg.return merolua.sender_id.user_id..'/groupNumseteng//'..UserId_Info.id},},
-{{text = 'رفع وتنزيل', data = msg.return merolua.sender_id.user_id..'/rankup//'..UserId_Info.id},},
-{{text = 'كتم وطرد', data = msg.return merolua.sender_id.user_id..'/sting//'..UserId_Info.id},},
+{{text = 'صلاحيات الاشراف', data = msg.sender_id.user_id..'/groupNumseteng//'..UserId_Info.id},},
+{{text = 'رفع وتنزيل', data = msg.sender_id.user_id..'/rankup//'..UserId_Info.id},},
+{{text = 'كتم وطرد', data = msg.sender_id.user_id..'/sting//'..UserId_Info.id},},
 {{text = '- اخفاء الامر -', data ='/delAmr1'}}}}
-return merolua.sendText(msg.chat_id,msg.id,'- تستطيع التحكم في '..news..' من خلال الازرار',"md",false, false, false, false, reply_markup)
+return bot.sendText(msg.chat_id,msg.id,'- تستطيع التحكم في '..news..' من خلال الازرار',"md",false, false, false, false, reply_markup)
 end
 if text == 'تحكم' and msg.reply_to_message_id ~= 0 then
 if not msg.Addictive then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(7)..' ) ',"md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ لا تستطيع استخدام الامر على البوت","md",true)  
 end
@@ -8511,11 +8511,11 @@ else
 news = " لا يوجد اسم"
 end
 local reply_markup = bot.replyMarkup{type = 'inline',data = {
-{{text = 'صلاحيات الاشراف', data = msg.return merolua.sender_id.user_id..'/groupNumseteng//'..Message_Reply.return merolua.sender_id.user_id},},
-{{text = 'رفع وتنزيل', data = msg.return merolua.sender_id.user_id..'/rankup//'..Message_Reply.return merolua.sender_id.user_id},},
-{{text = 'كتم وطرد', data = msg.return merolua.sender_id.user_id..'/sting//'..Message_Reply.return merolua.sender_id.user_id},},
+{{text = 'صلاحيات الاشراف', data = msg.sender_id.user_id..'/groupNumseteng//'..Message_Reply.sender_id.user_id},},
+{{text = 'رفع وتنزيل', data = msg.sender_id.user_id..'/rankup//'..Message_Reply.sender_id.user_id},},
+{{text = 'كتم وطرد', data = msg.sender_id.user_id..'/sting//'..Message_Reply.sender_id.user_id},},
 {{text = '- اخفاء الامر -', data ='/delAmr1'}}}}
-return merolua.sendText(msg.chat_id,msg.id,'- تستطيع التحكم في '..news..' من خلال الازرار',"md",false, false, false, false, reply_markup)
+return bot.sendText(msg.chat_id,msg.id,'- تستطيع التحكم في '..news..' من خلال الازرار',"md",false, false, false, false, reply_markup)
 end
 -------------------------------------------------------------------------------------------
 
@@ -8524,9 +8524,9 @@ if text == "اهمس" or text == "همسة" or text == "همسه" and msg.reply_
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
 local anubis = math.random(1,9999999999999)
 Redis:set(TheFRADM.."hms:"..anubis.."chat_id", msg_chat_id)
-Redis:set(TheFRADM.."hms:"..anubis.."to", Message_Reply.return merolua.sender_id.user_id)
+Redis:set(TheFRADM.."hms:"..anubis.."to", Message_Reply.sender_id.user_id)
 Redis:set(TheFRADM.."hms:"..anubis.."msg_id",msg.reply_to_message_id)
-local ban = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local ban = bot.getUser(Message_Reply.sender_id.user_id)
 if ban.first_name then
 news = "["..ban.first_name.."](tg://user?id="..ban.id..")"
 else
@@ -8536,7 +8536,7 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'اضغط هنا', url = 't.me/'..UserBot..'?start=hms'..anubis..'from_id'..msg.return merolua.sender_id.user_id..''}, 
+{text = 'اضغط هنا', url = 't.me/'..UserBot..'?start=hms'..anubis..'from_id'..msg.sender_id.user_id..''}, 
 },
 }
 }
@@ -8570,21 +8570,21 @@ if text == "اضف رد انلاين" then
 if not msg.Addictive then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(7)..' ) ',"md",true)  
 end
-Redis:set(TheFRADM.."Set:Manager:rd:inline"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,true)
+Redis:set(TheFRADM.."Set:Manager:rd:inline"..msg.sender_id.user_id..":"..msg_chat_id,true)
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'الغاء', data = msg.return merolua.sender_id.user_id..'/cancelamr'},
+{text = 'الغاء', data = msg.sender_id.user_id..'/cancelamr'},
 },
 }
 }
 return merolua.send(msg_chat_id,msg_id,"⇜ حلو ، الحين ارسل الكلمة اللي تبيها ","md",false, false, false, false, reply_markup)
 end
-if text and text:match("^(.*)$") and tonumber(msg.return merolua.sender_id.user_id) ~= tonumber(TheFRADM) then
-if Redis:get(TheFRADM.."Set:Manager:rd:inline"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == "true" then
-Redis:set(TheFRADM.."Set:Manager:rd:inline"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,"true1")
-Redis:set(TheFRADM.."Text:Manager:inline"..msg.return merolua.sender_id.user_id..":"..msg_chat_id, text)
+if text and text:match("^(.*)$") and tonumber(msg.sender_id.user_id) ~= tonumber(TheFRADM) then
+if Redis:get(TheFRADM.."Set:Manager:rd:inline"..msg.sender_id.user_id..":"..msg_chat_id) == "true" then
+Redis:set(TheFRADM.."Set:Manager:rd:inline"..msg.sender_id.user_id..":"..msg_chat_id,"true1")
+Redis:set(TheFRADM.."Text:Manager:inline"..msg.sender_id.user_id..":"..msg_chat_id, text)
 Redis:del(TheFRADM.."Add:Rd:Manager:Gif:inline"..text..msg_chat_id) 
 Redis:del(TheFRADM.."Add:Rd:Manager:Vico:inline"..text..msg_chat_id) 
 Redis:del(TheFRADM.."Add:Rd:Manager:Stekrs:inline"..text..msg_chat_id) 
@@ -8600,7 +8600,7 @@ Redis:del(TheFRADM.."Add:Rd:Manager:Audioc:inline"..text..msg_chat_id)
 Redis:del(TheFRADM.."Rd:Manager:inline:text"..text..msg_chat_id)
 Redis:del(TheFRADM.."Rd:Manager:inline:link"..text..msg_chat_id)
 Redis:sadd(TheFRADM.."List:Manager:inline"..msg_chat_id.."", text)
-return merolua.send(msg_chat_id,msg_id,[[
+send(msg_chat_id,msg_id,[[
 ⇜ حلو , الحين ارسل جواب الرد
 ⇜ ( نص,صوره,فيديو,متحركه,بصمه,اغنيه ) 
 ـــــــــــــــــــــــــــــــــــــــــ
@@ -8616,7 +8616,7 @@ return false
 end
 end
 if text and text:match("^(.*)$") then
-if Redis:get(TheFRADM.."Set:Manager:rd:inline"..msg.return merolua.sender_id.user_id..":"..msg_chat_id.."") == "true2" then
+if Redis:get(TheFRADM.."Set:Manager:rd:inline"..msg.sender_id.user_id..":"..msg_chat_id.."") == "true2" then
 Redis:del(TheFRADM.."Add:Rd:Manager:Gif:inline"..text..msg_chat_id) 
 Redis:del(TheFRADM.."Add:Rd:Manager:Vico:inline"..text..msg_chat_id) 
 Redis:del(TheFRADM.."Add:Rd:Manager:Stekrs:inline"..text..msg_chat_id) 
@@ -8631,17 +8631,17 @@ Redis:del(TheFRADM.."Add:Rd:Manager:Audio:inline"..text..msg_chat_id)
 Redis:del(TheFRADM.."Add:Rd:Manager:Audioc:inline"..text..msg_chat_id)
 Redis:del(TheFRADM.."Rd:Manager:inline:text"..text..msg_chat_id)
 Redis:del(TheFRADM.."Rd:Manager:inline:link"..text..msg_chat_id)
-Redis:del(TheFRADM.."Set:Manager:rd:inline"..msg.return merolua.sender_id.user_id..":"..msg_chat_id.."")
+Redis:del(TheFRADM.."Set:Manager:rd:inline"..msg.sender_id.user_id..":"..msg_chat_id.."")
 Redis:srem(TheFRADM.."List:Manager:inline"..msg_chat_id.."", text)
-return merolua.send(msg_chat_id,msg_id,"⇜ ابشر مسحت الرد من قائمة الانلاين  ","md",true)
+send(msg_chat_id,msg_id,"⇜ ابشر مسحت الرد من قائمة الانلاين  ","md",true)
 return false
 end
 end
-if Redis:get(TheFRADM.."Set:Manager:rd:inline"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == "true1" and tonumber(msg.return merolua.sender_id.user_id) ~= tonumber(TheFRADM) then
-Redis:del(TheFRADM.."Set:Manager:rd:inline"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
-Redis:set(TheFRADM.."Set:Manager:rd:inline"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,"set_inline")
+if Redis:get(TheFRADM.."Set:Manager:rd:inline"..msg.sender_id.user_id..":"..msg_chat_id) == "true1" and tonumber(msg.sender_id.user_id) ~= tonumber(TheFRADM) then
+Redis:del(TheFRADM.."Set:Manager:rd:inline"..msg.sender_id.user_id..":"..msg_chat_id)
+Redis:set(TheFRADM.."Set:Manager:rd:inline"..msg.sender_id.user_id..":"..msg_chat_id,"set_inline")
 if text or msg.content.video_note or msg.content.document or msg.content.audio or msg.content.video or msg.content.voice_note or msg.content.sticker or msg.content.animation or msg.content.photo then
-local anubis = Redis:get(TheFRADM.."Text:Manager:inline"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
+local anubis = Redis:get(TheFRADM.."Text:Manager:inline"..msg.sender_id.user_id..":"..msg_chat_id)
 if msg.content.text then 
 text = text:gsub('"',"") 
 text = text:gsub('"',"") 
@@ -8675,22 +8675,22 @@ end
 Redis:set(TheFRADM.."Add:Rd:Manager:Photo:inline"..anubis..msg_chat_id, idPhoto)
 Redis:set(TheFRADM.."Add:Rd:Manager:Photoc:inline"..anubis..msg_chat_id, msg.content.caption.text)
 end
-return merolua.send(msg_chat_id,msg_id,"⇜ الان ارسل الكلام داخل الزر","md",true)
+send(msg_chat_id,msg_id,"⇜ الان ارسل الكلام داخل الزر","md",true)
 return false
 end
 end
-if text and Redis:get(TheFRADM.."Set:Manager:rd:inline"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == "set_inline" then
-Redis:set(TheFRADM.."Set:Manager:rd:inline"..msg.return merolua.sender_id.user_id..":"..msg_chat_id, "set_link")
-local anubis = Redis:get(TheFRADM.."Text:Manager:inline"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
+if text and Redis:get(TheFRADM.."Set:Manager:rd:inline"..msg.sender_id.user_id..":"..msg_chat_id) == "set_inline" then
+Redis:set(TheFRADM.."Set:Manager:rd:inline"..msg.sender_id.user_id..":"..msg_chat_id, "set_link")
+local anubis = Redis:get(TheFRADM.."Text:Manager:inline"..msg.sender_id.user_id..":"..msg_chat_id)
 Redis:set(TheFRADM.."Rd:Manager:inline:text"..anubis..msg_chat_id, text)
-return merolua.send(msg_chat_id,msg_id,"⇜ الان ارسل الرابط  \n⇜ مثال : [https://t.me/Y88F8]","md",true)
+send(msg_chat_id,msg_id,"⇜ الان ارسل الرابط  \n⇜ مثال : [https://t.me/Y88F8]","md",true)
 return false
 end
-if text and Redis:get(TheFRADM.."Set:Manager:rd:inline"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == "set_link" then
-Redis:del(TheFRADM.."Set:Manager:rd:inline"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
-local anubis = Redis:get(TheFRADM.."Text:Manager:inline"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
+if text and Redis:get(TheFRADM.."Set:Manager:rd:inline"..msg.sender_id.user_id..":"..msg_chat_id) == "set_link" then
+Redis:del(TheFRADM.."Set:Manager:rd:inline"..msg.sender_id.user_id..":"..msg_chat_id)
+local anubis = Redis:get(TheFRADM.."Text:Manager:inline"..msg.sender_id.user_id..":"..msg_chat_id)
 Redis:set(TheFRADM.."Rd:Manager:inline:link"..anubis..msg_chat_id, text)
-return merolua.send(msg_chat_id,msg_id,"「 "..anubis.." 」\n واضفنا الرد ياحلو \n✧","md",true)
+send(msg_chat_id,msg_id,"「 "..anubis.." 」\n واضفنا الرد ياحلو \n✧","md",true)
 return false
 end
 if text and not Redis:get(TheFRADM.."Status:Reply:inline"..msg_chat_id) then
@@ -8717,42 +8717,42 @@ data = {
 }
 }
 if Texingt then 
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local NumMsg = Redis:get(TheFRADM..'Num:Message:User'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) or 0
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local NumMsg = Redis:get(TheFRADM..'Num:Message:User'..msg_chat_id..':'..msg.sender_id.user_id) or 0
 local TotalMsg = Total_message(NumMsg) 
 local Status_Gps = msg.Name_Controller
-local NumMessageEdit = Redis:get(TheFRADM..'Num:Message:Edit'..msg_chat_id..msg.return merolua.sender_id.user_id) or 0
+local NumMessageEdit = Redis:get(TheFRADM..'Num:Message:Edit'..msg_chat_id..msg.sender_id.user_id) or 0
 local Texingt = Texingt:gsub('{المعرف}',(UserInfo.username or 'لا يوجد')) 
 local Texingt = Texingt:gsub('{الاسم}',UserInfo.first_name)
-local Texingt = Texingt:gsub('{الايدي}',msg.return merolua.sender_id.user_id)
+local Texingt = Texingt:gsub('{الايدي}',msg.sender_id.user_id)
 local Texingt = Texingt:gsub('{التعديل}',NumMessageEdit)
 local Texingt = Texingt:gsub('{الرسائل}',NumMsg)
 local Texingt = Texingt:gsub('{الرتبه}',Status_Gps)
-return merolua.send(msg_chat_id,msg_id,'['..Texingt..']',"md",false, false, false, false, reply_markup)
+send(msg_chat_id,msg_id,'['..Texingt..']',"md",false, false, false, false, reply_markup)
 end
 if video_note then
-return merolua.sendVideoNote(msg_chat_id, msg.id, video_note, nil, nil, nil, nil, nil, nil, nil, reply_markup)
+bot.sendVideoNote(msg_chat_id, msg.id, video_note, nil, nil, nil, nil, nil, nil, nil, reply_markup)
 end
 if photo then
-return merolua.sendPhoto(msg.chat_id, msg.id, photo,photoc,"md", true, nil, nil, nil, nil, nil, nil, nil, nil, reply_markup )
+bot.sendPhoto(msg.chat_id, msg.id, photo,photoc,"md", true, nil, nil, nil, nil, nil, nil, nil, nil, reply_markup )
 end
 if stekr then 
-return merolua.sendSticker(msg_chat_id, msg.id, stekr,nil,nil,nil,nil,nil,nil,nil,reply_markup)
+bot.sendSticker(msg_chat_id, msg.id, stekr,nil,nil,nil,nil,nil,nil,nil,reply_markup)
 end
 if veico then 
-return merolua.sendVoiceNote(msg_chat_id, msg.id, veico, '', 'md',nil, nil, nil, nil, reply_markup)
+bot.sendVoiceNote(msg_chat_id, msg.id, veico, '', 'md',nil, nil, nil, nil, reply_markup)
 end
 if video then 
-return merolua.sendVideo(msg_chat_id, msg.id, video, videoc, "md", true, nil, nil, nil, nil, nil, nil, nil, nil, nil, reply_markup)
+bot.sendVideo(msg_chat_id, msg.id, video, videoc, "md", true, nil, nil, nil, nil, nil, nil, nil, nil, nil, reply_markup)
 end
 if anemi then 
-return merolua.sendAnimation(msg_chat_id,msg.id, anemi, '', 'md', nil, nil, nil, nil, nil, nil, nil, nil,reply_markup)
+bot.sendAnimation(msg_chat_id,msg.id, anemi, '', 'md', nil, nil, nil, nil, nil, nil, nil, nil,reply_markup)
 end
 if document then
-return merolua.sendDocument(msg_chat_id, msg.id, document, '', 'md',nil, nil, nil, nil,nil, reply_markup)
+bot.sendDocument(msg_chat_id, msg.id, document, '', 'md',nil, nil, nil, nil,nil, reply_markup)
 end
 if audio then
-return merolua.sendAudio(msg_chat_id, msg.id, audio, audioc, "md", nil, nil, nil, nil, nil, nil, nil, nil,reply_markup) 
+bot.sendAudio(msg_chat_id, msg.id, audio, audioc, "md", nil, nil, nil, nil, nil, nil, nil, nil,reply_markup) 
 end
 end
 if text == "حذف رد انلاين" or text == "مسح رد انلاين" then
@@ -8763,11 +8763,11 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'الغاء', data = msg.return merolua.sender_id.user_id..'/cancelamr'},
+{text = 'الغاء', data = msg.sender_id.user_id..'/cancelamr'},
 },
 }
 }
-Redis:set(TheFRADM.."Set:Manager:rd:inline"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,"true2")
+Redis:set(TheFRADM.."Set:Manager:rd:inline"..msg.sender_id.user_id..":"..msg_chat_id,"true2")
 return merolua.send(msg_chat_id,msg_id,"⇜ تمام عيني  \n⇜ الحين ارسل الرد عشان امسحه \n✧","md",false, false, false, false, reply_markup)
 end 
 
@@ -8805,10 +8805,10 @@ end
 return merolua.send(msg_chat_id,msg_id,"["..text.."]","md",true)
 end
 ------------------------------------------------------------------------------------------------------------------------------------------------
-if text or msg.content.video_note or msg.content.document or msg.content.audio or msg.content.video or msg.content.voice_note or msg.content.sticker or msg.content.animation or msg.content.photo and msg.return merolua.sender_id.user_id ~= TheFRADM then
-local test = Redis:get(TheFRADM.."Text:Sudo:Bot"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
-if Redis:get(TheFRADM.."Set:Rd:mz"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == "true1" then
-Redis:del(TheFRADM.."Set:Rd:mz"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
+if text or msg.content.video_note or msg.content.document or msg.content.audio or msg.content.video or msg.content.voice_note or msg.content.sticker or msg.content.animation or msg.content.photo and msg.sender_id.user_id ~= TheFRADM then
+local test = Redis:get(TheFRADM.."Text:Sudo:Bot"..msg.sender_id.user_id..":"..msg_chat_id)
+if Redis:get(TheFRADM.."Set:Rd:mz"..msg.sender_id.user_id..":"..msg_chat_id) == "true1" then
+Redis:del(TheFRADM.."Set:Rd:mz"..msg.sender_id.user_id..":"..msg_chat_id)
 if msg.content.text then   
 text = text:gsub('"',"") 
 text = text:gsub('"',"") 
@@ -8842,16 +8842,16 @@ end
 Redis:set(TheFRADM.."Add:Rd:Sudo:mz:Photo"..test, idPhoto)  
 Redis:set(TheFRADM.."Add:Rd:Sudo:mz:Photoc"..test, msg.content.caption.text)  
 end
-return merolua.send(msg_chat_id,msg_id,"⇜「 "..test.." 」\n⇜ واضفنا الرد ياحلو\n✧","md",true)  
+send(msg_chat_id,msg_id,"⇜「 "..test.." 」\n⇜ واضفنا الرد ياحلو\n✧","md",true)  
 return false
 end  
 end
 if text and text:match("^(.*)$") then
-if Redis:get(TheFRADM.."Set:Rd:mz"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == "true" then
-Redis:set(TheFRADM.."Set:Rd:mz"..msg.return merolua.sender_id.user_id..":"..msg_chat_id, "true1")
-Redis:set(TheFRADM.."Text:Sudo:Bot"..msg.return merolua.sender_id.user_id..":"..msg_chat_id, text)
+if Redis:get(TheFRADM.."Set:Rd:mz"..msg.sender_id.user_id..":"..msg_chat_id) == "true" then
+Redis:set(TheFRADM.."Set:Rd:mz"..msg.sender_id.user_id..":"..msg_chat_id, "true1")
+Redis:set(TheFRADM.."Text:Sudo:Bot"..msg.sender_id.user_id..":"..msg_chat_id, text)
 Redis:sadd(TheFRADM.."List:Rd:Sudo:mz", text)
-return merolua.send(msg_chat_id,msg_id,[[
+send(msg_chat_id,msg_id,[[
 ⇜ حلو , الحين ارسل جواب الرد
 ⇜ ( نص,صوره,فيديو,متحركه,بصمه,اغنيه ) 
 ـــــــــــــــــــــــــــــــــــــــــ
@@ -8867,18 +8867,18 @@ return false
 end
 end
 if text and text:match("^(.*)$") then
-if Redis:get(TheFRADM.."Set:On:mz"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == "true" then
+if Redis:get(TheFRADM.."Set:On:mz"..msg.sender_id.user_id..":"..msg_chat_id) == "true" then
 list = {"Add:Rd:Sudo:mz:video_note","Add:Rd:Sudo:mz:Audio","Add:Rd:Sudo:mz:Audioc","Add:Rd:Sudo:mz:File","Add:Rd:Sudo:mz:Video","Add:Rd:Sudo:mz:Videoc","Add:Rd:Sudo:mz:Photo","Add:Rd:Sudo:mz:Photoc","Add:Rd:Sudo:mz:Text","Add:Rd:Sudo:mz:stekr","Add:Rd:Sudo:mz:vico","Add:Rd:Sudo:mz:Gif"}
 for k,v in pairs(list) do
 Redis:del(TheFRADM..''..v..text)
 end
-Redis:del(TheFRADM.."Set:On:mz"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
+Redis:del(TheFRADM.."Set:On:mz"..msg.sender_id.user_id..":"..msg_chat_id)
 Redis:srem(TheFRADM.."List:Rd:Sudo:mz", text)
 return merolua.send(msg_chat_id,msg_id,"⇜ ابشر مسحت الرد من الردود المميزه العامه","md",true)  
 end
 end
 if text and text ~= "مسح رد مميز عام" and text ~= "اضف رد مميز عام" and text ~= "مسح الردود المميزه العامه" and text ~= "الردود المميزه العامه" and not Redis:get(TheFRADM.."Status:ReplySudo"..msg_chat_id) and not Redis:get(TheFRADM.."tf:rmz:d"..msg.chat_id) then
-if not Redis:sismember(TheFRADM..'Spam:Group'..msg.return merolua.sender_id.user_id,text) then
+if not Redis:sismember(TheFRADM..'Spam:Group'..msg.sender_id.user_id,text) then
 local listmz = Redis:smembers(TheFRADM.."List:Rd:Sudo:mz")
 for k,v in pairs(listmz) do
 i ,j  = string.find(text, v)
@@ -8898,50 +8898,50 @@ local audio = Redis:get(TheFRADM.."Add:Rd:Sudo:mz:Audio"..x)
 local audioc = Redis:get(TheFRADM.."Add:Rd:Sudo:mz:Audioc"..x)
 local video_note = Redis:get(TheFRADM.."Add:Rd:Sudo:mz:video_note"..x)
 if Text then 
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local NumMsg = Redis:get(TheFRADM..'Num:Message:User'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) or 0
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local NumMsg = Redis:get(TheFRADM..'Num:Message:User'..msg_chat_id..':'..msg.sender_id.user_id) or 0
 local TotalMsg = Total_message(NumMsg)
 local Status_Gps = msg.Name_Controller
-local NumMessageEdit = Redis:get(TheFRADM..'Num:Message:Edit'..msg_chat_id..msg.return merolua.sender_id.user_id) or 0
+local NumMessageEdit = Redis:get(TheFRADM..'Num:Message:Edit'..msg_chat_id..msg.sender_id.user_id) or 0
 local Text = Text:gsub('{اليوزر}',(UserInfo.username or 'لا يوجد')) 
 local Text = Text:gsub('{الاسم}',UserInfo.first_name)
-local Text = Text:gsub('{الايدي}',msg.return merolua.sender_id.user_id)
+local Text = Text:gsub('{الايدي}',msg.sender_id.user_id)
 local Text = Text:gsub('{التعديل}',NumMessageEdit)
 local Text = Text:gsub('{الرسائل}',NumMsg)
 local Text = Text:gsub('{الرتبه}',Status_Gps)
-return merolua.send(msg_chat_id,msg_id,'['..Text..']',"md",true)  
+send(msg_chat_id,msg_id,'['..Text..']',"md",true)  
 end
 if video_note then
-return merolua.sendVideoNote(msg_chat_id, msg.id, video_note)
-Redis:sadd(TheFRADM.."Spam:Group"..msg.return merolua.sender_id.user_id,text) 
+bot.sendVideoNote(msg_chat_id, msg.id, video_note)
+Redis:sadd(TheFRADM.."Spam:Group"..msg.sender_id.user_id,text) 
 end
 if photo then
-return merolua.sendPhoto(msg.chat_id, msg.id, photo,photoc)
-Redis:sadd(TheFRADM.."Spam:Group"..msg.return merolua.sender_id.user_id,text) 
+bot.sendPhoto(msg.chat_id, msg.id, photo,photoc)
+Redis:sadd(TheFRADM.."Spam:Group"..msg.sender_id.user_id,text) 
 end  
 if stekr then 
-return merolua.sendSticker(msg_chat_id, msg.id, stekr)
-Redis:sadd(TheFRADM.."Spam:Group"..msg.return merolua.sender_id.user_id,text) 
+bot.sendSticker(msg_chat_id, msg.id, stekr)
+Redis:sadd(TheFRADM.."Spam:Group"..msg.sender_id.user_id,text) 
 end
 if veico then 
-return merolua.sendVoiceNote(msg_chat_id, msg.id, veico, '', 'md')
-Redis:sadd(TheFRADM.."Spam:Group"..msg.return merolua.sender_id.user_id,text) 
+bot.sendVoiceNote(msg_chat_id, msg.id, veico, '', 'md')
+Redis:sadd(TheFRADM.."Spam:Group"..msg.sender_id.user_id,text) 
 end
 if video then 
-return merolua.sendVideo(msg_chat_id, msg.id, video, videoc, "md")
-Redis:sadd(TheFRADM.."Spam:Group"..msg.return merolua.sender_id.user_id,text) 
+bot.sendVideo(msg_chat_id, msg.id, video, videoc, "md")
+Redis:sadd(TheFRADM.."Spam:Group"..msg.sender_id.user_id,text) 
 end
 if anemi then 
-return merolua.sendAnimation(msg_chat_id,msg.id, anemi, '', 'md')
-Redis:sadd(TheFRADM.."Spam:Group"..msg.return merolua.sender_id.user_id,text) 
+bot.sendAnimation(msg_chat_id,msg.id, anemi, '', 'md')
+Redis:sadd(TheFRADM.."Spam:Group"..msg.sender_id.user_id,text) 
 end
 if document then
-return merolua.sendDocument(msg_chat_id, msg.id, document, '', 'md')
-Redis:sadd(TheFRADM.."Spam:Group"..msg.return merolua.sender_id.user_id,text) 
+bot.sendDocument(msg_chat_id, msg.id, document, '', 'md')
+Redis:sadd(TheFRADM.."Spam:Group"..msg.sender_id.user_id,text) 
 end  
 if audio then
-return merolua.sendAudio(msg_chat_id, msg.id, audio, audioc, "md") 
-Redis:sadd(TheFRADM.."Spam:Group"..msg.return merolua.sender_id.user_id,text) 
+bot.sendAudio(msg_chat_id, msg.id, audio, audioc, "md") 
+Redis:sadd(TheFRADM.."Spam:Group"..msg.sender_id.user_id,text) 
 end
 end
 end
@@ -8952,12 +8952,12 @@ if text == "اضف رد مميز عام" then
 if not msg.DevelopersQ then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(2)..' ) ',"md",true)  
 end
-Redis:set(TheFRADM.."Set:Rd:mz"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,true)
+Redis:set(TheFRADM.."Set:Rd:mz"..msg.sender_id.user_id..":"..msg_chat_id,true)
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'الغاء', data = msg.return merolua.sender_id.user_id..'/cancelamr'},
+{text = 'الغاء', data = msg.sender_id.user_id..'/cancelamr'},
 },
 }
 }
@@ -8967,19 +8967,19 @@ if text == "حذف رد مميز عام" or text == "مسح رد مميز عام
 if not msg.DevelopersQ then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(2)..' ) ',"md",true)  
 end
-Redis:set(TheFRADM.."Set:On:mz"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,true)
+Redis:set(TheFRADM.."Set:On:mz"..msg.sender_id.user_id..":"..msg_chat_id,true)
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'الغاء', data = msg.return merolua.sender_id.user_id..'/cancelamr'},
+{text = 'الغاء', data = msg.sender_id.user_id..'/cancelamr'},
 },
 }
 }
 return merolua.send(msg_chat_id,msg_id,"⇜ تمام عيني  \n⇜ الحين ارسل الرد عشان امسحه \n✧","md",false, false, false, false, reply_markup)
 end 
-if text and not Redis:sismember(TheFRADM.."Spam:Group"..msg.return merolua.sender_id.user_id,text) then
-Redis:del(TheFRADM.."Spam:Group"..msg.return merolua.sender_id.user_id) 
+if text and not Redis:sismember(TheFRADM.."Spam:Group"..msg.sender_id.user_id,text) then
+Redis:del(TheFRADM.."Spam:Group"..msg.sender_id.user_id) 
 end
 if text == "مسح الردود المميزه العامه" or text == "مسح الردود المميزه عام" then 
 if not msg.DevelopersQ then
@@ -9001,7 +9001,7 @@ Redis:del(TheFRADM.."Add:Rd:Sudo:mz:Audioc"..v)
 Redis:del(TheFRADM.."Add:Rd:Sudo:mz:video_note"..v)
 Redis:del(TheFRADM.."List:Rd:Sudo:mz")
 end
-return merolua.send(msg_chat_id,msg_id,"⇜ ابشر مسحت قائمه الردود المميزه العامه","md",true)  
+send(msg_chat_id,msg_id,"⇜ ابشر مسحت قائمه الردود المميزه العامه","md",true)  
 end
 if text == ("الردود المميزه العامه") then 
 if not msg.DevelopersQ then
@@ -9037,10 +9037,10 @@ end
 return merolua.send(msg_chat_id,msg_id,"["..text.."]","md",true)  
 end
 -------رد مميز عام 
-if text or msg.content.video_note or msg.content.document or msg.content.audio or msg.content.video or msg.content.voice_note or msg.content.sticker or msg.content.animation or msg.content.photo and msg.return merolua.sender_id.user_id ~= TheFRADM then
-local test = Redis:get(TheFRADM.."Text:Sudo:Bot"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
-if Redis:get(TheFRADM.."Set:Rdmzch"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == "true1" then
-Redis:del(TheFRADM.."Set:Rdmzch"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
+if text or msg.content.video_note or msg.content.document or msg.content.audio or msg.content.video or msg.content.voice_note or msg.content.sticker or msg.content.animation or msg.content.photo and msg.sender_id.user_id ~= TheFRADM then
+local test = Redis:get(TheFRADM.."Text:Sudo:Bot"..msg.sender_id.user_id..":"..msg_chat_id)
+if Redis:get(TheFRADM.."Set:Rdmzch"..msg.sender_id.user_id..":"..msg_chat_id) == "true1" then
+Redis:del(TheFRADM.."Set:Rdmzch"..msg.sender_id.user_id..":"..msg_chat_id)
 if msg.content.text then   
 text = text:gsub('"',"") 
 text = text:gsub('"',"") 
@@ -9074,16 +9074,16 @@ end
 Redis:set(TheFRADM.."Add:Rd:Sudomzch:Photo"..test..msg.chat_id, idPhoto)  
 Redis:set(TheFRADM.."Add:Rd:Sudomzch:Photoc"..test..msg.chat_id, msg.content.caption.text)  
 end
-return merolua.send(msg_chat_id,msg_id,"「  "..test.."  」 \n⇜ واضفنا الرد ياحلو\n✧","md",true)  
+send(msg_chat_id,msg_id,"「  "..test.."  」 \n⇜ واضفنا الرد ياحلو\n✧","md",true)  
 return false
 end  
 end
 if text and text:match("^(.*)$") then
-if Redis:get(TheFRADM.."Set:Rdmzch"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == "true" then
-Redis:set(TheFRADM.."Set:Rdmzch"..msg.return merolua.sender_id.user_id..":"..msg_chat_id, "true1")
-Redis:set(TheFRADM.."Text:Sudo:Bot"..msg.return merolua.sender_id.user_id..":"..msg_chat_id, text)
+if Redis:get(TheFRADM.."Set:Rdmzch"..msg.sender_id.user_id..":"..msg_chat_id) == "true" then
+Redis:set(TheFRADM.."Set:Rdmzch"..msg.sender_id.user_id..":"..msg_chat_id, "true1")
+Redis:set(TheFRADM.."Text:Sudo:Bot"..msg.sender_id.user_id..":"..msg_chat_id, text)
 Redis:sadd(TheFRADM.."List:Rd:Sudomzch"..msg.chat_id, text)
-return merolua.send(msg_chat_id,msg_id,[[
+send(msg_chat_id,msg_id,[[
 ⇜ حلو , الحين ارسل جواب الرد
 ⇜ ( نص,صوره,فيديو,متحركه,بصمه,اغنيه ) 
 ـــــــــــــــــــــــــــــــــــــــــ
@@ -9099,18 +9099,18 @@ return false
 end
 end
 if text and text:match("^(.*)$") then
-if Redis:get(TheFRADM.."Set:Onmzch"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == "true" then
+if Redis:get(TheFRADM.."Set:Onmzch"..msg.sender_id.user_id..":"..msg_chat_id) == "true" then
 list = {"Add:Rd:Sudomzch:video_note","Add:Rd:Sudomzch:Audio","Add:Rd:Sudomzch:Audioc","Add:Rd:Sudomzch:File","Add:Rd:Sudomzch:Video","Add:Rd:Sudomzch:Videoc","Add:Rd:Sudomzch:Photo","Add:Rd:Sudomzch:Photoc","Add:Rd:Sudomzch:Text","Add:Rd:Sudomzch:stekr","Add:Rd:Sudomzch:vico","Add:Rd:Sudomzch:Gif"}
 for k,v in pairs(list) do
 Redis:del(TheFRADM..''..v..text..msg.chat_id)
 end
-Redis:del(TheFRADM.."Set:Onmzch"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
+Redis:del(TheFRADM.."Set:Onmzch"..msg.sender_id.user_id..":"..msg_chat_id)
 Redis:srem(TheFRADM.."List:Rd:Sudomzch"..msg.chat_id, text)
 return merolua.send(msg_chat_id,msg_id,"⇜ ابشر مسحت الرد من الردود المميزه","md",true)  
 end
 end
 if text and text ~= "مسح رد مميز" and text ~= "اضف رد مميز" and text ~= "مسح الردود المميزه" and text ~= "الردود المميزه" and not Redis:get(TheFRADM.."Status:ReplySudo"..msg_chat_id) and not Redis:get(TheFRADM.."tf:rmz:d"..msg.chat_id) then
-if not Redis:sismember(TheFRADM..'Spam:Group'..msg.return merolua.sender_id.user_id,text) then
+if not Redis:sismember(TheFRADM..'Spam:Group'..msg.sender_id.user_id,text) then
 local listmz = Redis:smembers(TheFRADM.."List:Rd:Sudomzch"..msg.chat_id)
 for k,v in pairs(listmz) do
 i ,j  = string.find(text, v)
@@ -9130,50 +9130,50 @@ local audio = Redis:get(TheFRADM.."Add:Rd:Sudomzch:Audio"..x..msg.chat_id)
 local audioc = Redis:get(TheFRADM.."Add:Rd:Sudomzch:Audioc"..x..msg.chat_id)
 local video_note = Redis:get(TheFRADM.."Add:Rd:Sudomzch:video_note"..x..msg.chat_id)
 if Text then 
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local NumMsg = Redis:get(TheFRADM..'Num:Message:User'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) or 0
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local NumMsg = Redis:get(TheFRADM..'Num:Message:User'..msg_chat_id..':'..msg.sender_id.user_id) or 0
 local TotalMsg = Total_message(NumMsg)
 local Status_Gps = msg.Name_Controller
-local NumMessageEdit = Redis:get(TheFRADM..'Num:Message:Edit'..msg_chat_id..msg.return merolua.sender_id.user_id) or 0
+local NumMessageEdit = Redis:get(TheFRADM..'Num:Message:Edit'..msg_chat_id..msg.sender_id.user_id) or 0
 local Text = Text:gsub('{اليوزر}',(UserInfo.username or 'لا يوجد')) 
 local Text = Text:gsub('{الاسم}',UserInfo.first_name)
-local Text = Text:gsub('{الايدي}',msg.return merolua.sender_id.user_id)
+local Text = Text:gsub('{الايدي}',msg.sender_id.user_id)
 local Text = Text:gsub('{التعديل}',NumMessageEdit)
 local Text = Text:gsub('{الرسائل}',NumMsg)
 local Text = Text:gsub('{الرتبه}',Status_Gps)
-return merolua.send(msg_chat_id,msg_id,'['..Text..']',"md",true)  
+send(msg_chat_id,msg_id,'['..Text..']',"md",true)  
 end
 if video_note then
-return merolua.sendVideoNote(msg_chat_id, msg.id, video_note)
-Redis:sadd(TheFRADM.."Spam:Group"..msg.return merolua.sender_id.user_id,text) 
+bot.sendVideoNote(msg_chat_id, msg.id, video_note)
+Redis:sadd(TheFRADM.."Spam:Group"..msg.sender_id.user_id,text) 
 end
 if photo then
-return merolua.sendPhoto(msg.chat_id, msg.id, photo,photoc)
-Redis:sadd(TheFRADM.."Spam:Group"..msg.return merolua.sender_id.user_id,text) 
+bot.sendPhoto(msg.chat_id, msg.id, photo,photoc)
+Redis:sadd(TheFRADM.."Spam:Group"..msg.sender_id.user_id,text) 
 end  
 if stekr then 
-return merolua.sendSticker(msg_chat_id, msg.id, stekr)
-Redis:sadd(TheFRADM.."Spam:Group"..msg.return merolua.sender_id.user_id,text) 
+bot.sendSticker(msg_chat_id, msg.id, stekr)
+Redis:sadd(TheFRADM.."Spam:Group"..msg.sender_id.user_id,text) 
 end
 if veico then 
-return merolua.sendVoiceNote(msg_chat_id, msg.id, veico, '', 'md')
-Redis:sadd(TheFRADM.."Spam:Group"..msg.return merolua.sender_id.user_id,text) 
+bot.sendVoiceNote(msg_chat_id, msg.id, veico, '', 'md')
+Redis:sadd(TheFRADM.."Spam:Group"..msg.sender_id.user_id,text) 
 end
 if video then 
-return merolua.sendVideo(msg_chat_id, msg.id, video, videoc, "md")
-Redis:sadd(TheFRADM.."Spam:Group"..msg.return merolua.sender_id.user_id,text) 
+bot.sendVideo(msg_chat_id, msg.id, video, videoc, "md")
+Redis:sadd(TheFRADM.."Spam:Group"..msg.sender_id.user_id,text) 
 end
 if anemi then 
-return merolua.sendAnimation(msg_chat_id,msg.id, anemi, '', 'md')
-Redis:sadd(TheFRADM.."Spam:Group"..msg.return merolua.sender_id.user_id,text) 
+bot.sendAnimation(msg_chat_id,msg.id, anemi, '', 'md')
+Redis:sadd(TheFRADM.."Spam:Group"..msg.sender_id.user_id,text) 
 end
 if document then
-return merolua.sendDocument(msg_chat_id, msg.id, document, '', 'md')
-Redis:sadd(TheFRADM.."Spam:Group"..msg.return merolua.sender_id.user_id,text) 
+bot.sendDocument(msg_chat_id, msg.id, document, '', 'md')
+Redis:sadd(TheFRADM.."Spam:Group"..msg.sender_id.user_id,text) 
 end  
 if audio then
-return merolua.sendAudio(msg_chat_id, msg.id, audio, audioc, "md") 
-Redis:sadd(TheFRADM.."Spam:Group"..msg.return merolua.sender_id.user_id,text) 
+bot.sendAudio(msg_chat_id, msg.id, audio, audioc, "md") 
+Redis:sadd(TheFRADM.."Spam:Group"..msg.sender_id.user_id,text) 
 end
 end
 end
@@ -9184,12 +9184,12 @@ if text == "اضف رد مميز" then
 if not msg.Addictive then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(7)..' ) ',"md",true)  
 end
-Redis:set(TheFRADM.."Set:Rdmzch"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,true)
+Redis:set(TheFRADM.."Set:Rdmzch"..msg.sender_id.user_id..":"..msg_chat_id,true)
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'الغاء', data = msg.return merolua.sender_id.user_id..'/cancelamr'},
+{text = 'الغاء', data = msg.sender_id.user_id..'/cancelamr'},
 },
 }
 }
@@ -9199,19 +9199,19 @@ if text == "حذف رد مميز" or text == "مسح رد مميز" then
 if not msg.Addictive then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(7)..' ) ',"md",true)  
 end
-Redis:set(TheFRADM.."Set:Onmzch"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,true)
+Redis:set(TheFRADM.."Set:Onmzch"..msg.sender_id.user_id..":"..msg_chat_id,true)
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'الغاء', data = msg.return merolua.sender_id.user_id..'/cancelamr'},
+{text = 'الغاء', data = msg.sender_id.user_id..'/cancelamr'},
 },
 }
 }
 return merolua.send(msg_chat_id,msg_id,"⇜ تمام عيني  \n⇜ الحين ارسل الرد عشان امسحه \n✧","md",false, false, false, false, reply_markup)
 end 
-if text and not Redis:sismember(TheFRADM.."Spam:Group"..msg.return merolua.sender_id.user_id,text) then
-Redis:del(TheFRADM.."Spam:Group"..msg.return merolua.sender_id.user_id) 
+if text and not Redis:sismember(TheFRADM.."Spam:Group"..msg.sender_id.user_id,text) then
+Redis:del(TheFRADM.."Spam:Group"..msg.sender_id.user_id) 
 end
 if text == "مسح الردود المميزه" or text == "مسح الردود المميزة" then
 if not msg.Addictive then
@@ -9233,7 +9233,7 @@ Redis:del(TheFRADM.."Add:Rd:Sudomzch:Audioc"..v..msg.chat_id)
 Redis:del(TheFRADM.."Add:Rd:Sudomzch:video_note"..v..msg.chat_id)
 Redis:del(TheFRADM.."List:Rd:Sudomzch"..msg.chat_id)
 end
-return merolua.send(msg_chat_id,msg_id,"⇜ ابشر مسحت قائمه الردود المميزه","md",true)  
+send(msg_chat_id,msg_id,"⇜ ابشر مسحت قائمه الردود المميزه","md",true)  
 end
 if text == ("الردود المميزه") then 
 if not msg.Addictive then
@@ -9275,7 +9275,7 @@ if text == "تنظيف التعديل" or text == "مسح التعديل" or tex
 if not msg.Addictive then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(7)..' ) ',"md",true)  
 end
-return merolua.send(msg.chat_id,msg.id,"⇜ اصبر ابحثلك عن الرسائل المعدله","md",true)
+send(msg.chat_id,msg.id,"⇜ اصبر ابحثلك عن الرسائل المعدله","md",true)
 msgid = (msg.id - (1048576*250))
 y = 0
 r = 1048576
@@ -9292,7 +9292,7 @@ t = "⇜ مالقيت رسائل معدله"
 else
 t = "⇜ ابشر مسحت ( "..y.." ) من الرسائل المعدلة"
 end
-return merolua.send(msg.chat_id,msg.id,t,"md",true)  
+send(msg.chat_id,msg.id,t,"md",true)  
 end
 if text == 'كشف'  and msg.reply_to_message_id ~= 0 then
 if ChannelJoinch(msg) == false then
@@ -9304,17 +9304,17 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.username then
 UserInfousername = '[@'..UserInfo.username..']'
 else
 UserInfousername = 'لا يوجد يوزر'
 end
-local photo = bot.getUserProfilePhotos(Message_Reply.return merolua.sender_id.user_id)
-local UserId = Message_Reply.return merolua.sender_id.user_id
-local RinkBot = Controller(msg_chat_id,Message_Reply.return merolua.sender_id.user_id)
-local TotalMsg = Redis:get(TheFRADM..'FRADM:Num:Message:User'..msg_chat_id..':'..Message_Reply.return merolua.sender_id.user_id) or 0
-local TotalEdit = Redis:get(TheFRADM..'FRADM:Num:Message:Edit'..msg_chat_id..Message_Reply.return merolua.sender_id.user_id) or 0
+local photo = bot.getUserProfilePhotos(Message_Reply.sender_id.user_id)
+local UserId = Message_Reply.sender_id.user_id
+local RinkBot = Controller(msg_chat_id,Message_Reply.sender_id.user_id)
+local TotalMsg = Redis:get(TheFRADM..'FRADM:Num:Message:User'..msg_chat_id..':'..Message_Reply.sender_id.user_id) or 0
+local TotalEdit = Redis:get(TheFRADM..'FRADM:Num:Message:Edit'..msg_chat_id..Message_Reply.sender_id.user_id) or 0
 local TotalMsgT = Total_message(TotalMsg) 
 return merolua.send(msg_chat_id,msg_id,
 '\n• 𝖭𝖺𝗆𝖾 ↦ '..UserInfo.first_name..
@@ -9402,8 +9402,8 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 StatusMemberChat = 'مالك اساسي'
 elseif (StatusMember == "chatMemberStatusAdministrator") then
@@ -9422,8 +9422,8 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 StatusMemberChat = 'مالك اساسي'
 elseif (StatusMember == "chatMemberStatusAdministrator") then
@@ -9431,10 +9431,10 @@ StatusMemberChat = 'مشرف'
 else
 StatusMemberChat = 'عضو'
 end
-local UserId = msg.return merolua.sender_id.user_id
+local UserId = msg.sender_id.user_id
 local RinkBot = msg.Name_Controller
-local TotalMsg = Redis:get(TheFRADM..'FRADM:Num:Message:User'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) or 0
-local TotalEdit = Redis:get(TheFRADM..'FRADM:Num:Message:Edit'..msg_chat_id..msg.return merolua.sender_id.user_id) or 0
+local TotalMsg = Redis:get(TheFRADM..'FRADM:Num:Message:User'..msg_chat_id..':'..msg.sender_id.user_id) or 0
+local TotalEdit = Redis:get(TheFRADM..'FRADM:Num:Message:Edit'..msg_chat_id..msg.sender_id.user_id) or 0
 local TotalMsgT = Total_message(TotalMsg) 
 if UserInfo.username then
 UserInfousername = '@'..UserInfo.username..''
@@ -9442,7 +9442,7 @@ else
 UserInfousername = 'لا يوجد يوزر'
 end
 if StatusMemberChat == 'مشرف' then 
-local GetMemberStatus = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status
+local GetMemberStatus = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status
 if GetMemberStatus.can_change_info then
 change_info = 'نعم' else change_info = 'لا'
 end
@@ -9475,7 +9475,7 @@ return merolua.send(msg_chat_id,msg_id,
 ''..(PermissionsUser or '') ,"md",true) 
 end
 if text == 'لقبي' then
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id)
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id)
 if StatusMember.status.custom_title ~= "" then
 Lakb = StatusMember.status.custom_title
 else
@@ -9491,7 +9491,7 @@ end
 end
 if text == 'لقبه' and msg.reply_to_message_id ~= 0 then
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local StatusMember = bot.getChatMember(msg_chat_id,Message_Reply.return merolua.sender_id.user_id)
+local StatusMember = bot.getChatMember(msg_chat_id,Message_Reply.sender_id.user_id)
 if StatusMember.status.custom_title ~= "" then
 Lakb = StatusMember.status.custom_title
 else
@@ -9506,7 +9506,7 @@ return merolua.send(msg_chat_id,msg_id,'\n⇜ لقبه عضو بالقروب ',"
 end
 end
 if text == "تفاعلي" then
-local TotalMsg = Redis:get(TheFRADM..'FRADM:Num:Message:User'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) or 0
+local TotalMsg = Redis:get(TheFRADM..'FRADM:Num:Message:User'..msg_chat_id..':'..msg.sender_id.user_id) or 0
 local TotalMsgT = Total_message(TotalMsg) 
 return merolua.send(msg_chat_id,msg_id,'\n⇜ تفاعلك ↤ '..TotalMsgT..' ',"md",true)  
 end
@@ -9550,7 +9550,7 @@ return merolua.send(msg_chat_id,msg_id,PermissionsUser,"md",true)
 end
 if text == 'رفع القيود' and msg.reply_to_message_id ~= 0 then
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
@@ -9571,33 +9571,33 @@ end
 if msg.can_be_deleted_for_all_users == false then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً البوت ليس مشرف في القروب يرجى رفعه واعطائه الصلاحيات ","md",true)  
 end
-local GetMemberStatus = bot.getChatMember(msg_chat_id,Message_Reply.return merolua.sender_id.user_id).status
+local GetMemberStatus = bot.getChatMember(msg_chat_id,Message_Reply.sender_id.user_id).status
 if GetMemberStatus.Merotele == "chatMemberStatusRestricted" then
 Restricted = 'مقيد'
-bot.setChatMemberStatus(msg.chat_id,Message_Reply.return merolua.sender_id.user_id,'restricted',{1,1,1,1,1,1,1,1})
+bot.setChatMemberStatus(msg.chat_id,Message_Reply.sender_id.user_id,'restricted',{1,1,1,1,1,1,1,1})
 else
 Restricted = ''
 end
-if Statusrestricted(msg_chat_id,Message_Reply.return merolua.sender_id.user_id).BanAll == true and msg.ControllerBot then
+if Statusrestricted(msg_chat_id,Message_Reply.sender_id.user_id).BanAll == true and msg.ControllerBot then
 BanAll = 'محظور عام ,'
-Redis:srem(TheFRADM.."FRADM:BanAll:Groups",Message_Reply.return merolua.sender_id.user_id) 
+Redis:srem(TheFRADM.."FRADM:BanAll:Groups",Message_Reply.sender_id.user_id) 
 else
 BanAll = ''
 end
-if Statusrestricted(msg_chat_id,Message_Reply.return merolua.sender_id.user_id).BanGroup == true then
+if Statusrestricted(msg_chat_id,Message_Reply.sender_id.user_id).BanGroup == true then
 BanGroup = 'محظور ,'
-Redis:srem(TheFRADM.."FRADM:BanGroup:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) 
-bot.setChatMemberStatus(msg.chat_id,Message_Reply.return merolua.sender_id.user_id,'restricted',{1,1,1,1,1,1,1,1,1})
+Redis:srem(TheFRADM.."FRADM:BanGroup:Group"..msg_chat_id,Message_Reply.sender_id.user_id) 
+bot.setChatMemberStatus(msg.chat_id,Message_Reply.sender_id.user_id,'restricted',{1,1,1,1,1,1,1,1,1})
 else
 BanGroup = ''
 end
-if Statusrestricted(msg_chat_id,Message_Reply.return merolua.sender_id.user_id).SilentGroup == true then
+if Statusrestricted(msg_chat_id,Message_Reply.sender_id.user_id).SilentGroup == true then
 SilentGroup = 'مكتوم ,'
-Redis:srem(TheFRADM.."FRADM:SilentGroup:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) 
+Redis:srem(TheFRADM.."FRADM:SilentGroup:Group"..msg_chat_id,Message_Reply.sender_id.user_id) 
 else
 SilentGroup = ''
 end
-bot.setChatMemberStatus(msg.chat_id,Message_Reply.return merolua.sender_id.user_id,'restricted',{1,1,1,1,1,1,1,1,1})
+bot.setChatMemberStatus(msg.chat_id,Message_Reply.sender_id.user_id,'restricted',{1,1,1,1,1,1,1,1,1})
 return merolua.send(msg_chat_id,msg_id,"\n⇜ ابشر رفعت القيود عنه\n( "..BanAll..BanGroup..SilentGroup..Restricted..' )\n✧',"md",true)  
 end
 if text and text:match('^رفع القيود @(%S+)$') then
@@ -9668,145 +9668,145 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-if Redis:sismember(TheFRADM.."FRADM:DevelopersQ:Groups",Message_Reply.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM.."FRADM:DevelopersQ:Groups",Message_Reply.sender_id.user_id) then
 devQ = "المطور الثانوي ، " 
 else 
 devQ = "" 
 end
-if Redis:sismember(TheFRADM.."FRADM:Developers:Groups",Message_Reply.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM.."FRADM:Developers:Groups",Message_Reply.sender_id.user_id) then
 dev = "Myth ، " 
 else 
 dev = "" 
 end
-if Redis:sismember(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id, Message_Reply.sender_id.user_id) then
 crrQ = "المالك ، " 
 else 
 crrQ = "" 
 end
-if Redis:sismember(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id, Message_Reply.sender_id.user_id) then
 crr = "منشئ اساسي ، " 
 else 
 crr = "" 
 end
-if Redis:sismember(TheFRADM..'FRADM:Originators:Group'..msg_chat_id, Message_Reply.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM..'FRADM:Originators:Group'..msg_chat_id, Message_Reply.sender_id.user_id) then
 cr = "منشئ ، " 
 else 
 cr = "" 
 end
-if Redis:sismember(TheFRADM..'FRADM:Managers:Group'..msg_chat_id, Message_Reply.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM..'FRADM:Managers:Group'..msg_chat_id, Message_Reply.sender_id.user_id) then
 own = "مدير ، " 
 else 
 own = "" 
 end
-if Redis:sismember(TheFRADM..'FRADM:Addictive:Group'..msg_chat_id, Message_Reply.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM..'FRADM:Addictive:Group'..msg_chat_id, Message_Reply.sender_id.user_id) then
 mod = "ادمن ، " 
 else 
 mod = "" 
 end
-if Redis:sismember(TheFRADM..'FRADM:Distinguished:Group'..msg_chat_id, Message_Reply.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM..'FRADM:Distinguished:Group'..msg_chat_id, Message_Reply.sender_id.user_id) then
 vip = "مميز ، " 
 else 
 vip = ""
 end
-if The_ControllerAll(Message_Reply.return merolua.sender_id.user_id) == true then
+if The_ControllerAll(Message_Reply.sender_id.user_id) == true then
 Rink = 1
-elseif Redis:sismember(TheFRADM.."FRADM:DevelopersQ:Groups",Message_Reply.return merolua.sender_id.user_id)  then
+elseif Redis:sismember(TheFRADM.."FRADM:DevelopersQ:Groups",Message_Reply.sender_id.user_id)  then
 Rink = 2
-elseif Redis:sismember(TheFRADM.."FRADM:Developers:Groups",Message_Reply.return merolua.sender_id.user_id)  then
+elseif Redis:sismember(TheFRADM.."FRADM:Developers:Groups",Message_Reply.sender_id.user_id)  then
 Rink = 3
-elseif Redis:sismember(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id) then
+elseif Redis:sismember(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id, Message_Reply.sender_id.user_id) then
 Rink = 4
-elseif Redis:sismember(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id) then
+elseif Redis:sismember(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id, Message_Reply.sender_id.user_id) then
 Rink = 5
-elseif Redis:sismember(TheFRADM.."FRADM:Originators:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id) then
+elseif Redis:sismember(TheFRADM.."FRADM:Originators:Group"..msg_chat_id, Message_Reply.sender_id.user_id) then
 Rink = 6
-elseif Redis:sismember(TheFRADM.."FRADM:Managers:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id) then
+elseif Redis:sismember(TheFRADM.."FRADM:Managers:Group"..msg_chat_id, Message_Reply.sender_id.user_id) then
 Rink = 7
-elseif Redis:sismember(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id) then
+elseif Redis:sismember(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id, Message_Reply.sender_id.user_id) then
 Rink = 8
-elseif Redis:sismember(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id) then
+elseif Redis:sismember(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id, Message_Reply.sender_id.user_id) then
 Rink = 9
 else
 Rink = 10
 end
-if StatusCanOrNotCan(msg_chat_id,Message_Reply.return merolua.sender_id.user_id) == false then
+if StatusCanOrNotCan(msg_chat_id,Message_Reply.sender_id.user_id) == false then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ ليس لديه اي رتبه هنا ","md",true)  
 end
 if msg.ControllerBot then
 if Rink == 1 or Rink < 1 then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ لا يمكن تنزيل رتبه نفس رتبتك ولا اعلى من رتبتك ","md",true)  
 end
-Redis:srem(TheFRADM.."FRADM:DevelopersQ:Groups",Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Developers:Groups",Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Originators:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Managers:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:DevelopersQ:Groups",Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Developers:Groups",Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Originators:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Managers:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
 elseif msg.DevelopersQ then
 if Rink == 2 or Rink < 2 then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ لا يمكن تنزيل رتبه نفس رتبتك ولا اعلى من رتبتك ","md",true)  
 end
-Redis:srem(TheFRADM.."FRADM:Developers:Groups",Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Originators:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Managers:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Developers:Groups",Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Originators:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Managers:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
 elseif msg.Developers then
 if Rink == 3 or Rink < 3 then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ لا يمكن تنزيل رتبه نفس رتبتك ولا اعلى من رتبتك ","md",true)  
 end
-Redis:srem(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Originators:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Managers:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Originators:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Managers:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
 elseif msg.TheBasicsQ then
 if Rink == 4 or Rink < 4 then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ لا يمكن تنزيل رتبه نفس رتبتك ولا اعلى من رتبتك ","md",true)  
 end
-Redis:srem(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Originators:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Managers:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Originators:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Managers:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
 elseif msg.TheBasics then
 if Rink == 5 or Rink < 5 then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ لا يمكن تنزيل رتبه نفس رتبتك ولا اعلى من رتبتك ","md",true)  
 end
-Redis:srem(TheFRADM.."FRADM:Originators:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Managers:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Originators:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Managers:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
 elseif msg.Originators then
 if Rink == 6 or Rink < 6 then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ لا يمكن تنزيل رتبه نفس رتبتك ولا اعلى من رتبتك ","md",true)  
 end
-Redis:srem(TheFRADM.."FRADM:Managers:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Managers:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
 elseif msg.Managers then
 if Rink == 7 or Rink < 7 then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ لا يمكن تنزيل رتبه نفس رتبتك ولا اعلى من رتبتك ","md",true)  
 end
-Redis:srem(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
-Redis:srem(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
 elseif msg.Addictive then
 if Rink == 8 or Rink < 8 then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ لا يمكن تنزيل رتبه نفس رتبتك ولا اعلى من رتبتك ","md",true)  
 end
-Redis:srem(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id, Message_Reply.return merolua.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id, Message_Reply.sender_id.user_id)
 end
 return merolua.send(msg_chat_id,msg_id,"\n⇜ تم تنزيله من الرتب التاليه ( "..devQ..""..dev..""..crrQ..""..crr..""..cr..""..own..""..mod..""..vip.." )","md",true)  
 end
@@ -9996,7 +9996,7 @@ local deleteMessages = bot.deleteMessages(msg.chat_id,{[1]= Message})
 var(deleteMessages)
 Message = Message - 1048576
 end
-return merolua.send(msg_chat_id, msg_id, "⇜ تم مسح "..NumMessage.. ' رسالة', 'md')
+send(msg_chat_id, msg_id, "⇜ تم مسح "..NumMessage.. ' رسالة', 'md')
 end
 if text == ('رفع مشرف بكل الصلاحيات') and msg.reply_to_message_id ~= 0 then
 if not msg.TheBasicsQ then
@@ -10017,14 +10017,14 @@ if GetInfoBot(msg).SetAdmin == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ البوت ليس لديه صلاحيه اضافة مشرفين ',"md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-https.request("https://api.telegram.org/bot" .. Token .. "/promoteChatMember?chat_id=" .. msg.chat_id .. "&user_id=" ..Message_Reply.return merolua.sender_id.user_id.."&&can_manage_voice_chats=true&can_change_info=True&can_delete_messages=True&can_invite_users=True&can_restrict_members=True&can_pin_messages=True&can_promote_members=True")
+https.request("https://api.telegram.org/bot" .. Token .. "/promoteChatMember?chat_id=" .. msg.chat_id .. "&user_id=" ..Message_Reply.sender_id.user_id.."&&can_manage_voice_chats=true&can_change_info=True&can_delete_messages=True&can_invite_users=True&can_restrict_members=True&can_pin_messages=True&can_promote_members=True")
 return merolua.send(msg_chat_id, msg_id, "⇜  تم رفعه مشرف بكافة الصلاحيات", 'md')
 end
 if text and text:match('^رفع مشرف بكل الصلاحيات @(%S+)$') then
@@ -10078,23 +10078,23 @@ if GetInfoBot(msg).SetAdmin == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ البوت ليس لديه صلاحيه اضافة مشرفين ',"md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-local SetAdmin = bot.setChatMemberStatus(msg.chat_id,Message_Reply.return merolua.sender_id.user_id,'administrator',{1 ,1, 0, 0, 0, 0, 0 , 0, 0, 0, 0, 0, ''})
+local SetAdmin = bot.setChatMemberStatus(msg.chat_id,Message_Reply.sender_id.user_id,'administrator',{1 ,1, 0, 0, 0, 0, 0 , 0, 0, 0, 0, 0, ''})
 if SetAdmin.code == 3 then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ لا يمكنني رفعه ليس لدي صلاحيات ","md",true)  
 end
-https.request("https://api.telegram.org/bot" .. Token .. "/promoteChatMember?chat_id=" .. msg.chat_id .. "&user_id=" ..Message_Reply.return merolua.sender_id.user_id.."&&can_manage_voice_chats=true")
+https.request("https://api.telegram.org/bot" .. Token .. "/promoteChatMember?chat_id=" .. msg.chat_id .. "&user_id=" ..Message_Reply.sender_id.user_id.."&&can_manage_voice_chats=true")
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = '- تعديل الصلاحيات ', data = msg.return merolua.sender_id.user_id..'/groupNumseteng//'..Message_Reply.return merolua.sender_id.user_id}, 
+{text = '- تعديل الصلاحيات ', data = msg.sender_id.user_id..'/groupNumseteng//'..Message_Reply.sender_id.user_id}, 
 },
 }
 }
@@ -10138,7 +10138,7 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = '- تعديل الصلاحيات ', data = msg.return merolua.sender_id.user_id..'/groupNumseteng//'..UserId_Info.id}, 
+{text = '- تعديل الصلاحيات ', data = msg.sender_id.user_id..'/groupNumseteng//'..UserId_Info.id}, 
 },
 }
 }
@@ -10163,21 +10163,21 @@ if GetInfoBot(msg).SetAdmin == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ البوت ليس لديه صلاحيه اضافة مشرفين ',"md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-local SetAdmin = bot.setChatMemberStatus(msg.chat_id,Message_Reply.return merolua.sender_id.user_id,'administrator',{0 ,0, 0, 0, 0, 0, 0 ,0, 0})
+local SetAdmin = bot.setChatMemberStatus(msg.chat_id,Message_Reply.sender_id.user_id,'administrator',{0 ,0, 0, 0, 0, 0, 0 ,0, 0})
 if SetAdmin.code == 400 then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ لست انا من قام برفعه مشرف","md",true)  
 end
 if SetAdmin.code == 3 then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ لا يمكنني تنزيله ليس لدي صلاحيات ","md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ تم تنزيله من المشرفين ").Reply,"md",true)  
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ تم تنزيله من المشرفين ").Reply,"md",true)  
 end
 if text and text:match('^تنزيل مشرف @(%S+)$') then
 local UserName = text:match('^تنزيل مشرف @(%S+)$')
@@ -10218,7 +10218,7 @@ end
 return merolua.send(msg_chat_id,msg_id,Reply_Status(UserId_Info.id,"⇜ تم تنزيله من المشرفين ").Reply,"md",true)  
 end 
 if text == ('رفع مالك اساسي') and msg.reply_to_message_id ~= 0 then
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.MalekAsase then
@@ -10241,19 +10241,19 @@ if msg.can_be_deleted_for_all_users == false then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً البوت ليس ادمن في القروب يرجى رفعه وتفعيل الصلاحيات له ","md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-Redis:sadd(TheFRADM.."FRADM:MalekAsase:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر رفعته مالك اساسي ").Reply,"md",true)  
+Redis:sadd(TheFRADM.."FRADM:MalekAsase:Group"..msg_chat_id,Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر رفعته مالك اساسي ").Reply,"md",true)  
 end
 if text and text:match('^رفع مالك اساسي @(%S+)$') then
 local UserName = text:match('^رفع مالك اساسي @(%S+)$')
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.MalekAsase then
@@ -10289,7 +10289,7 @@ Redis:sadd(TheFRADM.."FRADM:MalekAsase:Group"..msg_chat_id,UserId_Info.id)
 return merolua.send(msg_chat_id,msg_id,Reply_Status(UserId_Info.id,"⇜ ابشر رفعته مالك اساسي ").Reply,"md",true)  
 end 
 if text == ('تنزيل مالك اساسي') and msg.reply_to_message_id ~= 0 then
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.MalekAsase then
@@ -10312,19 +10312,19 @@ if msg.can_be_deleted_for_all_users == false then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً البوت ليس ادمن في القروب يرجى رفعه وتفعيل الصلاحيات له ","md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-Redis:srem(TheFRADM.."FRADM:MalekAsase:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ تم تنزيله مالك اساسي ").Reply,"md",true)  
+Redis:srem(TheFRADM.."FRADM:MalekAsase:Group"..msg_chat_id,Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ تم تنزيله مالك اساسي ").Reply,"md",true)  
 end
 if text and text:match('^تنزيل مالك اساسي @(%S+)$') then
 local UserName = text:match('^تنزيل مالك اساسي @(%S+)$')
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.MalekAsase then
@@ -10360,7 +10360,7 @@ Redis:srem(TheFRADM.."FRADM:MalekAsase:Group"..msg_chat_id,UserId_Info.id)
 return merolua.send(msg_chat_id,msg_id,Reply_Status(UserId_Info.id,"⇜ تم تنزيله مالك اساسي ").Reply,"md",true)  
 end 
 if text == 'المالكين الاساسيين' then
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.MalekAsase then
@@ -10394,11 +10394,11 @@ end
 end
 local reply_markup = bot.replyMarkup{
 type = 'inline',
-data = {{{text = '- مسح المالكين الاساسيين', data = msg.return merolua.sender_id.user_id..'/MalekAsase'},},}}
+data = {{{text = '- مسح المالكين الاساسيين', data = msg.sender_id.user_id..'/MalekAsase'},},}}
 return merolua.send(msg_chat_id, msg_id, ListMembers, 'md')
 end
 if text == 'مسح المالكين الاساسيين' then
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.MalekAsase then
@@ -10449,15 +10449,15 @@ if msg.can_be_deleted_for_all_users == false then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً البوت ليس مشرف في القروب يرجى رفعه واعطائه الصلاحيات ","md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-Redis:sadd(TheFRADM.."FRADM:Distinguishedall:Group",Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر رفعته مدير عام ").Reply,"md",true)  
+Redis:sadd(TheFRADM.."FRADM:Distinguishedall:Group",Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر رفعته مدير عام ").Reply,"md",true)  
 end
 if text and text:match('^رفع مدير عام @(%S+)$') then
 local UserName = text:match('^رفع مدير عام @(%S+)$')
@@ -10504,15 +10504,15 @@ if msg.can_be_deleted_for_all_users == false then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً البوت ليس مشرف في القروب يرجى رفعه واعطائه الصلاحيات ","md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-Redis:srem(TheFRADM.."FRADM:Distinguishedall:Group",Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر نزلته مدير عام ").Reply,"md",true)  
+Redis:srem(TheFRADM.."FRADM:Distinguishedall:Group",Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر نزلته مدير عام ").Reply,"md",true)  
 end
 if text and text:match('^تنزيل مدير عام @(%S+)$') then
 local UserName = text:match('^تنزيل مدير عام @(%S+)$')
@@ -10596,7 +10596,7 @@ return merolua.send(msg_chat_id,msg_id,Reply_Status(UserId_Info.id,"⇜ ابشر
 end
 end
 if UserName[1] == "مالك" then
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.MalekAsase then
@@ -10672,7 +10672,7 @@ return merolua.send(msg_chat_id,msg_id,Reply_Status(UserId_Info.id,"⇜ ابشر
 end
 end
 if UserName[1] == "ادمن" then
-if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.sender_id.user_id) then
 testmod = true
 elseif msg.Managers then
 testmod = true
@@ -10728,7 +10728,7 @@ end
 if text and text:match("^تنزيل (.*)$") and msg.reply_to_message_id ~= 0 then
 local TextMsg = text:match("^تنزيل (.*)$")
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
@@ -10747,11 +10747,11 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-if not Redis:sismember(TheFRADM.."FRADM:DevelopersQ:Groups",Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ من قبل مو المطور الثانوي ").Reply,"md",true)  
+if not Redis:sismember(TheFRADM.."FRADM:DevelopersQ:Groups",Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ من قبل مو المطور الثانوي ").Reply,"md",true)  
 else
-Redis:srem(TheFRADM.."FRADM:DevelopersQ:Groups",Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر نزلته من المطور الثانوي").Reply,"md",true)  
+Redis:srem(TheFRADM.."FRADM:DevelopersQ:Groups",Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر نزلته من المطور الثانوي").Reply,"md",true)  
 end
 end
 if TextMsg == 'M' then
@@ -10766,15 +10766,15 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-if not Redis:sismember(TheFRADM.."FRADM:Developers:Groups",Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ من قبل مو Myth ").Reply,"md",true)  
+if not Redis:sismember(TheFRADM.."FRADM:Developers:Groups",Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ من قبل مو Myth ").Reply,"md",true)  
 else
-Redis:srem(TheFRADM.."FRADM:Developers:Groups",Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر نزلته من Myth ").Reply,"md",true)  
+Redis:srem(TheFRADM.."FRADM:Developers:Groups",Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر نزلته من Myth ").Reply,"md",true)  
 end
 end
 if TextMsg == "مالك" then
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.MalekAsase then
@@ -10785,11 +10785,11 @@ end
 if statusvar == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(3)..' او مالك القروب ) ',"md",true)  
 end
-if not Redis:sismember(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ من قبل مو مالك ").Reply,"md",true)  
+if not Redis:sismember(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id,Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ من قبل مو مالك ").Reply,"md",true)  
 else
-Redis:srem(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر نزلته من مالك ").Reply,"md",true)  
+Redis:srem(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id,Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر نزلته من مالك ").Reply,"md",true)  
 end
 end
 if TextMsg == "منشئ اساسي" then
@@ -10804,11 +10804,11 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-if not Redis:sismember(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ من قبل مو منشئ اساسي ").Reply,"md",true)  
+if not Redis:sismember(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id,Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ من قبل مو منشئ اساسي ").Reply,"md",true)  
 else
-Redis:srem(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر نزلته من منشئ اساسي ").Reply,"md",true)  
+Redis:srem(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id,Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر نزلته من منشئ اساسي ").Reply,"md",true)  
 end
 end
 if TextMsg == "منشئ" then
@@ -10823,11 +10823,11 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-if not Redis:sismember(TheFRADM.."FRADM:Originators:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ من قبل مو منشئ ").Reply,"md",true)  
+if not Redis:sismember(TheFRADM.."FRADM:Originators:Group"..msg_chat_id,Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ من قبل مو منشئ ").Reply,"md",true)  
 else
-Redis:srem(TheFRADM.."FRADM:Originators:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر نزلته من المنشئين ").Reply,"md",true)  
+Redis:srem(TheFRADM.."FRADM:Originators:Group"..msg_chat_id,Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر نزلته من المنشئين ").Reply,"md",true)  
 end
 end
 if TextMsg == "مدير" then
@@ -10842,15 +10842,15 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-if not Redis:sismember(TheFRADM.."FRADM:Managers:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ من قبل مو مدير ").Reply,"md",true)  
+if not Redis:sismember(TheFRADM.."FRADM:Managers:Group"..msg_chat_id,Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ من قبل مو مدير ").Reply,"md",true)  
 else
-Redis:srem(TheFRADM.."FRADM:Managers:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر نزلته من مدير ").Reply,"md",true)  
+Redis:srem(TheFRADM.."FRADM:Managers:Group"..msg_chat_id,Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر نزلته من مدير ").Reply,"md",true)  
 end
 end
 if TextMsg == "ادمن" then
-if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.sender_id.user_id) then
 testmod = true
 elseif msg.Managers then
 testmod = true
@@ -10868,11 +10868,11 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-if not Redis:sismember(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ من قبل مو ادمن ").Reply,"md",true)  
+if not Redis:sismember(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id,Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ من قبل مو ادمن ").Reply,"md",true)  
 else
-Redis:srem(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر نزلته من ادمن ").Reply,"md",true)  
+Redis:srem(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id,Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر نزلته من ادمن ").Reply,"md",true)  
 end
 end
 if TextMsg == "مميز" then
@@ -10887,17 +10887,17 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-if not Redis:sismember(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ من قبل مو مميز ").Reply,"md",true)  
+if not Redis:sismember(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id,Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ من قبل مو مميز ").Reply,"md",true)  
 else
-Redis:srem(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر نزلته من مميز ").Reply,"md",true)  
+Redis:srem(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id,Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر نزلته من مميز ").Reply,"md",true)  
 end
 end
 if not Redis:get(TheFRADM..'Redis:setRt'..msg.chat_id) then
 if TextMsg ~= "MY" or TextMsg ~= "M" or TextMsg ~= "مالك" or TextMsg ~= "منشئ اساسي" or TextMsg ~= "منشئ" or TextMsg ~= "مدير" or TextMsg ~= "ادمن" or TextMsg ~= "مميز" then
 if msg.Distinguished then
-Redis:del(TheFRADM..'FRADM:SetRt'..msg_chat_id..':'..Message_Reply.return merolua.sender_id.user_id)
+Redis:del(TheFRADM..'FRADM:SetRt'..msg_chat_id..':'..Message_Reply.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,"\n⇜ مسحت رتبته","md",true)
 end
 end
@@ -10954,7 +10954,7 @@ return merolua.send(msg_chat_id,msg_id,Reply_Status(UserId,"⇜ ابشر نزل�
 end
 end
 if UserId[1] == "مالك" then
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.MalekAsase then
@@ -11030,7 +11030,7 @@ return merolua.send(msg_chat_id,msg_id,Reply_Status(UserId[2],"⇜ ابشر نز
 end
 end
 if UserId[1] == "ادمن" then
-if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.sender_id.user_id) then
 testmod = true
 elseif msg.Managers then
 testmod = true
@@ -11134,7 +11134,7 @@ return merolua.send(msg_chat_id,msg_id,Reply_Status(UserId_Info.id,"⇜ ابشر
 end
 end
 if UserName[1] == "مالك" then
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.MalekAsase then
@@ -11210,7 +11210,7 @@ return merolua.send(msg_chat_id,msg_id,Reply_Status(UserId_Info.id,"⇜ ابشر
 end
 end
 if UserName[1] == "ادمن" then
-if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.sender_id.user_id) then
 testmod = true
 elseif msg.Managers then
 testmod = true
@@ -11272,7 +11272,7 @@ end
 if text and text:match("^رفع (.*)$") and msg.reply_to_message_id ~= 0 then
 local TextMsg = text:match("^رفع (.*)$")
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
@@ -11291,11 +11291,11 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-if Redis:sismember(TheFRADM.."FRADM:DevelopersQ:Groups",Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ من قبل المطور الثانوي ").Reply,"md",true)  
+if Redis:sismember(TheFRADM.."FRADM:DevelopersQ:Groups",Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ من قبل المطور الثانوي ").Reply,"md",true)  
 else
-Redis:sadd(TheFRADM.."FRADM:DevelopersQ:Groups",Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر رفعته المطور الثانوي").Reply,"md",true)  
+Redis:sadd(TheFRADM.."FRADM:DevelopersQ:Groups",Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر رفعته المطور الثانوي").Reply,"md",true)  
 end
 end
 if TextMsg == 'M' then
@@ -11310,15 +11310,15 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-if Redis:sismember(TheFRADM.."FRADM:Developers:Groups",Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ من قبل Myth ").Reply,"md",true)  
+if Redis:sismember(TheFRADM.."FRADM:Developers:Groups",Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ من قبل Myth ").Reply,"md",true)  
 else
-Redis:sadd(TheFRADM.."FRADM:Developers:Groups",Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر رفعته Myth ").Reply,"md",true)  
+Redis:sadd(TheFRADM.."FRADM:Developers:Groups",Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر رفعته Myth ").Reply,"md",true)  
 end
 end
 if TextMsg == "مالك" then
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.MalekAsase then
@@ -11329,11 +11329,11 @@ end
 if statusvar == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(3)..' او مالك القروب ) ',"md",true)  
 end
-if Redis:sismember(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ من قبل مالك ").Reply,"md",true)  
+if Redis:sismember(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id,Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ من قبل مالك ").Reply,"md",true)  
 else
-Redis:sadd(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر رفعته مالك ").Reply,"md",true)  
+Redis:sadd(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id,Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر رفعته مالك ").Reply,"md",true)  
 end
 end
 if TextMsg == "منشئ اساسي" then
@@ -11348,11 +11348,11 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-if Redis:sismember(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ من قبل منشئ اساسي ").Reply,"md",true)  
+if Redis:sismember(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id,Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ من قبل منشئ اساسي ").Reply,"md",true)  
 else
-Redis:sadd(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر رفعته منشئ اساسي ").Reply,"md",true)  
+Redis:sadd(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id,Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر رفعته منشئ اساسي ").Reply,"md",true)  
 end
 end
 if TextMsg == "منشئ" then
@@ -11367,11 +11367,11 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-if Redis:sismember(TheFRADM.."FRADM:Originators:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ من قبل منشئ ").Reply,"md",true)  
+if Redis:sismember(TheFRADM.."FRADM:Originators:Group"..msg_chat_id,Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ من قبل منشئ ").Reply,"md",true)  
 else
-Redis:sadd(TheFRADM.."FRADM:Originators:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر رفعته منشئ ").Reply,"md",true)  
+Redis:sadd(TheFRADM.."FRADM:Originators:Group"..msg_chat_id,Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر رفعته منشئ ").Reply,"md",true)  
 end
 end
 if TextMsg == "مدير" then
@@ -11386,15 +11386,15 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-if Redis:sismember(TheFRADM.."FRADM:Managers:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ من قبل مدير ").Reply,"md",true)  
+if Redis:sismember(TheFRADM.."FRADM:Managers:Group"..msg_chat_id,Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ من قبل مدير ").Reply,"md",true)  
 else
-Redis:sadd(TheFRADM.."FRADM:Managers:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر رفعته مدير  ").Reply,"md",true)  
+Redis:sadd(TheFRADM.."FRADM:Managers:Group"..msg_chat_id,Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر رفعته مدير  ").Reply,"md",true)  
 end
 end
 if TextMsg == "ادمن" then
-if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.sender_id.user_id) then
 testmod = true
 elseif msg.Managers then
 testmod = true
@@ -11415,11 +11415,11 @@ end
 if not msg.Originators and not Redis:get(TheFRADM.."FRADM:Status:SetId"..msg_chat_id) then
 return merolua.send(msg_chat_id,msg_id,"⇜ الرفع معطل من قبل المنشئين","md",true)
 end 
-if Redis:sismember(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ من قبل ادمن ").Reply,"md",true)  
+if Redis:sismember(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id,Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ من قبل ادمن ").Reply,"md",true)  
 else
-Redis:sadd(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر رفعته ادمن  ").Reply,"md",true)  
+Redis:sadd(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id,Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر رفعته ادمن  ").Reply,"md",true)  
 end
 end
 if TextMsg == "مميز" then
@@ -11437,17 +11437,17 @@ end
 if not msg.Originators and not Redis:get(TheFRADM.."FRADM:Status:SetId"..msg_chat_id) then
 return merolua.send(msg_chat_id,msg_id,"⇜ الرفع معطل من قبل المنشئين","md",true)
 end 
-if Redis:sismember(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ من قبل مميز ").Reply,"md",true)  
+if Redis:sismember(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id,Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ من قبل مميز ").Reply,"md",true)  
 else
-Redis:sadd(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر رفعته مميز  ").Reply,"md",true)  
+Redis:sadd(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id,Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر رفعته مميز  ").Reply,"md",true)  
 end
 end
 if not Redis:get(TheFRADM..'Redis:setRt'..msg.chat_id) then
 if TextMsg ~= "MY" or TextMsg ~= "M" or TextMsg ~= "مالك" or TextMsg ~= "منشئ اساسي" or TextMsg ~= "منشئ" or TextMsg ~= "مدير" or TextMsg ~= "ادمن" or TextMsg ~= "مميز" then
 if msg.Distinguished then
-Redis:set(TheFRADM..'FRADM:SetRt'..msg_chat_id..':'..Message_Reply.return merolua.sender_id.user_id,TextMsg)
+Redis:set(TheFRADM..'FRADM:SetRt'..msg_chat_id..':'..Message_Reply.sender_id.user_id,TextMsg)
 return merolua.send(msg_chat_id,msg_id,"\n⇜ ابشر رفعته "..TextMsg.."","md",true)
 end
 end
@@ -11504,7 +11504,7 @@ return merolua.send(msg_chat_id,msg_id,Reply_Status(UserId,"⇜ ابشر رفع�
 end
 end
 if UserId[1] == "مالك" then
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.MalekAsase then
@@ -11588,7 +11588,7 @@ return merolua.send(msg_chat_id,msg_id,Reply_Status(UserId[2],"⇜ ابشر رف
 end
 end
 if UserId[1] == "ادمن" then
-if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.sender_id.user_id) then
 testmod = true
 elseif msg.Managers then
 testmod = true
@@ -11773,7 +11773,7 @@ local Textingt = {"❤️", "🧡", "💛", "💚", "💙", "💜", "🖤", "�
 local Descriptiont = Textingt[math.random(#Textingt)]
 ls = ls..' ['..Descriptiont..'](tg://user?id='..v.member_id.user_id..')\n'
 end
-return merolua.send(msg.chat_id,msg.id,ls,"md",true)  
+send(msg.chat_id,msg.id,ls,"md",true)  
 end
 if text == 'تاك للكل' or text == "تاق للكل" or text == "منشن للكل" and (Redis:get(TheFRADM..'tagallgroup'..msg.chat_id) == "open") then
 if not msg.Addictive then
@@ -11798,7 +11798,7 @@ Creator = "⇜ مالك القروب : [@"..UserInfo.username.."]\n"
 else
 Creator = "⇜ مالك القروب : ["..FlterBio(UserInfo.first_name).."](tg://user?id="..UserInfo.id..")\n"
 end
-return merolua.send(msg_chat_id,msg_id,Creator,"md",true)
+send(msg_chat_id,msg_id,Creator,"md",true)
 end
 end
 end
@@ -11813,7 +11813,7 @@ else
 ListMembers = ListMembers..""..k.." - ["..v.."](tg://user?id="..v..")\n"
 end
 end
-return merolua.send(msg_chat_id, msg_id, ListMembers, 'md')
+send(msg_chat_id, msg_id, ListMembers, 'md')
 end
 local Info_Members = Redis:smembers(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id) 
 if #Info_Members ~= 0 then
@@ -11826,7 +11826,7 @@ else
 ListMembers = ListMembers..""..k.." - ["..v.."](tg://user?id="..v..")\n"
 end
 end
-return merolua.send(msg_chat_id, msg_id, ListMembers, 'md')
+send(msg_chat_id, msg_id, ListMembers, 'md')
 end
 local Info_Members = Redis:smembers(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id) 
 if #Info_Members ~= 0 then
@@ -11839,7 +11839,7 @@ else
 ListMembers = ListMembers..""..k.." - ["..v.."](tg://user?id="..v..")\n"
 end
 end
-return merolua.send(msg_chat_id, msg_id, ListMembers, 'md')
+send(msg_chat_id, msg_id, ListMembers, 'md')
 end
 local Info_Members = Redis:smembers(TheFRADM.."FRADM:Originators:Group"..msg_chat_id) 
 if #Info_Members ~= 0 then
@@ -11852,7 +11852,7 @@ else
 ListMembers = ListMembers..""..k.." - ["..v.."](tg://user?id="..v..")\n"
 end
 end
-return merolua.send(msg_chat_id, msg_id, ListMembers, 'md')
+send(msg_chat_id, msg_id, ListMembers, 'md')
 end
 local Info_Members = Redis:smembers(TheFRADM.."FRADM:Managers:Group"..msg_chat_id) 
 if #Info_Members ~= 0 then
@@ -11865,7 +11865,7 @@ else
 ListMembers = ListMembers..""..k.." - ["..v.."](tg://user?id="..v..")\n"
 end
 end
-return merolua.send(msg_chat_id, msg_id, ListMembers, 'md')
+send(msg_chat_id, msg_id, ListMembers, 'md')
 end
 local Info_Members = Redis:smembers(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id) 
 if #Info_Members ~= 0 then
@@ -11878,7 +11878,7 @@ else
 ListMembers = ListMembers..""..k.." - ["..v.."](tg://user?id="..v..")\n"
 end
 end
-return merolua.send(msg_chat_id, msg_id, ListMembers, 'md')
+send(msg_chat_id, msg_id, ListMembers, 'md')
 end
 local Info_Members = Redis:smembers(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id) 
 if #Info_Members ~= 0 then
@@ -11891,7 +11891,7 @@ else
 ListMembers = ListMembers..""..k.." - ["..v.."](tg://user?id="..v..")\n"
 end
 end
-return merolua.send(msg_chat_id, msg_id, ListMembers, 'md')
+send(msg_chat_id, msg_id, ListMembers, 'md')
 end
 local Info_Members = bot.searchChatMembers(msg_chat_id, "*", 200)
 local List_Members = Info_Members.members
@@ -11904,7 +11904,7 @@ else
 listall = listall..""..k.." - ["..UserInfo.id.."](tg://user?id="..UserInfo.id..")\n"
 end
 end
-return merolua.send(msg_chat_id,msg_id,listall,"md",true)  
+send(msg_chat_id,msg_id,listall,"md",true)  
 end
 if text == 'قائمه MY' or text == 'المطورين الثانوين' then
 if not msg.ControllerBot then 
@@ -11933,7 +11933,7 @@ end
 end
 local reply_markup = bot.replyMarkup{
 type = 'inline',
-data = {{{text = 'مسح المطور الثانوي', data = msg.return merolua.sender_id.user_id..'/DevelopersQ'},},}}
+data = {{{text = 'مسح المطور الثانوي', data = msg.sender_id.user_id..'/DevelopersQ'},},}}
 return merolua.send(msg_chat_id, msg_id, ListMembers, 'md', false, false, false, false, reply_markup)
 end
 if text == 'قائمه M' then
@@ -11963,11 +11963,11 @@ end
 end
 local reply_markup = bot.replyMarkup{
 type = 'inline',
-data = {{{text = 'مسح قائمه Myth', data = msg.return merolua.sender_id.user_id..'/Developers'},},}}
+data = {{{text = 'مسح قائمه Myth', data = msg.sender_id.user_id..'/Developers'},},}}
 return merolua.send(msg_chat_id, msg_id, ListMembers, 'md', false, false, false, false, reply_markup)
 end
 if text == 'المالكين' then
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.Originators then
@@ -12001,7 +12001,7 @@ end
 end
 local reply_markup = bot.replyMarkup{
 type = 'inline',
-data = {{{text = 'مسح المالكين', data = msg.return merolua.sender_id.user_id..'/TheBasicsQ'},},}}
+data = {{{text = 'مسح المالكين', data = msg.sender_id.user_id..'/TheBasicsQ'},},}}
 return merolua.send(msg_chat_id, msg_id, ListMembers, 'md')
 end
 if text == 'المنشئين الاساسيين' then
@@ -12031,7 +12031,7 @@ end
 end
 local reply_markup = bot.replyMarkup{
 type = 'inline',
-data = {{{text = 'مسح المنشئين الاساسيين', data = msg.return merolua.sender_id.user_id..'/TheBasics'},},}}
+data = {{{text = 'مسح المنشئين الاساسيين', data = msg.sender_id.user_id..'/TheBasics'},},}}
 return merolua.send(msg_chat_id, msg_id, ListMembers, 'md')
 end
 if text == 'المنشئين' then
@@ -12061,7 +12061,7 @@ end
 end
 local reply_markup = bot.replyMarkup{
 type = 'inline',
-data = {{{text = 'مسح المنشئين', data = msg.return merolua.sender_id.user_id..'/Originators'},},}}
+data = {{{text = 'مسح المنشئين', data = msg.sender_id.user_id..'/Originators'},},}}
 return merolua.send(msg_chat_id, msg_id, ListMembers, 'md')
 end
 if text == 'المدراء' then
@@ -12091,7 +12091,7 @@ end
 end
 local reply_markup = bot.replyMarkup{
 type = 'inline',
-data = {{{text = 'مسح المدراء', data = msg.return merolua.sender_id.user_id..'/Managers'},},}}
+data = {{{text = 'مسح المدراء', data = msg.sender_id.user_id..'/Managers'},},}}
 return merolua.send(msg_chat_id, msg_id, ListMembers, 'md')
 end
 if text == 'الادمنيه' then
@@ -12121,7 +12121,7 @@ end
 end
 local reply_markup = bot.replyMarkup{
 type = 'inline',
-data = {{{text = 'مسح الادمنيه', data = msg.return merolua.sender_id.user_id..'/Addictive'},},}}
+data = {{{text = 'مسح الادمنيه', data = msg.sender_id.user_id..'/Addictive'},},}}
 return merolua.send(msg_chat_id, msg_id, ListMembers, 'md')
 end
 if text == 'المميزين' then
@@ -12151,7 +12151,7 @@ end
 end
 local reply_markup = bot.replyMarkup{
 type = 'inline',
-data = {{{text = 'مسح المميزين', data = msg.return merolua.sender_id.user_id..'/DelDistinguished'},},}}
+data = {{{text = 'مسح المميزين', data = msg.sender_id.user_id..'/DelDistinguished'},},}}
 return merolua.send(msg_chat_id, msg_id, ListMembers, 'md')
 end
 if text == 'المحظورين عام' or text == 'قائمه العام' then
@@ -12181,7 +12181,7 @@ end
 end
 local reply_markup = bot.replyMarkup{
 type = 'inline',
-data = {{{text = 'مسح المحظورين عام', data = msg.return merolua.sender_id.user_id..'/BanAll'},},}}
+data = {{{text = 'مسح المحظورين عام', data = msg.sender_id.user_id..'/BanAll'},},}}
 return merolua.send(msg_chat_id, msg_id, ListMembers, 'md', false, false, false, false, reply_markup)
 end
 if text == 'المحظورين' then
@@ -12211,7 +12211,7 @@ end
 end
 local reply_markup = bot.replyMarkup{
 type = 'inline',
-data = {{{text = 'مسح المحظورين', data = msg.return merolua.sender_id.user_id..'/BanGroup'},},}}
+data = {{{text = 'مسح المحظورين', data = msg.sender_id.user_id..'/BanGroup'},},}}
 return merolua.send(msg_chat_id, msg_id, ListMembers, 'md', false, false, false, false, reply_markup)
 end
 if text == 'المكتومين' then
@@ -12241,7 +12241,7 @@ end
 end
 local reply_markup = bot.replyMarkup{
 type = 'inline',
-data = {{{text = 'مسح المكتومين', data = msg.return merolua.sender_id.user_id..'/SilentGroupGroup'},},}}
+data = {{{text = 'مسح المكتومين', data = msg.sender_id.user_id..'/SilentGroupGroup'},},}}
 return merolua.send(msg_chat_id, msg_id, ListMembers, 'md', false, false, false, false, reply_markup)
 end
 if msg.content.sticker then
@@ -12286,9 +12286,9 @@ t = "⇜ تم مسح ( "..k.." ) من الوسائط تلقائياً\n⇜ يم�
 bot.deleteMessages(msg.chat_id,{[1]= Mesge})
 end
 end
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '⇜ من ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..')\n'
-return merolua.send(msg.chat_id,msg.id, Teext..t,"md",true)
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '⇜ من ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..')\n'
+send(msg.chat_id,msg.id, Teext..t,"md",true)
 Redis:del(TheFRADM.."FRADM:allM"..msg.chat_id)
 end
 end
@@ -12299,7 +12299,7 @@ return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Cont
 end
 local Numbardel = text:match("^ضع عدد المسح (%d+)$")
 Redis:set(TheFRADM.."FRADM:allM:numdel"..msg.chat_id,Numbardel) 
-return merolua.send(msg_chat_id,msg_id, 'تم تعيين عدد المسح : '..Numbardel)
+send(msg_chat_id,msg_id, 'تم تعيين عدد المسح : '..Numbardel)
 end
 if text == ("امسح") or text == ("مسح الميديا") or text == ("تنظيف الميديا") or text == ("مسح الوسائط") or text == ("تنظيف الوسائط") and Redis:get(TheFRADM..'FRADM:Aldel:Chat'..msg.chat_id) then
 if ChannelJoinch(msg) == false then
@@ -12325,9 +12325,9 @@ end
 if #list == 0 then
 t = "⇜ لا يوجد ميديا في القروب"
 end
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '⇜ من ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..')\n'
-return merolua.send(msg.chat_id,msg.id, Teext..t,"md",true)
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '⇜ من ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..')\n'
+send(msg.chat_id,msg.id, Teext..t,"md",true)
 end
 if text == ("الميديا") or text == ("الوسائط") then
 if ChannelJoinch(msg) == false then
@@ -12342,7 +12342,7 @@ if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(6)..' ) ',"md",true)  
 end
 local gmria = Redis:scard(TheFRADM.."FRADM:allM"..msg.chat_id)  
- return merolua.send(msg_chat_id,msg_id,"⇜ عدد الميديا الموجود ( "..gmria.." )","md")
+ send(msg_chat_id,msg_id,"⇜ عدد الميديا الموجود ( "..gmria.." )","md")
 end
 if text == ("مسح الملصقات") or text == ("مسح ملصقات") or text == ("تنظيف الملصقات") or text == ("تنظيف ملصقات") then
 if not msg.Managers then
@@ -12360,9 +12360,9 @@ end
 if #list == 0 then
 t = "⇜ لا يوجد ملصقات في القروب"
 end
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '⇜ من ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..')\n'
-return merolua.send(msg.chat_id,msg.id, Teext..t,"md",true)
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '⇜ من ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..')\n'
+send(msg.chat_id,msg.id, Teext..t,"md",true)
 end
 if text == ("مسح الفيديو") or text == ("مسح فيديو") or text == ("تنظيف الفيديو") or text == ("تنظيف فيديو") then
 if not msg.Managers then
@@ -12380,9 +12380,9 @@ end
 if #list == 0 then
 t = "⇜ لا يوجد فيديو في القروب"
 end
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '⇜ من ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..')\n'
-return merolua.send(msg.chat_id,msg.id, Teext..t,"md",true)
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '⇜ من ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..')\n'
+send(msg.chat_id,msg.id, Teext..t,"md",true)
 end
 if text == ("مسح الملفات") or text == ("مسح ملفات") or text == ("تنظيف الملفات") or text == ("تنظيف ملفات") then
 if not msg.Managers then
@@ -12400,9 +12400,9 @@ end
 if #list == 0 then
 t = "⇜ لا يوجد ملفات في القروب"
 end
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '⇜ من ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..')\n'
-return merolua.send(msg.chat_id,msg.id, Teext..t,"md",true)
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '⇜ من ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..')\n'
+send(msg.chat_id,msg.id, Teext..t,"md",true)
 end
 if text == ("مسح الصوت") or text == ("مسح صوت") or text == ("تنظيف الصوت") or text == ("تنظيف صوت") or text == ("مسح الصوتيات") or text == ("تنظيف الصوتيات") then
 if not msg.Managers then
@@ -12420,9 +12420,9 @@ end
 if #list == 0 then
 t = "⇜ لا يوجد صوتيات في القروب"
 end
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '⇜ من ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..')\n'
-return merolua.send(msg.chat_id,msg.id, Teext..t,"md",true)
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '⇜ من ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..')\n'
+send(msg.chat_id,msg.id, Teext..t,"md",true)
 end
 if text == ("مسح الفويسات") or text == ("مسح البصمات") or text == ("تنظيف الفويسات") or text == ("تنظيف البصمات") then
 if not msg.Managers then
@@ -12440,9 +12440,9 @@ end
 if #list == 0 then
 t = "⇜ لا يوجد فويسات في القروب"
 end
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '⇜ من ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..')\n'
-return merolua.send(msg.chat_id,msg.id, Teext..t,"md",true)
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '⇜ من ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..')\n'
+send(msg.chat_id,msg.id, Teext..t,"md",true)
 end
 if text == ("مسح الصور") or text == ("مسح صور") or text == ("تنظيف الصور") or text == ("تنظيف صور") then
 if not msg.Managers then
@@ -12460,9 +12460,9 @@ end
 if #list == 0 then
 t = "⇜ لا يوجد صور في القروب"
 end
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '⇜ من ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..')\n'
-return merolua.send(msg.chat_id,msg.id, Teext..t,"md",true)
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '⇜ من ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..')\n'
+send(msg.chat_id,msg.id, Teext..t,"md",true)
 end
 if text == ("مسح القيفات") or text == ("مسح المتحركات") or text == ("تنظيف القيفات") or text == ("تنظيف المتحركات") or text == ("مسح متحركات") or text == ("مسح المتحركة") or text == ("مسح المتحركه") then
 if not msg.Managers then
@@ -12480,9 +12480,9 @@ end
 if #list == 0 then
 t = "⇜ لا يوجد قيفات في القروب"
 end
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Teext = '⇜ من ['..UserInfo.first_name..'](tg://user?id='..msg.return merolua.sender_id.user_id..')\n'
-return merolua.send(msg.chat_id,msg.id, Teext..t,"md",true)
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Teext = '⇜ من ['..UserInfo.first_name..'](tg://user?id='..msg.sender_id.user_id..')\n'
+send(msg.chat_id,msg.id, Teext..t,"md",true)
 end
 if text and text:match("^برج (.*)$") and not Redis:get(TheFRADM.."brjj"..msg.chat_id) then
 if ChannelJoinch(msg) == false then
@@ -12495,7 +12495,7 @@ return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في ق�
 end
 local Textbrj = text:match("^برج (.*)$")
 gk = io.popen('curl -s "https://api-jack.ml/api15.php?Text='..URL.escape(Textbrj)..'"'):read('*a')
-return merolua.send(msg_chat_id,msg_id, gk, "md",true)
+send(msg_chat_id,msg_id, gk, "md",true)
 end
 if text and text:match('^حظر عام @(%S+)$') then
 local UserName = text:match('^حظر عام @(%S+)$')
@@ -12564,7 +12564,7 @@ end
 end
 if text and text:match('^حظر @(%S+)$') then
 local UserName = text:match('^حظر @(%S+)$')
-if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.sender_id.user_id) then
 testmod = true
 elseif msg.Addictive then
 testmod = true
@@ -12614,7 +12614,7 @@ end
 end
 if text and text:match('^الغاء حظر @(%S+)$') then
 local UserName = text:match('^الغاء حظر @(%S+)$')
-if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.sender_id.user_id) then
 testmod = true
 elseif msg.Addictive then
 testmod = true
@@ -12795,15 +12795,15 @@ if not msg.Originators and not Redis:get(TheFRADM.."FRADM:Status:BanId"..msg_cha
 return merolua.send(msg_chat_id,msg_id,"⇜ ( الحظر - الطرد - التقييد ) معطل من قبل المنشئين","md",true)
 end 
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-if StatusCanOrNotCan(msg_chat_id,Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر على "..Controller(msg_chat_id,Message_Reply.return merolua.sender_id.user_id).." ","md",true)  
+if StatusCanOrNotCan(msg_chat_id,Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر على "..Controller(msg_chat_id,Message_Reply.sender_id.user_id).." ","md",true)  
 end
 if TimeKed[2] == 'يوم' then
 Time_Restrict = TimeKed[1]:match('(%d+)')
@@ -12817,8 +12817,8 @@ if TimeKed[2] == 'دقيقه' then
 Time_Restrict = TimeKed[1]:match('(%d+)')
 Time = Time_Restrict * 60
 end
-bot.setChatMemberStatus(msg.chat_id,Message_Reply.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0,tonumber(msg.date+Time)})
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر قيدته \n⇜ لمدة : "..TimeKed[1]..' '..TimeKed[2]).Reply,"md",true)  
+bot.setChatMemberStatus(msg.chat_id,Message_Reply.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0,tonumber(msg.date+Time)})
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر قيدته \n⇜ لمدة : "..TimeKed[1]..' '..TimeKed[2]).Reply,"md",true)  
 end
 if text and text:match('^تقييد (%d+) (.*) (%d+)$') then
 local UserId = {text:match('^تقييد (%d+) (.*) (%d+)$') }
@@ -12982,22 +12982,22 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-if Controllerbanall(msg_chat_id,Message_Reply.return merolua.sender_id.user_id) == true then 
-return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر على ( "..Controller(msg_chat_id,Message_Reply.return merolua.sender_id.user_id).." ) ","md",true)  
+if Controllerbanall(msg_chat_id,Message_Reply.sender_id.user_id) == true then 
+return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر على ( "..Controller(msg_chat_id,Message_Reply.sender_id.user_id).." ) ","md",true)  
 end
-if Redis:sismember(TheFRADM.."FRADM:BanAll:Groups",Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ من قبل محظور عام").Reply,"md",true)  
+if Redis:sismember(TheFRADM.."FRADM:BanAll:Groups",Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ من قبل محظور عام").Reply,"md",true)  
 else
-Redis:sadd(TheFRADM.."FRADM:BanAll:Groups",Message_Reply.return merolua.sender_id.user_id) 
-bot.setChatMemberStatus(msg.chat_id,Message_Reply.return merolua.sender_id.user_id,'banned',0)
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر حظرته عام ").Reply,"md",true)  
+Redis:sadd(TheFRADM.."FRADM:BanAll:Groups",Message_Reply.sender_id.user_id) 
+bot.setChatMemberStatus(msg.chat_id,Message_Reply.sender_id.user_id,'banned',0)
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر حظرته عام ").Reply,"md",true)  
 end
 end
 if text == ('الغاء العام') or text == ('الغاء حظر عام') or text == ('الغاء الحظر عام') and msg.reply_to_message_id ~= 0 then
@@ -13013,23 +13013,23 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-if not Redis:sismember(TheFRADM.."FRADM:BanAll:Groups",Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ من قبل مو محظور عام ").Reply,"md",true)  
+if not Redis:sismember(TheFRADM.."FRADM:BanAll:Groups",Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ من قبل مو محظور عام ").Reply,"md",true)  
 else
-Redis:srem(TheFRADM.."FRADM:BanAll:Groups",Message_Reply.return merolua.sender_id.user_id) 
-bot.setChatMemberStatus(msg.chat_id,Message_Reply.return merolua.sender_id.user_id,'restricted',{1,1,1,1,1,1,1,1,1})
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر الغيت حظره عام").Reply,"md",true)  
+Redis:srem(TheFRADM.."FRADM:BanAll:Groups",Message_Reply.sender_id.user_id) 
+bot.setChatMemberStatus(msg.chat_id,Message_Reply.sender_id.user_id,'restricted',{1,1,1,1,1,1,1,1,1})
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر الغيت حظره عام").Reply,"md",true)  
 end
 end
 if text == ('حظر') and msg.reply_to_message_id ~= 0 then
-if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.sender_id.user_id) then
 testmod = true
 elseif msg.Addictive then
 testmod = true
@@ -13057,26 +13057,26 @@ if not msg.Originators and not Redis:get(TheFRADM.."FRADM:Status:BanId"..msg_cha
 return merolua.send(msg_chat_id,msg_id,"⇜ ( الحظر - الطرد - التقييد ) معطل من قبل المنشئين","md",true)
 end 
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-if StatusCanOrNotCan(msg_chat_id,Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر على ( "..Controller(msg_chat_id,Message_Reply.return merolua.sender_id.user_id).." ) ","md",true)  
+if StatusCanOrNotCan(msg_chat_id,Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر على ( "..Controller(msg_chat_id,Message_Reply.sender_id.user_id).." ) ","md",true)  
 end
-if Redis:sismember(TheFRADM.."FRADM:BanGroup:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ من قبل محظور ").Reply,"md",true)  
+if Redis:sismember(TheFRADM.."FRADM:BanGroup:Group"..msg_chat_id,Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ من قبل محظور ").Reply,"md",true)  
 else
-Redis:sadd(TheFRADM.."FRADM:BanGroup:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) 
-bot.setChatMemberStatus(msg.chat_id,Message_Reply.return merolua.sender_id.user_id,'banned',0)
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر حظرته ").Reply,"md",true)  
+Redis:sadd(TheFRADM.."FRADM:BanGroup:Group"..msg_chat_id,Message_Reply.sender_id.user_id) 
+bot.setChatMemberStatus(msg.chat_id,Message_Reply.sender_id.user_id,'banned',0)
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر حظرته ").Reply,"md",true)  
 end
 end
 if text == ('الغاء حظر') or text == ('الغاء الحظر') and msg.reply_to_message_id ~= 0 then
-if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM.."FRADM:Distinguishedall:Group",msg.sender_id.user_id) then
 testmod = true
 elseif msg.Addictive then
 testmod = true
@@ -13098,19 +13098,19 @@ if msg.can_be_deleted_for_all_users == false then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً البوت ليس مشرف في القروب يرجى رفعه واعطائه الصلاحيات ","md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-bot.setChatMemberStatus(msg.chat_id,Message_Reply.return merolua.sender_id.user_id,'restricted',{1,1,1,1,1,1,1,1,1})
-if not Redis:sismember(TheFRADM.."FRADM:BanGroup:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ من قبل مو محظور ").Reply,"md",true)  
+bot.setChatMemberStatus(msg.chat_id,Message_Reply.sender_id.user_id,'restricted',{1,1,1,1,1,1,1,1,1})
+if not Redis:sismember(TheFRADM.."FRADM:BanGroup:Group"..msg_chat_id,Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ من قبل مو محظور ").Reply,"md",true)  
 else
-Redis:srem(TheFRADM.."FRADM:BanGroup:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر الغيت حظره").Reply,"md",true)  
+Redis:srem(TheFRADM.."FRADM:BanGroup:Group"..msg_chat_id,Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر الغيت حظره").Reply,"md",true)  
 end
 end
 if text == ('كتم') and msg.reply_to_message_id ~= 0 then
@@ -13129,26 +13129,26 @@ if GetInfoBot(msg).Delmsg == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ البوت ليس لديه صلاحيه مسح الرسائل ',"md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-if Message_Reply.return merolua.sender_id.Merotele == "messagereturn merolua.senderChat" then
---var(Message_Reply.return merolua.sender_id.chat_id)
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.chat_id) 
+if Message_Reply.sender_id.Merotele == "messageSenderChat" then
+--var(Message_Reply.sender_id.chat_id)
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg_chat_id,Message_Reply.sender_id.chat_id) 
 return merolua.send(msg_chat_id,msg_id,"⇜ تم كتم القناة من القروب ","md",true)  
 end
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-if StatusSilent(msg_chat_id,Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر على ( "..Controller(msg_chat_id,Message_Reply.return merolua.sender_id.user_id).." ) ","md",true)  
+if StatusSilent(msg_chat_id,Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر على ( "..Controller(msg_chat_id,Message_Reply.sender_id.user_id).." ) ","md",true)  
 end
-if Redis:sismember(TheFRADM.."FRADM:SilentGroup:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ من قبل مكتوم ").Reply,"md",true)  
+if Redis:sismember(TheFRADM.."FRADM:SilentGroup:Group"..msg_chat_id,Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ من قبل مكتوم ").Reply,"md",true)  
 else
-Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر كتمته ").Reply,"md",true)  
+Redis:sadd(TheFRADM.."FRADM:SilentGroup:Group"..msg_chat_id,Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر كتمته ").Reply,"md",true)  
 end
 end
 if text == ('الغاء كتم') or text == ('الغاء الكتم') and msg.reply_to_message_id ~= 0 then
@@ -13164,23 +13164,23 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-if Message_Reply.return merolua.sender_id.Merotele == "messagereturn merolua.senderChat" then
---var(Message_Reply.return merolua.sender_id.chat_id)
-Redis:srem(TheFRADM.."FRADM:SilentGroup:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.chat_id) 
+if Message_Reply.sender_id.Merotele == "messageSenderChat" then
+--var(Message_Reply.sender_id.chat_id)
+Redis:srem(TheFRADM.."FRADM:SilentGroup:Group"..msg_chat_id,Message_Reply.sender_id.chat_id) 
 return merolua.send(msg_chat_id,msg_id,"⇜ تم الغاء كتم القناة من القروب  ","md",true)  
 end
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-if not Redis:sismember(TheFRADM.."FRADM:SilentGroup:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ من قبل مو مكتوم ").Reply,"md",true)  
+if not Redis:sismember(TheFRADM.."FRADM:SilentGroup:Group"..msg_chat_id,Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ من قبل مو مكتوم ").Reply,"md",true)  
 else
-Redis:srem(TheFRADM.."FRADM:SilentGroup:Group"..msg_chat_id,Message_Reply.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر الغيت كتمه ").Reply,"md",true)  
+Redis:srem(TheFRADM.."FRADM:SilentGroup:Group"..msg_chat_id,Message_Reply.sender_id.user_id) 
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر الغيت كتمه ").Reply,"md",true)  
 end
 end
 if text == ('تقييد') or text == ("تقيد") and msg.reply_to_message_id ~= 0 then
@@ -13205,18 +13205,18 @@ if not msg.Originators and not Redis:get(TheFRADM.."FRADM:Status:BanId"..msg_cha
 return merolua.send(msg_chat_id,msg_id,"⇜ ( الحظر - الطرد - التقييد ) معطل من قبل المنشئين","md",true)
 end 
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-if StatusCanOrNotCan(msg_chat_id,Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر على ( "..Controller(msg_chat_id,Message_Reply.return merolua.sender_id.user_id).." ) ","md",true)  
+if StatusCanOrNotCan(msg_chat_id,Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر على ( "..Controller(msg_chat_id,Message_Reply.sender_id.user_id).." ) ","md",true)  
 end
-bot.setChatMemberStatus(msg.chat_id,Message_Reply.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر قيدته ").Reply,"md",true)  
+bot.setChatMemberStatus(msg.chat_id,Message_Reply.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر قيدته ").Reply,"md",true)  
 end
 if text == ('الغاء التقييد') or text == ('الغاء تقييد') or text == ('الغاء التقيد') or text == ('الغاء تقيد') and msg.reply_to_message_id ~= 0 then
 if not msg.Addictive then
@@ -13237,15 +13237,15 @@ if GetInfoBot(msg).BanUser == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ البوت ليس لديه صلاحيه حظر المستخدمين ',"md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-bot.setChatMemberStatus(msg.chat_id,Message_Reply.return merolua.sender_id.user_id,'restricted',{1,1,1,1,1,1,1,1})
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر الغيت تقييده").Reply,"md",true)  
+bot.setChatMemberStatus(msg.chat_id,Message_Reply.sender_id.user_id,'restricted',{1,1,1,1,1,1,1,1})
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر الغيت تقييده").Reply,"md",true)  
 end
 if text == ('طرد') and msg.reply_to_message_id ~= 0 then
 if not msg.Addictive then
@@ -13269,18 +13269,18 @@ if not msg.Originators and not Redis:get(TheFRADM.."FRADM:Status:BanId"..msg_cha
 return merolua.send(msg_chat_id,msg_id,"⇜ ( الحظر - الطرد - التقييد ) معطل من قبل المنشئين","md",true)
 end 
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-if StatusCanOrNotCan(msg_chat_id,Message_Reply.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر على ( "..Controller(msg_chat_id,Message_Reply.return merolua.sender_id.user_id).." ) ","md",true)  
+if StatusCanOrNotCan(msg_chat_id,Message_Reply.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر على ( "..Controller(msg_chat_id,Message_Reply.sender_id.user_id).." ) ","md",true)  
 end
-bot.setChatMemberStatus(msg.chat_id,Message_Reply.return merolua.sender_id.user_id,'banned',0)
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ ابشر طردته ").Reply,"md",true)  
+bot.setChatMemberStatus(msg.chat_id,Message_Reply.sender_id.user_id,'banned',0)
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ ابشر طردته ").Reply,"md",true)  
 end
 if text and text:match('^حظر عام (%d+)$') then
 local UserId = text:match('^حظر عام (%d+)$')
@@ -13557,10 +13557,10 @@ end
 if GetInfoBot(msg).BanUser == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ البوت ليس لديه صلاحيه حظر المستخدمين ',"md",true)  
 end
-if StatusCanOrNotCan(msg_chat_id,msg.return merolua.sender_id.user_id) then
-return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً لا استطيع استخدام الامر على ( "..Controller(msg_chat_id,msg.return merolua.sender_id.user_id).." ) ","md",true)  
+if StatusCanOrNotCan(msg_chat_id,msg.sender_id.user_id) then
+return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً لا استطيع استخدام الامر على ( "..Controller(msg_chat_id,msg.sender_id.user_id).." ) ","md",true)  
 end
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 KickMe = true
 elseif (StatusMember == "chatMemberStatusAdministrator") then
@@ -13571,8 +13571,8 @@ end
 if KickMe == true then
 return merolua.send(msg_chat_id,msg_id,"⇜ عذرا لا استطيع طرد صاحب القروب او المشرفين","md",true)    
 end
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'banned',0)
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم طردك من القروب").Reply,"md",true)  
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
+return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم طردك من القروب").Reply,"md",true)  
 end
 if text == 'ادمنيه القروب' or text == 'المشرفين' then
 if not msg.Managers then
@@ -13607,9 +13607,9 @@ end
 end
 local Info_Chats = bot.getSupergroupFullInfo(msg_chat_id)
 if Info_Chats.photo then
-return merolua.sendPhoto(msg.chat_id, msg.id, Info_Chats.photo.sizes[1].photo.remote.id,listAdmin,"md")
+return bot.sendPhoto(msg.chat_id, msg.id, Info_Chats.photo.sizes[1].photo.remote.id,listAdmin,"md")
 else
-return merolua.send(msg_chat_id,msg_id,listAdmin,"md",true)  
+send(msg_chat_id,msg_id,listAdmin,"md",true)  
 end
 end
 if text == 'رفع الادمنيه' or text == 'رفع المشرفين' then
@@ -13642,7 +13642,7 @@ y = y + 1
 end
 end
 end
-return merolua.send(msg_chat_id,msg_id,'\n⇜ تم رفع ( '..y..' ) ادمنية ',"md",true)  
+send(msg_chat_id,msg_id,'\n⇜ تم رفع ( '..y..' ) ادمنية ',"md",true)  
 end
 
 if text == 'تغيير كليشه المالك' or text == 'تغيير كليشة المالك' or text == 'تغيير يوزر المالك' or text == 'تغيير المالك' then
@@ -13657,7 +13657,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لأستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:set(TheFRADM..'FRADM:GetTextMalek'..msg_chat_id..':'..msg.return merolua.sender_id.user_id,true)
+Redis:set(TheFRADM..'FRADM:GetTextMalek'..msg_chat_id..':'..msg.sender_id.user_id,true)
 return merolua.send(msg_chat_id,msg_id,'⇜ ارسل لي يوزر المالك الجديد')
 end
 if text == 'مسح كليشه المالك' or text == 'مسح كليشة المالك' then
@@ -13675,12 +13675,12 @@ end
 Redis:del(TheFRADM..'FRADM:Text:malek'..msg.chat_id)
 return merolua.send(msg_chat_id,msg_id,'⇜ تم مسح كليشه المالك')
 end
-if text and Redis:get(TheFRADM..'FRADM:GetTextMalek'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) then
+if text and Redis:get(TheFRADM..'FRADM:GetTextMalek'..msg_chat_id..':'..msg.sender_id.user_id) then
 if text == 'الغاء' or text == 'الغاء الامر' then 
-Redis:del(TheFRADM..'FRADM:GetTextMalek'..msg_chat_id..':'..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM..'FRADM:GetTextMalek'..msg_chat_id..':'..msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,'⇜ تم الغاء حفظ كليشة المالك')
 end
-Redis:del(TheFRADM..'FRADM:GetTextMalek'..msg_chat_id..':'..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM..'FRADM:GetTextMalek'..msg_chat_id..':'..msg.sender_id.user_id)
 if text and text:match("^@[%a%d_]+$") then
 local UserId_Info = bot.searchPublicChat(text:gsub('@',''))
 if not UserId_Info.id then
@@ -13731,11 +13731,11 @@ end
 if photo.total_count > 0 then
 local TestText = "\nNamE ↦ ["..UserInfo.first_name.."](tg://user?id="..UserInfo.id..")\n\nuSeR ↦ "..UserInfousername.."\n"
 local msg_id = msg.id/2097152/0.5 
-return https.request("https://api.telegram.org/bot"..Token..'/return merolua.sendPhoto?chat_id='..msg.chat_id..'&caption='..URL.escape(TestText)..'&photo='..photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id..'&reply_to_message_id='..msg_id..'&parse_mode=markdown')
+return https.request("https://api.telegram.org/bot"..Token..'/sendPhoto?chat_id='..msg.chat_id..'&caption='..URL.escape(TestText)..'&photo='..photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id..'&reply_to_message_id='..msg_id..'&parse_mode=markdown')
 else
 local TestText = "\nNamE ↦ ["..UserInfo.first_name.."](tg://user?id="..UserInfo.id..")\n\nuSeR ↦ "..UserInfousername.."\n]"
 local msg_id = msg.id/2097152/0.5 
-return https.request("https://api.telegram.org/bot"..Token..'/return merolua.sendMessage?chat_id=' .. msg.chat_id .. '&text=' .. URL.escape(TestText).."&reply_to_message_id="..msg_id.."&parse_mode=markdown")
+return https.request("https://api.telegram.org/bot"..Token..'/sendMessage?chat_id=' .. msg.chat_id .. '&text=' .. URL.escape(TestText).."&reply_to_message_id="..msg_id.."&parse_mode=markdown")
 end
 end
 local Info_Members = bot.getSupergroupMembers(msg_chat_id, "Administrators", "*", 0, 200)
@@ -13744,7 +13744,7 @@ for k, v in pairs(List_Members) do
 if Info_Members.members[k].status.Merotele == "chatMemberStatusCreator" then
 local UserInfo = bot.getUser(v.member_id.user_id)
 if UserInfo.first_name == "" then
-return merolua.send(msg_chat_id,msg_id,"⇜ المالك حسابه محذوف ","md",true)  
+send(msg_chat_id,msg_id,"⇜ المالك حسابه محذوف ","md",true)  
 return false
 end 
 if UserInfo.username and UserInfo.username ~= "" then
@@ -13765,9 +13765,9 @@ keyboardd.inline_keyboard = {
 },
 }
 local msg_id = msg.id/2097152/0.5 
-https.request("https://api.telegram.org/bot"..Token..'/return merolua.sendPhoto?chat_id='..msg_chat_id..'&caption='..URL.escape(TestText)..'&photo='..photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id..'&reply_to_message_id='..msg_id..'&parse_mode=markdown&disable_web_page_preview=true&reply_markup='..JSON.encode(keyboardd))
+https.request("https://api.telegram.org/bot"..Token..'/sendPhoto?chat_id='..msg_chat_id..'&caption='..URL.escape(TestText)..'&photo='..photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id..'&reply_to_message_id='..msg_id..'&parse_mode=markdown&disable_web_page_preview=true&reply_markup='..JSON.encode(keyboardd))
 else
-return merolua.send(msg_chat_id,msg_id,"المالك 𖦹 "..(t).." ","md",true)  
+send(msg_chat_id,msg_id,"المالك 𖦹 "..(t).." ","md",true)  
 end
 end
 end
@@ -13791,11 +13791,11 @@ for k, v in pairs(List_Members) do
 if Info_Members.members[k].status.Merotele == "chatMemberStatusCreator" then
 local UserInfo = bot.getUser(v.member_id.user_id)
 if UserInfo.first_name == "" then
-return merolua.send(msg_chat_id,msg_id,"⇜ المالك حسابه محذوف ","md",true)  
+send(msg_chat_id,msg_id,"⇜ المالك حسابه محذوف ","md",true)  
 return false
 end 
 Redis:sadd(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id,v.member_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,"⇜ ابشر رفعت المالك","md",true)  
+send(msg_chat_id,msg_id,"⇜ ابشر رفعت المالك","md",true)  
 return false
 end
 end
@@ -13804,35 +13804,35 @@ if text == 'صنع كود' then
 if not msg.TheBasics then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(4)..' ) ',"md",true)  
 end
-Redis:set(TheFRADM..'FRADM:Getcode'..msg_chat_id..':'..msg.return merolua.sender_id.user_id,true)
+Redis:set(TheFRADM..'FRADM:Getcode'..msg_chat_id..':'..msg.sender_id.user_id,true)
 return merolua.send(msg_chat_id,msg_id,'⇜ ارسلي الرابط ')
 end
-if text and Redis:get(TheFRADM..'FRADM:Getcode'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) == "true" then
+if text and Redis:get(TheFRADM..'FRADM:Getcode'..msg_chat_id..':'..msg.sender_id.user_id) == "true" then
 if text == 'الغاء' or text == 'الغاء الامر' then 
-Redis:del(TheFRADM..'FRADM:Getcode'..msg_chat_id..':'..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM..'FRADM:Getcode'..msg_chat_id..':'..msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,'⇜ تم الغاء صنع الكود')
 end
-Redis:set(TheFRADM..'FRADM:Getcode'..msg_chat_id..':'..msg.return merolua.sender_id.user_id,"true1")
-Redis:set(TheFRADM..'FRADM:Getcode:'..msg_chat_id..':'..msg.return merolua.sender_id.user_id,text)
+Redis:set(TheFRADM..'FRADM:Getcode'..msg_chat_id..':'..msg.sender_id.user_id,"true1")
+Redis:set(TheFRADM..'FRADM:Getcode:'..msg_chat_id..':'..msg.sender_id.user_id,text)
 return merolua.send(msg_chat_id,msg_id,'⇜ الان ارسل النص الي تريده')
 end
-if text and Redis:get(TheFRADM..'FRADM:Getcode'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) == "true1" then
+if text and Redis:get(TheFRADM..'FRADM:Getcode'..msg_chat_id..':'..msg.sender_id.user_id) == "true1" then
 if text == 'الغاء' or text == 'الغاء الامر' then 
-Redis:del(TheFRADM..'FRADM:Getcode'..msg_chat_id..':'..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM..'FRADM:Getcode'..msg_chat_id..':'..msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,'⇜ تم الغاء صنع الكود')
 end
-Redis:set(TheFRADM..'FRADM:Getcode'..msg_chat_id..':'..msg.return merolua.sender_id.user_id,"true2")
-Redis:set(TheFRADM..'FRADM:Getcode:text'..msg_chat_id..':'..msg.return merolua.sender_id.user_id,text)
+Redis:set(TheFRADM..'FRADM:Getcode'..msg_chat_id..':'..msg.sender_id.user_id,"true2")
+Redis:set(TheFRADM..'FRADM:Getcode:text'..msg_chat_id..':'..msg.sender_id.user_id,text)
 return merolua.send(msg_chat_id,msg_id,'⇜ الان ارسل اسم الزر')
 end
-if text and Redis:get(TheFRADM..'FRADM:Getcode'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) == "true2" then
+if text and Redis:get(TheFRADM..'FRADM:Getcode'..msg_chat_id..':'..msg.sender_id.user_id) == "true2" then
 if text == 'الغاء' or text == 'الغاء الامر' then 
-Redis:del(TheFRADM..'FRADM:Getcode'..msg_chat_id..':'..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM..'FRADM:Getcode'..msg_chat_id..':'..msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,'⇜ تم الغاء صنع الكود')
 end
-Redis:del(TheFRADM..'FRADM:Getcode'..msg_chat_id..':'..msg.return merolua.sender_id.user_id)
-local get1 = Redis:get(TheFRADM..'FRADM:Getcode:text'..msg_chat_id..':'..msg.return merolua.sender_id.user_id)
-local get2 = Redis:get(TheFRADM..'FRADM:Getcode:'..msg_chat_id..':'..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM..'FRADM:Getcode'..msg_chat_id..':'..msg.sender_id.user_id)
+local get1 = Redis:get(TheFRADM..'FRADM:Getcode:text'..msg_chat_id..':'..msg.sender_id.user_id)
+local get2 = Redis:get(TheFRADM..'FRADM:Getcode:'..msg_chat_id..':'..msg.sender_id.user_id)
 local reply_markup = bot.replyMarkup{type = 'inline',
 data = {
 {
@@ -13840,8 +13840,8 @@ data = {
 },
 }
 }
-Redis:del(TheFRADM..'FRADM:Getcode:text'..msg_chat_id..':'..msg.return merolua.sender_id.user_id)
-Redis:del(TheFRADM..'FRADM:Getcode:'..msg_chat_id..':'..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM..'FRADM:Getcode:text'..msg_chat_id..':'..msg.sender_id.user_id)
+Redis:del(TheFRADM..'FRADM:Getcode:'..msg_chat_id..':'..msg.sender_id.user_id)
 return merolua.send(msg.chat_id,msg.id,'['..get1..']('..get2..')',"md",true, false, false, false, reply_markup)
 end
 if text == 'كشف البوتات' or text == 'كشف بوتات' then
@@ -13873,7 +13873,7 @@ Admin = ""
 end
 listBots = listBots..""..k.." - @"..UserInfo.username.." "..Admin.."\n"
 end
-return merolua.send(msg_chat_id,msg_id,listBots.."\n━━━━━━━━━\n⇜ عدد البوتات التي هي ادمن ( "..x.." )","md",true)  
+send(msg_chat_id,msg_id,listBots.."\n━━━━━━━━━\n⇜ عدد البوتات التي هي ادمن ( "..x.." )","md",true)  
 end
 if text == 'المقيدين' then
 if not msg.Managers then
@@ -13908,9 +13908,9 @@ end
 end
 end
 if y == true then
-return merolua.send(msg_chat_id,msg_id,restricted,"md",true)  
+send(msg_chat_id,msg_id,restricted,"md",true)  
 else
-return merolua.send(msg_chat_id,msg_id,'⇜ مافي مقيدين ',"md",true)
+send(msg_chat_id,msg_id,'⇜ مافي مقيدين ',"md",true)
 end
 end
 if text and text:match(Bot_Name.." غادر$") then  
@@ -13925,7 +13925,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-return merolua.send(msg_chat_id,msg_id,"\nخلك قدها !","md",true)  
+send(msg_chat_id,msg_id,"\nخلك قدها !","md",true)  
 local Left_Bot = bot.leaveChat(msg.chat_id)
 end
 if text and text:match(Bot_Name.." غادري$") then  
@@ -13940,7 +13940,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-return merolua.send(msg_chat_id,msg_id,"\nخلك قدها !","md",true)  
+send(msg_chat_id,msg_id,"\nخلك قدها !","md",true)  
 local Left_Bot = bot.leaveChat(msg.chat_id)
 end
 if text and text:match('^غادر (-100%d+)$') then
@@ -13949,7 +13949,7 @@ if not msg.ControllerBot then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(1)..' ) ',"md",true)  
 end
 bot.leaveChat(Chatid)
-return merolua.send(msg_chat_id,msg_id,'⇜ غادرت القروب')
+send(msg_chat_id,msg_id,'⇜ غادرت القروب')
 end 
 if text == "@all" or text == "تاك عام" or text == "all" then
 if not msg.Addictive then
@@ -13979,7 +13979,7 @@ if UserInfo.first_name ~= '' then
 listall = listall.." ["..FlterBio(UserInfo.first_name).."](tg://user?id="..UserInfo.id.."),"
 end
 if x == 5 or x == tags or k == 0 then
-return merolua.send(msg_chat_id,msg_id,listall,"md",true)  
+send(msg_chat_id,msg_id,listall,"md",true)  
 end
 end
 end
@@ -14013,7 +14013,7 @@ if UserInfo.first_name ~= '' then
 listall = listall.." ["..FlterBio(UserInfo.first_name).."](tg://user?id="..UserInfo.id.."),"
 end
 if x == 5 or x == tags or k == 0 then
-return merolua.send(msg_chat_id,msg_id,textee.."\n"..listall,"md",true)  
+send(msg_chat_id,msg_id,textee.."\n"..listall,"md",true)  
 end
 end
 end
@@ -14041,7 +14041,7 @@ else
 listall = listall..""..k.." - ["..UserInfo.id.."](tg://user?id="..UserInfo.id..")\n"
 end
 end
-return merolua.send(msg_chat_id,msg_id,listall,"md",true)  
+send(msg_chat_id,msg_id,listall,"md",true)  
 end
 if text == "قفل ارسال القناة" or text == "قفل القنوات" or text == "قفل القناه" or text == "قفل القناة" then 
 if not msg.Managers then
@@ -14055,8 +14055,8 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:set(TheFRADM.."FRADM:Lock:return merolua.senderChat"..msg_chat_id,true) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل القنوات").Lock,"md",true)  
+Redis:set(TheFRADM.."FRADM:Lock:SenderChat"..msg_chat_id,true) 
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل القنوات").Lock,"md",true)  
 return false
 end 
 if text == "فتح ارسال القناة" or text == "فتح القنوات" or text == "فتح القناه" or text == "فتح القناة" then 
@@ -14071,8 +14071,8 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end 
-Redis:del(TheFRADM.."FRADM:Lock:return merolua.senderChat"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح القنوات").unLock,"md",true)  
+Redis:del(TheFRADM.."FRADM:Lock:SenderChat"..msg_chat_id)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح القنوات").unLock,"md",true)  
 return false
 end 
 if text == "قفل السب" then 
@@ -14088,7 +14088,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:phshar"..msg_chat_id,true) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل السب").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل السب").Lock,"md",true)  
 return false
 end 
 if text == "فتح السب" then 
@@ -14104,7 +14104,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end 
 Redis:del(TheFRADM.."FRADM:Lock:phshar"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح السب").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح السب").unLock,"md",true)  
 return false
 end 
 if text == "قفل الانكليزيه" or text == 'قفل الانكليزية' then 
@@ -14120,7 +14120,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:english"..msg_chat_id,true) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الانكليزيه").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الانكليزيه").Lock,"md",true)  
 return false
 end 
 if text == "فتح الانكليزيه" or text == 'فتح الانكليزية' then 
@@ -14136,18 +14136,18 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end 
 Redis:del(TheFRADM.."FRADM:Lock:english"..msg_chat_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح الانكليزيه").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح الانكليزيه").unLock,"md",true)  
 return false
 end 
 if text == 'نزلني' and not Redis:get(TheFRADM..'FRADM:Nzlne:Abs'..msg.chat_id) then
-if Controllerbanall(msg_chat_id,msg.return merolua.sender_id.user_id) == true then 
-return merolua.send(msg_chat_id,msg_id,"\n⇜ مايمديني انزل "..Controller(msg_chat_id,msg.return merolua.sender_id.user_id).." ","md",true)  
+if Controllerbanall(msg_chat_id,msg.sender_id.user_id) == true then 
+return merolua.send(msg_chat_id,msg_id,"\n⇜ مايمديني انزل "..Controller(msg_chat_id,msg.sender_id.user_id).." ","md",true)  
 end
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'نعم ', data = msg.return merolua.sender_id.user_id..'/Nzlne'},{text = 'لا', data = msg.return merolua.sender_id.user_id..'/noNzlne'},
+{text = 'نعم ', data = msg.sender_id.user_id..'/Nzlne'},{text = 'لا', data = msg.sender_id.user_id..'/noNzlne'},
 },
 {
 {text = 'Louis', url = 't.me/Y88F8'}, 
@@ -14167,7 +14167,7 @@ local thumb_id = photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id
 local api_ = request('http://161.35.201.62:8080/nsfw?token=' .. Token .. '&file_id='..thumb_id)
 local api = JSON.decode(api_)
 if api.result.is_nsfw == true then
-local ban = bot.getUser(msg.return merolua.sender_id.user_id)
+local ban = bot.getUser(msg.sender_id.user_id)
 if ban.first_name then
 news = ban.first_name
 else
@@ -14179,25 +14179,25 @@ end
 if GetInfoBot(msg).BanUser == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ البوت ليس لديه صلاحيه حظر المستخدمين ',"md",true)
 end
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 return merolua.send(msg_chat_id, msg_id , "「 "..news.." 」\n⇜ قام باستخدام امر صورتي وصورته اباحية\n⇜ تم تقييده ومسح رسالته\n✧")
 end
 end
 end
 end
 end
-local photo = bot.getUserProfilePhotos(msg.return merolua.sender_id.user_id)
+local photo = bot.getUserProfilePhotos(msg.sender_id.user_id)
 local TotalPhoto = photo.total_count or 0
 if photo.total_count > 0 then
 if photo.photos[1].animation then
 local File = request("https://api.telegram.org/bot" .. Token .. "/getfile?file_id="..photo.photos[1].animation.file.remote.id) 
 local fc = JSON.decode(File)
 local Name_File = download("https://api.telegram.org/file/bot"..Token.."/"..JSON.decode(File).result.file_path, "./id.mp4") 
-return merolua.sendAnimation(msg.chat_id, msg.id, Name_File,
+return bot.sendAnimation(msg.chat_id, msg.id, Name_File,
 "\nعدد صورك : "..TotalPhoto..
 "") 
 else
-return merolua.sendPhoto(msg.chat_id, msg.id, photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id,
+return bot.sendPhoto(msg.chat_id, msg.id, photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id,
 "\nعدد صورك : "..TotalPhoto..
 "") 
 end
@@ -14212,7 +14212,7 @@ numbermypho = numbermyph
 else
 numbermypho = 1
 end
-local photo = bot.getUserProfilePhotos(msg.return merolua.sender_id.user_id)
+local photo = bot.getUserProfilePhotos(msg.sender_id.user_id)
 if photo.total_count < numbermyph then
 return merolua.send(msg_chat_id, msg_id , "⇜ عدد صورك "..photo.total_count.." وليس "..numbermyph.."")
 end
@@ -14226,7 +14226,7 @@ local thumb_id = photo.photos[numbermypho].sizes[#photo.photos[1].sizes].photo.r
 local api_ = request('http://161.35.201.62:8080/nsfw?token=' .. Token .. '&file_id='..thumb_id)
 local api = JSON.decode(api_)
 if api.result.is_nsfw == true then
-local ban = bot.getUser(msg.return merolua.sender_id.user_id)
+local ban = bot.getUser(msg.sender_id.user_id)
 if ban.first_name then
 news = ban.first_name
 else
@@ -14238,26 +14238,26 @@ end
 if GetInfoBot(msg).BanUser == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ البوت ليس لديه صلاحيه حظر المستخدمين ',"md",true)
 end
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 return merolua.send(msg_chat_id, msg_id , "「 "..news.." 」\n⇜ قام باستخدام امر صورتي وصورته اباحية\n⇜ تم تقييده ومسح رسالته\n✧")
 end
 end
 end
 end
 end
-local photo = bot.getUserProfilePhotos(msg.return merolua.sender_id.user_id)
+local photo = bot.getUserProfilePhotos(msg.sender_id.user_id)
 local TotalPhoto = photo.total_count or 0
 if photo.total_count > 0 then
 if photo.photos[numbermypho].animation then
 local File = request("https://api.telegram.org/bot" .. Token .. "/getfile?file_id="..photo.photos[numbermypho].animation.file.remote.id) 
 local fc = JSON.decode(File)
 local Name_File = download("https://api.telegram.org/file/bot"..Token.."/"..JSON.decode(File).result.file_path, "./id.mp4") 
-return merolua.sendAnimation(msg.chat_id, msg.id, Name_File,
+return bot.sendAnimation(msg.chat_id, msg.id, Name_File,
 "صورتك رقم : "..numbermyph..
 "\nعدد صورك : "..TotalPhoto..
 "") 
 else
-return merolua.sendPhoto(msg.chat_id, msg.id, photo.photos[numbermypho].sizes[#photo.photos[1].sizes].photo.remote.id,
+return bot.sendPhoto(msg.chat_id, msg.id, photo.photos[numbermypho].sizes[#photo.photos[1].sizes].photo.remote.id,
 "صورتك رقم : "..numbermyph..
 "\nعدد صورك : "..TotalPhoto..
 "") 
@@ -14272,7 +14272,7 @@ UrlMean = io.popen('curl -s "http://ahmed-yad.ml/Anubis/name_mean.php?name='..UR
 Mean = JSON.decode(UrlMean)
 local meanname = Mean.mean
 local nameeng = Mean.english_name
-return merolua.send(msg_chat_id,msg_id,"⌯ الاسم : "..TextMean.."\n⌯ المعنى : "..meanname.."", "md",true)
+send(msg_chat_id,msg_id,"⌯ الاسم : "..TextMean.."\n⌯ المعنى : "..meanname.."", "md",true)
 end
 end
 if text and text:match("^قول (.*)$") and Redis:get(TheFRADM..'kolklma'..msg.chat_id) then
@@ -14297,7 +14297,7 @@ return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في ق�
 end
 Redis:set(TheFRADM.."FRADM:Lock:tphlesh"..msg_chat_id,true) 
 Redis:del(TheFRADM.."FRADM:Status:IdPhoto"..msg_chat_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم تفعيل الحماية").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم تفعيل الحماية").Lock,"md",true)  
 return false
 end 
 if text == "فتح الحمايه" or text =="فتح الحماية" or text =="تعطيل الحمايه" or text =="تعطيل الحماية" or text =="تعطيل حمايه" then 
@@ -14314,7 +14314,7 @@ return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في ق�
 end 
 Redis:del(TheFRADM.."FRADM:Lock:tphlesh"..msg_chat_id)  
 Redis:set(TheFRADM.."FRADM:Status:IdPhoto"..msg_chat_id,true) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم تعطيل الحماية").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم تعطيل الحماية").unLock,"md",true)  
 return false
 end 
 if text == "قفل الفارسيه" then 
@@ -14330,7 +14330,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:farsia"..msg_chat_id,true) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفـل الفارسيه").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفـل الفارسيه").Lock,"md",true)  
 return false
 end 
 if text == "فتح الفارسيه" then 
@@ -14346,7 +14346,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end 
 Redis:del(TheFRADM.."FRADM:Lock:farsia"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح الفارسيه").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح الفارسيه").unLock,"md",true)  
 return false
 end 
 if text == "قفل الدردشه" or text =="قفل المحادثه" or text =="قفل الشات" or text =="قفل القروب" then 
@@ -14362,7 +14362,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:text"..msg_chat_id,true) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الشات").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الشات").Lock,"md",true)  
 return false
 end 
 if text == "قفل الاضافه" then 
@@ -14378,7 +14378,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end 
 Redis:set(TheFRADM.."FRADM:Lock:AddMempar"..msg_chat_id,"kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل اضافة الاعضاء").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل اضافة الاعضاء").Lock,"md",true)  
 return false
 end 
 if text == "قفل الدخول" then 
@@ -14394,7 +14394,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end 
 Redis:set(TheFRADM.."FRADM:Lock:Join"..msg_chat_id,"kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل دخول الاعضاء").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل دخول الاعضاء").Lock,"md",true)  
 return false
 end 
 if text == "قفل البوتات" then  
@@ -14410,7 +14410,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end 
 Redis:set(TheFRADM.."FRADM:Lock:Bot:kick"..msg_chat_id,"del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل البوتات").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل البوتات").Lock,"md",true)  
 return false
 end 
 if text == "قفل البوتات بالطرد" then 
@@ -14426,7 +14426,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end 
 Redis:set(TheFRADM.."FRADM:Lock:Bot:kick"..msg_chat_id,"kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل البوتات").lockKick,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل البوتات").lockKick,"md",true)  
 return false
 end 
 if text == "قفل الاشعارات" then 
@@ -14442,7 +14442,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end  
 Redis:set(TheFRADM.."FRADM:Lock:tagservr"..msg_chat_id,true)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الاشعارات").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الاشعارات").Lock,"md",true)  
 return false
 end 
 if text == "قفل التثبيت" then 
@@ -14458,7 +14458,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end  
 Redis:set(TheFRADM.."FRADM:lockpin"..msg_chat_id,(bot.getChatPinnedMessage(msg_chat_id).id or true)) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل التثبيت ").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل التثبيت ").Lock,"md",true)  
 return false
 end 
 if text == "قفل التعديل" then 
@@ -14474,7 +14474,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end 
 Redis:set(TheFRADM.."FRADM:Lock:edittext"..msg_chat_id,true) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل التعديل").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل التعديل").Lock,"md",true)  
 return false
 end 
 if text == "قفل تعديل الميديا" then 
@@ -14490,7 +14490,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end 
 Redis:set(TheFRADM.."FRADM:Lock:edit"..msg_chat_id,true) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل تعديل الميديا").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل تعديل الميديا").Lock,"md",true)  
 return false
 end 
 if text == "قفل الكل" then 
@@ -14511,7 +14511,7 @@ list ={"Lock:Bot:kick","Lock:User:Name","Lock:hashtak","Lock:Cmd","Lock:Link","L
 for i,lock in pairs(list) do 
 Redis:set(TheFRADM..'FRADM:'..lock..msg_chat_id,"del")    
 end
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل جميع الاوامر").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل جميع الاوامر").Lock,"md",true)  
 return false
 end 
 if text == "قفل وسائط المميزين" then 
@@ -14527,7 +14527,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end  
 Redis:set(TheFRADM.."FRADM:Lock:AlUasat"..msg_chat_id,"del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل وسائط المميزين").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل وسائط المميزين").Lock,"md",true)  
 return false
 end 
 if text == "فتح وسائط المميزين" then 
@@ -14543,7 +14543,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end 
 Redis:del(TheFRADM.."FRADM:Lock:AlUasat"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح وسائط المميزين").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح وسائط المميزين").unLock,"md",true)  
 return false
 end 
 if text == "قفل الوسائط" then 
@@ -14564,7 +14564,7 @@ Redis:set(TheFRADM.."FRADM:Lock:vico"..msg_chat_id,"del")
 Redis:set(TheFRADM.."FRADM:Lock:Audio"..msg_chat_id,"del")  
 Redis:set(TheFRADM.."FRADM:Lock:Sticker"..msg_chat_id,"del")  
 Redis:set(TheFRADM.."FRADM:Lock:Video"..msg_chat_id,"del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل جميع الوسائط").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل جميع الوسائط").Lock,"md",true)  
 return false
 end 
 if text == "فتح الوسائط" then 
@@ -14585,7 +14585,7 @@ Redis:del(TheFRADM.."FRADM:Lock:vico"..msg_chat_id)
 Redis:del(TheFRADM.."FRADM:Lock:Audio"..msg_chat_id)  
 Redis:del(TheFRADM.."FRADM:Lock:Sticker"..msg_chat_id)  
 Redis:del(TheFRADM.."FRADM:Lock:Video"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فـح جميع الوسائط").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فـح جميع الوسائط").unLock,"md",true)  
 return false
 end 
 --------------------------------------------------------------------------------------------------------------
@@ -14602,7 +14602,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end 
 Redis:del(TheFRADM.."FRADM:Lock:AddMempar"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح اضافة الاعضاء").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح اضافة الاعضاء").unLock,"md",true)  
 return false
 end 
 if text == "فتح الدردشه" or text =="فتح المحادثه" or text =="فتح الشات" or text =="فتح القروب" then 
@@ -14618,7 +14618,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end 
 Redis:del(TheFRADM.."FRADM:Lock:text"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح الشات").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح الشات").unLock,"md",true)  
 return false
 end 
 if text == "فتح الدخول" then 
@@ -14634,7 +14634,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end 
 Redis:del(TheFRADM.."FRADM:Lock:Join"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح دخول الاعضاء").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح دخول الاعضاء").unLock,"md",true)  
 return false
 end 
 if text == "فتح البوتات " then 
@@ -14650,7 +14650,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end 
 Redis:del(TheFRADM.."FRADM:Lock:Bot:kick"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح البوتات").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح البوتات").unLock,"md",true)  
 return false
 end 
 if text == "فتح الاشعارات" then 
@@ -14666,7 +14666,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end  
 Redis:del(TheFRADM.."FRADM:Lock:tagservr"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح الاشعارات").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح الاشعارات").unLock,"md",true)  
 return false
 end 
 if text == "فتح التثبيت" then 
@@ -14682,7 +14682,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end 
 Redis:del(TheFRADM.."FRADM:lockpin"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح التثبيت").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح التثبيت").unLock,"md",true)  
 return false
 end 
 if text == "فتح التعديل" then 
@@ -14698,7 +14698,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end 
 Redis:del(TheFRADM.."FRADM:Lock:edittext"..msg_chat_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح التعديل").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح التعديل").unLock,"md",true)  
 return false
 end 
 if text == "فتح تعديل الميديا" then 
@@ -14714,7 +14714,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end 
 Redis:del(TheFRADM.."FRADM:Lock:edit"..msg_chat_id) 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح تعديل الميديا").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح تعديل الميديا").unLock,"md",true)  
 return false
 end 
 if text == "فتح الكل" then 
@@ -14734,7 +14734,7 @@ list ={"Lock:Bot:kick","Lock:User:Name","Lock:hashtak","Lock:Cmd","Lock:Link","L
 for i,lock in pairs(list) do 
 Redis:del(TheFRADM..'FRADM:'..lock..msg_chat_id)    
 end
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح جميع الاوامر").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح جميع الاوامر").unLock,"md",true)  
 return false
 end 
 --------------------------------------------------------------------------------------------------------------
@@ -14751,7 +14751,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:hset(TheFRADM.."FRADM:Spam:Group:User"..msg_chat_id ,"Spam:User","del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل التكرار").Lock,"md",true)  
+return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل التكرار").Lock,"md",true)  
 elseif text == "قفل التكرار بالتقييد" then 
 if not msg.Addictive then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(7)..' ) ',"md",true)  
@@ -14765,7 +14765,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:hset(TheFRADM.."FRADM:Spam:Group:User"..msg_chat_id ,"Spam:User","keed")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل التكرار").lockKid,"md",true)  
+return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل التكرار").lockKid,"md",true)  
 elseif text == "قفل التكرار بالكتم" then 
 if not msg.Addictive then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(7)..' ) ',"md",true)  
@@ -14779,7 +14779,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:hset(TheFRADM.."FRADM:Spam:Group:User"..msg_chat_id ,"Spam:User","mute")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل التكرار").lockKtm,"md",true)  
+return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل التكرار").lockKtm,"md",true)  
 elseif text == "قفل التكرار بالطرد" then 
 if not msg.Addictive then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(7)..' ) ',"md",true)  
@@ -14793,7 +14793,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:hset(TheFRADM.."FRADM:Spam:Group:User"..msg_chat_id ,"Spam:User","kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل التكرار").lockKick,"md",true)  
+return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل التكرار").lockKick,"md",true)  
 elseif text == "فتح التكرار" then 
 if not msg.Addictive then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(7)..' ) ',"md",true)  
@@ -14807,7 +14807,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:hdel(TheFRADM.."FRADM:Spam:Group:User"..msg_chat_id ,"Spam:User")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح التكرار").unLock,"md",true)  
+return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح التكرار").unLock,"md",true)  
 end
 if text == "قفل الروابط" then 
 if not msg.Addictive then
@@ -14822,7 +14822,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Link"..msg_chat_id,"del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الروابط").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الروابط").Lock,"md",true)  
 return false
 end 
 if text == "قفل الروابط بالتقييد" then 
@@ -14838,7 +14838,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Link"..msg_chat_id,"ked")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الروابط").lockKid,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الروابط").lockKid,"md",true)  
 return false
 end 
 if text == "قفل الروابط بالكتم" then 
@@ -14854,7 +14854,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Link"..msg_chat_id,"ktm")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الروابط").lockKtm,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الروابط").lockKtm,"md",true)  
 return false
 end 
 if text == "قفل الروابط بالطرد" then 
@@ -14870,7 +14870,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Link"..msg_chat_id,"kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الروابط").lockKick,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الروابط").lockKick,"md",true)  
 return false
 end 
 if text == "فتح الروابط" then 
@@ -14886,7 +14886,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:del(TheFRADM.."FRADM:Lock:Link"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح الروابط").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح الروابط").unLock,"md",true)  
 return false
 end 
 if text == "قفل المعرفات" or text == "قفل اليوزرات" then 
@@ -14902,7 +14902,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:User:Name"..msg_chat_id,"del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل المعرفات").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل المعرفات").Lock,"md",true)  
 return false
 end 
 if text == "قفل المعرفات بالتقييد" then 
@@ -14918,7 +14918,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:User:Name"..msg_chat_id,"ked")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل المعرفات").lockKid,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل المعرفات").lockKid,"md",true)  
 return false
 end 
 if text == "قفل المعرفات بالكتم" then 
@@ -14934,7 +14934,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:User:Name"..msg_chat_id,"ktm")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل المعرفات").lockKtm,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل المعرفات").lockKtm,"md",true)  
 return false
 end 
 if text == "قفل المعرفات بالطرد" then 
@@ -14950,7 +14950,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:User:Name"..msg_chat_id,"kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل المعرفات").lockKick,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل المعرفات").lockKick,"md",true)  
 return false
 end 
 if text == "فتح المعرفات" or text == "فتح اليوزرات" then 
@@ -14966,7 +14966,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:del(TheFRADM.."FRADM:Lock:User:Name"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح المعرفات").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح المعرفات").unLock,"md",true)  
 return false
 end 
 if text == "قفل التاك" or text == "قفل التاق" then 
@@ -14982,7 +14982,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:hashtak"..msg_chat_id,"del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل التاق").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل التاق").Lock,"md",true)  
 return false
 end 
 if text == "قفل التاك بالتقييد" then 
@@ -14998,7 +14998,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:hashtak"..msg_chat_id,"ked")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل التاك").lockKid,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل التاك").lockKid,"md",true)  
 return false
 end 
 if text == "قفل التاك بالكتم" then 
@@ -15014,7 +15014,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:hashtak"..msg_chat_id,"ktm")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل التاك").lockKtm,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل التاك").lockKtm,"md",true)  
 return false
 end 
 if text == "قفل التاك بالطرد" then 
@@ -15030,7 +15030,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:hashtak"..msg_chat_id,"kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل التاك").lockKick,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل التاك").lockKick,"md",true)  
 return false
 end 
 if text == "فتح التاك" then 
@@ -15046,7 +15046,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:del(TheFRADM.."FRADM:Lock:hashtak"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح التاك").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح التاك").unLock,"md",true)  
 return false
 end 
 if text == "قفل الشارحه" then 
@@ -15062,7 +15062,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Cmd"..msg_chat_id,"del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الشارحه").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الشارحه").Lock,"md",true)  
 return false
 end 
 if text == "قفل الشارحه بالتقييد" then 
@@ -15078,7 +15078,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Cmd"..msg_chat_id,"ked")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الشارحه").lockKid,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الشارحه").lockKid,"md",true)  
 return false
 end 
 if text == "قفل الشارحه بالكتم" then 
@@ -15094,7 +15094,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Cmd"..msg_chat_id,"ktm")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الشارحه").lockKtm,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الشارحه").lockKtm,"md",true)  
 return false
 end 
 if text == "قفل الشارحه بالطرد" then 
@@ -15110,7 +15110,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Cmd"..msg_chat_id,"kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الشارحه").lockKick,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الشارحه").lockKick,"md",true)  
 return false
 end 
 if text == "فتح الشارحه" then 
@@ -15126,7 +15126,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:del(TheFRADM.."FRADM:Lock:Cmd"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح الشارحه").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح الشارحه").unLock,"md",true)  
 return false
 end 
 if text == "قفل الصور"then 
@@ -15142,7 +15142,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Photo"..msg_chat_id,"del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الصور").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الصور").Lock,"md",true)  
 return false
 end 
 if text == "قفل الصور بالتقييد" then 
@@ -15158,7 +15158,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Photo"..msg_chat_id,"ked")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الصور").lockKid,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الصور").lockKid,"md",true)  
 return false
 end 
 if text == "قفل الصور بالكتم" then 
@@ -15174,7 +15174,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Photo"..msg_chat_id,"ktm")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الصور").lockKtm,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الصور").lockKtm,"md",true)  
 return false
 end 
 if text == "قفل الصور بالطرد" then 
@@ -15190,7 +15190,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Photo"..msg_chat_id,"kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الصور").lockKick,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الصور").lockKick,"md",true)  
 return false
 end 
 if text == "فتح الصور" then 
@@ -15206,7 +15206,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:del(TheFRADM.."FRADM:Lock:Photo"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح الصور").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح الصور").unLock,"md",true)  
 return false
 end 
 if text == "قفل الفيديو" then 
@@ -15222,7 +15222,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Video"..msg_chat_id,"del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الفيديو").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الفيديو").Lock,"md",true)  
 return false
 end 
 if text == "قفل الفيديو بالتقييد" then 
@@ -15238,7 +15238,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Video"..msg_chat_id,"ked")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الفيديو").lockKid,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الفيديو").lockKid,"md",true)  
 return false
 end 
 if text == "قفل الفيديو بالكتم" then 
@@ -15254,7 +15254,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Video"..msg_chat_id,"ktm")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الفيديو").lockKtm,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الفيديو").lockKtm,"md",true)  
 return false
 end 
 if text == "قفل الفيديو بالطرد" then 
@@ -15270,7 +15270,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Video"..msg_chat_id,"kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الفيديو").lockKick,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الفيديو").lockKick,"md",true)  
 return false
 end 
 if text == "فتح الفيديو" then 
@@ -15286,7 +15286,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:del(TheFRADM.."FRADM:Lock:Video"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح الفيديو").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح الفيديو").unLock,"md",true)  
 return false
 end 
 if text == "قفل المتحركه" or text == "قفل المتحركة" or text == "قفل المتحركات" then 
@@ -15302,7 +15302,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Animation"..msg_chat_id,"del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل المتحركه").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل المتحركه").Lock,"md",true)  
 return false
 end 
 if text == "قفل المتحركه بالتقييد" then 
@@ -15318,7 +15318,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Animation"..msg_chat_id,"ked")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل المتحركه").lockKid,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل المتحركه").lockKid,"md",true)  
 return false
 end 
 if text == "قفل المتحركه بالكتم" then 
@@ -15334,7 +15334,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Animation"..msg_chat_id,"ktm")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل المتحركه").lockKtm,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل المتحركه").lockKtm,"md",true)  
 return false
 end 
 if text == "قفل المتحركه بالطرد" then 
@@ -15350,7 +15350,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Animation"..msg_chat_id,"kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل المتحركه").lockKick,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل المتحركه").lockKick,"md",true)  
 return false
 end 
 if text == "فتح المتحركه" then 
@@ -15366,7 +15366,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:del(TheFRADM.."FRADM:Lock:Animation"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح المتحركه").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح المتحركه").unLock,"md",true)  
 return false
 end 
 if text == "قفل الالعاب" then 
@@ -15382,7 +15382,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:geam"..msg_chat_id,"del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الالعاب").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الالعاب").Lock,"md",true)  
 return false
 end 
 if text == "قفل الالعاب بالتقييد" then 
@@ -15398,7 +15398,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:geam"..msg_chat_id,"ked")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الالعاب").lockKid,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الالعاب").lockKid,"md",true)  
 return false
 end 
 if text == "قفل الالعاب بالكتم" then 
@@ -15414,7 +15414,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:geam"..msg_chat_id,"ktm")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الالعاب").lockKtm,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الالعاب").lockKtm,"md",true)  
 return false
 end 
 if text == "قفل الالعاب بالطرد" then 
@@ -15430,7 +15430,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:geam"..msg_chat_id,"kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الالعاب").lockKick,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الالعاب").lockKick,"md",true)  
 return false
 end 
 if text == "فتح الالعاب" then 
@@ -15446,7 +15446,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:del(TheFRADM.."FRADM:Lock:geam"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح الالعاب").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح الالعاب").unLock,"md",true)  
 return false
 end 
 if text == "قفل الاغاني" then 
@@ -15462,7 +15462,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Audio"..msg_chat_id,"del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الاغاني").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الاغاني").Lock,"md",true)  
 return false
 end 
 if text == "قفل الاغاني بالتقييد" then 
@@ -15478,7 +15478,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Audio"..msg_chat_id,"ked")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الاغاني").lockKid,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الاغاني").lockKid,"md",true)  
 return false
 end 
 if text == "قفل الاغاني بالكتم" then 
@@ -15494,7 +15494,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Audio"..msg_chat_id,"ktm")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الاغاني").lockKtm,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الاغاني").lockKtm,"md",true)  
 return false
 end 
 if text == "قفل الاغاني بالطرد" then 
@@ -15510,7 +15510,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Audio"..msg_chat_id,"kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الاغاني").lockKick,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الاغاني").lockKick,"md",true)  
 return false
 end 
 if text == "فتح الاغاني" then 
@@ -15526,7 +15526,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:del(TheFRADM.."FRADM:Lock:Audio"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح الاغاني").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح الاغاني").unLock,"md",true)  
 return false
 end 
 if text == "قفل الصوت" then 
@@ -15542,7 +15542,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:vico"..msg_chat_id,"del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الصوت").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الصوت").Lock,"md",true)  
 return false
 end 
 if text == "قفل الصوت بالتقييد" then 
@@ -15558,7 +15558,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:vico"..msg_chat_id,"ked")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الصوت").lockKid,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الصوت").lockKid,"md",true)  
 return false
 end 
 if text == "قفل الصوت بالكتم" then 
@@ -15574,7 +15574,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:vico"..msg_chat_id,"ktm")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الصوت").lockKtm,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الصوت").lockKtm,"md",true)  
 return false
 end 
 if text == "قفل الصوت بالطرد" then 
@@ -15590,7 +15590,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:vico"..msg_chat_id,"kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الصوت").lockKick,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الصوت").lockKick,"md",true)  
 return false
 end 
 if text == "فتح الصوت" then 
@@ -15606,7 +15606,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:del(TheFRADM.."FRADM:Lock:vico"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح الصوت").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح الصوت").unLock,"md",true)  
 return false
 end 
 if text == "قفل الكيبورد" then 
@@ -15622,7 +15622,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Keyboard"..msg_chat_id,"del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الكيبورد").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الكيبورد").Lock,"md",true)  
 return false
 end 
 if text == "قفل الكيبورد بالتقييد" then 
@@ -15638,7 +15638,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Keyboard"..msg_chat_id,"ked")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الكيبورد").lockKid,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الكيبورد").lockKid,"md",true)  
 return false
 end 
 if text == "قفل الكيبورد بالكتم" then 
@@ -15654,7 +15654,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Keyboard"..msg_chat_id,"ktm")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الكيبورد").lockKtm,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الكيبورد").lockKtm,"md",true)  
 return false
 end 
 if text == "قفل الكيبورد بالطرد" then 
@@ -15670,7 +15670,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Keyboard"..msg_chat_id,"kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الكيبورد").lockKick,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الكيبورد").lockKick,"md",true)  
 return false
 end 
 if text == "فتح الكيبورد" then 
@@ -15686,7 +15686,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:del(TheFRADM.."FRADM:Lock:Keyboard"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح الكيبورد").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح الكيبورد").unLock,"md",true)  
 return false
 end 
 if text == "قفل الملصقات" then 
@@ -15702,7 +15702,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Sticker"..msg_chat_id,"del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الملصقات").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الملصقات").Lock,"md",true)  
 return false
 end 
 if text == "قفل الملصقات بالتقييد" then 
@@ -15718,7 +15718,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Sticker"..msg_chat_id,"ked")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الملصقات").lockKid,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الملصقات").lockKid,"md",true)  
 return false
 end 
 if text == "قفل الملصقات بالكتم" then 
@@ -15734,7 +15734,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Sticker"..msg_chat_id,"ktm")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الملصقات").lockKtm,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الملصقات").lockKtm,"md",true)  
 return false
 end 
 if text == "قفل الملصقات بالطرد" then 
@@ -15750,7 +15750,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Sticker"..msg_chat_id,"kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الملصقات").lockKick,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الملصقات").lockKick,"md",true)  
 return false
 end 
 if text == "فتح الملصقات" then 
@@ -15766,7 +15766,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:del(TheFRADM.."FRADM:Lock:Sticker"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح الملصقات").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح الملصقات").unLock,"md",true)  
 return false
 end 
 if text == "قفل التوجيه" then 
@@ -15782,7 +15782,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:forward"..msg_chat_id,"del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل التوجيه").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل التوجيه").Lock,"md",true)  
 return false
 end 
 if text == "قفل التوجيه بالتقييد" then 
@@ -15798,7 +15798,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:forward"..msg_chat_id,"ked")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل التوجيه").lockKid,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل التوجيه").lockKid,"md",true)  
 return false
 end 
 if text == "قفل التوجيه بالكتم" then 
@@ -15814,7 +15814,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:forward"..msg_chat_id,"ktm")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل التوجيه").lockKtm,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل التوجيه").lockKtm,"md",true)  
 return false
 end 
 if text == "قفل التوجيه بالطرد" then 
@@ -15830,7 +15830,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:forward"..msg_chat_id,"kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل التوجيه").lockKick,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل التوجيه").lockKick,"md",true)  
 return false
 end 
 if text == "فتح التوجيه" then 
@@ -15846,7 +15846,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:del(TheFRADM.."FRADM:Lock:forward"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح التوجيه").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح التوجيه").unLock,"md",true)  
 return false
 end 
 if text == "قفل الملفات" then 
@@ -15862,7 +15862,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Document"..msg_chat_id,"del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الملفات").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الملفات").Lock,"md",true)  
 return false
 end 
 if text == "قفل الملفات بالتقييد" then 
@@ -15878,7 +15878,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Document"..msg_chat_id,"ked")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الملفات").lockKid,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الملفات").lockKid,"md",true)  
 return false
 end 
 if text == "قفل الملفات بالكتم" then 
@@ -15894,7 +15894,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Document"..msg_chat_id,"ktm")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الملفات").lockKtm,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الملفات").lockKtm,"md",true)  
 return false
 end 
 if text == "قفل الملفات بالطرد" then 
@@ -15910,7 +15910,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Document"..msg_chat_id,"kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الملفات").lockKick,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الملفات").lockKick,"md",true)  
 return false
 end 
 if text == "فتح الملفات" then 
@@ -15926,7 +15926,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:del(TheFRADM.."FRADM:Lock:Document"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح الملفات").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح الملفات").unLock,"md",true)  
 return false
 end 
 if text == "قفل السيلفي" then 
@@ -15942,7 +15942,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Unsupported"..msg_chat_id,"del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل السيلفي").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل السيلفي").Lock,"md",true)  
 return false
 end 
 if text == "قفل السيلفي بالتقييد" then 
@@ -15958,7 +15958,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Unsupported"..msg_chat_id,"ked")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل السيلفي").lockKid,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل السيلفي").lockKid,"md",true)  
 return false
 end 
 if text == "قفل السيلفي بالكتم" then 
@@ -15974,7 +15974,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Unsupported"..msg_chat_id,"ktm")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل السيلفي").lockKtm,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل السيلفي").lockKtm,"md",true)  
 return false
 end 
 if text == "قفل السيلفي بالطرد" then 
@@ -15990,7 +15990,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Unsupported"..msg_chat_id,"kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل السيلفي").lockKick,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل السيلفي").lockKick,"md",true)  
 return false
 end 
 if text == "فتح السيلفي" then 
@@ -16006,7 +16006,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:del(TheFRADM.."FRADM:Lock:Unsupported"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح السيلفي").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح السيلفي").unLock,"md",true)  
 return false
 end 
 if text == "قفل الماركداون" then 
@@ -16022,7 +16022,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Markdaun"..msg_chat_id,"del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الماركداون").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الماركداون").Lock,"md",true)  
 return false
 end 
 if text == "قفل الماركداون بالتقييد" then 
@@ -16038,7 +16038,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Markdaun"..msg_chat_id,"ked")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الماركداون").lockKid,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الماركداون").lockKid,"md",true)  
 return false
 end 
 if text == "قفل الماركداون بالكتم" then 
@@ -16054,7 +16054,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Markdaun"..msg_chat_id,"ktm")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الماركداون").lockKtm,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الماركداون").lockKtm,"md",true)  
 return false
 end 
 if text == "قفل الماركداون بالطرد" then 
@@ -16070,7 +16070,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Markdaun"..msg_chat_id,"kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الماركداون").lockKick,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الماركداون").lockKick,"md",true)  
 return false
 end 
 if text == "فتح الماركداون" then 
@@ -16086,7 +16086,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:del(TheFRADM.."FRADM:Lock:Markdaun"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح الماركداون").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح الماركداون").unLock,"md",true)  
 return false
 end 
 if text == "قفل الجهات" then 
@@ -16102,7 +16102,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Contact"..msg_chat_id,"del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الجهات").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الجهات").Lock,"md",true)  
 return false
 end 
 if text == "قفل الجهات بالتقييد" then 
@@ -16118,7 +16118,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Contact"..msg_chat_id,"ked")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الجهات").lockKid,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الجهات").lockKid,"md",true)  
 return false
 end 
 if text == "قفل الجهات بالكتم" then 
@@ -16134,7 +16134,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Contact"..msg_chat_id,"ktm")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الجهات").lockKtm,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الجهات").lockKtm,"md",true)  
 return false
 end 
 if text == "قفل الجهات بالطرد" then 
@@ -16150,7 +16150,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Contact"..msg_chat_id,"kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الجهات").lockKick,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الجهات").lockKick,"md",true)  
 return false
 end 
 if text == "فتح الجهات" then 
@@ -16166,7 +16166,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:del(TheFRADM.."FRADM:Lock:Contact"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح الجهات").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح الجهات").unLock,"md",true)  
 return false
 end 
 if text == "قفل الكلايش" then 
@@ -16182,7 +16182,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Spam"..msg_chat_id,"del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الكلايش").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الكلايش").Lock,"md",true)  
 return false
 end 
 if text == "قفل الكلايش بالتقييد" then 
@@ -16198,7 +16198,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Spam"..msg_chat_id,"ked")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الكلايش").lockKid,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الكلايش").lockKid,"md",true)  
 return false
 end 
 if text == "قفل الكلايش بالكتم" then 
@@ -16214,7 +16214,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Spam"..msg_chat_id,"ktm")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الكلايش").lockKtm,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الكلايش").lockKtm,"md",true)  
 return false
 end 
 if text == "قفل الكلايش بالطرد" then 
@@ -16230,7 +16230,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Spam"..msg_chat_id,"kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الكلايش").lockKick,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الكلايش").lockKick,"md",true)  
 return false
 end 
 if text == "فتح الكلايش" then 
@@ -16246,7 +16246,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:del(TheFRADM.."FRADM:Lock:Spam"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح الكلايش").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح الكلايش").unLock,"md",true)  
 return false
 end 
 if text == "قفل الانلاين" then 
@@ -16262,7 +16262,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Inlen"..msg_chat_id,"del")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الانلاين").Lock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الانلاين").Lock,"md",true)  
 return false
 end 
 if text == "قفل الانلاين بالتقييد" then 
@@ -16278,7 +16278,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Inlen"..msg_chat_id,"ked")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الانلاين").lockKid,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الانلاين").lockKid,"md",true)  
 return false
 end 
 if text == "قفل الانلاين بالكتم" then 
@@ -16294,7 +16294,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Inlen"..msg_chat_id,"ktm")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الانلاين").lockKtm,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الانلاين").lockKtm,"md",true)  
 return false
 end 
 if text == "قفل الانلاين بالطرد" then 
@@ -16310,7 +16310,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM.."FRADM:Lock:Inlen"..msg_chat_id,"kick")  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم قفل الانلاين").lockKick,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم قفل الانلاين").lockKick,"md",true)  
 return false
 end 
 if text == "فتح الانلاين" then 
@@ -16326,7 +16326,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:del(TheFRADM.."FRADM:Lock:Inlen"..msg_chat_id)  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(msg.return merolua.sender_id.user_id,"⇜ تم فتح الانلاين").unLock,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"⇜ تم فتح الانلاين").unLock,"md",true)  
 return false
 end 
 if text == "ضع رابط" or text == "وضع رابط" then
@@ -16341,7 +16341,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:setex(TheFRADM.."FRADM:Set:Link"..msg_chat_id..""..msg.return merolua.sender_id.user_id,120,true) 
+Redis:setex(TheFRADM.."FRADM:Set:Link"..msg_chat_id..""..msg.sender_id.user_id,120,true) 
 return merolua.send(msg_chat_id,msg_id,"⇜ ارسل رابط القروب او رابط قناة القروب","md",true)  
 end
 if text == "مسح الرابط" or text == "مسح رابط" then
@@ -16418,7 +16418,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:setex(TheFRADM.."FRADM:Welcome:Group:Set" .. msg_chat_id .. "" .. msg.return merolua.sender_id.user_id, 120, true)  
+Redis:setex(TheFRADM.."FRADM:Welcome:Group:Set" .. msg_chat_id .. "" .. msg.sender_id.user_id, 120, true)  
 local textett =[[
 ⇜ ارسل لي الترحيب عام الان
 ⇜ تستطيع اضافة مايلي
@@ -16467,12 +16467,12 @@ end
 Redis:del(TheFRADM.."FRADM:Welcome:Groups") 
 return merolua.send(msg_chat_id,msg_id,"⇜ تم مسح الترحيب عام","md",true)   
 end
-if Redis:get(TheFRADM.."FRADM:Welcome:Group:Set" .. msg_chat_id .. "" .. msg.return merolua.sender_id.user_id) then 
+if Redis:get(TheFRADM.."FRADM:Welcome:Group:Set" .. msg_chat_id .. "" .. msg.sender_id.user_id) then 
 if text == "الغاء" then 
-Redis:del(TheFRADM.."FRADM:Welcome:Group:Set" .. msg_chat_id .. "" .. msg.return merolua.sender_id.user_id)  
+Redis:del(TheFRADM.."FRADM:Welcome:Group:Set" .. msg_chat_id .. "" .. msg.sender_id.user_id)  
 return merolua.send(msg_chat_id,msg_id,"⇜ تم الغاء حفظ الترحيب عام","md",true)   
 end 
-Redis:del(TheFRADM.."FRADM:Welcome:Group:Set" .. msg_chat_id .. "" .. msg.return merolua.sender_id.user_id)  
+Redis:del(TheFRADM.."FRADM:Welcome:Group:Set" .. msg_chat_id .. "" .. msg.sender_id.user_id)  
 Redis:set(TheFRADM.."FRADM:Welcome:Groups",text) 
 return merolua.send(msg_chat_id,msg_id,"⇜ تم حفظ الترحيب عام","md",true)
 end
@@ -16488,7 +16488,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:setex(TheFRADM.."Tshake:Welcome:Group" .. msg_chat_id .. "" .. msg.return merolua.sender_id.user_id, 120, true)  
+Redis:setex(TheFRADM.."Tshake:Welcome:Group" .. msg_chat_id .. "" .. msg.sender_id.user_id, 120, true)  
 local textett =[[
 ⇜ ارسل لي الترحيب الان
 ⇜ تستطيع اضافة مايلي
@@ -16551,7 +16551,7 @@ local thumb_id = msg.content.video.thumbnail.file.remote.id
 local api_ = request('http://161.35.201.62:8080/nsfw?token=' .. Token .. '&file_id='..thumb_id)
 local api = JSON.decode(api_)
 if api.result.is_nsfw == true then
-local ban = bot.getUser(msg.return merolua.sender_id.user_id)
+local ban = bot.getUser(msg.sender_id.user_id)
 if ban.first_name then
 news = ban.first_name
 else
@@ -16563,9 +16563,9 @@ end
 if GetInfoBot(msg).BanUser == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ البوت ليس لديه صلاحيه حظر المستخدمين ',"md",true)
 end
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
-return merolua.send(msg_chat_id, msg_id , "「 "..news.." 」\n⇜ قام بارسال فيديو اباحي\n⇜ تم تقييده ومسح الفيديو\n✧")
+send(msg_chat_id, msg_id , "「 "..news.." 」\n⇜ قام بارسال فيديو اباحي\n⇜ تم تقييده ومسح الفيديو\n✧")
 end
 end
 if msg.content.animation then
@@ -16573,7 +16573,7 @@ local thumb_id = msg.content.animation.thumbnail.file.remote.id
 local api_ = request('http://161.35.201.62:8080/nsfw?token=' .. Token .. '&file_id='..thumb_id)
 local api = JSON.decode(api_)
 if api.result.is_nsfw == true then
-local ban = bot.getUser(msg.return merolua.sender_id.user_id)
+local ban = bot.getUser(msg.sender_id.user_id)
 if ban.first_name then
 news = ban.first_name
 else
@@ -16585,9 +16585,9 @@ end
 if GetInfoBot(msg).BanUser == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ البوت ليس لديه صلاحيه حظر المستخدمين ',"md",true)
 end
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
-return merolua.send(msg_chat_id, msg_id , "「 "..news.." 」\n⇜ قام بارسال قيف اباحي\n⇜ تم تقييده ومسح القيف\n✧")
+send(msg_chat_id, msg_id , "「 "..news.." 」\n⇜ قام بارسال قيف اباحي\n⇜ تم تقييده ومسح القيف\n✧")
 end
 end
 if msg.content.sticker then
@@ -16595,7 +16595,7 @@ local thumb_id = msg.content.sticker.thumbnail.file.remote.id
 local api_ = request('http://161.35.201.62:8080/nsfw?token=' .. Token .. '&file_id='..thumb_id)
 local api = JSON.decode(api_)
 if api.result.is_nsfw == true then
-local ban = bot.getUser(msg.return merolua.sender_id.user_id)
+local ban = bot.getUser(msg.sender_id.user_id)
 if ban.first_name then
 news = ban.first_name
 else
@@ -16607,9 +16607,9 @@ end
 if GetInfoBot(msg).BanUser == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ البوت ليس لديه صلاحيه حظر المستخدمين ',"md",true)
 end
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
-return merolua.send(msg_chat_id, msg_id , "「 "..news.." 」\n⇜ قام بارسال ملصق اباحي\n⇜ تم تقييده ومسح الملصق\n✧")
+send(msg_chat_id, msg_id , "「 "..news.." 」\n⇜ قام بارسال ملصق اباحي\n⇜ تم تقييده ومسح الملصق\n✧")
 end
 end
 if msg.content.photo then
@@ -16623,7 +16623,7 @@ end
 local api_ = request('http://161.35.201.62:8080/nsfw?token=' .. Token .. '&file_id='..thumb_id)
 local api = JSON.decode(api_)
 if api.result.is_nsfw == true then
-local ban = bot.getUser(msg.return merolua.sender_id.user_id)
+local ban = bot.getUser(msg.sender_id.user_id)
 if ban.first_name then
 news = ban.first_name
 else
@@ -16635,9 +16635,9 @@ end
 if GetInfoBot(msg).BanUser == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ البوت ليس لديه صلاحيه حظر المستخدمين ',"md",true)
 end
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 bot.deleteMessages(msg.chat_id,{[1]= msg.id})
-return merolua.send(msg_chat_id, msg_id , "「 "..news.." 」\n⇜ قام بارسال صورة اباحية\n⇜ تم تقييده ومسح الصورة\n✧")
+send(msg_chat_id, msg_id , "「 "..news.." 」\n⇜ قام بارسال صورة اباحية\n⇜ تم تقييده ومسح الصورة\n✧")
 end
 end
 end
@@ -16659,7 +16659,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:setex(TheFRADM.."FRADM:Set:Rules:" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id, 600, true) 
+Redis:setex(TheFRADM.."FRADM:Set:Rules:" .. msg_chat_id .. ":" .. msg.sender_id.user_id, 600, true) 
 return merolua.send(msg_chat_id,msg_id,"⇜ ارسل لي القوانين","md",true)  
 end
 if text == "مسح القوانين" or text == "مسح قوانين" then  
@@ -16703,7 +16703,7 @@ end
 if GetInfoBot(msg).Info == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ البوت ليس لديه صلاحية تغيير المعلومات ',"md",true)  
 end
-Redis:setex(TheFRADM.."FRADM:Set:Description:" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id, 600, true) 
+Redis:setex(TheFRADM.."FRADM:Set:Description:" .. msg_chat_id .. ":" .. msg.sender_id.user_id, 600, true) 
 return merolua.send(msg_chat_id,msg_id,"⇜ ارسل لي وصف القروب","md",true)  
 end
 if text == "مسح الوصف" or text == "مسح وصف" then  
@@ -16764,7 +16764,7 @@ end
 if GetInfoBot(msg).Info == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ البوت ليس لديه صلاحية تغيير المعلومات ',"md",true)  
 end
-Redis:set(TheFRADM.."FRADM:Chat:Photo"..msg_chat_id..":"..msg.return merolua.sender_id.user_id,true) 
+Redis:set(TheFRADM.."FRADM:Chat:Photo"..msg_chat_id..":"..msg.sender_id.user_id,true) 
 return merolua.send(msg_chat_id,msg_id,"⇜ ارسل الصوره لوضعها للقروب","md",true)    
 end
 if text == "مسح قائمه المنع" or text == "مسح قائمة المنع" then   
@@ -16828,7 +16828,7 @@ v = v:gsub('text:',"")
 local Text_Filter = Redis:get(TheFRADM.."FRADM:Filter:Group:"..v..msg_chat_id)   
 Filter = Filter..""..k.."- "..ver.." ← ( "..Text_Filter.." )\n"    
 end  
-return merolua.send(msg_chat_id,msg_id,Filter,"md",true)  
+send(msg_chat_id,msg_id,Filter,"md",true)  
 end  
 if text == "منع" then       
 if not msg.Addictive then
@@ -16842,7 +16842,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:set(TheFRADM..'FRADM:FilterText'..msg_chat_id..':'..msg.return merolua.sender_id.user_id,'true')
+Redis:set(TheFRADM..'FRADM:FilterText'..msg_chat_id..':'..msg.sender_id.user_id,'true')
 return merolua.send(msg_chat_id,msg_id,'\n⇜ ارسل الان ( ملصق ,متحركة ,صورة ,رسالة ) ',"md",true)  
 end    
 if text == "الغاء منع" then    
@@ -16857,21 +16857,21 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:set(TheFRADM..'FRADM:FilterText'..msg_chat_id..':'..msg.return merolua.sender_id.user_id,'DelFilter')
+Redis:set(TheFRADM..'FRADM:FilterText'..msg_chat_id..':'..msg.sender_id.user_id,'DelFilter')
 return merolua.send(msg_chat_id,msg_id,'\n⇜ ارسل الان ( ملصق ,متحركة ,صورة,رسالة ) ',"md",true)  
 end
 if text == "اضف امر عام" then
 if not msg.ControllerBot then 
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(1)..' )',"md",true)  
 end
-Redis:set(TheFRADM.."All:Command:Reids:Group"..msg_chat_id..":"..msg.return merolua.sender_id.user_id,"true") 
+Redis:set(TheFRADM.."All:Command:Reids:Group"..msg_chat_id..":"..msg.sender_id.user_id,"true") 
 return merolua.send(msg_chat_id,msg_id,"⇜ ارسل لي الامر القديم ...","md",true)
 end
 if text == "حذف امر عام" or text == "مسح امر عام" then 
 if not msg.ControllerBot then 
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(1)..' )',"md",true)  
 end
-Redis:set(TheFRADM.."All:Command:Reids:Group:Del"..msg_chat_id..":"..msg.return merolua.sender_id.user_id,"true") 
+Redis:set(TheFRADM.."All:Command:Reids:Group:Del"..msg_chat_id..":"..msg.sender_id.user_id,"true") 
 return merolua.send(msg_chat_id,msg_id,"⇜ ارسل الان الامر الذي قمت بوضعه مكان الامر القديم","md",true)
 end
 if text == "حذف الاوامر المضافه العامه" or text == "مسح الاوامر المضافه العامه" or text == "مسح الاوامر المضافه عام" then 
@@ -16916,12 +16916,12 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:set(TheFRADM.."FRADM:Command:Reids:Group"..msg_chat_id..":"..msg.return merolua.sender_id.user_id,"true") 
+Redis:set(TheFRADM.."FRADM:Command:Reids:Group"..msg_chat_id..":"..msg.sender_id.user_id,"true") 
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = '- الغاء الامر ', data =msg.return merolua.sender_id.user_id..'/cancelamr'}
+{text = '- الغاء الامر ', data =msg.sender_id.user_id..'/cancelamr'}
 },
 }
 }
@@ -16939,12 +16939,12 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:set(TheFRADM.."FRADM:Command:Reids:Group:Del"..msg_chat_id..":"..msg.return merolua.sender_id.user_id,"true") 
+Redis:set(TheFRADM.."FRADM:Command:Reids:Group:Del"..msg_chat_id..":"..msg.sender_id.user_id,"true") 
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = '- الغاء الامر ', data =msg.return merolua.sender_id.user_id..'/cancelamr'}
+{text = '- الغاء الامر ', data =msg.sender_id.user_id..'/cancelamr'}
 },
 }
 }
@@ -17014,7 +17014,7 @@ end
 if GetInfoBot(msg).PinMsg == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ البوت ليس لديه صلاحية تثبيت الرسائل ',"md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,"\n⇜ تم تثبيت الرسالة","md",true)
+send(msg_chat_id,msg_id,"\n⇜ تم تثبيت الرسالة","md",true)
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
 local PinMsg = bot.pinChatMessage(msg_chat_id,Message_Reply.id,true)
 end
@@ -17036,7 +17036,7 @@ end
 if GetInfoBot(msg).PinMsg == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ البوت ليس لديه صلاحية تثبيت الرسائل ',"md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,"\n⇜ تم الغاء تثبيت الرسالة","md",true)
+send(msg_chat_id,msg_id,"\n⇜ تم الغاء تثبيت الرسالة","md",true)
 bot.unpinChatMessage(msg.chat_id,bot.getChatPinnedMessage(msg.chat_id).id) 
 end
 if text == 'الغاء تثبيت الكل' then
@@ -17057,7 +17057,7 @@ end
 if GetInfoBot(msg).PinMsg == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ البوت ليس لديه صلاحية تثبيت الرسائل ',"md",true)  
 end
-return merolua.send(msg_chat_id,msg_id,"\n⇜ تم الغاء تثبيت جميع الرسائل","md",true)
+send(msg_chat_id,msg_id,"\n⇜ تم الغاء تثبيت جميع الرسائل","md",true)
 for i=0, 20 do
 local UnPin = bot.unpinChatMessage(msg_chat_id) 
 if not bot.getChatPinnedMessage(msg_chat_id).id then
@@ -17081,61 +17081,61 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'تعطيل الرابط', data = msg.return merolua.sender_id.user_id..'/'.. 'unmute_link'},{text = 'تفعيل الرابط', data = msg.return merolua.sender_id.user_id..'/'.. 'mute_link'},
+{text = 'تعطيل الرابط', data = msg.sender_id.user_id..'/'.. 'unmute_link'},{text = 'تفعيل الرابط', data = msg.sender_id.user_id..'/'.. 'mute_link'},
 },
 {
-{text = 'تعطيل الترحيب', data = msg.return merolua.sender_id.user_id..'/'.. 'unmute_welcome'},{text = 'تفعيل الترحيب', data = msg.return merolua.sender_id.user_id..'/'.. 'mute_welcome'},
+{text = 'تعطيل الترحيب', data = msg.sender_id.user_id..'/'.. 'unmute_welcome'},{text = 'تفعيل الترحيب', data = msg.sender_id.user_id..'/'.. 'mute_welcome'},
 },
 {
-{text = 'تعطيل الايدي', data = msg.return merolua.sender_id.user_id..'/'.. 'unmute_Id'},{text = 'تفعيل الايدي', data = msg.return merolua.sender_id.user_id..'/'.. 'mute_Id'},
+{text = 'تعطيل الايدي', data = msg.sender_id.user_id..'/'.. 'unmute_Id'},{text = 'تفعيل الايدي', data = msg.sender_id.user_id..'/'.. 'mute_Id'},
 },
 {
-{text = 'تعطيل الايدي بالصوره', data = msg.return merolua.sender_id.user_id..'/'.. 'unmute_IdPhoto'},{text = 'تفعيل الايدي بالصوره', data = msg.return merolua.sender_id.user_id..'/'.. 'mute_IdPhoto'},
+{text = 'تعطيل الايدي بالصوره', data = msg.sender_id.user_id..'/'.. 'unmute_IdPhoto'},{text = 'تفعيل الايدي بالصوره', data = msg.sender_id.user_id..'/'.. 'mute_IdPhoto'},
 },
 {
-{text = 'تعطيل الردود', data = msg.return merolua.sender_id.user_id..'/'.. 'unmute_ryple'},{text = 'تفعيل الردود', data = msg.return merolua.sender_id.user_id..'/'.. 'mute_ryple'},
+{text = 'تعطيل الردود', data = msg.sender_id.user_id..'/'.. 'unmute_ryple'},{text = 'تفعيل الردود', data = msg.sender_id.user_id..'/'.. 'mute_ryple'},
 },
 {
-{text = 'تعطيل الردود العامه', data = msg.return merolua.sender_id.user_id..'/'.. 'unmute_ryplesudo'},{text = 'تفعيل الردود العامه', data = msg.return merolua.sender_id.user_id..'/'.. 'mute_ryplesudo'},
+{text = 'تعطيل الردود العامه', data = msg.sender_id.user_id..'/'.. 'unmute_ryplesudo'},{text = 'تفعيل الردود العامه', data = msg.sender_id.user_id..'/'.. 'mute_ryplesudo'},
 },
 {
-{text = 'تعطيل الرفع', data = msg.return merolua.sender_id.user_id..'/'.. 'unmute_setadmib'},{text = 'تفعيل الرفع', data = msg.return merolua.sender_id.user_id..'/'.. 'mute_setadmib'},
+{text = 'تعطيل الرفع', data = msg.sender_id.user_id..'/'.. 'unmute_setadmib'},{text = 'تفعيل الرفع', data = msg.sender_id.user_id..'/'.. 'mute_setadmib'},
 },
 {
-{text = 'تعطيل الطرد', data = msg.return merolua.sender_id.user_id..'/'.. 'unmute_kickmembars'},{text = 'تفعيل الطرد', data = msg.return merolua.sender_id.user_id..'/'.. 'mute_kickmembars'},
+{text = 'تعطيل الطرد', data = msg.sender_id.user_id..'/'.. 'unmute_kickmembars'},{text = 'تفعيل الطرد', data = msg.sender_id.user_id..'/'.. 'mute_kickmembars'},
 },
 {
-{text = 'تعطيل الالعاب', data = msg.return merolua.sender_id.user_id..'/'.. 'unmute_games'},{text = 'تفعيل الالعاب', data = msg.return merolua.sender_id.user_id..'/'.. 'mute_games'},
+{text = 'تعطيل الالعاب', data = msg.sender_id.user_id..'/'.. 'unmute_games'},{text = 'تفعيل الالعاب', data = msg.sender_id.user_id..'/'.. 'mute_games'},
 },
 {
-{text = 'تعطيل اطردني', data = msg.return merolua.sender_id.user_id..'/'.. 'unmute_kickme'},{text = 'تفعيل اطردني', data = msg.return merolua.sender_id.user_id..'/'.. 'mute_kickme'},
+{text = 'تعطيل اطردني', data = msg.sender_id.user_id..'/'.. 'unmute_kickme'},{text = 'تفعيل اطردني', data = msg.sender_id.user_id..'/'.. 'mute_kickme'},
 },
 {
-{text = 'تعطيل التسليه', data = msg.return merolua.sender_id.user_id..'/'.. 'unmute_thshesh'},{text = 'تفعيل التسليه', data = msg.return merolua.sender_id.user_id..'/'.. 'mute_thshesh'},
+{text = 'تعطيل التسليه', data = msg.sender_id.user_id..'/'.. 'unmute_thshesh'},{text = 'تفعيل التسليه', data = msg.sender_id.user_id..'/'.. 'mute_thshesh'},
 },
 {
-{text = 'تعطيل الحظر المحدود', data = msg.return merolua.sender_id.user_id..'/'.. 'unmute_kicknum'},{text = 'تفعيل الحظر المحدود', data = msg.return merolua.sender_id.user_id..'/'.. 'mute_kicknum'},
+{text = 'تعطيل الحظر المحدود', data = msg.sender_id.user_id..'/'.. 'unmute_kicknum'},{text = 'تفعيل الحظر المحدود', data = msg.sender_id.user_id..'/'.. 'mute_kicknum'},
 },
 {
-{text = 'تعطيل الصيغ', data = msg.return merolua.sender_id.user_id..'/'.. 'unmute_seck'},{text = 'تفعيل الصيغ', data = msg.return merolua.sender_id.user_id..'/'.. 'mute_seck'},
+{text = 'تعطيل الصيغ', data = msg.sender_id.user_id..'/'.. 'unmute_seck'},{text = 'تفعيل الصيغ', data = msg.sender_id.user_id..'/'.. 'mute_seck'},
 },
 {
-{text = 'تعطيل غنيلي', data = msg.return merolua.sender_id.user_id..'/'.. 'unmute_knile'},{text = 'تفعيل غنيلي', data = msg.return merolua.sender_id.user_id..'/'.. 'mute_knile'},
+{text = 'تعطيل غنيلي', data = msg.sender_id.user_id..'/'.. 'unmute_knile'},{text = 'تفعيل غنيلي', data = msg.sender_id.user_id..'/'.. 'mute_knile'},
 },
 {
-{text = 'تعطيل الابراح', data = msg.return merolua.sender_id.user_id..'/'.. 'unmute_brj'},{text = 'تفعيل الابراج', data = msg.return merolua.sender_id.user_id..'/'.. 'mute_brj'},
+{text = 'تعطيل الابراح', data = msg.sender_id.user_id..'/'.. 'unmute_brj'},{text = 'تفعيل الابراج', data = msg.sender_id.user_id..'/'.. 'mute_brj'},
 },
 {
-{text = 'تعطيل الصوتيات', data = msg.return merolua.sender_id.user_id..'/'.. 'unmute_audio'},{text = 'تفعيل الصوتيات', data = msg.return merolua.sender_id.user_id..'/'.. 'mute_audio'},
+{text = 'تعطيل الصوتيات', data = msg.sender_id.user_id..'/'.. 'unmute_audio'},{text = 'تفعيل الصوتيات', data = msg.sender_id.user_id..'/'.. 'mute_audio'},
 },
 {
-{text = 'تعطيل الصوتيات العامه', data = msg.return merolua.sender_id.user_id..'/'.. 'unmute_audioall'},{text = 'تفعيل الصوتيات العامه', data = msg.return merolua.sender_id.user_id..'/'.. 'mute_audioall'},
+{text = 'تعطيل الصوتيات العامه', data = msg.sender_id.user_id..'/'.. 'unmute_audioall'},{text = 'تفعيل الصوتيات العامه', data = msg.sender_id.user_id..'/'.. 'mute_audioall'},
 },
 {
-{text = 'تعطيل تاك عام', data = msg.return merolua.sender_id.user_id..'/'.. 'unmute_takall'},{text = 'تفعيل تاك عام', data = msg.return merolua.sender_id.user_id..'/'.. 'mute_takall'},
+{text = 'تعطيل تاك عام', data = msg.sender_id.user_id..'/'.. 'unmute_takall'},{text = 'تفعيل تاك عام', data = msg.sender_id.user_id..'/'.. 'mute_takall'},
 },
 {
-{text = 'تعطيل التنبيه', data = msg.return merolua.sender_id.user_id..'/'.. 'unmute_namemy'},{text = 'تفعيل التنبيه', data = msg.return merolua.sender_id.user_id..'/'.. 'mute_namemy'},
+{text = 'تعطيل التنبيه', data = msg.sender_id.user_id..'/'.. 'unmute_namemy'},{text = 'تفعيل التنبيه', data = msg.sender_id.user_id..'/'.. 'mute_namemy'},
 },
 {
 {text = '- اخفاء الامر ', data ='/delAmr'}
@@ -17239,38 +17239,38 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = GetSetieng(msg_chat_id).lock_links, data =msg.return merolua.sender_id.user_id..'/'.. 'Status_link'},{text = 'الروابط : ', data =msg.return merolua.sender_id.user_id..'/'.. 'Status_link'},
-{text = GetSetieng(msg_chat_id).lock_spam, data =msg.return merolua.sender_id.user_id..'/'.. 'Status_spam'},{text = 'السبام : ', data =msg.return merolua.sender_id.user_id..'/'.. 'Status_spam'},
+{text = GetSetieng(msg_chat_id).lock_links, data =msg.sender_id.user_id..'/'.. 'Status_link'},{text = 'الروابط : ', data =msg.sender_id.user_id..'/'.. 'Status_link'},
+{text = GetSetieng(msg_chat_id).lock_spam, data =msg.sender_id.user_id..'/'.. 'Status_spam'},{text = 'السبام : ', data =msg.sender_id.user_id..'/'.. 'Status_spam'},
 },
 {
-{text = GetSetieng(msg_chat_id).lock_inlin, data =msg.return merolua.sender_id.user_id..'/'.. 'Status_keypord'},{text = 'الكيبورد : ', data =msg.return merolua.sender_id.user_id..'/'.. 'Status_keypord'},
-{text = GetSetieng(msg_chat_id).lock_vico, data =msg.return merolua.sender_id.user_id..'/'.. 'Status_voice'},{text = 'الاغاني : ', data =msg.return merolua.sender_id.user_id..'/'.. 'Status_voice'},
+{text = GetSetieng(msg_chat_id).lock_inlin, data =msg.sender_id.user_id..'/'.. 'Status_keypord'},{text = 'الكيبورد : ', data =msg.sender_id.user_id..'/'.. 'Status_keypord'},
+{text = GetSetieng(msg_chat_id).lock_vico, data =msg.sender_id.user_id..'/'.. 'Status_voice'},{text = 'الاغاني : ', data =msg.sender_id.user_id..'/'.. 'Status_voice'},
 },
 {
-{text = GetSetieng(msg_chat_id).lock_gif, data =msg.return merolua.sender_id.user_id..'/'.. 'Status_gif'},{text = 'المتحركه : ', data =msg.return merolua.sender_id.user_id..'/'.. 'Status_gif'},
-{text = GetSetieng(msg_chat_id).lock_file, data =msg.return merolua.sender_id.user_id..'/'.. 'Status_files'},{text = 'الملفات : ', data =msg.return merolua.sender_id.user_id..'/'.. 'Status_files'},
+{text = GetSetieng(msg_chat_id).lock_gif, data =msg.sender_id.user_id..'/'.. 'Status_gif'},{text = 'المتحركه : ', data =msg.sender_id.user_id..'/'.. 'Status_gif'},
+{text = GetSetieng(msg_chat_id).lock_file, data =msg.sender_id.user_id..'/'.. 'Status_files'},{text = 'الملفات : ', data =msg.sender_id.user_id..'/'.. 'Status_files'},
 },
 {
-{text = GetSetieng(msg_chat_id).lock_text, data =msg.return merolua.sender_id.user_id..'/'.. 'Status_text'},{text = 'الشات : ', data =msg.return merolua.sender_id.user_id..'/'.. 'Status_text'},
-{text = GetSetieng(msg_chat_id).lock_ved, data =msg.return merolua.sender_id.user_id..'/'.. 'Status_video'},{text = 'الفيديو : ', data =msg.return merolua.sender_id.user_id..'/'.. 'Status_video'},
+{text = GetSetieng(msg_chat_id).lock_text, data =msg.sender_id.user_id..'/'.. 'Status_text'},{text = 'الشات : ', data =msg.sender_id.user_id..'/'.. 'Status_text'},
+{text = GetSetieng(msg_chat_id).lock_ved, data =msg.sender_id.user_id..'/'.. 'Status_video'},{text = 'الفيديو : ', data =msg.sender_id.user_id..'/'.. 'Status_video'},
 },
 {
-{text = GetSetieng(msg_chat_id).lock_photo, data =msg.return merolua.sender_id.user_id..'/'.. 'Status_photo'},{text = 'الصور : ', data =msg.return merolua.sender_id.user_id..'/'.. 'Status_photo'},
-{text = GetSetieng(msg_chat_id).lock_user, data =msg.return merolua.sender_id.user_id..'/'.. 'Status_username'},{text = 'المعرفات : ', data =msg.return merolua.sender_id.user_id..'/'.. 'Status_username'},
+{text = GetSetieng(msg_chat_id).lock_photo, data =msg.sender_id.user_id..'/'.. 'Status_photo'},{text = 'الصور : ', data =msg.sender_id.user_id..'/'.. 'Status_photo'},
+{text = GetSetieng(msg_chat_id).lock_user, data =msg.sender_id.user_id..'/'.. 'Status_username'},{text = 'المعرفات : ', data =msg.sender_id.user_id..'/'.. 'Status_username'},
 },
 {
-{text = GetSetieng(msg_chat_id).lock_hash, data =msg.return merolua.sender_id.user_id..'/'.. 'Status_tags'},{text = 'التاك : ', data =msg.return merolua.sender_id.user_id..'/'.. 'Status_tags'},
-{text = GetSetieng(msg_chat_id).lock_bots, data =msg.return merolua.sender_id.user_id..'/'.. 'Status_bots'},{text = 'البوتات : ', data =msg.return merolua.sender_id.user_id..'/'.. 'Status_bots'},
+{text = GetSetieng(msg_chat_id).lock_hash, data =msg.sender_id.user_id..'/'.. 'Status_tags'},{text = 'التاك : ', data =msg.sender_id.user_id..'/'.. 'Status_tags'},
+{text = GetSetieng(msg_chat_id).lock_bots, data =msg.sender_id.user_id..'/'.. 'Status_bots'},{text = 'البوتات : ', data =msg.sender_id.user_id..'/'.. 'Status_bots'},
 },
 {
-{text = GetSetieng(msg_chat_id).farsia, data =msg.return merolua.sender_id.user_id..'/'.. 'Status_farsia'},{text = 'الفارسيه : ', data =msg.return merolua.sender_id.user_id..'/'.. 'Status_farsia'},
-{text = GetSetieng(msg_chat_id).tphlesh, data =msg.return merolua.sender_id.user_id..'/'.. 'Status_tphlesh'},{text = 'الحمايه : ', data =msg.return merolua.sender_id.user_id..'/'.. 'Status_tphlesh'},
+{text = GetSetieng(msg_chat_id).farsia, data =msg.sender_id.user_id..'/'.. 'Status_farsia'},{text = 'الفارسيه : ', data =msg.sender_id.user_id..'/'.. 'Status_farsia'},
+{text = GetSetieng(msg_chat_id).tphlesh, data =msg.sender_id.user_id..'/'.. 'Status_tphlesh'},{text = 'الحمايه : ', data =msg.sender_id.user_id..'/'.. 'Status_tphlesh'},
 },
 {
-{text = GetSetieng(msg_chat_id).alphsar, data =msg.return merolua.sender_id.user_id..'/'.. 'Status_alphsar'},{text = 'السب : ', data =msg.return merolua.sender_id.user_id..'/'.. 'Status_alphsar'},
+{text = GetSetieng(msg_chat_id).alphsar, data =msg.sender_id.user_id..'/'.. 'Status_alphsar'},{text = 'السب : ', data =msg.sender_id.user_id..'/'.. 'Status_alphsar'},
 },
 {
-{text = '- التالي .. ', data =msg.return merolua.sender_id.user_id..'/'.. 'NextSeting'}
+{text = '- التالي .. ', data =msg.sender_id.user_id..'/'.. 'NextSeting'}
 },
 {
 {text = '- اخفاء الامر ', data ='/delAmr'}
@@ -17308,16 +17308,16 @@ end
 if Get_Chat.permissions.can_pin_messages then
 pin = 'نعم' else pin = 'لا'
 end
-if Get_Chat.permissions.can_return merolua.send_media_messages then
+if Get_Chat.permissions.can_send_media_messages then
 media = 'نعم' else media = 'لا'
 end
-if Get_Chat.permissions.can_return merolua.send_messages then
+if Get_Chat.permissions.can_send_messages then
 messges = 'نعم' else messges = 'لا'
 end
-if Get_Chat.permissions.can_return merolua.send_other_messages then
+if Get_Chat.permissions.can_send_other_messages then
 other = 'نعم' else other = 'لا'
 end
-if Get_Chat.permissions.can_return merolua.send_polls then
+if Get_Chat.permissions.can_send_polls then
 polls = 'نعم' else polls = 'لا'
 end
 local Namdaysmsg = Redis:get(TheFRADM.."Num:MssEgeS:Days"..msg.chat_id..os.date("%d")) or 0
@@ -17328,7 +17328,7 @@ local tfaol = '⇜ تفاعل القروب اليومي : \n━━━━━━�
 local permissions = '\n⇜ صلاحيات القروب :\n━━━━━━━━━'..'\n⇜ ارسال الويب : '..web..'\n⇜ تغيير معلومات القروب : '..info..'\n⇜ اضافه مستخدمين : '..invite..'\n⇜ تثبيت الرسائل : '..pin..'\n⇜ ارسال الميديا : '..media..'\n⇜ ارسال الرسائل : '..messges..'\n⇜ اضافه البوتات : '..other..'\n⇜ ارسال استفتاء : '..polls..'\n\n'
 local TextChat = '\n⇜ معلومات القروب :\n━━━━━━━━━'..' \n⇜ اسم القروب :  ['..Get_Chat.title..']('..Info_Chats.invite_link.invite_link..') \n⇜ عدد الادمنيه : '..Info_Chats.administrator_count..' \n⇜ عدد المحظورين : '..Info_Chats.banned_count..' \n⇜ عدد الاعضاء : '..Info_Chats.member_count..' \n⇜ عدد المقيديين : '..Info_Chats.restricted_count..' \n⇜ الايدي : `'..msg.chat_id..'` \n'
 if Info_Chats.photo then
-return merolua.sendPhoto(msg.chat_id, msg.id, Info_Chats.photo.sizes[1].photo.remote.id,TextChat..permissions..tfaol, "md")
+bot.sendPhoto(msg.chat_id, msg.id, Info_Chats.photo.sizes[1].photo.remote.id,TextChat..permissions..tfaol, "md")
 else
 return merolua.send(msg_chat_id,msg_id, TextChat..permissions..tfaol,"md",true)
 end
@@ -17355,22 +17355,22 @@ end
 if Get_Chat.permissions.can_pin_messages then
 pin = 'نعم' else pin = 'لا'
 end
-if Get_Chat.permissions.can_return merolua.send_media_messages then
+if Get_Chat.permissions.can_send_media_messages then
 media = 'نعم' else media = 'لا'
 end
-if Get_Chat.permissions.can_return merolua.send_messages then
+if Get_Chat.permissions.can_send_messages then
 messges = 'نعم' else messges = 'لا'
 end
-if Get_Chat.permissions.can_return merolua.send_other_messages then
+if Get_Chat.permissions.can_send_other_messages then
 other = 'نعم' else other = 'لا'
 end
-if Get_Chat.permissions.can_return merolua.send_polls then
+if Get_Chat.permissions.can_send_polls then
 polls = 'نعم' else polls = 'لا'
 end
 local permissions = '\n⇜ صلاحيات القروب :\n━━━━━━━━━'..'\n⇜ ارسال الويب : '..web..'\n⇜ تغيير معلومات القروب : '..info..'\n⇜ اضافه مستخدمين : '..invite..'\n⇜ تثبيت الرسائل : '..pin..'\n⇜ ارسال الميديا : '..media..'\n⇜ ارسال الرسائل : '..messges..'\n⇜ اضافه البوتات : '..other..'\n⇜ ارسال استفتاء : '..polls..'\n\n'
 local TextChat = '\n⇜ معلومات القروب :\n━━━━━━━━━'..' \n⇜ اسم القروب : ['..Get_Chat.title..']('..Info_Chats.invite_link.invite_link..') \n⇜ عدد الادمنيه : '..Info_Chats.administrator_count..' \n⇜ عدد المحظورين : '..Info_Chats.banned_count..' \n⇜ عدد الاعضاء : '..Info_Chats.member_count..' \n⇜ عدد المقيديين : '..Info_Chats.restricted_count..' \n⇜ الايدي : `'..ChatIdd..'` \n'
 if Info_Chats.photo then
-return merolua.sendPhoto(msg.chat_id, msg.id, Info_Chats.photo.sizes[1].photo.remote.id,TextChat..permissions, "md")
+bot.sendPhoto(msg.chat_id, msg.id, Info_Chats.photo.sizes[1].photo.remote.id,TextChat..permissions, "md")
 else
 return merolua.send(msg_chat_id,msg_id, TextChat..permissions,"md",true)
 end
@@ -17415,44 +17415,44 @@ end
 if Get_Chat.permissions.can_pin_messages then
 pin = 'نعم' else pin = 'لا'
 end
-if Get_Chat.permissions.can_return merolua.send_media_messages then
+if Get_Chat.permissions.can_send_media_messages then
 media = 'نعم' else media = 'لا'
 end
-if Get_Chat.permissions.can_return merolua.send_messages then
+if Get_Chat.permissions.can_send_messages then
 messges = 'نعم' else messges = 'لا'
 end
-if Get_Chat.permissions.can_return merolua.send_other_messages then
+if Get_Chat.permissions.can_send_other_messages then
 other = 'نعم' else other = 'لا'
 end
-if Get_Chat.permissions.can_return merolua.send_polls then
+if Get_Chat.permissions.can_send_polls then
 polls = 'نعم' else polls = 'لا'
 end
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = '- ارسال الويب : '..web, data = msg.return merolua.sender_id.user_id..'/web'}, 
+{text = '- ارسال الويب : '..web, data = msg.sender_id.user_id..'/web'}, 
 },
 {
-{text = '- تغيير معلومات المجموعه : '..info, data =msg.return merolua.sender_id.user_id..  '/info'}, 
+{text = '- تغيير معلومات المجموعه : '..info, data =msg.sender_id.user_id..  '/info'}, 
 },
 {
-{text = '- اضافه مستخدمين : '..invite, data =msg.return merolua.sender_id.user_id..  '/invite'}, 
+{text = '- اضافه مستخدمين : '..invite, data =msg.sender_id.user_id..  '/invite'}, 
 },
 {
-{text = '- تثبيت الرسائل : '..pin, data =msg.return merolua.sender_id.user_id..  '/pin'}, 
+{text = '- تثبيت الرسائل : '..pin, data =msg.sender_id.user_id..  '/pin'}, 
 },
 {
-{text = '- ارسال الميديا : '..media, data =msg.return merolua.sender_id.user_id..  '/media'}, 
+{text = '- ارسال الميديا : '..media, data =msg.sender_id.user_id..  '/media'}, 
 },
 {
-{text = '- ارسال الرسائل : .'..messges, data =msg.return merolua.sender_id.user_id..  '/messges'}, 
+{text = '- ارسال الرسائل : .'..messges, data =msg.sender_id.user_id..  '/messges'}, 
 },
 {
-{text = '- اضافه البوتات : '..other, data =msg.return merolua.sender_id.user_id..  '/other'}, 
+{text = '- اضافه البوتات : '..other, data =msg.sender_id.user_id..  '/other'}, 
 },
 {
-{text = '- ارسال استفتاء : '..polls, data =msg.return merolua.sender_id.user_id.. '/polls'}, 
+{text = '- ارسال استفتاء : '..polls, data =msg.sender_id.user_id.. '/polls'}, 
 },
 {
 {text = '- اخفاء الامر ', data ='/delAmr'}
@@ -17463,7 +17463,7 @@ return merolua.send(msg_chat_id, msg_id, "⇜ صلاحيات القروب : ", '
 end
 
 if text == "تنزيل جميع الرتب" then
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.TheBasicsQ then
@@ -17501,17 +17501,17 @@ if GetInfoBot(msg).SetAdmin == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ البوت ليس لديه صلاحيه اضافة مشرفين ',"md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-local SetCustomTitle = https.request("https://api.telegram.org/bot"..Token.."/setChatAdministratorCustomTitle?chat_id="..msg_chat_id.."&user_id="..Message_Reply.return merolua.sender_id.user_id.."&custom_title="..CustomTitle)
+local SetCustomTitle = https.request("https://api.telegram.org/bot"..Token.."/setChatAdministratorCustomTitle?chat_id="..msg_chat_id.."&user_id="..Message_Reply.sender_id.user_id.."&custom_title="..CustomTitle)
 local SetCustomTitle_ = JSON.decode(SetCustomTitle)
 if SetCustomTitle_.result == true then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ حطيتله لقب : "..CustomTitle).Reply,"md",true)  
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ حطيتله لقب : "..CustomTitle).Reply,"md",true)  
 else
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً هناك خطا تاكد من البوت ومن الشخص","md",true)  
 end 
@@ -17551,7 +17551,7 @@ return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Cont
 end
 local Numbardel = text:match("^ضع التكرار (%d+)$") or text:match("^وضع التكرار (%d+)$")
 Redis:hset(TheFRADM.."FRADM:Spam:Group:User"..msg_chat_id ,"Num:Spam",Numbardel)  
-return merolua.send(msg_chat_id,msg_id, 'تم تعيين عدد التكرار : '..Numbardel)
+send(msg_chat_id,msg_id, 'تم تعيين عدد التكرار : '..Numbardel)
 end
 if text == 'مسح رسائلي' then
 if ChannelJoinch(msg) == false then
@@ -17562,8 +17562,8 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:del(TheFRADM..'FRADM:Num:Message:User'..msg.chat_id..':'..msg.return merolua.sender_id.user_id)
-return merolua.send(msg_chat_id,msg_id,'⇜ تم مسح جميع رسائلك ',"md",true)  
+Redis:del(TheFRADM..'FRADM:Num:Message:User'..msg.chat_id..':'..msg.sender_id.user_id)
+send(msg_chat_id,msg_id,'⇜ تم مسح جميع رسائلك ',"md",true)  
 elseif text == 'مسح سحكاتي' or text == 'مسح تعديلاتي' then
 if ChannelJoinch(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Chat:Channel:Join:Name'..msg.chat_id), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Chat:Channel:Join'..msg.chat_id)}, },}}
@@ -17573,8 +17573,8 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:del(TheFRADM..'FRADM:Num:Message:Edit'..msg.chat_id..msg.return merolua.sender_id.user_id)
-return merolua.send(msg_chat_id,msg_id,'⇜ تم مسح جميع تعديلاتك ',"md",true)  
+Redis:del(TheFRADM..'FRADM:Num:Message:Edit'..msg.chat_id..msg.sender_id.user_id)
+send(msg_chat_id,msg_id,'⇜ تم مسح جميع تعديلاتك ',"md",true)  
 elseif text == 'مسح جهاتي' then
 if ChannelJoinch(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Chat:Channel:Join:Name'..msg.chat_id), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Chat:Channel:Join'..msg.chat_id)}, },}}
@@ -17584,8 +17584,8 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:del(TheFRADM..'FRADM:Num:Add:Memp'..msg.chat_id..':'..msg.return merolua.sender_id.user_id)
-return merolua.send(msg_chat_id,msg_id,'⇜ تم مسح جميع جهاتك ',"md",true)  
+Redis:del(TheFRADM..'FRADM:Num:Add:Memp'..msg.chat_id..':'..msg.sender_id.user_id)
+send(msg_chat_id,msg_id,'⇜ تم مسح جميع جهاتك ',"md",true)  
 elseif text == 'رسائلي' or text == 'رسايلي' then
 if ChannelJoinch(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Chat:Channel:Join:Name'..msg.chat_id), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Chat:Channel:Join'..msg.chat_id)}, },}}
@@ -17595,7 +17595,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-return merolua.send(msg_chat_id,msg_id,'⇜ عدد رسائلك ← '..(Redis:get(TheFRADM..'FRADM:Num:Message:User'..msg.chat_id..':'..msg.return merolua.sender_id.user_id) or 1)..'',"md",true)  
+send(msg_chat_id,msg_id,'⇜ عدد رسائلك ← '..(Redis:get(TheFRADM..'FRADM:Num:Message:User'..msg.chat_id..':'..msg.sender_id.user_id) or 1)..'',"md",true)  
 elseif text == 'سحكاتي' or text == 'تعديلاتي' then
 if ChannelJoinch(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Chat:Channel:Join:Name'..msg.chat_id), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Chat:Channel:Join'..msg.chat_id)}, },}}
@@ -17605,7 +17605,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-return merolua.send(msg_chat_id,msg_id,'⇜ عدد تعديلاتك← '..(Redis:get(TheFRADM..'FRADM:Num:Message:Edit'..msg.chat_id..msg.return merolua.sender_id.user_id) or 0)..'',"md",true)  
+send(msg_chat_id,msg_id,'⇜ عدد تعديلاتك← '..(Redis:get(TheFRADM..'FRADM:Num:Message:Edit'..msg.chat_id..msg.sender_id.user_id) or 0)..'',"md",true)  
 elseif text == 'جهاتي' then
 if ChannelJoinch(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Chat:Channel:Join:Name'..msg.chat_id), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Chat:Channel:Join'..msg.chat_id)}, },}}
@@ -17615,7 +17615,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-return merolua.send(msg_chat_id,msg_id,'⇜ عدد جهاتك ← '..(Redis:get(TheFRADM.."FRADM:Num:Add:Memp"..msg.chat_id..":"..msg.return merolua.sender_id.user_id) or 0)..'',"md",true)  
+send(msg_chat_id,msg_id,'⇜ عدد جهاتك ← '..(Redis:get(TheFRADM.."FRADM:Num:Add:Memp"..msg.chat_id..":"..msg.sender_id.user_id) or 0)..'',"md",true)  
 elseif text == 'مسح' and msg.reply_to_message_id ~= 0 and msg.Addictive then
 if ChannelJoinch(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Chat:Channel:Join:Name'..msg.chat_id), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Chat:Channel:Join'..msg.chat_id)}, },}}
@@ -17668,7 +17668,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:setex(TheFRADM.."FRADM:Redis:Id:Group"..msg.chat_id..""..msg.return merolua.sender_id.user_id,240,true)  
+Redis:setex(TheFRADM.."FRADM:Redis:Id:Group"..msg.chat_id..""..msg.sender_id.user_id,240,true)  
 return merolua.send(msg_chat_id,msg_id,[[
 تمام , الحين ارسل شكل الايدي الجديد
 
@@ -17826,7 +17826,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:setex(TheFRADM.."FRADM:Redis:Id:Groups"..msg.chat_id..""..msg.return merolua.sender_id.user_id,240,true)  
+Redis:setex(TheFRADM.."FRADM:Redis:Id:Groups"..msg.chat_id..""..msg.sender_id.user_id,240,true)  
 return merolua.send(msg_chat_id,msg_id,[[
 تمام , الحين ارسل شكل الايدي الجديد
 
@@ -17889,7 +17889,7 @@ Redis:del(TheFRADM.."FRADM:Developers:Groups")
 return merolua.send(msg_chat_id,msg_id,"⇜ تم مسح ( "..#Info_Members.." ) من Myth ","md",true)
 end
 if TextMsg == 'المالكين' then
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.MalekAsase then
@@ -18108,7 +18108,7 @@ end
 if y == true then
 return merolua.send(msg_chat_id,msg_id,"⇜ تم مسح ( "..x.." ) من المقيديين ","md",true)
 else
-return merolua.send(msg_chat_id,msg_id,'⇜ لا يوجد مقيدين ',"md",true)  
+send(msg_chat_id,msg_id,'⇜ لا يوجد مقيدين ',"md",true)  
 end
 end
 if TextMsg == 'البوتات' then
@@ -18172,7 +18172,7 @@ end
 if y == true then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عدد المطرودين : "..#List_Members.."\n⇜ تم الغاء الحظر عن ( "..x.." ) ","md",true)  
 else
-return merolua.send(msg_chat_id,msg_id,'⇜ لا يوجد مطرودين ',"md",true)  
+send(msg_chat_id,msg_id,'⇜ لا يوجد مطرودين ',"md",true)  
 end
 end
 if TextMsg == 'المحذوفين' then
@@ -18210,7 +18210,7 @@ end
 if y == true then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ تم مسح ( "..x.." ) حساب محذوف ","md",true)  
 else
-return merolua.send(msg_chat_id,msg_id,'⇜ لا يوجد محذوفين ',"md",true)  
+send(msg_chat_id,msg_id,'⇜ لا يوجد محذوفين ',"md",true)  
 end
 end
 end
@@ -18249,7 +18249,7 @@ end
 if y == true then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ تم طرد ( "..x.." ) حساب محذوف ","md",true)  
 else
-return merolua.send(msg_chat_id,msg_id,'⇜ لا يوجد محذوفين ',"md",true)  
+send(msg_chat_id,msg_id,'⇜ لا يوجد محذوفين ',"md",true)  
 end
 end
 if text == 'طرد البوتات' then
@@ -18361,12 +18361,12 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:set(TheFRADM.."FRADM:Set:Manager:rd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,true)
+Redis:set(TheFRADM.."FRADM:Set:Manager:rd"..msg.sender_id.user_id..":"..msg_chat_id,true)
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = '- الغاء الامر ', data =msg.return merolua.sender_id.user_id..'/cancelamr'}
+{text = '- الغاء الامر ', data =msg.sender_id.user_id..'/cancelamr'}
 },
 }
 }
@@ -18384,12 +18384,12 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:set(TheFRADM.."FRADM:Set:Manager:rd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,"true2")
+Redis:set(TheFRADM.."FRADM:Set:Manager:rd"..msg.sender_id.user_id..":"..msg_chat_id,"true2")
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = '- الغاء الامر ', data =msg.return merolua.sender_id.user_id..'/cancelamr'}
+{text = '- الغاء الامر ', data =msg.sender_id.user_id..'/cancelamr'}
 },
 }
 }
@@ -18475,12 +18475,12 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:set(TheFRADM.."FRADM:Set:Rd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,true)
+Redis:set(TheFRADM.."FRADM:Set:Rd"..msg.sender_id.user_id..":"..msg_chat_id,true)
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = '- الغاء الامر ', data =msg.return merolua.sender_id.user_id..'/cancelamr'}
+{text = '- الغاء الامر ', data =msg.sender_id.user_id..'/cancelamr'}
 },
 }
 }
@@ -18498,12 +18498,12 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:set(TheFRADM.."FRADM:Set:On"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,true)
+Redis:set(TheFRADM.."FRADM:Set:On"..msg.sender_id.user_id..":"..msg_chat_id,true)
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = '- الغاء الامر ', data =msg.return merolua.sender_id.user_id..'/cancelamr'}
+{text = '- الغاء الامر ', data =msg.sender_id.user_id..'/cancelamr'}
 },
 }
 }
@@ -18521,8 +18521,8 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:setex(TheFRADM.."FRADM:Broadcasting:Users" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id, 600, true) 
-return merolua.send(msg_chat_id,msg_id,[[
+Redis:setex(TheFRADM.."FRADM:Broadcasting:Users" .. msg_chat_id .. ":" .. msg.sender_id.user_id, 600, true) 
+send(msg_chat_id,msg_id,[[
 ⇜ الحين ارسل لي
 ⇜ ( نص,صوره,فيديو,متحركه,بصمه,اغنيه ) 
 ـــــــــــــــــــــــــــــــــــــــــ
@@ -18543,8 +18543,8 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:setex(TheFRADM.."FRADM:Broadcasting:Groups" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id, 600, true) 
-return merolua.send(msg_chat_id,msg_id,[[
+Redis:setex(TheFRADM.."FRADM:Broadcasting:Groups" .. msg_chat_id .. ":" .. msg.sender_id.user_id, 600, true) 
+send(msg_chat_id,msg_id,[[
 ↯︙ارسل لي سواء كان 
 ⇜ الحين ارسل لي
 ⇜ ( نص,صوره,فيديو,متحركه,بصمه,اغنيه ) 
@@ -18566,8 +18566,8 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:setex(TheFRADM.."FRADM:Broadcasting:Groups:Pin" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id, 600, true) 
-return merolua.send(msg_chat_id,msg_id,[[
+Redis:setex(TheFRADM.."FRADM:Broadcasting:Groups:Pin" .. msg_chat_id .. ":" .. msg.sender_id.user_id, 600, true) 
+send(msg_chat_id,msg_id,[[
 ⇜ الحين ارسل لي
 ⇜ ( نص,صوره,فيديو,متحركه,بصمه,اغنيه ) 
 ـــــــــــــــــــــــــــــــــــــــــ
@@ -18587,8 +18587,8 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:setex(TheFRADM.."FRADM:Broadcasting:Groups:Fwd" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id, 600, true) 
-return merolua.send(msg_chat_id,msg_id,"⇜ ارسل لي التوجيه الان","md",true)  
+Redis:setex(TheFRADM.."FRADM:Broadcasting:Groups:Fwd" .. msg_chat_id .. ":" .. msg.sender_id.user_id, 600, true) 
+send(msg_chat_id,msg_id,"⇜ ارسل لي التوجيه الان","md",true)  
 return false
 end
 if text=="اذاعه خاص بالتوجيه" then 
@@ -18603,13 +18603,13 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:setex(TheFRADM.."FRADM:Broadcasting:Users:Fwd" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id, 600, true) 
-return merolua.send(msg_chat_id,msg_id,"⇜ ارسل لي التوجيه الان","md",true)  
+Redis:setex(TheFRADM.."FRADM:Broadcasting:Users:Fwd" .. msg_chat_id .. ":" .. msg.sender_id.user_id, 600, true) 
+send(msg_chat_id,msg_id,"⇜ ارسل لي التوجيه الان","md",true)  
 return false
 end
 if text == 'كشف القيود' and msg.reply_to_message_id ~= 0 then
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
@@ -18630,28 +18630,28 @@ end
 if msg.can_be_deleted_for_all_users == false then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً البوت ليس مشرف في القروب يرجى رفعه واعطائه الصلاحيات ","md",true)  
 end
-local GetMemberStatus = bot.getChatMember(msg_chat_id,Message_Reply.return merolua.sender_id.user_id).status
+local GetMemberStatus = bot.getChatMember(msg_chat_id,Message_Reply.sender_id.user_id).status
 if GetMemberStatus.Merotele == "chatMemberStatusRestricted" then
 Restricted = 'نعم'
 else
 Restricted = 'لا️'
 end
-if Statusrestricted(msg_chat_id,Message_Reply.return merolua.sender_id.user_id).BanAll == true then
+if Statusrestricted(msg_chat_id,Message_Reply.sender_id.user_id).BanAll == true then
 BanAll = 'نعم'
 else
 BanAll = 'لا️'
 end
-if Statusrestricted(msg_chat_id,Message_Reply.return merolua.sender_id.user_id).BanGroup == true then
+if Statusrestricted(msg_chat_id,Message_Reply.sender_id.user_id).BanGroup == true then
 BanGroup = 'نعم'
 else
 BanGroup = 'لا️'
 end
-if Statusrestricted(msg_chat_id,Message_Reply.return merolua.sender_id.user_id).SilentGroup == true then
+if Statusrestricted(msg_chat_id,Message_Reply.sender_id.user_id).SilentGroup == true then
 SilentGroup = 'نعم'
 else
 SilentGroup = 'لا️'
 end
-return merolua.send(msg_chat_id,msg_id,'⇜ حظر عام : '..BanAll..'\n⇜ الحظر : '..BanGroup..'\n⇜ الكتم : '..SilentGroup..'\n⇜ التقييد : '..Restricted..'\n✧',"md",true)  
+send(msg_chat_id,msg_id,'⇜ حظر عام : '..BanAll..'\n⇜ الحظر : '..BanGroup..'\n⇜ الكتم : '..SilentGroup..'\n⇜ التقييد : '..Restricted..'\n✧',"md",true)  
 end
 if text and text:match('^كشف القيود @(%S+)$') then
 local UserName = text:match('^كشف القيود @(%S+)$')
@@ -18700,7 +18700,7 @@ SilentGroup = 'نعم'
 else
 SilentGroup = 'لا️'
 end
-return merolua.send(msg_chat_id,msg_id,'⇜ حظر عام : '..BanAll..'\n⇜ الحظر : '..BanGroup..'\n⇜ الكتم : '..SilentGroup..'\n⇜ التقييد : '..Restricted..'\n✧',"md",true)  
+send(msg_chat_id,msg_id,'⇜ حظر عام : '..BanAll..'\n⇜ الحظر : '..BanGroup..'\n⇜ الكتم : '..SilentGroup..'\n⇜ التقييد : '..Restricted..'\n✧',"md",true)  
 end
 
 if text == 'ضع كليشه المطور' then
@@ -18715,7 +18715,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:set(TheFRADM..'FRADM:GetTexting:DevTheFRADM'..msg_chat_id..':'..msg.return merolua.sender_id.user_id,true)
+Redis:set(TheFRADM..'FRADM:GetTexting:DevTheFRADM'..msg_chat_id..':'..msg.sender_id.user_id,true)
 return merolua.send(msg_chat_id,msg_id,'⇜ ارسل لي الكليشه ')
 end
 if text == 'مسح كليشه المطور' then
@@ -18737,7 +18737,7 @@ if text == "استبدال كلمه" or text == "استبدال كلمة" then
 if not msg.Addictive then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(7)..' ) ',"md",true)  
 end
-Redis:set(TheFRADM..msg_chat_id..msg.return merolua.sender_id.user_id.."replace",true)
+Redis:set(TheFRADM..msg_chat_id..msg.sender_id.user_id.."replace",true)
 return merolua.send(msg_chat_id,msg_id,'\n⇜ ارسل الكلمة القديمة ليتم استبدالها',"md",true)  
 end
 if text == "مسح الكلمات المستبدله" or text == "مسح الكلمات المستبدلة" then
@@ -18749,7 +18749,7 @@ for k,v in pairs(list) do
 Redis:del(TheFRADM..msg_chat_id.."Word:Replace"..v)
 end
 Redis:del(TheFRADM..msg_chat_id.."Words:r")
-return merolua.send(msg_chat_id,msg_id,"⇜ تم مسح الكلمات المستبدلة")
+send(msg_chat_id,msg_id,"⇜ تم مسح الكلمات المستبدلة")
 end
 if text == "الكلمات المستبدله" or text == "الكلمات المستبدلة" then
 if not msg.Addictive then
@@ -18764,7 +18764,7 @@ for k,v in pairs(list) do
 cmdd = Redis:get(TheFRADM..msg_chat_id.."Word:Replace"..v)
 txx = txx..k.." - ( "..v.." ) ← ( "..cmdd.." )\n"
 end
-return merolua.send(msg_chat_id,msg_id,txx)
+send(msg_chat_id,msg_id,txx)
 end
 if text == 'SHDHEUUE728291919AISJ' then
 if ChannelJoinch(msg) == false then
@@ -18786,7 +18786,7 @@ keyboard.inline_keyboard = {
 },
 }
 local msg_id = msg.id/2097152/0.5
-return https.request("https://api.telegram.org/bot"..Token..'/return merolua.sendPhoto?chat_id=' .. msg.chat_id .. '&photo=https://t.me/NvvvF/9?single&caption=' ..URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard))
+return https.request("https://api.telegram.org/bot"..Token..'/sendPhoto?chat_id=' .. msg.chat_id .. '&photo=https://t.me/NvvvF/9?single&caption=' ..URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard))
 elseif text == 'الاوامر' then
 if not msg.Addictive then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ متأكد انك مو عضو؟',"md",true)  
@@ -18803,13 +18803,13 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = '❶', data = msg.return merolua.sender_id.user_id..'/help1'}, {text = '❷', data = msg.return merolua.sender_id.user_id..'/help2'},{text = '❸', data = msg.return merolua.sender_id.user_id..'/help3'},
+{text = '❶', data = msg.sender_id.user_id..'/help1'}, {text = '❷', data = msg.sender_id.user_id..'/help2'},{text = '❸', data = msg.sender_id.user_id..'/help3'},
 },
 {
-{text = '❹', data = msg.return merolua.sender_id.user_id..'/help4'},{text = '❺', data = msg.return merolua.sender_id.user_id..'/help5'}, {text = '❻', data = msg.return merolua.sender_id.user_id..'/helpp6'},
+{text = '❹', data = msg.sender_id.user_id..'/help4'},{text = '❺', data = msg.sender_id.user_id..'/help5'}, {text = '❻', data = msg.sender_id.user_id..'/helpp6'},
 },
 {
-{text = 'اوامر القفل', data = msg.return merolua.sender_id.user_id..'/NoNextSeting'}, {text = 'اوامر التعطيل', data = msg.return merolua.sender_id.user_id..'/listallAddorrem'}, 
+{text = 'اوامر القفل', data = msg.sender_id.user_id..'/NoNextSeting'}, {text = 'اوامر التعطيل', data = msg.sender_id.user_id..'/listallAddorrem'}, 
 },
 }
 }
@@ -18842,7 +18842,7 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'قائمة الاوامر', data = msg.return merolua.sender_id.user_id..'/helpall'}, 
+{text = 'قائمة الاوامر', data = msg.sender_id.user_id..'/helpall'}, 
 },
 }
 }
@@ -18974,7 +18974,7 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'قائمة الاوامر', data = msg.return merolua.sender_id.user_id..'/helpall'}, 
+{text = 'قائمة الاوامر', data = msg.sender_id.user_id..'/helpall'}, 
 },
 }
 }
@@ -19020,7 +19020,7 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'قائمة الاوامر', data = msg.return merolua.sender_id.user_id..'/helpall'}, 
+{text = 'قائمة الاوامر', data = msg.sender_id.user_id..'/helpall'}, 
 },
 }
 }
@@ -19088,7 +19088,7 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'قائمة الاوامر', data = msg.return merolua.sender_id.user_id..'/helpall'}, 
+{text = 'قائمة الاوامر', data = msg.sender_id.user_id..'/helpall'}, 
 },
 }
 }
@@ -19155,7 +19155,7 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'قائمة الاوامر', data = msg.return merolua.sender_id.user_id..'/helpall'}, 
+{text = 'قائمة الاوامر', data = msg.sender_id.user_id..'/helpall'}, 
 },
 }
 }
@@ -19246,7 +19246,7 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'قائمة الاوامر', data = msg.return merolua.sender_id.user_id..'/helpall'},  
+{text = 'قائمة الاوامر', data = msg.sender_id.user_id..'/helpall'},  
 },
 }
 }
@@ -19295,7 +19295,7 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'قائمة الاوامر', data = msg.return merolua.sender_id.user_id..'/helpall'},  
+{text = 'قائمة الاوامر', data = msg.sender_id.user_id..'/helpall'},  
 },
 }
 }
@@ -19363,7 +19363,7 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'قائمة الاوامر', data = msg.return merolua.sender_id.user_id..'/helpall'}, 
+{text = 'قائمة الاوامر', data = msg.sender_id.user_id..'/helpall'}, 
 },
 }
 }
@@ -19489,8 +19489,8 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 print('Chat Id : '..msg_chat_id)
-print('User Id : '..msg_user_return merolua.send_id)
-return merolua.send(msg_chat_id,msg_id, "⇜  تم تحديث الملفات ","md",true)
+print('User Id : '..msg_user_send_id)
+send(msg_chat_id,msg_id, "⇜  تم تحديث الملفات ","md",true)
 dofile('FRADM.lua')  
 end
 if text == "تغير اسم البوت" or text == "تغيير اسم البوت" then 
@@ -19505,7 +19505,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:setex(TheFRADM.."FRADM:Change:Name:Bot"..msg.return merolua.sender_id.user_id,300,true) 
+Redis:setex(TheFRADM.."FRADM:Change:Name:Bot"..msg.sender_id.user_id,300,true) 
 return merolua.send(msg_chat_id,msg_id,"⇜ ارسل لي الاسم ","md",true)  
 end
 if text == "مسح اسم البوت" then 
@@ -19539,7 +19539,7 @@ local list = Redis:smembers(TheFRADM.."FRADM:Num:User:Pv")
 local x = 0
 for k,v in pairs(list) do  
 local Get_Chat = bot.getChat(v)
-local ChatAction = return merolua.sendChatAction(v,'Typing')
+local ChatAction = bot.sendChatAction(v,'Typing')
 if ChatAction.Merotele ~= "ok" then
 x = x + 1
 Redis:srem(TheFRADM..'FRADM:Num:User:Pv',v)
@@ -19571,7 +19571,7 @@ if Get_Chat.id then
 local statusMem = bot.getChatMember(Get_Chat.id,TheFRADM)
 if statusMem.status.Merotele == "chatMemberStatusMember" then
 x = x + 1
-return merolua.send(Get_Chat.id,0,'⇜ البوت عضو في القروب سوف اغادر ',"md")
+send(Get_Chat.id,0,'⇜ البوت عضو في القروب سوف اغادر ',"md")
 Redis:srem(TheFRADM..'FRADM:ChekBotAdd',Get_Chat.id)
 local keys = Redis:keys(TheFRADM..'*'..Get_Chat.id)
 for i = 1, #keys do
@@ -19634,7 +19634,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-Redis:del(TheFRADM..'FRADM:Num:Message:User'..msg_chat_id..':'..Message_Reply.return merolua.sender_id.user_id) 
+Redis:del(TheFRADM..'FRADM:Num:Message:User'..msg_chat_id..':'..Message_Reply.sender_id.user_id) 
 return merolua.send(msg_chat_id,msg_id,"⇜ مسحت رسائله ", "md")
 end
 if text == 'مسح نقاطه' and msg.reply_to_message_id ~= 0 then
@@ -19650,7 +19650,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-Redis:del(TheFRADM.."FRADM:Num:Add:Games"..msg.chat_id..Message_Reply.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."FRADM:Num:Add:Games"..msg.chat_id..Message_Reply.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,"⇜ مسحت نقاطه ", "md")
 end
 if text == 'مسح تعديلاته' and msg.reply_to_message_id ~= 0 then
@@ -19666,7 +19666,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-Redis:del(TheFRADM..'FRADM:Num:Message:Edit'..msg.chat_id..Message_Reply.return merolua.sender_id.user_id)
+Redis:del(TheFRADM..'FRADM:Num:Message:Edit'..msg.chat_id..Message_Reply.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,"⇜ مسحت تعديلاته ", "md")
 end
 if text and text:match("^بيع نقاطي (%d+)$") then
@@ -19682,7 +19682,7 @@ end
 if tonumber(NumGame) == tonumber(0) then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ لا استطيع بيع اقل من ( 1 ) نقطة","md",true)  
 end
-local NumberGame = Redis:get(TheFRADM.."FRADM:Num:Add:Games"..msg.chat_id..msg.return merolua.sender_id.user_id)
+local NumberGame = Redis:get(TheFRADM.."FRADM:Num:Add:Games"..msg.chat_id..msg.sender_id.user_id)
 if tonumber(NumberGame) == tonumber(0) then
 return merolua.send(msg_chat_id,msg_id,"⇜ ماعندك نقاط \n⇜ ارسل الالعاب وابدأ اللعب ","md",true)  
 end
@@ -19690,8 +19690,8 @@ if tonumber(NumGame) > tonumber(NumberGame) then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ نقاطك ماتكفي \n⇜ لزيادة نقاطك ارسل الالعاب وابدأ اللعب ","md",true)   
 end
 local NumberGet = tonumber(NumGame) * 50
-Redis:decrby(TheFRADM.."FRADM:Num:Add:Games"..msg.chat_id..msg.return merolua.sender_id.user_id,NumGame)  
-Redis:incrby(TheFRADM.."FRADM:Num:Message:User"..msg.chat_id..":"..msg.return merolua.sender_id.user_id,NumberGet)  
+Redis:decrby(TheFRADM.."FRADM:Num:Add:Games"..msg.chat_id..msg.sender_id.user_id,NumGame)  
+Redis:incrby(TheFRADM.."FRADM:Num:Message:User"..msg.chat_id..":"..msg.sender_id.user_id,NumberGet)  
 return merolua.send(msg_chat_id,msg_id,"⇜ تم خصم ( "..NumGame.." ) من نقاطك \n⇜ ضفتلك ( "..NumberGet.." ) رسالة","md",true)  
 end 
 if text and text:match("^اضف نقاط (%d+)$") and msg.reply_to_message_id ~= 0 and Redis:get(TheFRADM.."FRADM:Status:Games"..msg.chat_id) then
@@ -19707,15 +19707,15 @@ if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(6)..' ) ',"md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-Redis:incrby(TheFRADM.."FRADM:Num:Add:Games"..msg.chat_id..Message_Reply.return merolua.sender_id.user_id, text:match("^اضف نقاط (%d+)$"))  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ تم اضافه له ( "..text:match("^اضف نقاط (%d+)$").." ) نقطة").Reply,"md",true)  
+Redis:incrby(TheFRADM.."FRADM:Num:Add:Games"..msg.chat_id..Message_Reply.sender_id.user_id, text:match("^اضف نقاط (%d+)$"))  
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ تم اضافه له ( "..text:match("^اضف نقاط (%d+)$").." ) نقطة").Reply,"md",true)  
 end
 if text and text:match("^اضف تعديلات (%d+)$") and msg.reply_to_message_id ~= 0 and Redis:get(TheFRADM.."FRADM:Status:Games"..msg.chat_id) then
 if ChannelJoinch(msg) == false then
@@ -19730,15 +19730,15 @@ if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(6)..' ) ',"md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-Redis:incrby(TheFRADM..'FRADM:Num:Message:Edit'..msg.chat_id..Message_Reply.return merolua.sender_id.user_id, text:match("^اضف تعديلات (%d+)$"))  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ تم اضافه له ( "..text:match("^اضف تعديلات (%d+)$").." ) من التعديلات").Reply,"md",true)  
+Redis:incrby(TheFRADM..'FRADM:Num:Message:Edit'..msg.chat_id..Message_Reply.sender_id.user_id, text:match("^اضف تعديلات (%d+)$"))  
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ تم اضافه له ( "..text:match("^اضف تعديلات (%d+)$").." ) من التعديلات").Reply,"md",true)  
 end
 if text and text:match("^اضف رسائل (%d+)$") and msg.reply_to_message_id ~= 0 and Redis:get(TheFRADM.."FRADM:Status:Games"..msg.chat_id) then
 if ChannelJoinch(msg) == false then
@@ -19753,15 +19753,15 @@ if not msg.Managers then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(6)..' ) ',"md",true)  
 end
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Message_Reply.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ هييه مايمديك تستخدم الامر علي ياورع ! ","md",true)  
 end
-Redis:incrby(TheFRADM.."FRADM:Num:Message:User"..msg.chat_id..":"..Message_Reply.return merolua.sender_id.user_id, text:match("^اضف رسائل (%d+)$"))  
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.return merolua.sender_id.user_id,"⇜ تم اضافه له ( "..text:match("^اضف رسائل (%d+)$").." ) رسالة").Reply,"md",true)  
+Redis:incrby(TheFRADM.."FRADM:Num:Message:User"..msg.chat_id..":"..Message_Reply.sender_id.user_id, text:match("^اضف رسائل (%d+)$"))  
+return merolua.send(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.user_id,"⇜ تم اضافه له ( "..text:match("^اضف رسائل (%d+)$").." ) رسالة").Reply,"md",true)  
 end
 if text == "نقاطي" then 
 if ChannelJoinch(msg) == false then
@@ -19772,7 +19772,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-local Num = Redis:get(TheFRADM.."FRADM:Num:Add:Games"..msg.chat_id..msg.return merolua.sender_id.user_id) or 0
+local Num = Redis:get(TheFRADM.."FRADM:Num:Add:Games"..msg.chat_id..msg.sender_id.user_id) or 0
 if Num == 0 then 
 return merolua.send(msg_chat_id,msg_id, "⇜ ليس لديك نقاط ارسل الالعاب وابدأ اللعب ","md",true)  
 else
@@ -19787,28 +19787,28 @@ local reply_markup = bot.replyMarkup{
 type = "inline",
 data = {
 {
-{text="المطورين الاساسيين",data=msg.return merolua.sender_id.user_id..'/Redis:Devall'},
+{text="المطورين الاساسيين",data=msg.sender_id.user_id..'/Redis:Devall'},
 },
 {
-{text="المكتومين عام",data=msg.return merolua.sender_id.user_id..'/KtmAll'},{text="المحظورين عام",data=msg.return merolua.sender_id.user_id..'/BanAll'},
+{text="المكتومين عام",data=msg.sender_id.user_id..'/KtmAll'},{text="المحظورين عام",data=msg.sender_id.user_id..'/BanAll'},
 },
 {
-{text="قائمه MY",data=msg.return merolua.sender_id.user_id..'/DevelopersQ'},{text="قائمه M",data=msg.return merolua.sender_id.user_id..'/Developers'},
+{text="قائمه MY",data=msg.sender_id.user_id..'/DevelopersQ'},{text="قائمه M",data=msg.sender_id.user_id..'/Developers'},
 },
 {
-{text="المالكين",data=msg.return merolua.sender_id.user_id..'/TheBasicsQ'},{text="المنشئين الاساسيين",data=msg.return merolua.sender_id.user_id..'/TheBasics'},
+{text="المالكين",data=msg.sender_id.user_id..'/TheBasicsQ'},{text="المنشئين الاساسيين",data=msg.sender_id.user_id..'/TheBasics'},
 },
 {
-{text="المنشئين",data=msg.return merolua.sender_id.user_id..'/Originators'},{text="المدراء",data=msg.return merolua.sender_id.user_id..'/Managers'},
+{text="المنشئين",data=msg.sender_id.user_id..'/Originators'},{text="المدراء",data=msg.sender_id.user_id..'/Managers'},
 },
 {
-{text="الادمنيه",data=msg.return merolua.sender_id.user_id..'/Addictive'},{text="المميزين",data=msg.return merolua.sender_id.user_id..'/DelDistinguished'},
+{text="الادمنيه",data=msg.sender_id.user_id..'/Addictive'},{text="المميزين",data=msg.sender_id.user_id..'/DelDistinguished'},
 },
 {
-{text="المكتومين",data=msg.return merolua.sender_id.user_id..'/SilentGroupGroup'},{text="المحظورين",data=msg.return merolua.sender_id.user_id..'/BanGroup'},
+{text="المكتومين",data=msg.sender_id.user_id..'/SilentGroupGroup'},{text="المحظورين",data=msg.sender_id.user_id..'/BanGroup'},
 },
 {
-{text = "- اخفاء الامر ", data =msg.return merolua.sender_id.user_id.."/delAmr"}
+{text = "- اخفاء الامر ", data =msg.sender_id.user_id.."/delAmr"}
 },
 }
 }
@@ -19823,7 +19823,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:del(TheFRADM.."FRADM:Num:Add:Games"..msg.chat_id..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."FRADM:Num:Add:Games"..msg.chat_id..msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id, "⇜ مسحت نقاطك","md",true)  
 end
 if text == ("مسح الردود الانلاين العامه") or text == ("مسح الردود الانلاين عام") then
@@ -19850,25 +19850,25 @@ Redis:del(TheFRADM.."List:Manager:inline3am")
 end
 return merolua.send(msg_chat_id,msg_id,"⇜ تم مسح قائمة الردود الانلاين عام","md",true)
 end
-if text and Redis:get(TheFRADM.."Set:Manager:rd:inline3am"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == "set_link" then
-Redis:del(TheFRADM.."Set:Manager:rd:inline3am"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
-local anubis = Redis:get(TheFRADM.."Text:Manager:inline3am"..msg.return merolua.sender_id.user_id..":")
+if text and Redis:get(TheFRADM.."Set:Manager:rd:inline3am"..msg.sender_id.user_id..":"..msg_chat_id) == "set_link" then
+Redis:del(TheFRADM.."Set:Manager:rd:inline3am"..msg.sender_id.user_id..":"..msg_chat_id)
+local anubis = Redis:get(TheFRADM.."Text:Manager:inline3am"..msg.sender_id.user_id..":")
 Redis:set(TheFRADM.."Rd:Manager:inline3am:link"..anubis, text)
-return merolua.send(msg_chat_id,msg_id,"「 "..anubis.." 」\n واضفنا الرد ياحلو \n✧","md",true)
+send(msg_chat_id,msg_id,"「 "..anubis.." 」\n واضفنا الرد ياحلو \n✧","md",true)
 return false
 end
-if text and Redis:get(TheFRADM.."Set:Manager:rd:inline3am"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == "set_inline" then
-Redis:set(TheFRADM.."Set:Manager:rd:inline3am"..msg.return merolua.sender_id.user_id..":"..msg_chat_id, "set_link")
-local anubis = Redis:get(TheFRADM.."Text:Manager:inline3am"..msg.return merolua.sender_id.user_id..":")
+if text and Redis:get(TheFRADM.."Set:Manager:rd:inline3am"..msg.sender_id.user_id..":"..msg_chat_id) == "set_inline" then
+Redis:set(TheFRADM.."Set:Manager:rd:inline3am"..msg.sender_id.user_id..":"..msg_chat_id, "set_link")
+local anubis = Redis:get(TheFRADM.."Text:Manager:inline3am"..msg.sender_id.user_id..":")
 Redis:set(TheFRADM.."Rd:Manager:inline3am:text"..anubis, text)
-return merolua.send(msg_chat_id,msg_id,"⇜ الان ارسل الرابط \n⇜ مثال : [https://t.me/Y88F8]","md",true)
+send(msg_chat_id,msg_id,"⇜ الان ارسل الرابط \n⇜ مثال : [https://t.me/Y88F8]","md",true)
 return false
 end
-if Redis:get(TheFRADM.."Set:Manager:rd:inline3am"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == "true1" and tonumber(msg.return merolua.sender_id.user_id) ~= tonumber(TheFRADM) then
-Redis:del(TheFRADM.."Set:Manager:rd:inline3am"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
-Redis:set(TheFRADM.."Set:Manager:rd:inline3am"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,"set_inline")
+if Redis:get(TheFRADM.."Set:Manager:rd:inline3am"..msg.sender_id.user_id..":"..msg_chat_id) == "true1" and tonumber(msg.sender_id.user_id) ~= tonumber(TheFRADM) then
+Redis:del(TheFRADM.."Set:Manager:rd:inline3am"..msg.sender_id.user_id..":"..msg_chat_id)
+Redis:set(TheFRADM.."Set:Manager:rd:inline3am"..msg.sender_id.user_id..":"..msg_chat_id,"set_inline")
 if text or msg.content.video_note or msg.content.document or msg.content.audio or msg.content.video or msg.content.voice_note or msg.content.sticker or msg.content.animation or msg.content.photo then
-local anubis = Redis:get(TheFRADM.."Text:Manager:inline3am"..msg.return merolua.sender_id.user_id..":")
+local anubis = Redis:get(TheFRADM.."Text:Manager:inline3am"..msg.sender_id.user_id..":")
 if msg.content.text then 
 text = text:gsub('"',"") 
 text = text:gsub('"',"") 
@@ -19902,14 +19902,14 @@ end
 Redis:set(TheFRADM.."Add:Rd:Manager:Photo:inline3am"..anubis, idPhoto)
 Redis:set(TheFRADM.."Add:Rd:Manager:Photoc:inline3am"..anubis, msg.content.caption.text)
 end
-return merolua.send(msg_chat_id,msg_id,"⇜ الان ارسل الكلام داخل الزر","md",true)
+send(msg_chat_id,msg_id,"⇜ الان ارسل الكلام داخل الزر","md",true)
 return false
 end
 end
 if text and text:match("^(.*)$") then
-if Redis:get(TheFRADM.."Set:Manager:rd:inline3am"..msg.return merolua.sender_id.user_id..":"..msg_chat_id.."") == "true2" then
+if Redis:get(TheFRADM.."Set:Manager:rd:inline3am"..msg.sender_id.user_id..":"..msg_chat_id.."") == "true2" then
 if not Redis:sismember(TheFRADM.."List:Manager:inline3am", text) then
- Redis:del(TheFRADM.."Set:Manager:rd:inline3am"..msg.return merolua.sender_id.user_id..":"..msg_chat_id.."")
+ Redis:del(TheFRADM.."Set:Manager:rd:inline3am"..msg.sender_id.user_id..":"..msg_chat_id.."")
  return merolua.send(msg_chat_id,msg_id,"⇜ لا يوجد رد لهذه الكلمة","md",true)
 end
 Redis:del(TheFRADM.."Add:Rd:Manager:Gif:inline3am"..text) 
@@ -19926,16 +19926,16 @@ Redis:del(TheFRADM.."Add:Rd:Manager:Audio:inline3am"..text)
 Redis:del(TheFRADM.."Add:Rd:Manager:Audioc:inline3am"..text)
 Redis:del(TheFRADM.."Rd:Manager:inline3am:text"..text)
 Redis:del(TheFRADM.."Rd:Manager:inline3am:link"..text)
-Redis:del(TheFRADM.."Set:Manager:rd:inline3am"..msg.return merolua.sender_id.user_id..":"..msg_chat_id.."")
+Redis:del(TheFRADM.."Set:Manager:rd:inline3am"..msg.sender_id.user_id..":"..msg_chat_id.."")
 Redis:srem(TheFRADM.."List:Manager:inline3am", text)
-return merolua.send(msg_chat_id,msg_id,"⇜ ابشر مسحت الرد من قائمة الانلاين العامة ","md",true)
+send(msg_chat_id,msg_id,"⇜ ابشر مسحت الرد من قائمة الانلاين العامة ","md",true)
 return false
 end
 end
-if text and text:match("^(.*)$") and tonumber(msg.return merolua.sender_id.user_id) ~= tonumber(TheFRADM) then
-if Redis:get(TheFRADM.."Set:Manager:rd:inline3am"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == "true" then
-Redis:set(TheFRADM.."Set:Manager:rd:inline3am"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,"true1")
-Redis:set(TheFRADM.."Text:Manager:inline3am"..msg.return merolua.sender_id.user_id..":", text)
+if text and text:match("^(.*)$") and tonumber(msg.sender_id.user_id) ~= tonumber(TheFRADM) then
+if Redis:get(TheFRADM.."Set:Manager:rd:inline3am"..msg.sender_id.user_id..":"..msg_chat_id) == "true" then
+Redis:set(TheFRADM.."Set:Manager:rd:inline3am"..msg.sender_id.user_id..":"..msg_chat_id,"true1")
+Redis:set(TheFRADM.."Text:Manager:inline3am"..msg.sender_id.user_id..":", text)
 Redis:del(TheFRADM.."Add:Rd:Manager:Gif:inline3am"..text) 
 Redis:del(TheFRADM.."Add:Rd:Manager:Vico:inline3am"..text) 
 Redis:del(TheFRADM.."Add:Rd:Manager:Stekrs:inline3am"..text) 
@@ -19951,7 +19951,7 @@ Redis:del(TheFRADM.."Add:Rd:Manager:Audioc:inline3am"..text)
 Redis:del(TheFRADM.."Rd:Manager:inline3am:text"..text)
 Redis:del(TheFRADM.."Rd:Manager:inline3am:link"..text)
 Redis:sadd(TheFRADM.."List:Manager:inline3am", text)
-return merolua.send(msg_chat_id,msg_id,[[
+send(msg_chat_id,msg_id,[[
 ⇜ حلو , الحين ارسل جواب الرد
 ⇜ ( نص,صوره,فيديو,متحركه,بصمه,اغنيه ) 
 ـــــــــــــــــــــــــــــــــــــــــ
@@ -19970,12 +19970,12 @@ if text == "اضف رد انلاين عام" then
 if not msg.DevelopersQ then
 return merolua.send(msg_chat_id,msg_id,'\n*⇜ هذا الامر يخص ( '..Controller_Num(2)..' )* ',"md",true)  
 end
-Redis:set(TheFRADM.."Set:Manager:rd:inline3am"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,true)
+Redis:set(TheFRADM.."Set:Manager:rd:inline3am"..msg.sender_id.user_id..":"..msg_chat_id,true)
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'الغاء الامر', data = msg.return merolua.sender_id.user_id..'/cancelamr'},
+{text = 'الغاء الامر', data = msg.sender_id.user_id..'/cancelamr'},
 },
 }
 }
@@ -20005,42 +20005,42 @@ data = {
 }
 }
 if Texingt then 
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local NumMsg = Redis:get(TheFRADM..'Num:Message:User'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) or 0
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local NumMsg = Redis:get(TheFRADM..'Num:Message:User'..msg_chat_id..':'..msg.sender_id.user_id) or 0
 local TotalMsg = Total_message(NumMsg) 
 local Status_Gps = msg.Name_Controller
-local NumMessageEdit = Redis:get(TheFRADM..'Num:Message:Edit'..msg_chat_id..msg.return merolua.sender_id.user_id) or 0
+local NumMessageEdit = Redis:get(TheFRADM..'Num:Message:Edit'..msg_chat_id..msg.sender_id.user_id) or 0
 local Texingt = Texingt:gsub('{المعرف}',(UserInfo.username or 'لا يوجد')) 
 local Texingt = Texingt:gsub('{الاسم}',UserInfo.first_name)
-local Texingt = Texingt:gsub('{الايدي}',msg.return merolua.sender_id.user_id)
+local Texingt = Texingt:gsub('{الايدي}',msg.sender_id.user_id)
 local Texingt = Texingt:gsub('{التعديل}',NumMessageEdit)
 local Texingt = Texingt:gsub('{الرسائل}',NumMsg)
 local Texingt = Texingt:gsub('{الرتبه}',Status_Gps)
-return merolua.send(msg_chat_id,msg_id,'['..Texingt..']',"md",false, false, false, false, reply_markup)
+send(msg_chat_id,msg_id,'['..Texingt..']',"md",false, false, false, false, reply_markup)
 end
 if video_note then
-return merolua.sendVideoNote(msg_chat_id, msg.id, video_note, nil, nil, nil, nil, nil, nil, nil, reply_markup)
+bot.sendVideoNote(msg_chat_id, msg.id, video_note, nil, nil, nil, nil, nil, nil, nil, reply_markup)
 end
 if photo then
-return merolua.sendPhoto(msg.chat_id, msg.id, photo,photoc,"md", true, nil, nil, nil, nil, nil, nil, nil, nil, reply_markup )
+bot.sendPhoto(msg.chat_id, msg.id, photo,photoc,"md", true, nil, nil, nil, nil, nil, nil, nil, nil, reply_markup )
 end
 if stekr then 
-return merolua.sendSticker(msg_chat_id, msg.id, stekr,nil,nil,nil,nil,nil,nil,nil,reply_markup)
+bot.sendSticker(msg_chat_id, msg.id, stekr,nil,nil,nil,nil,nil,nil,nil,reply_markup)
 end
 if veico then 
-return merolua.sendVoiceNote(msg_chat_id, msg.id, veico, '', 'md',nil, nil, nil, nil, reply_markup)
+bot.sendVoiceNote(msg_chat_id, msg.id, veico, '', 'md',nil, nil, nil, nil, reply_markup)
 end
 if video then 
-return merolua.sendVideo(msg_chat_id, msg.id, video, videoc, "md", true, nil, nil, nil, nil, nil, nil, nil, nil, nil, reply_markup)
+bot.sendVideo(msg_chat_id, msg.id, video, videoc, "md", true, nil, nil, nil, nil, nil, nil, nil, nil, nil, reply_markup)
 end
 if anemi then 
-return merolua.sendAnimation(msg_chat_id,msg.id, anemi, '', 'md', nil, nil, nil, nil, nil, nil, nil, nil,reply_markup)
+bot.sendAnimation(msg_chat_id,msg.id, anemi, '', 'md', nil, nil, nil, nil, nil, nil, nil, nil,reply_markup)
 end
 if document then
-return merolua.sendDocument(msg_chat_id, msg.id, document, '', 'md',nil, nil, nil, nil,nil, reply_markup)
+bot.sendDocument(msg_chat_id, msg.id, document, '', 'md',nil, nil, nil, nil,nil, reply_markup)
 end
 if audio then
-return merolua.sendAudio(msg_chat_id, msg.id, audio, audioc, "md", nil, nil, nil, nil, nil, nil, nil, nil,reply_markup) 
+bot.sendAudio(msg_chat_id, msg.id, audio, audioc, "md", nil, nil, nil, nil, nil, nil, nil, nil,reply_markup) 
 end
 end
 if text == "حذف رد انلاين عام" or text == "مسح رد انلاين عام" then
@@ -20051,11 +20051,11 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'الغاء', data = msg.return merolua.sender_id.user_id..'/cancelamr'},
+{text = 'الغاء', data = msg.sender_id.user_id..'/cancelamr'},
 },
 }
 }
-Redis:set(TheFRADM.."Set:Manager:rd:inline3am"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,"true2")
+Redis:set(TheFRADM.."Set:Manager:rd:inline3am"..msg.sender_id.user_id..":"..msg_chat_id,"true2")
 return merolua.send(msg_chat_id,msg_id,"⇜ تمام عيني  \n⇜ الحين ارسل الرد عشان امسحه \n✧","md",false, false, false, false, reply_markup)
 end 
 if text == ("الردود الانلاين العامه") or text == ("الردود الانلاين عام") then
@@ -20223,7 +20223,7 @@ end
 else
 ListMembers7 = ' '
 end
-return merolua.send(msg_chat_id, msg_id, Creator..ListMembers1..ListMembers2..ListMembers3..ListMembers4..ListMembers5..ListMembers6..ListMembers7, 'md')
+send(msg_chat_id, msg_id, Creator..ListMembers1..ListMembers2..ListMembers3..ListMembers4..ListMembers5..ListMembers6..ListMembers7, 'md')
 end
 ---------------------------------------------------------------------------------
 if text == "تعطيل اليوتيوب" or text == "تعطيل يوتيوب" then
@@ -20292,7 +20292,7 @@ end
 if not msg.Distinguished and Redis:get(TheFRADM.."sochal"..msg.chat_id) then
 return merolua.send(msg.chat_id,msg.id,"⇜ عذراً عزيزي الفيسبوك للمميزين ومافوق فقط","md",true)
 end
-local nameuser = bot.getUser(msg.return merolua.sender_id.user_id)
+local nameuser = bot.getUser(msg.sender_id.user_id)
 if nameuser.first_name then
 nameuser = "["..nameuser.first_name.."](tg://user?id="..nameuser.id..")"
 else
@@ -20301,7 +20301,7 @@ end
 os.execute("yt-dlp "..facelink.." --max-filesize 50M -o 'face.mkv'")
 local facefile = io.open("./face.mkv","r")
 if facefile then
-return merolua.sendVideo(msg_chat_id,msg_id,'./face.mkv',"- من قبل : "..nameuser.."️","md")
+bot.sendVideo(msg_chat_id,msg_id,'./face.mkv',"- من قبل : "..nameuser.."️","md")
 sleep(1)
 os.remove("face.mkv")
 else
@@ -20317,7 +20317,7 @@ end
 if not msg.Distinguished and Redis:get(TheFRADM.."sochal"..msg.chat_id) then
 return merolua.send(msg.chat_id,msg.id,"⇜ عذراً عزيزي التيك توك للمميزين ومافوق فقط","md",true)
 end
-local nameuser = bot.getUser(msg.return merolua.sender_id.user_id)
+local nameuser = bot.getUser(msg.sender_id.user_id)
 if nameuser.first_name then
 nameuser = "["..nameuser.first_name.."](tg://user?id="..nameuser.id..")"
 else
@@ -20326,7 +20326,7 @@ end
 os.execute("yt-dlp "..tiklink.." --max-filesize 50M -o 'tik.mp4'")
 local tikfile = io.open("./tik.mp4","r")
 if tikfile then
-return merolua.sendVideo(msg_chat_id,msg_id,'./tik.mp4',"- من قبل : "..nameuser.."️","md") 
+bot.sendVideo(msg_chat_id,msg_id,'./tik.mp4',"- من قبل : "..nameuser.."️","md") 
 sleep(1)
 os.remove("tik.mp4")
 else
@@ -20342,7 +20342,7 @@ end
 if not msg.Distinguished and Redis:get(TheFRADM.."sochal"..msg.chat_id) then
 return merolua.send(msg.chat_id,msg.id,"⇜ عذراً عزيزي الساوند للمميزين ومافوق فقط","md",true)
 end
-local nameuser = bot.getUser(msg.return merolua.sender_id.user_id)
+local nameuser = bot.getUser(msg.sender_id.user_id)
 if nameuser.first_name then
 nameuser = "["..nameuser.first_name.."](tg://user?id="..nameuser.id..")"
 else
@@ -20351,7 +20351,7 @@ end
 os.execute("yt-dlp "..soundlink.." --max-filesize 25M -o 'soundc.mp3'")
 local soufile = io.open("./soundc.mp3","r")
 if soufile then
-return merolua.sendAudio(msg_chat_id,msg_id,'./soundc.mp3',"- من قبل : "..nameuser.."️","md",nil,"soundc")
+bot.sendAudio(msg_chat_id,msg_id,'./soundc.mp3',"- من قبل : "..nameuser.."️","md",nil,"soundc")
 sleep(1)
 os.remove("soundc.mp3")
 else
@@ -20367,8 +20367,8 @@ if not msg.Distinguished and Redis:get(TheFRADM.."sochal"..msg.chat_id) then
 return merolua.send(msg.chat_id,msg.id,"⇜ عذراً عزيزي الساوند للمميزين ومافوق فقط","md",true)
 end
 local jsonson = JSON.decode(request("https://anubis.fun/api/sound_search.php?q="..URL.escape(search)..""))
-Redis:del(TheFRADM.."soundidche"..msg.chat_id..msg.return merolua.sender_id.user_id)
-Redis:set(TheFRADM.."soundidche"..msg.chat_id..msg.return merolua.sender_id.user_id,search)
+Redis:del(TheFRADM.."soundidche"..msg.chat_id..msg.sender_id.user_id)
+Redis:set(TheFRADM.."soundidche"..msg.chat_id..msg.sender_id.user_id,search)
 local datar = {data = {{text = "Louis", url = 'https://t.me/Y88F8'}}}
 for i = 1,5 do
 titlee = jsonson.result[''..i..''].title
@@ -20381,7 +20381,7 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = datar
 }
-return merolua.sendText(msg.chat_id,msg.id,' نتائج بحثك على الساوند ل ( *'..search..'* )',"md",false, false, false, false, reply_markup)
+bot.sendText(msg.chat_id,msg.id,' نتائج بحثك على الساوند ل ( *'..search..'* )',"md",false, false, false, false, reply_markup)
 end
 if text and text:match("^بحث (.*)$") then
 local search = text:match("^بحث (.*)$")
@@ -20392,8 +20392,8 @@ if not msg.Distinguished and Redis:get(TheFRADM.."sochal"..msg.chat_id) then
 return merolua.send(msg.chat_id,msg.id,"⇜ عذراً عزيزي اليوتيوب للمميزين ومافوق فقط","md",true)
 end
 local jsonyou = JSON.decode(request("https://youtube-scrape.herokuapp.com/api/search?q="..URL.escape(search)..""))
-Redis:del(TheFRADM.."youtidche"..msg.chat_id..msg.return merolua.sender_id.user_id)
-Redis:set(TheFRADM.."youtidche"..msg.chat_id..msg.return merolua.sender_id.user_id,search)
+Redis:del(TheFRADM.."youtidche"..msg.chat_id..msg.sender_id.user_id)
+Redis:set(TheFRADM.."youtidche"..msg.chat_id..msg.sender_id.user_id,search)
 local datar = {data = {{text = "Louis", url = 'https://t.me/Y88F8'}}}
 link = link:gsub("https://youtu.be/",'') 
 datar[i] = {{text = titlee , data = search..":yout:"..link}}
@@ -20401,7 +20401,7 @@ local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = datar
 }
-return merolua.sendText(msg.chat_id,msg.id,' نتائج بحثك على اليوتيوب ل ( *'..search..'* )',"md",false, false, false, false, reply_markup)
+bot.sendText(msg.chat_id,msg.id,' نتائج بحثك على اليوتيوب ل ( *'..search..'* )',"md",false, false, false, false, reply_markup)
 end
 ---------------------------------------------------------------------------------
 if text and text:match('^ضع تفاعل (%d+) (.*)$') or text and text:match('^وضع تفاعل (%d+) (.*)$') then
@@ -20435,7 +20435,7 @@ Redis:del(TheFRADM.."rtpaspecial"..msg.chat_id)
 Redis:del(TheFRADM.."rtpaspecialmsg"..msg.chat_id)
 end
 if msgcountneed[2] == "مالك اساسي" or msgcountneed[2] == "مالك الاساسي" or msgcountneed[2] == "المالك الاساسي" then
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 else
@@ -20446,31 +20446,31 @@ return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص صاحب 
 end
 Redis:set(TheFRADM.."rtpamalekass"..msg.chat_id,msgcountneed[2])
 Redis:set(TheFRADM.."rtpamalekassmsg"..msg.chat_id,tonumber(msgcountneed[1]:match('(%d+)')))
-return merolua.send(msg_chat_id,msg_id,'\n⇜ تم وضع التفاعل بنجاح\n⇜ عدد الرسائل : '..msgcountneed[1]:match('(%d+)')..'\n⇜ الرتبه : مالك اساسي\n\n- سيتم رفع الرتبه تلقائي\n✧',"md")
+send(msg_chat_id,msg_id,'\n⇜ تم وضع التفاعل بنجاح\n⇜ عدد الرسائل : '..msgcountneed[1]:match('(%d+)')..'\n⇜ الرتبه : مالك اساسي\n\n- سيتم رفع الرتبه تلقائي\n✧',"md")
 elseif msgcountneed[2] == "مالك" or msgcountneed[2] == "المالك" then
 Redis:set(TheFRADM.."rtpamalek"..msg.chat_id,msgcountneed[2])
 Redis:set(TheFRADM.."rtpamalekmsg"..msg.chat_id,tonumber(msgcountneed[1]:match('(%d+)')))
-return merolua.send(msg_chat_id,msg_id,'\n⇜ تم وضع التفاعل بنجاح\n⇜ عدد الرسائل : '..msgcountneed[1]:match('(%d+)')..'\n⇜ الرتبه : مالك\n\n- سيتم رفع الرتبه تلقائي\n✧',"md")
+send(msg_chat_id,msg_id,'\n⇜ تم وضع التفاعل بنجاح\n⇜ عدد الرسائل : '..msgcountneed[1]:match('(%d+)')..'\n⇜ الرتبه : مالك\n\n- سيتم رفع الرتبه تلقائي\n✧',"md")
 elseif msgcountneed[2] == "منشئ اساسي" or msgcountneed[2] == "منشئ الاساسي" or msgcountneed[2] == "المنشئ الاساسي" then
 Redis:set(TheFRADM.."rtpamonsheass"..msg.chat_id,msgcountneed[2])
 Redis:set(TheFRADM.."rtpamonsheassmsg"..msg.chat_id,tonumber(msgcountneed[1]:match('(%d+)')))
-return merolua.send(msg_chat_id,msg_id,'\n⇜ تم وضع التفاعل بنجاح\n⇜ عدد الرسائل : '..msgcountneed[1]:match('(%d+)')..'\n⇜ الرتبه : منشئ اساسي\n\n- سيتم رفع الرتبه تلقائي\n✧',"md")
+send(msg_chat_id,msg_id,'\n⇜ تم وضع التفاعل بنجاح\n⇜ عدد الرسائل : '..msgcountneed[1]:match('(%d+)')..'\n⇜ الرتبه : منشئ اساسي\n\n- سيتم رفع الرتبه تلقائي\n✧',"md")
 elseif msgcountneed[2] == "منشئ" or msgcountneed[2] == "المنشئ" then
 Redis:set(TheFRADM.."rtpamonsge"..msg.chat_id,msgcountneed[2])
 Redis:set(TheFRADM.."rtpamonshemsg"..msg.chat_id,tonumber(msgcountneed[1]:match('(%d+)')))
-return merolua.send(msg_chat_id,msg_id,'\n⇜ تم وضع التفاعل بنجاح\n⇜ عدد الرسائل : '..msgcountneed[1]:match('(%d+)')..'\n⇜ الرتبه : منشئ\n\n- سيتم رفع الرتبه تلقائي\n✧',"md")
+send(msg_chat_id,msg_id,'\n⇜ تم وضع التفاعل بنجاح\n⇜ عدد الرسائل : '..msgcountneed[1]:match('(%d+)')..'\n⇜ الرتبه : منشئ\n\n- سيتم رفع الرتبه تلقائي\n✧',"md")
 elseif msgcountneed[2] == "مدير" or msgcountneed[2] == "المدير" then
 Redis:set(TheFRADM.."rtpamanager"..msg.chat_id,msgcountneed[2])
 Redis:set(TheFRADM.."rtpamanagermsg"..msg.chat_id,tonumber(msgcountneed[1]:match('(%d+)')))
-return merolua.send(msg_chat_id,msg_id,'\n⇜ تم وضع التفاعل بنجاح\n⇜ عدد الرسائل : '..msgcountneed[1]:match('(%d+)')..'\n⇜ الرتبه : مدير\n\n- سيتم رفع الرتبه تلقائي\n✧',"md")
+send(msg_chat_id,msg_id,'\n⇜ تم وضع التفاعل بنجاح\n⇜ عدد الرسائل : '..msgcountneed[1]:match('(%d+)')..'\n⇜ الرتبه : مدير\n\n- سيتم رفع الرتبه تلقائي\n✧',"md")
 elseif msgcountneed[2] == "ادمن" or msgcountneed[2] == "الادمن" then
 Redis:set(TheFRADM.."rtpaadmin"..msg.chat_id,msgcountneed[2])
 Redis:set(TheFRADM.."rtpaadminmsg"..msg.chat_id,tonumber(msgcountneed[1]:match('(%d+)')))
-return merolua.send(msg_chat_id,msg_id,'\n⇜ تم وضع التفاعل بنجاح\n⇜ عدد الرسائل : '..msgcountneed[1]:match('(%d+)')..'\n⇜ الرتبه : ادمن\n\n- سيتم رفع الرتبه تلقائي\n✧',"md")
+send(msg_chat_id,msg_id,'\n⇜ تم وضع التفاعل بنجاح\n⇜ عدد الرسائل : '..msgcountneed[1]:match('(%d+)')..'\n⇜ الرتبه : ادمن\n\n- سيتم رفع الرتبه تلقائي\n✧',"md")
 elseif msgcountneed[2] == "مميز" or msgcountneed[2] == "المميز" then
 Redis:set(TheFRADM.."rtpaspecial"..msg.chat_id,msgcountneed[2])
 Redis:set(TheFRADM.."rtpaspecialmsg"..msg.chat_id,tonumber(msgcountneed[1]:match('(%d+)')))
-return merolua.send(msg_chat_id,msg_id,'\n⇜ تم وضع التفاعل بنجاح\n⇜ عدد الرسائل : '..msgcountneed[1]:match('(%d+)')..'\n⇜ الرتبه : مميز\n\n- سيتم رفع الرتبه تلقائي\n✧',"md")
+send(msg_chat_id,msg_id,'\n⇜ تم وضع التفاعل بنجاح\n⇜ عدد الرسائل : '..msgcountneed[1]:match('(%d+)')..'\n⇜ الرتبه : مميز\n\n- سيتم رفع الرتبه تلقائي\n✧',"md")
 else
 return merolua.send(msg_chat_id,msg_id,'\n⇜ مافي رتبة بالاسم هذا ',"md")
 end
@@ -20501,7 +20501,7 @@ return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص الما�
 end
 local msgcountdel = text:match('^حذف تفاعل (.*)$') or text:match('^مسح تفاعل (.*)$')  or text:match('^مسح التفاعل (.*)$') or text:match('^حذف التفاعل (.*)$')
 if msgcountdel == "مالك اساسي" or msgcountdel == "مالك الاساسي" or msgcountdel == "المالك الاساسي" then
-local StatusMember = bot.getChatMember(msg_chat_id,msg.return merolua.sender_id.user_id).status.Merotele
+local StatusMember = bot.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Merotele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 else
@@ -20512,31 +20512,31 @@ return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص صاحب 
 end
 Redis:del(TheFRADM.."rtpamalekass"..msg.chat_id)
 Redis:del(TheFRADM.."rtpamalekassmsg"..msg.chat_id)
-return merolua.send(msg_chat_id,msg_id,'\n⇜ تم مسح رتبة المالك الاساسي من التفاعل',"md")
+send(msg_chat_id,msg_id,'\n⇜ تم مسح رتبة المالك الاساسي من التفاعل',"md")
 elseif msgcountdel == "مالك" or msgcountdel == "المالك" then
 Redis:del(TheFRADM.."rtpamalek"..msg.chat_id)
 Redis:del(TheFRADM.."rtpamalekmsg"..msg.chat_id)
-return merolua.send(msg_chat_id,msg_id,'\n⇜ تم مسح رتبة المالك من التفاعل',"md")
+send(msg_chat_id,msg_id,'\n⇜ تم مسح رتبة المالك من التفاعل',"md")
 elseif msgcountdel == "منشئ اساسي" or msgcountdel == "منشئ الاساسي" or msgcountdel == "المنشئ الاساسي" then
 Redis:del(TheFRADM.."rtpamonsheass"..msg.chat_id)
 Redis:del(TheFRADM.."rtpamonsheassmsg"..msg.chat_id)
-return merolua.send(msg_chat_id,msg_id,'\n⇜ تم مسح رتبة المنشئ الاساسي من التفاعل',"md")
+send(msg_chat_id,msg_id,'\n⇜ تم مسح رتبة المنشئ الاساسي من التفاعل',"md")
 elseif msgcountdel == "منشئ" or msgcountdel == "المنشئ" then
 Redis:del(TheFRADM.."rtpamonsge"..msg.chat_id)
 Redis:del(TheFRADM.."rtpamonshemsg"..msg.chat_id)
-return merolua.send(msg_chat_id,msg_id,'\n⇜ تم مسح رتبة المنشئ من التفاعل',"md")
+send(msg_chat_id,msg_id,'\n⇜ تم مسح رتبة المنشئ من التفاعل',"md")
 elseif msgcountdel == "مدير" or msgcountdel == "المدير" then
 Redis:del(TheFRADM.."rtpamanager"..msg.chat_id)
 Redis:del(TheFRADM.."rtpamanagermsg"..msg.chat_id)
-return merolua.send(msg_chat_id,msg_id,'\n⇜ تم مسح رتبة المدير من التفاعل',"md")
+send(msg_chat_id,msg_id,'\n⇜ تم مسح رتبة المدير من التفاعل',"md")
 elseif msgcountdel == "ادمن" or msgcountdel == "الادمن" then
 Redis:del(TheFRADM.."rtpaadmin"..msg.chat_id)
 Redis:del(TheFRADM.."rtpaadminmsg"..msg.chat_id)
-return merolua.send(msg_chat_id,msg_id,'\n⇜ تم مسح رتبة الادمن من التفاعل',"md")
+send(msg_chat_id,msg_id,'\n⇜ تم مسح رتبة الادمن من التفاعل',"md")
 elseif msgcountdel == "مميز" or msgcountdel == "المميز" then
 Redis:del(TheFRADM.."rtpaspecial"..msg.chat_id)
 Redis:del(TheFRADM.."rtpaspecialmsg"..msg.chat_id)
-return merolua.send(msg_chat_id,msg_id,'\n⇜ تم مسح رتبة المميز من التفاعل',"md")
+send(msg_chat_id,msg_id,'\n⇜ تم مسح رتبة المميز من التفاعل',"md")
 else
 return merolua.send(msg_chat_id,msg_id,'\n⇜ مافي رتبة بالاسم هذا ',"md")
 end
@@ -20594,37 +20594,37 @@ rtpaspecialres = '▪︎ '..rtpaspecial..' ↤︎ '..rtpaspecialmsg..' رسال�
 else
 rtpaspecialres = ''
 end
-return merolua.send(msg_chat_id,msg_id,"\n⇜ أهلاً بك في تفاعل الرتب :\n\n"..rtpamalekassres..rtpamalekres..rtpamonsheassres..rtpamonsgeres..rtpamanagerres..rtpaadminres..rtpaspecialres.."\n✧","md",true)
+send(msg_chat_id,msg_id,"\n⇜ أهلاً بك في تفاعل الرتب :\n\n"..rtpamalekassres..rtpamalekres..rtpamonsheassres..rtpamonsgeres..rtpamanagerres..rtpaadminres..rtpaspecialres.."\n✧","md",true)
 end
 if text then
-nummaguser = Redis:get(TheFRADM..'FRADM:Num:Message:Usertrand'..msg.chat_id..':'..msg.return merolua.sender_id.user_id) or 1
-local name = bot.getUser(msg.return merolua.sender_id.user_id)
+nummaguser = Redis:get(TheFRADM..'FRADM:Num:Message:Usertrand'..msg.chat_id..':'..msg.sender_id.user_id) or 1
+local name = bot.getUser(msg.sender_id.user_id)
 if name.first_name then
 namee = ""..name.first_name..""
 else
 namee = " لا يوجد اسم"
 end
 if Redis:get(TheFRADM.."rtpamalekassmsg"..msg.chat_id) == nummaguser then
-Redis:sadd(TheFRADM.."FRADM:MalekAsase:Group"..msg_chat_id,msg.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,"\n⇜ مبروك ياحلو ↤︎ "..namee.."\n⇜ وصل تفاعلك الى : "..math.floor(nummaguser).." رسالة\n⇜ حصلت على رتبة : "..Redis:get(TheFRADM.."rtpamalekass"..msg.chat_id).."\n✧","md")
+Redis:sadd(TheFRADM.."FRADM:MalekAsase:Group"..msg_chat_id,msg.sender_id.user_id) 
+send(msg_chat_id,msg_id,"\n⇜ مبروك ياحلو ↤︎ "..namee.."\n⇜ وصل تفاعلك الى : "..math.floor(nummaguser).." رسالة\n⇜ حصلت على رتبة : "..Redis:get(TheFRADM.."rtpamalekass"..msg.chat_id).."\n✧","md")
 elseif Redis:get(TheFRADM.."rtpamalekmsg"..msg.chat_id) == nummaguser then
-Redis:sadd(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id,msg.return merolua.sender_id.user_id)
-return merolua.send(msg_chat_id,msg_id,"\n⇜ مبروك ياحلو ↤︎ "..namee.."\n⇜ وصل تفاعلك الى : "..math.floor(nummaguser).." رسالة\n⇜ حصلت على رتبة : "..Redis:get(TheFRADM.."rtpamalek"..msg.chat_id).."\n✧","md")
+Redis:sadd(TheFRADM.."FRADM:TheBasicsQ:Group"..msg_chat_id,msg.sender_id.user_id)
+send(msg_chat_id,msg_id,"\n⇜ مبروك ياحلو ↤︎ "..namee.."\n⇜ وصل تفاعلك الى : "..math.floor(nummaguser).." رسالة\n⇜ حصلت على رتبة : "..Redis:get(TheFRADM.."rtpamalek"..msg.chat_id).."\n✧","md")
 elseif Redis:get(TheFRADM.."rtpamonsheassmsg"..msg.chat_id) == nummaguser then
-Redis:sadd(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id,msg.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,"\n⇜ مبروك ياحلو ↤︎ "..namee.."\n⇜ وصل تفاعلك الى : "..math.floor(nummaguser).." رسالة\n⇜ حصلت على رتبة : "..Redis:get(TheFRADM.."rtpamonsheass"..msg.chat_id).."\n✧","md")
+Redis:sadd(TheFRADM.."FRADM:TheBasics:Group"..msg_chat_id,msg.sender_id.user_id) 
+send(msg_chat_id,msg_id,"\n⇜ مبروك ياحلو ↤︎ "..namee.."\n⇜ وصل تفاعلك الى : "..math.floor(nummaguser).." رسالة\n⇜ حصلت على رتبة : "..Redis:get(TheFRADM.."rtpamonsheass"..msg.chat_id).."\n✧","md")
 elseif Redis:get(TheFRADM.."rtpamonshemsg"..msg.chat_id) == nummaguser then
-Redis:sadd(TheFRADM.."FRADM:Originators:Group"..msg_chat_id,msg.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,"\n⇜ مبروك ياحلو ↤︎ "..namee.."\n⇜ وصل تفاعلك الى : "..math.floor(nummaguser).." رسالة\n⇜ حصلت على رتبة : "..Redis:get(TheFRADM.."rtpamonsge"..msg.chat_id).."\n✧","md")
+Redis:sadd(TheFRADM.."FRADM:Originators:Group"..msg_chat_id,msg.sender_id.user_id) 
+send(msg_chat_id,msg_id,"\n⇜ مبروك ياحلو ↤︎ "..namee.."\n⇜ وصل تفاعلك الى : "..math.floor(nummaguser).." رسالة\n⇜ حصلت على رتبة : "..Redis:get(TheFRADM.."rtpamonsge"..msg.chat_id).."\n✧","md")
 elseif Redis:get(TheFRADM.."rtpamanagermsg"..msg.chat_id) == nummaguser then
-Redis:sadd(TheFRADM.."FRADM:Managers:Group"..msg_chat_id,msg.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,"\n⇜ مبروك ياحلو ↤︎ "..namee.."\n⇜ وصل تفاعلك الى : "..math.floor(nummaguser).." رسالة\n⇜ حصلت على رتبة : "..Redis:get(TheFRADM.."rtpamanager"..msg.chat_id).."\n✧","md")
+Redis:sadd(TheFRADM.."FRADM:Managers:Group"..msg_chat_id,msg.sender_id.user_id) 
+send(msg_chat_id,msg_id,"\n⇜ مبروك ياحلو ↤︎ "..namee.."\n⇜ وصل تفاعلك الى : "..math.floor(nummaguser).." رسالة\n⇜ حصلت على رتبة : "..Redis:get(TheFRADM.."rtpamanager"..msg.chat_id).."\n✧","md")
 elseif Redis:get(TheFRADM.."rtpaadminmsg"..msg.chat_id) == nummaguser then
-Redis:sadd(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id,msg.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,"\n⇜ مبروك ياحلو ↤︎ "..namee.."\n⇜ وصل تفاعلك الى : "..math.floor(nummaguser).." رسالة\n⇜ حصلت على رتبة : "..Redis:get(TheFRADM.."rtpaadmin"..msg.chat_id).."\n✧","md")
+Redis:sadd(TheFRADM.."FRADM:Addictive:Group"..msg_chat_id,msg.sender_id.user_id) 
+send(msg_chat_id,msg_id,"\n⇜ مبروك ياحلو ↤︎ "..namee.."\n⇜ وصل تفاعلك الى : "..math.floor(nummaguser).." رسالة\n⇜ حصلت على رتبة : "..Redis:get(TheFRADM.."rtpaadmin"..msg.chat_id).."\n✧","md")
 elseif Redis:get(TheFRADM.."rtpaspecialmsg"..msg.chat_id) == nummaguser then
-Redis:sadd(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id,msg.return merolua.sender_id.user_id) 
-return merolua.send(msg_chat_id,msg_id,"\n⇜ مبروك ياحلو ↤︎ "..namee.."\n⇜ وصل تفاعلك الى : "..math.floor(nummaguser).." رسالة\n⇜ حصلت على رتبة : "..Redis:get(TheFRADM.."rtpaspecial"..msg.chat_id).."\n✧","md")
+Redis:sadd(TheFRADM.."FRADM:Distinguished:Group"..msg_chat_id,msg.sender_id.user_id) 
+send(msg_chat_id,msg_id,"\n⇜ مبروك ياحلو ↤︎ "..namee.."\n⇜ وصل تفاعلك الى : "..math.floor(nummaguser).." رسالة\n⇜ حصلت على رتبة : "..Redis:get(TheFRADM.."rtpaspecial"..msg.chat_id).."\n✧","md")
 end
 end
 if text == "ضع الردود للمميزين" or text == "وضع الردود للمميزين" then
@@ -20670,40 +20670,40 @@ end
 if not msg.Distinguished and Redis:get(TheFRADM.."myrdspecial"..msg.chat_id) then
 return merolua.send(msg.chat_id,msg.id,"⇜ عذراً عزيزي اضافة ردي للمميزين ومافوق فقط","md",true)
 end
-if Redis:sismember(TheFRADM.."FRADM:List:myrdmyid"..msg_chat_id,msg.return merolua.sender_id.user_id) then
+if Redis:sismember(TheFRADM.."FRADM:List:myrdmyid"..msg_chat_id,msg.sender_id.user_id) then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً عزيزي انت ضايف ردك من قبل\n⇜ لحذف ردك ( حذف ردي )","md",true)
 end
-Redis:set(TheFRADM.."FRADM:Set:myrd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,true)
+Redis:set(TheFRADM.."FRADM:Set:myrd"..msg.sender_id.user_id..":"..msg_chat_id,true)
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = '- الغاء الامر ', data =msg.return merolua.sender_id.user_id..'/cancelamr'}
+{text = '- الغاء الامر ', data =msg.sender_id.user_id..'/cancelamr'}
 },
 }
 }
 return merolua.send(msg_chat_id,msg_id,"⇜ حسناً عزيزي ارسل اسمك الان", 'md', false, false, false, false, reply_markup)
 end
 if text == "حذف ردي" or text == "مسح ردي" then
-myrd = Redis:get(TheFRADM.."FRADM:List:myrdmyrd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
-return merolua.send(msg.chat_id, msg.id,"⇜ تم مسح ردك بنجاح\n⇜ الرد ( "..myrd.." )", 'md')
+myrd = Redis:get(TheFRADM.."FRADM:List:myrdmyrd"..msg.sender_id.user_id..":"..msg_chat_id)
+send(msg.chat_id, msg.id,"⇜ تم مسح ردك بنجاح\n⇜ الرد ( "..myrd.." )", 'md')
 Redis:srem(TheFRADM.."FRADM:List:myrd"..msg_chat_id, myrd)
-Redis:srem(TheFRADM.."FRADM:List:myrdmyid"..msg_chat_id, msg.return merolua.sender_id.user_id)
+Redis:srem(TheFRADM.."FRADM:List:myrdmyid"..msg_chat_id, msg.sender_id.user_id)
 Redis:del(TheFRADM.."FRADM:Add:myrdtext"..myrd..msg_chat_id)
 Redis:del(TheFRADM.."FRADM:Add:myrdid"..myrd..msg_chat_id)
-Redis:del(TheFRADM.."FRADM:List:myrdmyrd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
+Redis:del(TheFRADM.."FRADM:List:myrdmyrd"..msg.sender_id.user_id..":"..msg_chat_id)
 end
 if text == "ردي" then
 if not Redis:get(TheFRADM.."onmyrd"..msg.chat_id) then
 return merolua.send(msg.chat_id,msg.id,"⇜ اضافة الردود للاعضاء معطلة\n⇜ لتفعيلها ( تفعيل ردود الاعضاء )","md",true)
 end
-checkmyrde = Redis:get(TheFRADM.."FRADM:List:myrdmyrd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
+checkmyrde = Redis:get(TheFRADM.."FRADM:List:myrdmyrd"..msg.sender_id.user_id..":"..msg_chat_id)
 if Redis:get(TheFRADM.."FRADM:Add:myrdid"..checkmyrde..msg_chat_id) then
-myrd = Redis:get(TheFRADM.."FRADM:List:myrdmyrd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local Bio = FlterBio(getbio(msg.return merolua.sender_id.user_id))
-local photo = bot.getUserProfilePhotos(msg.return merolua.sender_id.user_id)
-local ban = bot.getUser(msg.return merolua.sender_id.user_id)
+myrd = Redis:get(TheFRADM.."FRADM:List:myrdmyrd"..msg.sender_id.user_id..":"..msg_chat_id)
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local Bio = FlterBio(getbio(msg.sender_id.user_id))
+local photo = bot.getUserProfilePhotos(msg.sender_id.user_id)
+local ban = bot.getUser(msg.sender_id.user_id)
 if ban.first_name then
 news = ban.first_name
 else
@@ -20723,7 +20723,7 @@ data = {
 },
 }
 }
-return merolua.sendPhoto(msg.chat_id, msg.id, photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id,
+return bot.sendPhoto(msg.chat_id, msg.id, photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id,
 '\n• Name 𖦹 '..news..
 '\n• 𝖴𝗌𝖾𝗋𝗇𝖺𝗆𝖾 𖦹 ['..UserInfousername..
 ']\n• 𝖡𝗂𝗈 𖦹 ['..Bio..
@@ -20737,14 +20737,14 @@ data = {
 },
 }
 }
-return merolua.sendText(msg_chat_id,msg_id,
+return bot.sendText(msg_chat_id,msg_id,
 '\n• Name 𖦹 '..news..
 '\n• 𝖴𝗌𝖾𝗋𝗇𝖺𝗆𝖾 𖦹 ['..UserInfousername..
 ']\n• 𝖡𝗂𝗈 𖦹 ['..Bio..
 ']', "md",false, false, false, false, reply_markup)
 end
 else
-return merolua.send(msg.chat_id, msg.id,"⇜ لا يوجد لديك رد\n⇜ لأضافة ردك ( اضف ردي )", 'md')
+send(msg.chat_id, msg.id,"⇜ لا يوجد لديك رد\n⇜ لأضافة ردك ( اضف ردي )", 'md')
 end
 end
 
@@ -20815,7 +20815,7 @@ data = {
 },
 }
 }
-return merolua.sendPhoto(msg.chat_id, msg.id, photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id,
+return bot.sendPhoto(msg.chat_id, msg.id, photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id,
 '\n• Name 𖦹 '..news..
 '\n• 𝖴𝗌𝖾𝗋𝗇𝖺𝗆𝖾 𖦹 ['..UserInfousername..
 ']\n• 𝖡𝗂𝗈 𖦹 ['..Bio..
@@ -20829,7 +20829,7 @@ data = {
 },
 }
 }
-return merolua.sendText(msg_chat_id,msg_id,
+return bot.sendText(msg_chat_id,msg_id,
 '\n• Name 𖦹 '..news..
 '\n• 𝖴𝗌𝖾𝗋𝗇𝖺𝗆𝖾 𖦹 ['..UserInfousername..
 ']\n• 𝖡𝗂𝗈 𖦹 ['..Bio..
@@ -20839,22 +20839,22 @@ end
 end
 
 if text and text:match("^(.*)$") then
-if Redis:get(TheFRADM.."FRADM:Set:myrd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id) == "true" then
+if Redis:get(TheFRADM.."FRADM:Set:myrd"..msg.sender_id.user_id..":"..msg_chat_id) == "true" then
 if text and #text:match("^(.*)$") >= 30 then
-Redis:del(TheFRADM.."FRADM:Set:myrd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
+Redis:del(TheFRADM.."FRADM:Set:myrd"..msg.sender_id.user_id..":"..msg_chat_id)
 return merolua.send(msg.chat_id, msg.id,"⇜ قلل من عدد الاحرف", 'md')
 end
 local Texingt = Redis:get(TheFRADM.."FRADM:Add:myrdtext"..text..msg_chat_id)
 if Texingt == text then
 return merolua.send(msg_chat_id,msg_id,"\n⇜ عذراً عزيزي الرد ( "..text.." ) مضاف مسبقاً ","md",true)  
 end
-Redis:set(TheFRADM.."FRADM:List:myrdmyrd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id, text)
-Redis:sadd(TheFRADM.."FRADM:List:myrdmyid"..msg_chat_id, msg.return merolua.sender_id.user_id)
+Redis:set(TheFRADM.."FRADM:List:myrdmyrd"..msg.sender_id.user_id..":"..msg_chat_id, text)
+Redis:sadd(TheFRADM.."FRADM:List:myrdmyid"..msg_chat_id, msg.sender_id.user_id)
 Redis:sadd(TheFRADM.."FRADM:List:myrd"..msg_chat_id, text)
 Redis:set(TheFRADM.."FRADM:Add:myrdtext"..text..msg_chat_id, text)
-Redis:set(TheFRADM.."FRADM:Add:myrdid"..text..msg_chat_id, msg.return merolua.sender_id.user_id)
-Redis:del(TheFRADM.."FRADM:Set:myrd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id)
-return merolua.send(msg.chat_id, msg.id,"⇜ واضفنا ردك ياحلو\n⇜ اكتب ( "..text.." ) لتجربته", 'md')
+Redis:set(TheFRADM.."FRADM:Add:myrdid"..text..msg_chat_id, msg.sender_id.user_id)
+Redis:del(TheFRADM.."FRADM:Set:myrd"..msg.sender_id.user_id..":"..msg_chat_id)
+send(msg.chat_id, msg.id,"⇜ واضفنا ردك ياحلو\n⇜ اكتب ( "..text.." ) لتجربته", 'md')
 end
 end
 if text and text:match('^ايدي (%d+)$') then
@@ -20866,20 +20866,20 @@ end
 if not msg.Distinguished and Redis:get(TheFRADM..'idnotmem'..msg.chat_id)  then
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عذراً ايدي العضو معطل',"md")
 end
-local UserInfo = bot.getUser(msg.return merolua.sender_id.user_id)
-local InfoUser = bot.getUserFullInfo(msg.return merolua.sender_id.user_id)
-local Bio = FlterBio(getbio(msg.return merolua.sender_id.user_id))
+local UserInfo = bot.getUser(msg.sender_id.user_id)
+local InfoUser = bot.getUserFullInfo(msg.sender_id.user_id)
+local Bio = FlterBio(getbio(msg.sender_id.user_id))
 if Redis:get(TheFRADM.."NSFW:"..msg.chat_id) then
 if not msg.ControllerBot then
 if not msg.TheBasicsQ then 
-local photo = bot.getUserProfilePhotos(msg.return merolua.sender_id.user_id)
+local photo = bot.getUserProfilePhotos(msg.sender_id.user_id)
 local TotalPhoto = photo.total_count or 0
 if photo.total_count > 0 then
 local thumb_id = photo.photos[numberid].sizes[#photo.photos[1].sizes].photo.remote.id
 local api_ = request('http://161.35.201.62:8080/nsfw?token=' .. Token .. '&file_id='..thumb_id)
 local api = JSON.decode(api_)
 if api.result.is_nsfw == true then
-local ban = bot.getUser(msg.return merolua.sender_id.user_id)
+local ban = bot.getUser(msg.sender_id.user_id)
 if ban.first_name then
 news = ban.first_name
 else
@@ -20891,7 +20891,7 @@ end
 if GetInfoBot(msg).BanUser == false then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ البوت ليس لديه صلاحيه حظر المستخدمين ',"md",true)
 end
-bot.setChatMemberStatus(msg.chat_id,msg.return merolua.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
+bot.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
 return merolua.send(msg_chat_id, msg_id , "「 "..news.." 」\n⇜ قام بارسال ايدي يحتوي على صورة اباحية\n⇜ تم تقييده ومسح رسالته\n✧")
 end
 end
@@ -20899,15 +20899,15 @@ end
 end
 end
 local nameuser = FlterBio(UserInfo.first_name)
-local photo = bot.getUserProfilePhotos(msg.return merolua.sender_id.user_id)
-local UserId = msg.return merolua.sender_id.user_id
+local photo = bot.getUserProfilePhotos(msg.sender_id.user_id)
+local UserId = msg.sender_id.user_id
 local RinkBot = msg.Name_Controller
-local TotalMsg = Redis:get(TheFRADM..'FRADM:Num:Message:User'..msg_chat_id..':'..msg.return merolua.sender_id.user_id) or 0
+local TotalMsg = Redis:get(TheFRADM..'FRADM:Num:Message:User'..msg_chat_id..':'..msg.sender_id.user_id) or 0
 local TotalPhoto = photo.total_count or 0
-local TotalEdit = Redis:get(TheFRADM..'FRADM:Num:Message:Edit'..msg_chat_id..msg.return merolua.sender_id.user_id) or 0
+local TotalEdit = Redis:get(TheFRADM..'FRADM:Num:Message:Edit'..msg_chat_id..msg.sender_id.user_id) or 0
 local TotalMsgT = Total_message(TotalMsg) 
-local NumberGames = Redis:get(TheFRADM.."FRADM:Num:Add:Games"..msg.chat_id..msg.return merolua.sender_id.user_id) or 0
-local NumAdd = Redis:get(TheFRADM.."FRADM:Num:Add:Memp"..msg.chat_id..":"..msg.return merolua.sender_id.user_id) or 0
+local NumberGames = Redis:get(TheFRADM.."FRADM:Num:Add:Games"..msg.chat_id..msg.sender_id.user_id) or 0
+local NumAdd = Redis:get(TheFRADM.."FRADM:Num:Add:Memp"..msg.chat_id..":"..msg.sender_id.user_id) or 0
 if UserInfo.username then
 UserInfousername = '@'..UserInfo.username..''
 else
@@ -20923,11 +20923,11 @@ data = {
 },
 }
 }
-return merolua.sendText(msg.chat_id, msg.id,
+return bot.sendText(msg.chat_id, msg.id,
 'لا يمكنني عرض الصورة رقم '..numberid..' لان عدد صورك '..photo.total_count..
 '\n• 𝖭𝖺𝗆𝖾 𖦹 '..UserInfo.first_name..
 '\n• 𝖨𝖣 𖦹 '..UserId..
-'\n• 𝖴𝗌𝖾𝗋𝗇𝖺𝗆𝖾 ?? ['..UserInfousername..
+'\n• 𝖴𝗌𝖾𝗋𝗇𝖺𝗆𝖾 𖦹 ['..UserInfousername..
 ']\n• 𝖱𝖺𝗇𝗄 𖦹 '..RinkBot..
 '\n• 𝖬𝗌𝗀 𖦹 '..TotalMsg..
 '\n• 𝖯𝗁𝗈𝗍𝗈 𖦹 '..TotalPhoto..
@@ -20947,7 +20947,7 @@ data = {
 },
 }
 }
-return merolua.sendAnimation(msg.chat_id, msg.id, Name_File,
+return bot.sendAnimation(msg.chat_id, msg.id, Name_File,
 '\n• 𝖭𝖺𝗆𝖾 𖦹 '..UserInfo.first_name..
 '\n• 𝖨𝖣 𖦹 '..UserId..
 '\n• 𝖴𝗌𝖾𝗋𝗇𝖺𝗆𝖾 𖦹 ['..UserInfousername..
@@ -20965,7 +20965,7 @@ data = {
 },
 }
 }
-return merolua.sendPhoto(msg.chat_id, msg.id, photo.photos[numberid].sizes[#photo.photos[1].sizes].photo.remote.id,
+return bot.sendPhoto(msg.chat_id, msg.id, photo.photos[numberid].sizes[#photo.photos[1].sizes].photo.remote.id,
 '\n• 𝖭𝖺𝗆𝖾 𖦹 '..UserInfo.first_name..
 '\n• 𝖨𝖣 𖦹 '..UserId..
 '\n• 𝖴𝗌𝖾𝗋𝗇𝖺𝗆𝖾 𖦹 ['..UserInfousername..
@@ -20984,7 +20984,7 @@ data = {
 },
 }
 }
-return merolua.sendText(msg.chat_id, msg.id,
+return bot.sendText(msg.chat_id, msg.id,
 '\n• 𝖭𝖺𝗆𝖾 𖦹 '..UserInfo.first_name..
 '\n• 𝖨𝖣 𖦹 '..UserId..
 '\n• 𝖴𝗌𝖾𝗋𝗇𝖺𝗆𝖾 𖦹 ['..UserInfousername..
@@ -20997,34 +20997,34 @@ end
 end
 end
 if text == "الحاسبه" or text == "اله حاسبه" or text == "الاله الحاسبه" or text == "الالة الحاسبة" then
-Redis:del(TheFRADM..msg.return merolua.sender_id.user_id..msg.chat_id.."num")
+Redis:del(TheFRADM..msg.sender_id.user_id..msg.chat_id.."num")
 start_mrkup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'ON', data = msg.return merolua.sender_id.user_id..'ON'},{text = 'DEL', data = msg.return merolua.sender_id.user_id..'DEL'},{text = 'AC', data = msg.return merolua.sender_id.user_id..'rest'},{text = 'OFF', data = msg.return merolua.sender_id.user_id..'OFF'},
+{text = 'ON', data = msg.sender_id.user_id..'ON'},{text = 'DEL', data = msg.sender_id.user_id..'DEL'},{text = 'AC', data = msg.sender_id.user_id..'rest'},{text = 'OFF', data = msg.sender_id.user_id..'OFF'},
 },
 {
-{text = '^', data = msg.return merolua.sender_id.user_id..'calc&^'},{text = '√', data = msg.return merolua.sender_id.user_id..'calc&√'},{text = '(', data = msg.return merolua.sender_id.user_id..'calc&('},{text = ')', data = msg.return merolua.sender_id.user_id..'calc&)'},
+{text = '^', data = msg.sender_id.user_id..'calc&^'},{text = '√', data = msg.sender_id.user_id..'calc&√'},{text = '(', data = msg.sender_id.user_id..'calc&('},{text = ')', data = msg.sender_id.user_id..'calc&)'},
 },
 {
-{text = '7', data = msg.return merolua.sender_id.user_id..'calc&7'},{text = '8', data = msg.return merolua.sender_id.user_id..'calc&8'},{text = '9', data = msg.return merolua.sender_id.user_id..'calc&9'},{text = '÷', data = msg.return merolua.sender_id.user_id..'calc&/'},
+{text = '7', data = msg.sender_id.user_id..'calc&7'},{text = '8', data = msg.sender_id.user_id..'calc&8'},{text = '9', data = msg.sender_id.user_id..'calc&9'},{text = '÷', data = msg.sender_id.user_id..'calc&/'},
 },
 {
-{text = '4', data = msg.return merolua.sender_id.user_id..'calc&4'},{text = '5', data = msg.return merolua.sender_id.user_id..'calc&5'},{text = '6', data = msg.return merolua.sender_id.user_id..'calc&6'},{text = 'x', data = msg.return merolua.sender_id.user_id..'calc&*'},
+{text = '4', data = msg.sender_id.user_id..'calc&4'},{text = '5', data = msg.sender_id.user_id..'calc&5'},{text = '6', data = msg.sender_id.user_id..'calc&6'},{text = 'x', data = msg.sender_id.user_id..'calc&*'},
 },
 {
-{text = '1', data = msg.return merolua.sender_id.user_id..'calc&1'},{text = '2', data = msg.return merolua.sender_id.user_id..'calc&2'},{text = '3', data = msg.return merolua.sender_id.user_id..'calc&3'},{text = '-', data = msg.return merolua.sender_id.user_id..'calc&-'},
+{text = '1', data = msg.sender_id.user_id..'calc&1'},{text = '2', data = msg.sender_id.user_id..'calc&2'},{text = '3', data = msg.sender_id.user_id..'calc&3'},{text = '-', data = msg.sender_id.user_id..'calc&-'},
 },
 {
-{text = '0', data = msg.return merolua.sender_id.user_id..'calc&0'},{text = '.', data = msg.return merolua.sender_id.user_id..'calc&.'},{text = '+', data = msg.return merolua.sender_id.user_id..'calc&+'},{text = '=', data = msg.return merolua.sender_id.user_id..'equal'},
+{text = '0', data = msg.sender_id.user_id..'calc&0'},{text = '.', data = msg.sender_id.user_id..'calc&.'},{text = '+', data = msg.sender_id.user_id..'calc&+'},{text = '=', data = msg.sender_id.user_id..'equal'},
 },
 {
 {text = 'Louis', url = 't.me/Y88F8'}, 
 },
 }
 }
-return merolua.sendText(msg.chat_id,msg.id," الالة الحاسبة\n✧","md",false, false, false, false, start_mrkup)
+bot.sendText(msg.chat_id,msg.id," الالة الحاسبة\n✧","md",false, false, false, false, start_mrkup)
 return false 
 end
 -------------
@@ -21033,14 +21033,14 @@ if not msg.Managers then
 return merolua.send(msg.chat_id,msg.id,"⇜ هذا الامر يخص المدير")
 end
 Redis:del(TheFRADM..msg.chat_id..'chat_lock:lock')
-return merolua.send(msg.chat_id,msg.id,"⇜ تم تفعيل قفل الدردشه التلقائي \n⇜ استخدم الامر : تعيين وقت قفل الدردشه ")
+send(msg.chat_id,msg.id,"⇜ تم تفعيل قفل الدردشه التلقائي \n⇜ استخدم الامر : تعيين وقت قفل الدردشه ")
 end
 if text == "تعطيل القفل التلقائي" then
 if not msg.Managers then
 return merolua.send(msg.chat_id,msg.id,"⇜ هذا الامر يخص المدير")
 end
 Redis:set(TheFRADM..msg.chat_id..'chat_lock:lock',true)
-return merolua.send(msg.chat_id,msg.id,"⇜ تم تعطيل قفل الدردشه التلقائي")
+send(msg.chat_id,msg.id,"⇜ تم تعطيل قفل الدردشه التلقائي")
 end
 if text == "القفل التلقائي" then
 if not msg.Managers then
@@ -21067,9 +21067,9 @@ return merolua.send(msg.chat_id,msg.id,txx)
 end
 
 if text then
-if Redis:get(TheFRADM..msg.return merolua.sender_id.user_id..'set:time:chat') then
+if Redis:get(TheFRADM..msg.sender_id.user_id..'set:time:chat') then
 if text == "الغاء" then
-Redis:del(TheFRADM..msg.return merolua.sender_id.user_id..'set:time:chat')
+Redis:del(TheFRADM..msg.sender_id.user_id..'set:time:chat')
 return merolua.send(msg.chat_id,msg.id,"⇜ تم الغاء الامر")
 end
 if text:match("(%d+)") then
@@ -21079,8 +21079,8 @@ lock_time = 00
 else
 lock_time = tonumber(text)
 end
-Redis:del(TheFRADM..msg.return merolua.sender_id.user_id..'set:time:chat')
-Redis:set(TheFRADM..msg.return merolua.sender_id.user_id..'set:time:chat:on',true)
+Redis:del(TheFRADM..msg.sender_id.user_id..'set:time:chat')
+Redis:set(TheFRADM..msg.sender_id.user_id..'set:time:chat:on',true)
 Redis:del(TheFRADM..msg.chat_id..'time:chat:lock')
 Redis:set(TheFRADM..msg.chat_id..'time:chat:lock',math.floor(tonumber(lock_time)))
 return merolua.send(msg.chat_id,msg.id,"⇜ تم حفظ وقت القفل الساعه "..text.."\n ارسل الان وقت التفعيل ")
@@ -21090,9 +21090,9 @@ end
 else
 return merolua.send(msg.chat_id,msg.id,"⇜ لقد ارسلت وقت خاطئ")
 end
-elseif Redis:get(TheFRADM..msg.return merolua.sender_id.user_id..'set:time:chat:on') then
+elseif Redis:get(TheFRADM..msg.sender_id.user_id..'set:time:chat:on') then
 if text == "الغاء" then
-Redis:del(TheFRADM..msg.return merolua.sender_id.user_id..'set:time:chat:on')
+Redis:del(TheFRADM..msg.sender_id.user_id..'set:time:chat:on')
 return merolua.send(msg.chat_id,msg.id,"⇜ تم الغاء الامر")
 end
 if text:match("(%d+)") then
@@ -21102,7 +21102,7 @@ lock_time = 00
 else
 lock_time = tonumber(text)
 end
-Redis:del(TheFRADM..msg.return merolua.sender_id.user_id..'set:time:chat:on')
+Redis:del(TheFRADM..msg.sender_id.user_id..'set:time:chat:on')
 Redis:del(TheFRADM..msg.chat_id..'time:chat:on')
 Redis:set(TheFRADM..msg.chat_id..'time:chat:on',math.floor(tonumber(lock_time)))
 return merolua.send(msg.chat_id,msg.id,"⇜ تم حفظ وقت الفتح الساعه "..lock_time.."\n")
@@ -21118,8 +21118,8 @@ if text == "ضع وقت قفل الدردشه" or text == "وضع وقت قفل 
 if not msg.Managers then
 return merolua.send(msg.chat_id,msg.id,"⇜ هذا الامر يخص المدير")
 end
-Redis:set(TheFRADM..msg.return merolua.sender_id.user_id..'set:time:chat',true)
-return merolua.send(msg.chat_id,msg.id,"⇜ ارسل الان الوقت بنظام 24 ساعه")
+Redis:set(TheFRADM..msg.sender_id.user_id..'set:time:chat',true)
+send(msg.chat_id,msg.id,"⇜ ارسل الان الوقت بنظام 24 ساعه")
 end
 if not Redis:get(TheFRADM..msg.chat_id..'chat_lock:lock') then
 if Redis:get(TheFRADM..msg.chat_id..'time:chat:lock') then
@@ -21127,7 +21127,7 @@ local current_time = request("https://dev-revor.tk/Apis/Auto/Auto.php?a=h")
 if tonumber(Redis:get(TheFRADM..msg.chat_id..'time:chat:lock')) - tonumber(current_time) == tonumber(0) then
 Redis:set(TheFRADM.."FRADM:Lock:text"..msg.chat_id,true)
 Redis:del(TheFRADM..msg.chat_id..'time:chat:lock')
-return merolua.send(msg.chat_id,0,"⇜ تم قفل الدردشه تلقائيا")
+send(msg.chat_id,0,"⇜ تم قفل الدردشه تلقائيا")
 end
 end
 if Redis:get(TheFRADM..msg.chat_id..'time:chat:on') then
@@ -21135,7 +21135,7 @@ local current_time = request("https://dev-revor.tk/Apis/Auto/Auto.php?a=h")
 if tonumber(current_time) == tonumber(Redis:get(TheFRADM..msg.chat_id..'time:chat:on')) then
 Redis:del(TheFRADM.."FRADM:Lock:text"..msg.chat_id) 
 Redis:del(TheFRADM..msg.chat_id..'time:chat:on')
-return merolua.send(msg.chat_id,0,"⇜ تم فتح الدردشه تلقائيا")
+send(msg.chat_id,0,"⇜ تم فتح الدردشه تلقائيا")
 end
 end
 end
@@ -21175,58 +21175,58 @@ if text == "اضف ميزه" or text == "اضف ميزة" then
 if not msg.TheBasicsQ then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص المالك ',"md",true)  
 end
-Redis:set(TheFRADM.."add_meza:return merolua.send:"..msg.chat_id..":"..msg.return merolua.sender_id.user_id, true)
+Redis:set(TheFRADM.."add_meza:send:"..msg.chat_id..":"..msg.sender_id.user_id, true)
 return merolua.send(msg.chat_id, msg.id,"⇜ ارسل اسم الميزة", 'md')
 end
 if text == "حذف ميزه" or text == "مسح ميزه" or text == "حذف ميزة" or text == "مسح ميزة" then 
 if not msg.TheBasicsQ then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص المالك  ',"md",true)  
 end
-Redis:set(TheFRADM.."add_meza:rem:"..msg.chat_id..":"..msg.return merolua.sender_id.user_id, true)
+Redis:set(TheFRADM.."add_meza:rem:"..msg.chat_id..":"..msg.sender_id.user_id, true)
 return merolua.send(msg.chat_id, msg.id,"⇜ ارسل اسم الميزة", 'md')
 end
-if text and Redis:get(TheFRADM.."add_meza:rem:"..msg.chat_id..":"..msg.return merolua.sender_id.user_id) == "true" then
+if text and Redis:get(TheFRADM.."add_meza:rem:"..msg.chat_id..":"..msg.sender_id.user_id) == "true" then
 if Redis:get(TheFRADM.."meza:type"..text) then
 Redis:del(TheFRADM.."meza:type"..text)
 Redis:del(TheFRADM.."meza:link"..text)
-Redis:del(TheFRADM.."add_meza:rem:"..msg.chat_id..":"..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."add_meza:rem:"..msg.chat_id..":"..msg.sender_id.user_id)
 Redis:srem(TheFRADM.."meza:names:", text)
-return merolua.send(msg.chat_id, msg.id,"⇜ تم مسح الميزة", 'md')
+send(msg.chat_id, msg.id,"⇜ تم مسح الميزة", 'md')
 else
-Redis:del(TheFRADM.."add_meza:rem:"..msg.chat_id..":"..msg.return merolua.sender_id.user_id)
-return merolua.send(msg.chat_id, msg.id,"⇜ لا يوجد ميزة بهذا الاسم", 'md')
+Redis:del(TheFRADM.."add_meza:rem:"..msg.chat_id..":"..msg.sender_id.user_id)
+send(msg.chat_id, msg.id,"⇜ لا يوجد ميزة بهذا الاسم", 'md')
 end
 end
-if text and Redis:get(TheFRADM.."add_meza:return merolua.send:"..msg.chat_id..":"..msg.return merolua.sender_id.user_id) == "true" then
-Redis:set(TheFRADM.."add_meza:return merolua.send:"..msg.chat_id..":"..msg.return merolua.sender_id.user_id, "link")
-Redis:set(TheFRADM.."add_meza:name:"..msg.chat_id..":"..msg.return merolua.sender_id.user_id, text)
+if text and Redis:get(TheFRADM.."add_meza:send:"..msg.chat_id..":"..msg.sender_id.user_id) == "true" then
+Redis:set(TheFRADM.."add_meza:send:"..msg.chat_id..":"..msg.sender_id.user_id, "link")
+Redis:set(TheFRADM.."add_meza:name:"..msg.chat_id..":"..msg.sender_id.user_id, text)
 return merolua.send(msg.chat_id, msg.id,"⇜ تم حفظ الاسم \n⇜ ارسل رابط القناة", 'md')
 end
 
-if text and Redis:get(TheFRADM.."add_meza:return merolua.send:"..msg.chat_id..":"..msg.return merolua.sender_id.user_id) == "link" then
+if text and Redis:get(TheFRADM.."add_meza:send:"..msg.chat_id..":"..msg.sender_id.user_id) == "link" then
 if not text:match('https://t.me/(.*)') then
 return merolua.send(msg.chat_id, msg.id,"⇜ الرابط خطأ \n⇜ ارسل الرابط مثل : https://t.me/Y88F8 ", 'md', true)
 end
-Redis:del(TheFRADM.."add_meza:return merolua.send:"..msg.chat_id..":"..msg.return merolua.sender_id.user_id)
-local meza_name = Redis:get(TheFRADM.."add_meza:name:"..msg.chat_id..":"..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."add_meza:send:"..msg.chat_id..":"..msg.sender_id.user_id)
+local meza_name = Redis:get(TheFRADM.."add_meza:name:"..msg.chat_id..":"..msg.sender_id.user_id)
 Redis:set(TheFRADM.."meza:link"..meza_name, text)
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'صور 📸', data = msg.return merolua.sender_id.user_id..'/meza_photo'}
+{text = 'صور 📸', data = msg.sender_id.user_id..'/meza_photo'}
 },
 {
-{text = 'فيديو 📹', data = msg.return merolua.sender_id.user_id..'/meza_video'}
+{text = 'فيديو 📹', data = msg.sender_id.user_id..'/meza_video'}
 },
 {
-{text = 'صوت 🎧', data = msg.return merolua.sender_id.user_id..'/meza_audio'}
+{text = 'صوت 🎧', data = msg.sender_id.user_id..'/meza_audio'}
 },
 {
-{text = 'متحركه 🎴', data = msg.return merolua.sender_id.user_id..'/meza_animation'}
+{text = 'متحركه 🎴', data = msg.sender_id.user_id..'/meza_animation'}
 },
 {
-{text = 'ملصق 🌁', data = msg.return merolua.sender_id.user_id..'/meza_sticker'}
+{text = 'ملصق 🌁', data = msg.sender_id.user_id..'/meza_sticker'}
 },
 }
 }
@@ -21244,15 +21244,15 @@ print(link)
 local meza_type = Redis:get(TheFRADM.."meza:type"..text)
 print(meza_type)
 if meza_type == "photo" then
-https.request("https://api.telegram.org/bot"..Token.."/return merolua.sendphoto?chat_id="..msg.chat_id.."&photo="..link.."&caption="..URL.escape(" ").."&reply_to_message_id="..(msg.id/2097152/0.5))
+https.request("https://api.telegram.org/bot"..Token.."/sendphoto?chat_id="..msg.chat_id.."&photo="..link.."&caption="..URL.escape(" ").."&reply_to_message_id="..(msg.id/2097152/0.5))
 elseif meza_type == "video" then
-https.request("https://api.telegram.org/bot"..Token.."/return merolua.sendvideo?chat_id="..msg_chat_id.."&caption="..URL.escape(" ").."&video="..link.."&reply_to_message_id="..(msg.id/2097152/0.5).."&parse_mode=Markdown")
+https.request("https://api.telegram.org/bot"..Token.."/sendvideo?chat_id="..msg_chat_id.."&caption="..URL.escape(" ").."&video="..link.."&reply_to_message_id="..(msg.id/2097152/0.5).."&parse_mode=Markdown")
 elseif meza_type == "animation" then
-https.request("https://api.telegram.org/bot"..Token.."/return merolua.sendanimation?chat_id="..msg_chat_id.."&caption="..URL.escape(" ").."&animation="..link.."&reply_to_message_id="..(msg.id/2097152/0.5).."&parse_mode=Markdown")
+https.request("https://api.telegram.org/bot"..Token.."/sendanimation?chat_id="..msg_chat_id.."&caption="..URL.escape(" ").."&animation="..link.."&reply_to_message_id="..(msg.id/2097152/0.5).."&parse_mode=Markdown")
 elseif meza_type == "audio" then
-https.request("https://api.telegram.org/bot"..Token.."/return merolua.sendaudio?chat_id="..msg.chat_id.."&audio="..link.."&caption="..URL.escape(" ").."&reply_to_message_id="..(msg.id/2097152/0.5))
+https.request("https://api.telegram.org/bot"..Token.."/sendaudio?chat_id="..msg.chat_id.."&audio="..link.."&caption="..URL.escape(" ").."&reply_to_message_id="..(msg.id/2097152/0.5))
 elseif meza_type == "sticker" then
-https.request("https://api.telegram.org/bot"..Token.."/return merolua.sendsticker?chat_id="..msg.chat_id.."&sticker="..link.."&caption="..URL.escape(" ").."&reply_to_message_id="..(msg.id/2097152/0.5))
+https.request("https://api.telegram.org/bot"..Token.."/sendsticker?chat_id="..msg.chat_id.."&sticker="..link.."&caption="..URL.escape(" ").."&reply_to_message_id="..(msg.id/2097152/0.5))
 end
 end
 ----------------------------------------------------------------------------------------
@@ -21267,8 +21267,8 @@ if Redis:get(TheFRADM.."hzergametime"..msg.chat_id) then
 local time = ctime(Redis:ttl(TheFRADM.."hzergametime"..msg.chat_id))
 return merolua.send(msg.chat_id,msg.id,"⇜ في لعبة حزر قبل\n⇜ تنتهي بعد "..time.." \n✧","md",true)
 end
-Redis:set(TheFRADM.."hazrgroupid"..msg.return merolua.sender_id.user_id, msg_chat_id)
-Redis:set(TheFRADM.."hazrmalek"..msg_chat_id, msg.return merolua.sender_id.user_id)
+Redis:set(TheFRADM.."hazrgroupid"..msg.sender_id.user_id, msg_chat_id)
+Redis:set(TheFRADM.."hazrmalek"..msg_chat_id, msg.sender_id.user_id)
 Redis:setex(TheFRADM.."hzergametime"..msg.chat_id,300,true)
 Redis:del(TheFRADM.."hazranswer"..msg.chat_id)
 Redis:del(TheFRADM.."hazrqustion"..msg.chat_id)
@@ -21289,22 +21289,22 @@ data = {
 {text = 'انضم هنا', data = boby..'/joinhzer'}
 },
 {
-{text = 'بدء اللعبة', url = 't.me/'..UserBot..'?start=hazr'..boby..'from_id'..msg.return merolua.sender_id.user_id..''}
+{text = 'بدء اللعبة', url = 't.me/'..UserBot..'?start=hazr'..boby..'from_id'..msg.sender_id.user_id..''}
 },
 }
 }
 return merolua.send(msg.chat_id, msg.id,"⇜ تم بدء لعبة احزر الكلمة\n- الفائز بالجولة الاخيرة : "..nameuser.."\n✧", 'md',true, false, false, false, reply_markup)
 end
 if Redis:get(TheFRADM.."hazranswer"..msg.chat_id) then
-if text == Redis:get(TheFRADM.."hazranswer"..msg.chat_id) and Redis:sismember(TheFRADM.."listhzerid"..msg.chat_id, msg.return merolua.sender_id.user_id) then
-if tonumber(Redis:get(TheFRADM.."hazrmalek"..msg_chat_id)) == msg.return merolua.sender_id.user_id then
+if text == Redis:get(TheFRADM.."hazranswer"..msg.chat_id) and Redis:sismember(TheFRADM.."listhzerid"..msg.chat_id, msg.sender_id.user_id) then
+if tonumber(Redis:get(TheFRADM.."hazrmalek"..msg_chat_id)) == msg.sender_id.user_id then
 return bot.deleteMessages(msg.chat_id,{[1]= msg_id})
 end
 Redis:del(TheFRADM.."hazranswer"..msg.chat_id)
 Redis:del(TheFRADM.."hazrqustion"..msg.chat_id)
 Redis:del(TheFRADM.."hazrmalek"..msg.chat_id)
 Redis:del(TheFRADM.."hazrlock"..msg.chat_id)
-Redis:set(TheFRADM.."hazrwinerid"..msg.chat_id, msg.return merolua.sender_id.user_id)
+Redis:set(TheFRADM.."hazrwinerid"..msg.chat_id, msg.sender_id.user_id)
 local starttime = Redis:get(TheFRADM..'Mira:Game:Time'..msg.chat_id) or 0
 local a = os.time() - starttime
 Redis:del(TheFRADM.."listhzerid"..msg.chat_id)
@@ -21321,7 +21321,7 @@ return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Cont
 end
 local Numbardel = text:match("^تعيين عدد الاحرف (%d+)$") or text:match("^تعين عدد الاحروف (%d+)$")
 Redis:set(TheFRADM.."NUM_CH_MAX"..msg_chat_id, Numbardel)
-return merolua.send(msg_chat_id,msg_id, 'تم تعيين عدد الاحرف : '..Numbardel)
+send(msg_chat_id,msg_id, 'تم تعيين عدد الاحرف : '..Numbardel)
 end
 ----------------------------------------------------------------------------------------
 if text == "تعطيل ثنائي اليوم" or text == "تعطيل ثنائي" or text == "تعطيل الثنائي" then
@@ -21450,35 +21450,35 @@ if Redis:get(TheFRADM.."azkarhourr"..msg.chat_id) and tonumber(Redis:ttl(TheFRAD
 local Textingt = {"ربَّنا آتِنا في الدُّنيا حسنةً، وفي الآخرةِ حسنةً، وقِنا عذابَ النَّار️", "لك الحمد ربي حمدًا يليق بلطفك و عظيم كرمك♥️", "اللهم يسرلي امري واشرح لي صدري", "اللهم إن الأمر أمرك، والخلق خلقك، والقضاء قضاؤك اللهم إني وكلتك وفوضت أمري إليك", "لا إِلَهَ إِلا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ", "‏﴿ فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ إِنَّهُ كَانَ تَوَّابًا ﴾", "اللهُم وسع قبور من رحلوا إليك بجنةٍ لا يفنى نعيمها", "اللهُم السّعه والتوسّع والمُتسّع لِقبورهَم", "اللهم ارزقنا توبةً نصوحةً قبل الموت", "اللهم يا مقلب القلوب ثبت قلبي على دينك", "أستغفُرك ربِي رضًا وعافيّه،أستغفُرك ربِي حُبًا وطمَأنينة", "استغفرالله واتوب اليه", "استغفرالله ألذي لا إله إلا هو الحي القيوم واتوب اليه 💕✨", "اللهم إني اسألك العفو والعافية والمعافاة الدائمة في الدين والدنيا والآخرة", "اللهُم جازنا بحُلو الحياة وطيب المقام ‏وعيشة السُعداء وراحة البال", "اللهُم افتح بيني وبينَ رزقي ونصيبي وسعادتي وتوفيقي فتحًا مُبينًا وأنتَ خير الفاتِحين", "اللهم أعنّا على طاعتك وحُسن عبادتك 🤎🌱", "ثم يأتي الله بأكثر شيء يعلم أنه سيقر عينك، و يعوضك به على صبرك.", "وَيُؤْنِسُنِي أَنَّكَ عَلِيمٌ بِمَا يُخْفَى.", "اللهُم أحسن رحيلي إن حان وقتي.", "‏سلامًا على من مرّ على مُرِّنا فحلّاهُ.", "لا تَمَلْ، ‏أكمِلْ طريقكَ، ‏إنَّ اللهَ يُحِبُّ العبدَ اللحوح.", "وسبق أن تمنينا ما نحن فيه الآن، فاللهم لك الحمد.",}
 local Descriptiont = Textingt[math.random(#Textingt)]
 Redis:setex(TheFRADM.."azkarhour"..msg.chat_id,3600,true)
-return merolua.send(msg.chat_id,0,Descriptiont,"md",true)
+send(msg.chat_id,0,Descriptiont,"md",true)
 return merolua.send(msg.chat_id,0,"-","md",true)
 end
 ---------------------------------------------------------------------------------
-if Redis:get(TheFRADM.."addchannel"..msg.return merolua.sender_id.user_id) == "on" then
+if Redis:get(TheFRADM.."addchannel"..msg.sender_id.user_id) == "on" then
 if text and text:match("^@[%a%d_]+$") then
 local m , res = http.request("http://api.telegram.org/bot"..Token.."/getchat?chat_id="..text)
 data = JSON.decode(m)
 if res == 200 then
 ch = data.result.id
 Redis:set(TheFRADM.."chadmin"..msg_chat_id,ch) 
-return merolua.send(msg_chat_id,msg_id,"⇜ تم حفظ ايدي القناه","md",true)  
+send(msg_chat_id,msg_id,"⇜ تم حفظ ايدي القناه","md",true)  
 else
-return merolua.send(msg_chat_id,msg_id,"⇜ المعرف خطأ","md",true)  
+send(msg_chat_id,msg_id,"⇜ المعرف خطأ","md",true)  
 end
 elseif text and text:match('^-100(%d+)$') then
 ch = text
 Redis:set(TheFRADM.."chadmin"..msg_chat_id,ch) 
-return merolua.send(msg_chat_id,msg_id,"⇜ تم حفظ ايدي القناه","md",true)  
+send(msg_chat_id,msg_id,"⇜ تم حفظ ايدي القناه","md",true)  
 elseif text and not text:match('^-100(%d+)$') then
-return merolua.send(msg_chat_id,msg_id,"⇜ الايدي خطأ","md",true)  
+send(msg_chat_id,msg_id,"⇜ الايدي خطأ","md",true)  
 end
-Redis:del(TheFRADM.."addchannel"..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."addchannel"..msg.sender_id.user_id)
 end
 if text == "القناه المضافه" or text == "القناة المضافة" then
 if Redis:get(TheFRADM.."chadmin"..msg_chat_id) then
-return merolua.send(msg_chat_id,msg_id,Redis:get(TheFRADM.."chadmin"..msg_chat_id),"md",true)  
+send(msg_chat_id,msg_id,Redis:get(TheFRADM.."chadmin"..msg_chat_id),"md",true)  
 else 
-return merolua.send(msg_chat_id,msg_id,"⇜ لا توجد قناه ","md",true)  
+send(msg_chat_id,msg_id,"⇜ لا توجد قناه ","md",true)  
 end 
 end
 if text == "حذف القناه" or text == "حذف القناة" or text == "مسح القناة" or text == "مسح القناه" then
@@ -21487,25 +21487,25 @@ return merolua.send(msg_chat_id,msg_id,'⇜ هذا الامر يخص ( الاد�
 end
 if Redis:get(TheFRADM.."chadmin"..msg_chat_id) then
 Redis:del(TheFRADM.."chadmin"..msg_chat_id) 
-return merolua.send(msg_chat_id,msg_id,"⇜ تم حذف القناه بنجاح","md",true)  
+send(msg_chat_id,msg_id,"⇜ تم حذف القناه بنجاح","md",true)  
 else 
-return merolua.send(msg_chat_id,msg_id,"⇜ لا توجد قناه ","md",true)  
+send(msg_chat_id,msg_id,"⇜ لا توجد قناه ","md",true)  
 end 
 end
 if text == "اضف قناه" or text == "اضف قناة"then
 if not msg.Addictive then
 return merolua.send(msg_chat_id,msg_id,'⇜ هذا الامر يخص ( الادمن,المدير,المالك,المطور ) بس ',"md",true)  
 end
-Redis:set(TheFRADM.."addchannel"..msg.return merolua.sender_id.user_id,"on") 
-return merolua.send(msg_chat_id,msg_id,"⇜ ارسل يوزر او ايدي القناه","md",true)  
+Redis:set(TheFRADM.."addchannel"..msg.sender_id.user_id,"on") 
+send(msg_chat_id,msg_id,"⇜ ارسل يوزر او ايدي القناه","md",true)  
 end
 if text == "احسب عمري" or text == "احسب العمر" then
 if not Redis:get(TheFRADM.."myages"..msg.chat_id) then
-Redis:setex(TheFRADM.."Age:return merolua.send:"..msg.chat_id..":"..msg.return merolua.sender_id.user_id, 30, true)
+Redis:setex(TheFRADM.."Age:send:"..msg.chat_id..":"..msg.sender_id.user_id, 30, true)
 return merolua.send(msg.chat_id, msg.id,"⇜ ارسل عمرك بالصيغيه التالية :\n يوم/شهر/سنة\n- مثال : 20/2/2002 ", 'md')
 end
 end
-if text and Redis:get(TheFRADM.."Age:return merolua.send:"..msg.chat_id..":"..msg.return merolua.sender_id.user_id) then
+if text and Redis:get(TheFRADM.."Age:send:"..msg.chat_id..":"..msg.sender_id.user_id) then
 if text and text:match('(%d+)/(%d+)/(%d+)') then
 local input = {text:match('(%d+)/(%d+)/(%d+)')}
 local day = input[1]
@@ -21531,7 +21531,7 @@ local heart_beat = "- نبضات قلبك : ".. api_decode["عدد نبضات ا
 local lol = "- ضحكت : ".. api_decode["كم مره ضحك"].."ضحكه 😂"
 local sleep_time = "- نمت : ".. api_decode["مده النوم في العمر"].." ساعه 🕔"
 local eat_times = api_decode["مده الاكل في العمر"]
-Redis:del(TheFRADM.."Age:return merolua.send:"..msg.chat_id..":"..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."Age:send:"..msg.chat_id..":"..msg.sender_id.user_id)
 local Msg_text = birth_date.."\n"..birth_hijri.."\n"..birth_months.."\n"..birth_weeks.."\n"..birth_days.."\n"..birth_hours.."\n"..birth_day_name.." "..in_Season.." "..brg.."\n"..breath.."\n"..heart_beat.."\n"..lol.."\n"..sleep_time.."\n✬"
 return merolua.send(msg.chat_id, msg.id,Msg_text, 'html')
 else
@@ -21540,7 +21540,7 @@ end
 end
 if text == "الساعه" or text == "الوقت" then
 local ramsesj20 = "\n⇜ الساعة الان : "..os.date("%p %I:%M:%S")
-return merolua.send(msg_chat_id,msg_id,ramsesj20)
+send(msg_chat_id,msg_id,ramsesj20)
 end
 if text == "التاريخ" or text == "التقويم" then
 local url, res = https.request("http://api.aladhan.com/v1/timingsByAddress?address=Mecca&method=8")
@@ -21579,10 +21579,10 @@ tarekh = "https://t.me/calshevd728/12"
 elseif months == 12 then
 tarekh = "https://t.me/calshevd728/13"
 else
-return merolua.send(msg_chat_id, msg_id, textt, "md",true)
+send(msg_chat_id, msg_id, textt, "md",true)
 end
 local msg_id = msg.id/2097152/0.5
-https.request("https://api.telegram.org/bot"..Token..'/return merolua.sendphoto?chat_id=' .. msg.chat_id .. '&photo='..tarekh..'&caption=' .. URL.escape(textt).."&reply_to_message_id="..msg_id.."&parse_mode=markdown") 
+https.request("https://api.telegram.org/bot"..Token..'/sendphoto?chat_id=' .. msg.chat_id .. '&photo='..tarekh..'&caption=' .. URL.escape(textt).."&reply_to_message_id="..msg_id.."&parse_mode=markdown") 
 end
 if text and text:match("^اذان (.*)$") or text and text:match("^الاذان (.*)$") then
 local textcity = text:match("^اذان (.*)$") or text:match("^الاذان (.*)$") 
@@ -21594,7 +21594,7 @@ local Asr = jdat.data.timings.Asr
 local Maghrib = jdat.data.timings.Maghrib
 local Isha = jdat.data.timings.Isha
 textt = "⌯ اوقات الاذان في : " ..textcity.. "\n- الفجر : "..Fajr.."\n- الظهر : "..Dhuhr.."\n- العصر : " .. Asr .. "\n- المغرب : " .. Maghrib .. "\n- العشاء : "..Isha.."\n✧"
-return merolua.send(msg_chat_id,msg_id,textt)
+send(msg_chat_id,msg_id,textt)
 end
 if text and text:match("^الطقس (.*)$") or text and text:match("^طقس (.*)$") then
 local textcity = text:match("^طقس (.*)$") or text:match("^الطقس (.*)$") 
@@ -21619,7 +21619,7 @@ elseif weather.weather[1].main == 'Mist' then
 conditions = conditions .. 'مغبر 💨'
 end
 local temp = '⌯ الطقس في : '..textcity..'\n- درجة الحرارة : '..weather.main.feels_like..' 🌡\n- الضغط : '..pressure..'\n- الرطوبة : '..humidity..'\n'..conditions..'\n✧'
-return merolua.send(msg_chat_id,msg_id,temp)
+send(msg_chat_id,msg_id,temp)
 end
 
 if text == "نمله" or text == "نملة" or text == "النمله" then
@@ -21632,7 +21632,7 @@ keyboard.inline_keyboard = {
 },
 }
 local msg_rep = msg.id/2097152/0.5
-https.request("https://api.telegram.org/bot"..Token.."/return merolua.sendphoto?chat_id="..msg.chat_id.."&reply_to_message_id="..msg_rep.."&photo="..photo.."&caption="..URL.escape(caption).."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard))
+https.request("https://api.telegram.org/bot"..Token.."/sendphoto?chat_id="..msg.chat_id.."&reply_to_message_id="..msg_rep.."&photo="..photo.."&caption="..URL.escape(caption).."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard))
 end
 if text == "ترند القروبات" or text == "ترند المجموعات" then
 if not msg.Addictive then
@@ -21675,11 +21675,11 @@ end
 if text == 'ابلاغ' or text == 'بلاغ' or text == 'تبليغ' and tonumber(msg.reply_to_message_id) ~= 0 then
 if Redis:get(TheFRADM.."rebomsg"..msg.chat_id) then
 local Remsg = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = bot.getUser(Remsg.return merolua.sender_id.user_id)
+local UserInfo = bot.getUser(Remsg.sender_id.user_id)
 if UserInfo and UserInfo.type and UserInfo.type.Merotele == "userTypeBot" then
 return false
 end
-if Remsg.return merolua.sender_id.user_id == msg.return merolua.sender_id.user_id then
+if Remsg.sender_id.user_id == msg.sender_id.user_id then
 return false
 end
 Info_Members = bot.getSupergroupMembers(msg_chat_id, "Administrators", "*", 0, 200)
@@ -21691,13 +21691,13 @@ end
 end
 local Get_Chat = bot.getChat(msg.chat_id)
 local Info_Chats = bot.getSupergroupFullInfo(msg.chat_id)
-local nameuser = bot.getUser(msg.return merolua.sender_id.user_id)
+local nameuser = bot.getUser(msg.sender_id.user_id)
 if nameuser.first_name then
 nameuser = "["..nameuser.first_name.."](tg://user?id="..nameuser.id..")"
 else
 nameuser = 'لا يوجد اسم'
 end
-local nameuserr = bot.getUser(Remsg.return merolua.sender_id.user_id)
+local nameuserr = bot.getUser(Remsg.sender_id.user_id)
 if nameuserr.first_name then
 nameuserr = "["..nameuserr.first_name.."](tg://user?id="..nameuserr.id..")"
 else
@@ -21715,7 +21715,7 @@ data = {
 {{text="• مسح الرسالة •",data = msg.reply_to_message_id..":kk:"..gt.."/delreb:"..UserInfo.id}},
 }
 }
-return merolua.sendText(UserInfo.id,0,textd,"md",false, false, false, false, reply_markup)
+bot.sendText(UserInfo.id,0,textd,"md",false, false, false, false, reply_markup)
 end
 end
 ----------------
@@ -21730,75 +21730,75 @@ data = {
 },
 }
 }
-return merolua.sendText(msg.chat_id,msg.id,Text_mira,"md",false, false, false, false, reply_markup)
+return bot.sendText(msg.chat_id,msg.id,Text_mira,"md",false, false, false, false, reply_markup)
 end
 if text and (text:match("^ضع قناتي (.*)$") or text:match("^وضع قناتي (.*)$")) then
 local UserId = Text:match("^ضع قناتي (.*)$") or text:match("^وضع قناتي (.*)$") 
 if not msg.Addictive then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(7)..' ) ',"md",true)  
 end
-Redis:set(TheFRADM..'SOFI:Channel:Vip'..msg.return merolua.sender_id.user_id,UserId)
+Redis:set(TheFRADM..'SOFI:Channel:Vip'..msg.sender_id.user_id,UserId)
 local Text = "⇜ تم حفظ قناتك"
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
-{{text="• الغاء •",data="/DelChannelVip:"..msg.return merolua.sender_id.user_id}},
-{{text="• اخفاء •",data="/HideChannelVip:"..msg.return merolua.sender_id.user_id}},
+{{text="• الغاء •",data="/DelChannelVip:"..msg.sender_id.user_id}},
+{{text="• اخفاء •",data="/HideChannelVip:"..msg.sender_id.user_id}},
 {{text='Louis',url="t.me/Y88F8"}}, 
 }
 }
-return merolua.sendText(msg_chat_id,msg_id,Text,"md",false, false, false, false, reply_markup)
+bot.sendText(msg_chat_id,msg_id,Text,"md",false, false, false, false, reply_markup)
 return false   
 end
 if text == "حذف قناتي" or text == "مسح قناتي" then
 if not msg.Addictive then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(7)..' ) ',"md",true)  
 end
-if not Redis:get(TheFRADM..'SOFI:Channel:Vip'..msg.return merolua.sender_id.user_id) then
+if not Redis:get(TheFRADM..'SOFI:Channel:Vip'..msg.sender_id.user_id) then
 Text = "⇜ انت لم تقم بـ وضع قناتك"
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
-{{text="• وضع قناتي •",data="/ChangeChannelVip:"..msg.return merolua.sender_id.user_id}},
-{{text="• اخفاء •",data="/HideChannelVip:"..msg.return merolua.sender_id.user_id}},
+{{text="• وضع قناتي •",data="/ChangeChannelVip:"..msg.sender_id.user_id}},
+{{text="• اخفاء •",data="/HideChannelVip:"..msg.sender_id.user_id}},
 {{text='Louis',url="t.me/Y88F8"}},
 }
 }
-return merolua.sendText(msg_chat_id,msg_id,Text,"md",false, false, false, false, reply_markup)
+bot.sendText(msg_chat_id,msg_id,Text,"md",false, false, false, false, reply_markup)
 return false
 else
-Redis:del(TheFRADM..'SOFI:Channel:Vip'..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM..'SOFI:Channel:Vip'..msg.sender_id.user_id)
 Text = "⇜ تم مسح قناتك "
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
-{{text="• وضع قناتي •",data="/ChangeChannelVip:"..msg.return merolua.sender_id.user_id}},
-{{text="• اخفاء •",data="/HideChannelVip:"..msg.return merolua.sender_id.user_id}},
+{{text="• وضع قناتي •",data="/ChangeChannelVip:"..msg.sender_id.user_id}},
+{{text="• اخفاء •",data="/HideChannelVip:"..msg.sender_id.user_id}},
 {{text='Louis',url="t.me/Y88F8"}},
 }
 }
-return merolua.sendText(msg_chat_id,msg_id,Text,"md",false, false, false, false, reply_markup)
+bot.sendText(msg_chat_id,msg_id,Text,"md",false, false, false, false, reply_markup)
 return false
 end
 end
-if Redis:get(TheFRADM..'SetChannelVip'..msg.return merolua.sender_id.user_id) then 
+if Redis:get(TheFRADM..'SetChannelVip'..msg.sender_id.user_id) then 
 if text =='الغاء' then 
-return merolua.sendText(msg_chat_id,msg_id, '⇜ تم الغاء حفظ قناتك ',"md",true)  
-Redis:del(TheFRADM..'SetChannelVip'..msg.return merolua.sender_id.user_id)
+bot.sendText(msg_chat_id,msg_id, '⇜ تم الغاء حفظ قناتك ',"md",true)  
+Redis:del(TheFRADM..'SetChannelVip'..msg.sender_id.user_id)
 return false  
 end 
-Redis:del(TheFRADM..'SetChannelVip'..msg.return merolua.sender_id.user_id)
-Redis:set(TheFRADM..'SOFI:Channel:Vip'..msg.return merolua.sender_id.user_id,text)
+Redis:del(TheFRADM..'SetChannelVip'..msg.sender_id.user_id)
+Redis:set(TheFRADM..'SOFI:Channel:Vip'..msg.sender_id.user_id,text)
 local text = "⇜ تم حفظ قناتك"
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
-{{text="• تغيير قناتي •",data="/ChangeChannelVip:"..msg.return merolua.sender_id.user_id},{text="• مسح قناتي •",callback_data="/DelChannelVip:"..msg.return merolua.sender_id.user_id}},
-{{text="• اخفاء •",data="/HideChannelVip:"..msg.return merolua.sender_id.user_id}},
+{{text="• تغيير قناتي •",data="/ChangeChannelVip:"..msg.sender_id.user_id},{text="• مسح قناتي •",callback_data="/DelChannelVip:"..msg.sender_id.user_id}},
+{{text="• اخفاء •",data="/HideChannelVip:"..msg.sender_id.user_id}},
 {{text='Louis',url="t.me/Y88F8"}},
 }
 }
-return merolua.sendText(msg_chat_id,msg_id,text,"md",false, false, false, false, reply_markup)
+bot.sendText(msg_chat_id,msg_id,text,"md",false, false, false, false, reply_markup)
 return false   
 end
 if text and text:match("^ضع قناتي$") or text and text:match("^وضع قناتي$") then
@@ -21809,23 +21809,23 @@ local text = "⇜ ارسل لي قناتك الان"
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
-{{text="• الغاء •",data="/CancelChannelVip:"..msg.return merolua.sender_id.user_id}},
+{{text="• الغاء •",data="/CancelChannelVip:"..msg.sender_id.user_id}},
 {{text='Louis',url="t.me/Y88F8"}},
 }
 }
-return merolua.sendText(msg_chat_id,msg_id,text,"md",false, false, false, false, reply_markup)
-Redis:set(TheFRADM..'SetChannelVip'..msg.return merolua.sender_id.user_id,true)
+bot.sendText(msg_chat_id,msg_id,text,"md",false, false, false, false, reply_markup)
+Redis:set(TheFRADM..'SetChannelVip'..msg.sender_id.user_id,true)
 return false
 end
 if text and text:match("^قناتي$") then
 if not msg.Addictive then
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(7)..' ) ',"md",true)  
 end
-if not Redis:get(TheFRADM..'SOFI:Channel:Vip'..msg.return merolua.sender_id.user_id) then
-return merolua.sendText(msg_chat_id,msg_id, "⇜ لم تقم باضافة قناتك\n⇜ قم بارسال وضع قناتي","md",true)
+if not Redis:get(TheFRADM..'SOFI:Channel:Vip'..msg.sender_id.user_id) then
+bot.sendText(msg_chat_id,msg_id, "⇜ لم تقم باضافة قناتك\n⇜ قم بارسال وضع قناتي","md",true)
 else
-local rules = Redis:get(TheFRADM..'SOFI:Channel:Vip'..msg.return merolua.sender_id.user_id)
-return merolua.sendText(msg_chat_id,msg_id, rules,"md",true)
+local rules = Redis:get(TheFRADM..'SOFI:Channel:Vip'..msg.sender_id.user_id)
+bot.sendText(msg_chat_id,msg_id, rules,"md",true)
 end
 end
 if text == 'ترتيب الاوامر' then
@@ -21979,26 +21979,26 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 print('Chat Id : '..msg_chat_id)
-print('User Id : '..msg_user_return merolua.send_id)
-return merolua.send(msg_chat_id,msg_id, "⇜  تم تحديث الملفات","md",true)
+print('User Id : '..msg_user_send_id)
+send(msg_chat_id,msg_id, "⇜  تم تحديث الملفات","md",true)
 dofile('FRADM.lua')  
 end
 
 if text and text:match("/start hms(.*)from_id(%d+)") then
 local anubis = {text:match("/start hms(.*)from_id(%d+)") }
-if msg_user_return merolua.send_id ~= tonumber(anubis[2]) then
-return merolua.send(msg_user_return merolua.send_id,msg_id,'⇜ الامر ليس لك',"md",true)  
+if msg_user_send_id ~= tonumber(anubis[2]) then
+send(msg_user_send_id,msg_id,'⇜ الامر ليس لك',"md",true)  
 else
-Redis:set(TheFRADM.."hms:"..msg_user_return merolua.send_id, anubis[1])
-return merolua.send(msg_user_return merolua.send_id,msg_id,'⇜ ارسل الهمسه الان',"md",true)  
+Redis:set(TheFRADM.."hms:"..msg_user_send_id, anubis[1])
+return merolua.send(msg_user_send_id,msg_id,'⇜ ارسل الهمسه الان',"md",true)  
 end
-elseif not text:match("(.*)start(.*)") and Redis:get(TheFRADM.."hms:"..msg_user_return merolua.send_id) then
-local anubis = Redis:get(TheFRADM.."hms:"..msg_user_return merolua.send_id)
+elseif not text:match("(.*)start(.*)") and Redis:get(TheFRADM.."hms:"..msg_user_send_id) then
+local anubis = Redis:get(TheFRADM.."hms:"..msg_user_send_id)
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'نعم', data = msg_user_return merolua.send_id.."hms"..anubis},{text = 'لا', data = msg_user_return merolua.send_id.."hms_no"..anubis}
+{text = 'نعم', data = msg_user_send_id.."hms"..anubis},{text = 'لا', data = msg_user_send_id.."hms_no"..anubis}
 },
 }
 }
@@ -22007,33 +22007,33 @@ return merolua.send(msg_chat_id,msg_id,"⇜ هل انت متاكد من ارسا
 end
 if text and text:match("/start hazr(.*)from_id(%d+)") then
 bob = {text:match("/start hazr(.*)from_id(%d+)") }
-if msg_user_return merolua.send_id ~= tonumber(bob[2]) then
-return merolua.send(msg_user_return merolua.send_id,msg_id,'⇜ الامر ليس لك',"md",true)  
+if msg_user_send_id ~= tonumber(bob[2]) then
+return merolua.send(msg_user_send_id,msg_id,'⇜ الامر ليس لك',"md",true)  
 end
 local list = Redis:smembers(TheFRADM..'listhzerid'..msg.chat_id) 
 if #list == 1 then 
-return merolua.send(msg_user_return merolua.send_id,msg_id,'⇜ يجب انضمام لاعبان على الاقل\n اعد الضغط على زر',"md",true)  
+return merolua.send(msg_user_send_id,msg_id,'⇜ يجب انضمام لاعبان على الاقل\n اعد الضغط على زر',"md",true)  
 end 
-hazrgroupid = Redis:get(TheFRADM.."hazrgroupid"..msg_user_return merolua.send_id)
+hazrgroupid = Redis:get(TheFRADM.."hazrgroupid"..msg_user_send_id)
 if not Redis:get(TheFRADM.."hzergametime"..hazrgroupid) then
 return false
 end
-Redis:set(TheFRADM.."hazrstart"..msg_user_return merolua.send_id, true)
-return merolua.send(msg_user_return merolua.send_id,msg_id,'⇜ ارسل السؤال مع الجواب وبينهم اشارة هاشتاك #\n- مثال :\n حيوان شرس من اربع احرف#الاسد\n✧',"md",true)  
-elseif text and text:match('(.*)#(.*)') and Redis:get(TheFRADM.."hazrstart"..msg_user_return merolua.send_id) then
-if msg_user_return merolua.send_id ~= tonumber(bob[2]) then
-return merolua.send(msg_user_return merolua.send_id,msg_id,'⇜ الامر ليس لك',"md",true)  
+Redis:set(TheFRADM.."hazrstart"..msg_user_send_id, true)
+return merolua.send(msg_user_send_id,msg_id,'⇜ ارسل السؤال مع الجواب وبينهم اشارة هاشتاك #\n- مثال :\n حيوان شرس من اربع احرف#الاسد\n✧',"md",true)  
+elseif text and text:match('(.*)#(.*)') and Redis:get(TheFRADM.."hazrstart"..msg_user_send_id) then
+if msg_user_send_id ~= tonumber(bob[2]) then
+return merolua.send(msg_user_send_id,msg_id,'⇜ الامر ليس لك',"md",true)  
 end
 if not Redis:get(TheFRADM.."hzergametime"..hazrgroupid) then
 return false
 end
 bobe = {text:match("(.*)#(.*)") }
-Redis:del(TheFRADM.."hazrstart"..msg_user_return merolua.send_id)
-return merolua.send(msg_user_return merolua.send_id,msg_id,'⇜ تم ارسال السؤال الى القروب\n✧',"md",true)
+Redis:del(TheFRADM.."hazrstart"..msg_user_send_id)
+send(msg_user_send_id,msg_id,'⇜ تم ارسال السؤال الى القروب\n✧',"md",true)
 Redis:set(TheFRADM.."hazrqustion"..hazrgroupid, bobe[1])
 Redis:set(TheFRADM.."hazranswer"..hazrgroupid, bobe[2])
 Redis:del(TheFRADM.."hzergametime"..hazrgroupid)
-local nameuser = bot.getUser(msg_user_return merolua.send_id)
+local nameuser = bot.getUser(msg_user_send_id)
 if nameuser.first_name then
 nameuser = "["..nameuser.first_name.."](tg://user?id="..nameuser.id..")"
 else
@@ -22041,8 +22041,8 @@ nameuser = 'لا يوجد اسم'
 end
 local time = os.time()
 Redis:set(TheFRADM.."Mira:Game:Time"..hazrgroupid,time)
-return merolua.send(hazrgroupid,0,'السؤال من '..nameuser..'\n\n- '..bobe[1]..' ؟\n✧',"md",true)
-Redis:del(TheFRADM.."hazrgroupid"..msg_user_return merolua.send_id)
+send(hazrgroupid,0,'السؤال من '..nameuser..'\n\n- '..bobe[1]..' ؟\n✧',"md",true)
+Redis:del(TheFRADM.."hazrgroupid"..msg_user_send_id)
 end
 
 if text and text:match("/start korsi(.*)from_id(%d+)") then
@@ -22050,26 +22050,26 @@ local testkorsi = {text:match("/start korsi(.*)from_id(%d+)") }
 local chat_id = Redis:get(TheFRADM.."korsi:"..testkorsi[1].."chat_id")
 local Quizz = Redis:get(TheFRADM.."Quiz:Add:Koorsy"..chat_id) or 0
 if tonumber(Quizz) == tonumber(10) then
-return merolua.send(msg_user_return merolua.send_id,msg_id, "⇜ عذراً لقد وصلتم للحد الاعلى من الاسئلة\n⇜ ارسل كرسي وابدأ اللعب من جديد","md",true)  
+return merolua.send(msg_user_send_id,msg_id, "⇜ عذراً لقد وصلتم للحد الاعلى من الاسئلة\n⇜ ارسل كرسي وابدأ اللعب من جديد","md",true)  
 end
 if not Redis:sismember(TheFRADM..'List_Korsi'..chat_id,testkorsi[2]) then
-return merolua.send(msg_user_return merolua.send_id,msg_id,'⇜ الامر للمشاركين في اللعبة فقط',"md",true)  
+send(msg_user_send_id,msg_id,'⇜ الامر للمشاركين في اللعبة فقط',"md",true)  
 else
-Redis:set(TheFRADM.."korsi:"..msg_user_return merolua.send_id, testkorsi[1])
-return merolua.send(msg_user_return merolua.send_id,msg_id,'⇜ ارسل السؤال الان',"md",true)  
+Redis:set(TheFRADM.."korsi:"..msg_user_send_id, testkorsi[1])
+return merolua.send(msg_user_send_id,msg_id,'⇜ ارسل السؤال الان',"md",true)  
 end
-elseif not text:match("(.*)start(.*)") and Redis:get(TheFRADM.."korsi:"..msg_user_return merolua.send_id) then
-local testkorsi = Redis:get(TheFRADM.."korsi:"..msg_user_return merolua.send_id)
+elseif not text:match("(.*)start(.*)") and Redis:get(TheFRADM.."korsi:"..msg_user_send_id) then
+local testkorsi = Redis:get(TheFRADM.."korsi:"..msg_user_send_id)
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'نعم', data = msg_user_return merolua.send_id.."korsi"..testkorsi},{text = 'لا', data = msg_user_return merolua.send_id.."nn_korsi"..testkorsi}
+{text = 'نعم', data = msg_user_send_id.."korsi"..testkorsi},{text = 'لا', data = msg_user_send_id.."nn_korsi"..testkorsi}
 },
 }
 }
 Redis:set(TheFRADM.."korsi:"..testkorsi.."text:", text)
-return merolua.sendText(msg_chat_id,msg_id,"⇜ هل انتا متأكد من السؤال ؟","md",true,false,false,false,reply_markup)
+return bot.sendText(msg_chat_id,msg_id,"⇜ هل انتا متأكد من السؤال ؟","md",true,false,false,false,reply_markup)
 end
 
 if text and text:match("/start saraha(.*)from_id(%d+)") then
@@ -22077,26 +22077,26 @@ local testsaraha = {text:match("/start saraha(.*)from_id(%d+)") }
 local chat_id = Redis:get(TheFRADM.."saraha:"..testsaraha[1].."chat_id")
 local Qiuizz = Redis:get(TheFRADM.."Quiz:Add:Saraha"..chat_id) or 0
 if tonumber(Qiuizz) == tonumber(5) then
-return merolua.send(msg_user_return merolua.send_id,msg_id, "⇜ عذراً لقد وصلتم للحد الاعلى من الاسئلة\n⇜ ارسل صراحه وابدأ اللعب من جديد","md",true)   
+return merolua.send(msg_user_send_id,msg_id, "⇜ عذراً لقد وصلتم للحد الاعلى من الاسئلة\n⇜ ارسل صراحه وابدأ اللعب من جديد","md",true)   
 end
-if msg_user_return merolua.send_id ~= tonumber(testsaraha[2]) then
-return merolua.send(msg_user_return merolua.send_id,msg_id,'⇜ انتا لست الفائز',"md",true)    
+if msg_user_send_id ~= tonumber(testsaraha[2]) then
+send(msg_user_send_id,msg_id,'⇜ انتا لست الفائز',"md",true)    
 else
-Redis:set(TheFRADM.."saraha:"..msg_user_return merolua.send_id, testsaraha[1])
-return merolua.send(msg_user_return merolua.send_id,msg_id,'⇜ ارسل السؤال الان',"md",true)  
+Redis:set(TheFRADM.."saraha:"..msg_user_send_id, testsaraha[1])
+return merolua.send(msg_user_send_id,msg_id,'⇜ ارسل السؤال الان',"md",true)  
 end
-elseif not text:match("(.*)start(.*)") and Redis:get(TheFRADM.."saraha:"..msg_user_return merolua.send_id) then
-local testsaraha = Redis:get(TheFRADM.."saraha:"..msg_user_return merolua.send_id)
+elseif not text:match("(.*)start(.*)") and Redis:get(TheFRADM.."saraha:"..msg_user_send_id) then
+local testsaraha = Redis:get(TheFRADM.."saraha:"..msg_user_send_id)
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'نعم', data = msg_user_return merolua.send_id.."saraha"..testsaraha},{text = 'لا', data = msg_user_return merolua.send_id.."nn_saraha"..testsaraha}
+{text = 'نعم', data = msg_user_send_id.."saraha"..testsaraha},{text = 'لا', data = msg_user_send_id.."nn_saraha"..testsaraha}
 },
 }
 }
 Redis:set(TheFRADM.."saraha:"..testsaraha.."text:", text)
-return merolua.sendText(msg_chat_id,msg_id,"⇜ سيتم ارسال السؤال بسرية تامة اضغط نعم","md",true,false,false,false,reply_markup)
+return bot.sendText(msg_chat_id,msg_id,"⇜ سيتم ارسال السؤال بسرية تامة اضغط نعم","md",true,false,false,false,reply_markup)
 end
 
 if text and text:match("/start koorsi(.*)") then
@@ -22104,26 +22104,26 @@ local testkoorsi = {text:match("/start koorsi(.*)") }
 local chat_id = Redis:get(TheFRADM.."koorsi:"..testkoorsi[1].."chat_id")
 local Quizz = Redis:get(TheFRADM.."Quiz:Add:Koorsy"..chat_id) or 0
 if tonumber(Quizz) == tonumber(10) then
-return merolua.send(msg_user_return merolua.send_id,msg_id, "⇜ عذراً لقد وصلتم للحد الاعلى من الاسئلة\n⇜ ارسل كرسي وابدأ اللعب من جديد","md",true)  
+return merolua.send(msg_user_send_id,msg_id, "⇜ عذراً لقد وصلتم للحد الاعلى من الاسئلة\n⇜ ارسل كرسي وابدأ اللعب من جديد","md",true)  
 end
 if not Redis:sismember(TheFRADM..'List_Koorsi'..chat_id,IdUser) then
-return merolua.send(msg_user_return merolua.send_id,msg_id,'⇜ الامر للمشاركين في اللعبة فقط',"md",true)  
+send(msg_user_send_id,msg_id,'⇜ الامر للمشاركين في اللعبة فقط',"md",true)  
 else
-Redis:set(TheFRADM.."koorsi:"..msg_user_return merolua.send_id, testkoorsi[1])
-return merolua.send(msg_user_return merolua.send_id,msg_id,'⇜ ارسل السؤال الان',"md",true)  
+Redis:set(TheFRADM.."koorsi:"..msg_user_send_id, testkoorsi[1])
+return merolua.send(msg_user_send_id,msg_id,'⇜ ارسل السؤال الان',"md",true)  
 end
-elseif not text:match("(.*)start(.*)") and Redis:get(TheFRADM.."koorsi:"..msg_user_return merolua.send_id) then
-local testkoorsi = Redis:get(TheFRADM.."koorsi:"..msg_user_return merolua.send_id)
+elseif not text:match("(.*)start(.*)") and Redis:get(TheFRADM.."koorsi:"..msg_user_send_id) then
+local testkoorsi = Redis:get(TheFRADM.."koorsi:"..msg_user_send_id)
 local reply_markup = bot.replyMarkup{
 type = 'inline',
 data = {
 {
-{text = 'نعم', data = msg_user_return merolua.send_id.."koorsi"..testkoorsi},{text = 'لا', data = msg_user_return merolua.send_id.."nn_koorsi"..testkoorsi}
+{text = 'نعم', data = msg_user_send_id.."koorsi"..testkoorsi},{text = 'لا', data = msg_user_send_id.."nn_koorsi"..testkoorsi}
 },
 }
 }
 Redis:set(TheFRADM.."koorsi:"..testkoorsi.."text:", text)
-return merolua.sendText(msg_chat_id,msg_id,"⇜ هل انتا متأكد من السؤال ؟","md",true,false,false,false,reply_markup)
+return bot.sendText(msg_chat_id,msg_id,"⇜ هل انتا متأكد من السؤال ؟","md",true,false,false,false,reply_markup)
 end
 
 if text == 'قسم الافتارات' then 
@@ -22150,7 +22150,7 @@ data = {
 },
 }
 }
-return merolua.sendText(msg_chat_id,msg_id,'⇜ اهلا عزيزي العضو ، في بوت .\n⇜ اليك بعض الاوامر الترفيه الخاصه بك ، ', 'md', false, false, false, false, reply_markup)
+return bot.sendText(msg_chat_id,msg_id,'⇜ اهلا عزيزي العضو ، في بوت .\n⇜ اليك بعض الاوامر الترفيه الخاصه بك ، ', 'md', false, false, false, false, reply_markup)
 end
 ------------------------------------ كود لوحة الاعضاء  
 -------------------
@@ -22178,7 +22178,7 @@ data = {
 },
 }
 }
-return merolua.sendText(msg_chat_id,msg_id,'⇜ اهلا عزيزي العضو ، في قسم المتحركات .\n⇜ اليك الاوامر الترفيه الخاصه في هاذه القسم ،', 'md', false, false, false, false, reply_markup)
+return bot.sendText(msg_chat_id,msg_id,'⇜ اهلا عزيزي العضو ، في قسم المتحركات .\n⇜ اليك الاوامر الترفيه الخاصه في هاذه القسم ،', 'md', false, false, false, false, reply_markup)
 end
 ----------------------------------------------------
 -------------------
@@ -22215,12 +22215,12 @@ data = {
 },
 }
 }
-return merolua.sendText(msg_chat_id,msg_id,'⇜ اختار ماتريده من الازرار .', 'md', false, false, false, false, reply_markup)
+return bot.sendText(msg_chat_id,msg_id,'⇜ اختار ماتريده من الازرار .', 'md', false, false, false, false, reply_markup)
 end
 -------------------------------------------------------------------------
 if text == '/start' then 
-Redis:set(TheFRADM.."keyboardmemb"..msg.return merolua.sender_id.user_id,true)
-Redis:sadd(TheFRADM..'FRADM:Num:User:Pv',msg.return merolua.sender_id.user_id)
+Redis:set(TheFRADM.."keyboardmemb"..msg.sender_id.user_id,true)
+Redis:sadd(TheFRADM..'FRADM:Num:User:Pv',msg.sender_id.user_id)
 if not msg.ControllerBot then
 if not Redis:get(TheFRADM.."FRADM:Start:Bot") then
 local CmdStart = '\n⇜ أهلاً بك عزيزي انا بوت اسمي '..(Redis:get(TheFRADM.."FRADM:Name:Bot") or "لويس")..
@@ -22264,8 +22264,8 @@ local reply_markup = bot.replyMarkup{type = 'keyboard',resize = true,is_personal
 },
 }
 }
-return merolua.send(msg_chat_id,msg_id,CmdStart,"md",false, false, false, false, reply_markupp)
-return merolua.send(msg_chat_id,msg_id,'• اختر ما تريده من الكيبورد', 'md', false, false, false, false, reply_markup) 
+send(msg_chat_id,msg_id,CmdStart,"md",false, false, false, false, reply_markupp)
+send(msg_chat_id,msg_id,'• اختر ما تريده من الكيبورد', 'md', false, false, false, false, reply_markup) 
 end
 else
 local reply_markup = bot.replyMarkup{type = 'keyboard',resize = true,is_personal = true,
@@ -22305,7 +22305,7 @@ data = {
 },
 }
 }
-return merolua.sendText(msg_chat_id,msg_id,'⇜ اهلا بك عزيزي المطور', 'md', false, false, false, false, reply_markup)
+return bot.sendText(msg_chat_id,msg_id,'⇜ اهلا بك عزيزي المطور', 'md', false, false, false, false, reply_markup)
 end
 end
 if text == "اوامر المطور" and msg.ControllerBot then
@@ -22508,8 +22508,8 @@ return merolua.send(msg_chat_id,msg_id,'⇜ اهلا بك عزيزي المطو�
 end
 
 if text == '/keb' then
-Redis:sadd(TheFRADM..'FRADM:Num:User:Pv',msg.return merolua.sender_id.user_id)
-Redis:set(TheFRADM.."keyboardmemb"..msg.return merolua.sender_id.user_id,true)
+Redis:sadd(TheFRADM..'FRADM:Num:User:Pv',msg.sender_id.user_id)
+Redis:set(TheFRADM.."keyboardmemb"..msg.sender_id.user_id,true)
 if not msg.ControllerBot then
 local reply_markup = bot.replyMarkup{type = 'keyboard',resize = true,is_personal = true,
 data = {
@@ -22551,19 +22551,19 @@ data = {
 },
 }
 }
-return merolua.sendText(msg_chat_id,msg_id,'⇜ اهلا بك في كيبورد الاعضاء ', 'md', false, false, false, false, reply_markup)
+return bot.sendText(msg_chat_id,msg_id,'⇜ اهلا بك في كيبورد الاعضاء ', 'md', false, false, false, false, reply_markup)
 end
 end
 
-if Redis:get(TheFRADM.."set:rmz"..msg.return merolua.sender_id.user_id) then
+if Redis:get(TheFRADM.."set:rmz"..msg.sender_id.user_id) then
 if text then
 if text == "الغاء" then
-Redis:del(TheFRADM.."set:rmz"..msg.return merolua.sender_id.user_id)
+Redis:del(TheFRADM.."set:rmz"..msg.sender_id.user_id)
 return merolua.send(msg_chat_id,msg_id,'⇜ تم الغاء الامر ',"md",true)  
 end
 Redis:set(TheFRADM..'rmzsource',text)
-Redis:del(TheFRADM.."set:rmz"..msg.return merolua.sender_id.user_id)
-return merolua.send(msg_chat_id,msg_id,'⇜ تم حفظ رمز السورس ',"md",true)  
+Redis:del(TheFRADM.."set:rmz"..msg.sender_id.user_id)
+send(msg_chat_id,msg_id,'⇜ تم حفظ رمز السورس ',"md",true)  
 dofile('FRADM.lua')  
 end
 end
@@ -22571,7 +22571,7 @@ if text == "تعيين رمز السورس" then
 if not msg.ControllerBot then 
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(1)..' ) ',"md",true)  
 end
-Redis:set(TheFRADM.."set:rmz"..msg.return merolua.sender_id.user_id,true)
+Redis:set(TheFRADM.."set:rmz"..msg.sender_id.user_id,true)
 return merolua.send(msg_chat_id,msg_id,'ارسل رمز بدل من ( ⇜ )',"md",true)  
 end
 if text == "حذف رمز السورس" or text == "مسح رمز السورس" then 
@@ -22606,7 +22606,7 @@ end
 local File = io.open('./Groups.txt', "w")
 File:write(G)
 File:close()
-return merolua.sendDocument(msg_chat_id,msg_id,'./Groups.txt', '⇜ تم جبتلك القروبات\n', 'md')
+bot.sendDocument(msg_chat_id,msg_id,'./Groups.txt', '⇜ تم جبتلك القروبات\n', 'md')
 end
 
 if text == 'تنظيف المشتركين' then
@@ -22625,7 +22625,7 @@ local list = Redis:smembers(TheFRADM.."FRADM:Num:User:Pv")
 local x = 0
 for k,v in pairs(list) do  
 local Get_Chat = bot.getChat(v)
-local ChatAction = return merolua.sendChatAction(v,'Typing')
+local ChatAction = bot.sendChatAction(v,'Typing')
 if ChatAction.Merotele ~= "ok" then
 x = x + 1
 Redis:srem(TheFRADM..'FRADM:Num:User:Pv',v)
@@ -22649,7 +22649,7 @@ end
 if #list == 0 then
 t = "⇜ لا يوجد ردود متعدده عام"
 end
-return merolua.send(msg.chat_id,msg.id,t,"md",true)  
+send(msg.chat_id,msg.id,t,"md",true)  
 end
 if text == 'تنظيف المجموعات' then
 if not msg.ControllerBot then 
@@ -22671,7 +22671,7 @@ if Get_Chat.id then
 local statusMem = bot.getChatMember(Get_Chat.id,TheFRADM)
 if statusMem.status.Merotele == "chatMemberStatusMember" then
 x = x + 1
-return merolua.send(Get_Chat.id,0,'⇜ البوت عضو في القروب سوف اغادر ',"md")
+send(Get_Chat.id,0,'⇜ البوت عضو في القروب سوف اغادر ',"md")
 Redis:srem(TheFRADM..'FRADM:ChekBotAdd',Get_Chat.id)
 local keys = Redis:keys(TheFRADM..'*'..Get_Chat.id)
 for i = 1, #keys do
@@ -22707,7 +22707,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:setex(TheFRADM.."FRADM:Change:Start:Bot"..msg.return merolua.sender_id.user_id,300,true) 
+Redis:setex(TheFRADM.."FRADM:Change:Start:Bot"..msg.sender_id.user_id,300,true) 
 return merolua.send(msg_chat_id,msg_id,"⇜ ارسل لي كليشه Start ","md",true)  
 end
 if text == 'مسح كليشه ستارت' then 
@@ -22737,7 +22737,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:setex(TheFRADM.."FRADM:Change:Name:Bot"..msg.return merolua.sender_id.user_id,300,true) 
+Redis:setex(TheFRADM.."FRADM:Change:Name:Bot"..msg.sender_id.user_id,300,true) 
 return merolua.send(msg_chat_id,msg_id,"⇜ ارسل لي الاسم ","md",true)  
 end
 if text == 'مسح اسم البوت' then 
@@ -22768,7 +22768,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
 Redis:set(TheFRADM..'FRADM:Num:Add:Bot',text:match("تعيين عدد الاعضاء (%d+)$") ) 
-return merolua.send(msg_chat_id,msg_id,'⇜ تم تعيين عدد اعضاء تفعيل البوت اكثر من : '..text:match("تعيين عدد الاعضاء (%d+)$")..' عضو ',"md",true)  
+send(msg_chat_id,msg_id,'⇜ تم تعيين عدد اعضاء تفعيل البوت اكثر من : '..text:match("تعيين عدد الاعضاء (%d+)$")..' عضو ',"md",true)  
 elseif text =='احصائيات' then 
 if not msg.ControllerBot then 
 return merolua.send(msg_chat_id,msg_id,'\n⇜ هذا الامر يخص ( '..Controller_Num(1)..' ) ',"md",true)  
@@ -22781,7 +22781,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-return merolua.send(msg_chat_id,msg_id,'⇜ عدد احصائيات البوت \nـــــــــــــــــــــــــــــــــــــــــ\n⇜ عدد القروبات : '..(Redis:scard(TheFRADM..'FRADM:ChekBotAdd') or 0)..'\n⇜ عدد المشتركين : '..(Redis:scard(TheFRADM..'FRADM:Num:User:Pv') or 0)..'',"md",true)  
+send(msg_chat_id,msg_id,'⇜ عدد احصائيات البوت \nـــــــــــــــــــــــــــــــــــــــــ\n⇜ عدد القروبات : '..(Redis:scard(TheFRADM..'FRADM:ChekBotAdd') or 0)..'\n⇜ عدد المشتركين : '..(Redis:scard(TheFRADM..'FRADM:Num:User:Pv') or 0)..'',"md",true)  
 end
 if text == 'تغيير كليشه المطور' then
 if not msg.ControllerBot then 
@@ -22795,7 +22795,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:set(TheFRADM..'FRADM:GetTexting:DevTheFRADM'..msg_chat_id..':'..msg.return merolua.sender_id.user_id,true)
+Redis:set(TheFRADM..'FRADM:GetTexting:DevTheFRADM'..msg_chat_id..':'..msg.sender_id.user_id,true)
 return merolua.send(msg_chat_id,msg_id,'⇜ ارسل لي الكليشه ')
 end
 if text == 'مسح كليشه المطور' then
@@ -22825,7 +22825,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:set(TheFRADM.."FRADM:Set:Rd"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,true)
+Redis:set(TheFRADM.."FRADM:Set:Rd"..msg.sender_id.user_id..":"..msg_chat_id,true)
 return merolua.send(msg_chat_id,msg_id,"⇜ ارسل الان الكلمه لاضافتها في الردود العامه ","md",true)  
 end
 if text == 'مسح رد عام' then 
@@ -22840,7 +22840,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:set(TheFRADM.."FRADM:Set:On"..msg.return merolua.sender_id.user_id..":"..msg_chat_id,true)
+Redis:set(TheFRADM.."FRADM:Set:On"..msg.sender_id.user_id..":"..msg_chat_id,true)
 return merolua.send(msg_chat_id,msg_id,"⇜ ارسل الان الكلمه لمسحها من الردود العامه","md",true)  
 end
 if text=='اذاعه خاص' then 
@@ -22855,8 +22855,8 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:setex(TheFRADM.."FRADM:Broadcasting:Users" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id, 600, true) 
-return merolua.send(msg_chat_id,msg_id,[[
+Redis:setex(TheFRADM.."FRADM:Broadcasting:Users" .. msg_chat_id .. ":" .. msg.sender_id.user_id, 600, true) 
+send(msg_chat_id,msg_id,[[
 ⇜ الحين ارسل لي
 ⇜ ( نص,صوره,فيديو,متحركه,بصمه,اغنيه ) 
 ـــــــــــــــــــــــــــــــــــــــــ
@@ -22877,8 +22877,8 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:setex(TheFRADM.."FRADM:Broadcasting:Groups" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id, 600, true) 
-return merolua.send(msg_chat_id,msg_id,[[
+Redis:setex(TheFRADM.."FRADM:Broadcasting:Groups" .. msg_chat_id .. ":" .. msg.sender_id.user_id, 600, true) 
+send(msg_chat_id,msg_id,[[
 ⇜ الحين ارسل لي
 ⇜ ( نص,صوره,فيديو,متحركه,بصمه,اغنيه ) 
 ـــــــــــــــــــــــــــــــــــــــــ
@@ -22899,8 +22899,8 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:setex(TheFRADM.."FRADM:Broadcasting:Groups:Pin" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id, 600, true) 
-return merolua.send(msg_chat_id,msg_id,[[
+Redis:setex(TheFRADM.."FRADM:Broadcasting:Groups:Pin" .. msg_chat_id .. ":" .. msg.sender_id.user_id, 600, true) 
+send(msg_chat_id,msg_id,[[
 ⇜ الحين ارسل لي
 ⇜ ( نص,صوره,فيديو,متحركه,بصمه,اغنيه ) 
 ـــــــــــــــــــــــــــــــــــــــــ
@@ -22920,8 +22920,8 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:setex(TheFRADM.."FRADM:Broadcasting:Groups:Fwd" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id, 600, true) 
-return merolua.send(msg_chat_id,msg_id,"⇜ ارسل لي التوجيه","md",true)  
+Redis:setex(TheFRADM.."FRADM:Broadcasting:Groups:Fwd" .. msg_chat_id .. ":" .. msg.sender_id.user_id, 600, true) 
+send(msg_chat_id,msg_id,"⇜ ارسل لي التوجيه","md",true)  
 return false
 end
 if text=='اذاعه بالتوجيه خاص' then 
@@ -22936,8 +22936,8 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(TheFRADM..'FRADM:Channel:Join:Name'), url = 't.me/'..Redis:get(TheFRADM..'FRADM:Channel:Join')}, },}}
 return merolua.send(msg.chat_id,msg.id,'\n⇜ عليك الاشتراك في قناة البوت لاستخدام الاوامر',"md",false, false, false, false, reply_markup)
 end
-Redis:setex(TheFRADM.."FRADM:Broadcasting:Users:Fwd" .. msg_chat_id .. ":" .. msg.return merolua.sender_id.user_id, 600, true) 
-return merolua.send(msg_chat_id,msg_id,"⇜ ارسل لي التوجيه ","md",true)  
+Redis:setex(TheFRADM.."FRADM:Broadcasting:Users:Fwd" .. msg_chat_id .. ":" .. msg.sender_id.user_id, 600, true) 
+send(msg_chat_id,msg_id,"⇜ ارسل لي التوجيه ","md",true)  
 return false
 end
 if text == ("الردود العامه") then 
@@ -23154,7 +23154,7 @@ end
 end
 local reply_markup = bot.replyMarkup{
 type = 'inline',
-data = {{{text = 'مسح المحظورين عام', data = msg.return merolua.sender_id.user_id..'/BanAll'},},}}
+data = {{{text = 'مسح المحظورين عام', data = msg.sender_id.user_id..'/BanAll'},},}}
 return merolua.send(msg_chat_id, msg_id, ListMembers, 'md', false, false, false, false, reply_markup)
 end
 if text == 'المكتومين عام' or text == 'قائمه المكتومين عام' then
@@ -23176,7 +23176,7 @@ end
 end
 local reply_markup = bot.replyMarkup{
 type = 'inline',
-data = {{{text = 'مسح المكتومين عام', data = msg.return merolua.sender_id.user_id..'/KtmAll'},},}}
+data = {{{text = 'مسح المكتومين عام', data = msg.sender_id.user_id..'/KtmAll'},},}}
 return merolua.send(msg_chat_id, msg_id, ListMembers, 'md', false, false, false, false, reply_markup)
 end
 if text == 'قائمه M' then
@@ -23206,7 +23206,7 @@ end
 end
 local reply_markup = bot.replyMarkup{
 type = 'inline',
-data = {{{text = 'مسح قائمه M', data = msg.return merolua.sender_id.user_id..'/Developers'},},}}
+data = {{{text = 'مسح قائمه M', data = msg.sender_id.user_id..'/Developers'},},}}
 return merolua.send(msg_chat_id, msg_id, ListMembers, 'md', false, false, false, false, reply_markup)
 end
 if text == 'قائمه MY' then
@@ -23236,18 +23236,18 @@ end
 end
 local reply_markup = bot.replyMarkup{
 type = 'inline',
-data = {{{text = 'مسح قائمه M', data = msg.return merolua.sender_id.user_id..'/Developers'},},}}
+data = {{{text = 'مسح قائمه M', data = msg.sender_id.user_id..'/Developers'},},}}
 return merolua.send(msg_chat_id, msg_id, ListMembers, 'md', false, false, false, false, reply_markup)
 end
 if not msg.ControllerBot then
-if Redis:get(TheFRADM.."FRADM:TwaslBot") and not Redis:sismember(TheFRADM.."FRADM:BaN:In:Tuasl",msg.return merolua.sender_id.user_id) and not Redis:get(TheFRADM.."hms:"..msg.return merolua.sender_id.user_id) and not Redis:get(TheFRADM.."keyboardmemb"..msg.return merolua.sender_id.user_id) then
-local ListGet = {Sudo_Id,msg.return merolua.sender_id.user_id}
+if Redis:get(TheFRADM.."FRADM:TwaslBot") and not Redis:sismember(TheFRADM.."FRADM:BaN:In:Tuasl",msg.sender_id.user_id) and not Redis:get(TheFRADM.."hms:"..msg.sender_id.user_id) and not Redis:get(TheFRADM.."keyboardmemb"..msg.sender_id.user_id) then
+local ListGet = {Sudo_Id,msg.sender_id.user_id}
 local IdSudo = bot.getChat(ListGet[1]).id
 local IdUser = bot.getChat(ListGet[2]).id
-local FedMsg = return merolua.sendForwarded(IdSudo, 0, IdUser, msg_id)
+local FedMsg = bot.sendForwarded(IdSudo, 0, IdUser, msg_id)
 Redis:setex(TheFRADM.."FRADM:Twasl:UserId"..msg.date,172800,IdUser)
 if FedMsg.content.Merotele == "messageSticker" then
-return merolua.send(IdSudo,0,Reply_Status(IdUser,'⇜ قام بارسال ملصق').Reply,"md",true)  
+send(IdSudo,0,Reply_Status(IdUser,'⇜ قام بارسال ملصق').Reply,"md",true)  
 end
 return merolua.send(IdUser,msg_id,Reply_Status(IdUser,'⇜ تم ارسال رسالتك الى المطور').Reply,"md",true)  
 end
@@ -23264,12 +23264,12 @@ if text =='الغاء الحظر' or text =='الغاء حظر' then
 Redis:srem(TheFRADM..'FRADM:BaN:In:Tuasl',Info_User)  
 return merolua.send(msg_chat_id,msg_id,Reply_Status(Info_User,'⇜ تم الغاء حظره من تواصل في البوت ').Reply,"md",true)  
 end 
-local ChatAction = return merolua.sendChatAction(Info_User,'Typing')
+local ChatAction = bot.sendChatAction(Info_User,'Typing')
 if not Info_User or ChatAction.message == "USER_IS_BLOCKED" then
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Info_User,'⇜ قام بحظر البوت لا استطيع ارسال رسالتك اليه ').Reply,"md",true)  
+send(msg_chat_id,msg_id,Reply_Status(Info_User,'⇜ قام بحظر البوت لا استطيع ارسال رسالتك اليه ').Reply,"md",true)  
 end
 if msg.content.video_note then
-return merolua.sendVideoNote(Info_User, 0, msg.content.video_note.video.remote.id)
+bot.sendVideoNote(Info_User, 0, msg.content.video_note.video.remote.id)
 elseif msg.content.photo then
 if msg.content.photo.sizes[1].photo.remote.id then
 idPhoto = msg.content.photo.sizes[1].photo.remote.id
@@ -23278,23 +23278,23 @@ idPhoto = msg.content.photo.sizes[2].photo.remote.id
 elseif msg.content.photo.sizes[3].photo.remote.id then
 idPhoto = msg.content.photo.sizes[3].photo.remote.id
 end
-return merolua.sendPhoto(Info_User, 0, idPhoto,'')
+bot.sendPhoto(Info_User, 0, idPhoto,'')
 elseif msg.content.sticker then 
-return merolua.sendSticker(Info_User, 0, msg.content.sticker.sticker.remote.id)
+bot.sendSticker(Info_User, 0, msg.content.sticker.sticker.remote.id)
 elseif msg.content.voice_note then 
-return merolua.sendVoiceNote(Info_User, 0, msg.content.voice_note.voice.remote.id, '', 'md')
+bot.sendVoiceNote(Info_User, 0, msg.content.voice_note.voice.remote.id, '', 'md')
 elseif msg.content.video then 
-return merolua.sendVideo(Info_User, 0, msg.content.video.video.remote.id, '', "md")
+bot.sendVideo(Info_User, 0, msg.content.video.video.remote.id, '', "md")
 elseif msg.content.animation then 
-return merolua.sendAnimation(Info_User,0, msg.content.animation.animation.remote.id, '', 'md')
+bot.sendAnimation(Info_User,0, msg.content.animation.animation.remote.id, '', 'md')
 elseif msg.content.document then
-return merolua.sendDocument(Info_User, 0, msg.content.document.document.remote.id, '', 'md')
+bot.sendDocument(Info_User, 0, msg.content.document.document.remote.id, '', 'md')
 elseif msg.content.audio then
-return merolua.sendAudio(Info_User, 0, msg.content.audio.audio.remote.id, '', "md") 
+bot.sendAudio(Info_User, 0, msg.content.audio.audio.remote.id, '', "md") 
 elseif text then
-return merolua.send(Info_User,0,text,"md",true)
+send(Info_User,0,text,"md",true)
 end 
-return merolua.send(msg_chat_id,msg_id,Reply_Status(Info_User,'⇜ تم ارسال رسالتك اليه ').Reply,"md",true)
+send(msg_chat_id,msg_id,Reply_Status(Info_User,'⇜ تم ارسال رسالتك اليه ').Reply,"md",true)
 end
 end
 end
